@@ -1,0 +1,12 @@
+Hestia AI branching strategy
+
+main is the long-lived branch used for assignment submissions.
+
+Feature work happens on short-lived branches, then merges back into main.
+
+Examples:
+- feat/split-settings: production-aware Django settings and .env support
+- feat/docs-structure: README and docs folders
+
+Do not commit .env, db.sqlite3, or virtual environments.
+See git-branching-strategy.png in this folder.

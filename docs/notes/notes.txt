@@ -1,0 +1,11 @@
+Hestia AI — Team 12 notes
+
+Week of 2026-09-16
+- Created the assignment GitHub repository: 12_HestiaAI
+- Added instructor 27guptamohit as a collaborator
+- Kept the existing Django apps: households, intake, inventory, workflows
+- Restructured the repo to the assignment layout: README.md, docs/wireframes, docs/branching_strategy, docs/notes
+- Split Django settings into base.py, development.py, and production.py
+- DEBUG is True only in development and False in production
+- Moved SECRET_KEY and a dummy OPENAI_API_KEY into .env; added .env.example
+- Reminder: copy .env.example to .env before running. Never commit .env
