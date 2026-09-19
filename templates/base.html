@@ -1,0 +1,47 @@
+{% load static %}
+{% now "U" as ts %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {# Each child overrides this block to set its browser-tab title. #}
+    <title>{% block title %}Hestia{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ ts }}">
+    <meta name="theme-color" content="#5946a8">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="hestia-header">
+        <div class="container header-inner">
+            <a class="hestia-brand" href="{% url 'workflows:task-cbv-generic' %}">
+                <span class="hestia-logo" aria-hidden="true">H</span>
+                <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
+            </a>
+            <span class="header-label">A little more order. A little more home.</span>
+        </div>
+    </header>
+    <nav class="navigation" aria-label="Primary navigation">
+        <div class="container">
+            <a class="nav-link" href="{% url 'workflows:task-cbv-generic' %}">Household tasks</a>
+        </div>
+    </nav>
+
+    {# Shared page shell. Feature templates supply only their own content. #}
+    <main id="main-content" class="container" tabindex="-1">
+        {% block content %}{% endblock %}
+        {# Optional blocks retained from the instructor's base-template pattern. #}
+        {% block send_search %}{% endblock %}
+        {% block filter %}{% endblock %}
+        {% block stats %}{% endblock %}
+    </main>
+    <footer class="hestia-footer">
+        <div class="container">
+            <strong>Hestia</strong> &middot; Household responsibilities, together.
+            <p>INFO 490 &middot; Team 12 &middot; University of Illinois Urbana-Champaign</p>
+        </div>
+    </footer>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

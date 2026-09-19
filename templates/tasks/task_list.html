@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% comment %}
+All four view styles supply an iterable named tasks to this template.
+Task holds reusable responsibilities; due dates and completion state belong
+on TaskOccurrence, so we do not assume those fields exist here.
+Use Django comments for template examples: HTML comments still execute tags.
+{% endcomment %}
+
+{% block title %}Household Tasks | Hestia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">Household coordination</p>
+    <h1>Household Tasks</h1>
+    <p>Keep recurring routines and one-time responsibilities in one place.</p>
+</section>
+{% endblock %}
+
+{% block send_search %}
+{# No action URL is needed: GET submits to whichever of the four views is open. #}
+<form method="get" class="search-form" role="search">
+    <div class="search-field">
+        <label for="task-search">Find a task</label>
+        <input id="task-search" type="search" name="q" placeholder="Search tasks by title..." value="{{ request.GET.q }}">
+    </div>
+    <button type="submit">Search tasks</button>
+    {% if request.GET.q %}<a class="clear-link" href="{{ request.path }}">Clear search</a>{% endif %}
+</form>
+{% endblock %}
+
+{% block filter %}
+<section aria-labelledby="task-results-heading">
+    <div class="results-heading">
+        <h2 id="task-results-heading">{% if request.GET.q %}Search results{% else %}Your responsibilities{% endif %}</h2>
+    </div>
+    <div class="task-grid">
+        {# The empty clause works for an empty QuerySet or an empty Python list. #}
+        {% for task in tasks %}
+            <article class="task-card">
+                <div class="card-heading">
+                    <h3>{{ task.title }}</h3>
+                    <span class="status-badge priority-{{ task.priority|lower }}">{{ task.get_priority_display }}</span>
+                </div>
+                <p class="task-description">{{ task.description|default:"No description provided." }}</p>
+                <dl class="task-details">
+                    <div><dt>Type</dt><dd>{{ task.get_task_type_display }}</dd></div>
+                    <div><dt>Location</dt><dd>{{ task.default_location|default:"No location specified" }}</dd></div>
+                    <div><dt>Recurrence</dt><dd>{{ task.recurrence_rule|default:"One-time task" }}</dd></div>
+                </dl>
+                {% if task.created_at %}
+                    <p class="record-date">Added {{ task.created_at|date:"M j, Y" }}</p>
+                {% endif %}
+            </article>
+        {% empty %}
+            <section class="empty-state" aria-labelledby="empty-title">
+                <span class="empty-state-icon" aria-hidden="true">&#10003;</span>
+                <h3 id="empty-title">No tasks found</h3>
+                {% if request.GET.q %}
+                    <p>No household tasks match &ldquo;{{ request.GET.q }}&rdquo;. Try another title or clear your search.</p>
+                    <a class="button-link" href="{{ request.path }}">Show all tasks</a>
+                {% else %}
+                    <p>Your household has no tasks yet. New responsibilities will appear here once they are created.</p>
+                {% endif %}
+            </section>
+        {% endfor %}
+    </div>
+</section>
+{% endblock %}

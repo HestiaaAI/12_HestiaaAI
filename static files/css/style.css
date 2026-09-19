@@ -1,0 +1,65 @@
+/* Shared Hestia styles. Kept local so the assignment also works offline. */
+:root {
+    --hestia-primary: #5946a8;
+    --hestia-primary-dark: #42347d;
+    --hestia-background: #f7f7fb;
+    --hestia-text: #24232a;
+    --hestia-muted: #64636f;
+    --hestia-border: #e6e5ed;
+}
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; display: flex; flex-direction: column; background: var(--hestia-background); color: var(--hestia-text); font: 16px/1.6 "Segoe UI", sans-serif; }
+a { color: var(--hestia-primary); }
+a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid #b77d13; outline-offset: 4px; }
+.container { width: min(1120px, 90%); margin-inline: auto; }
+.hestia-header { background: linear-gradient(135deg, var(--hestia-primary), var(--hestia-primary-dark)); color: white; }
+.header-inner { display: flex; justify-content: space-between; align-items: center; gap: 24px; padding-block: 24px; }
+.hestia-brand { display: flex; gap: 14px; align-items: center; color: white; text-decoration: none; }
+.hestia-brand strong { display: block; font-size: 26px; letter-spacing: -.5px; }
+.hestia-brand small { display: block; color: #eeeafa; font-size: 12px; }
+.hestia-logo { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #a89bd2; border-radius: 14px; font-size: 28px; font-weight: 700; }
+.header-label { font-size: 13px; color: #eeeafa; }
+.navigation { background: white; border-bottom: 1px solid var(--hestia-border); }
+.nav-link { display: inline-block; padding: 16px 0 12px; border-bottom: 3px solid var(--hestia-primary); font-size: 14px; font-weight: 600; text-decoration: none; }
+main { flex: 1; padding-block: 42px 60px; }
+.page-header { margin-bottom: 28px; }
+.page-header h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; letter-spacing: -1px; margin: 7px 0 12px; }
+.page-header p { margin: 0; color: var(--hestia-muted); }
+.page-header .eyebrow { color: var(--hestia-primary); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+.search-form { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
+.search-field { flex: 1; min-width: 200px; }
+.search-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+input { width: 100%; padding: 12px 14px; border: 1px solid #bdbbc9; border-radius: 8px; background: white; color: inherit; font: inherit; }
+button, .button-link { display: inline-block; padding: 13px 22px; border: 0; border-radius: 8px; background: var(--hestia-primary); color: white; font: 600 15px/1.6 "Segoe UI", sans-serif; text-decoration: none; cursor: pointer; }
+button:hover, .button-link:hover { background: var(--hestia-primary-dark); }
+.clear-link { padding: 12px 0; }
+.results-heading h2 { font-size: 17px; margin: 0 0 16px; }
+/* Auto-fit cards wrap without a separate mobile template. */
+.task-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); gap: 20px; }
+.task-card { background: white; border: 1px solid var(--hestia-border); border-radius: 14px; padding: 24px; box-shadow: 0 3px 12px #24232a06; overflow-wrap: anywhere; }
+.card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.task-card h3 { margin: 0; font-size: 19px; line-height: 1.4; }
+.status-badge { flex-shrink: 0; padding: 4px 10px; border-radius: 30px; background: #ece9fa; color: var(--hestia-primary-dark); font-size: 12px; font-weight: 700; }
+.priority-high, .priority-urgent { background: #fff0e4; color: #8b3b12; }
+.priority-low { background: #e7f3ed; color: #286045; }
+.task-description { color: var(--hestia-muted); margin: 16px 0 22px; }
+.task-details { margin: 0; font-size: 13px; }
+.task-details div { display: grid; grid-template-columns: 80px 1fr; gap: 12px; margin-top: 9px; }
+.task-details dt { color: var(--hestia-muted); }
+.task-details dd { margin: 0; }
+.record-date { border-top: 1px solid var(--hestia-border); padding-top: 16px; margin: 22px 0 0; color: var(--hestia-muted); font-size: 12px; }
+.empty-state { grid-column: 1 / -1; padding: 46px 24px; border: 1px dashed #c7c5d2; border-radius: 14px; background: white; text-align: center; overflow-wrap: anywhere; }
+.empty-state-icon { display: inline-grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; background: #ece9fa; color: var(--hestia-primary); font-size: 24px; }
+.empty-state h3 { font-size: 23px; margin: 14px 0 8px; }
+.empty-state p { max-width: 530px; margin: 0 auto 20px; color: var(--hestia-muted); }
+.hestia-footer { padding-block: 26px; background: #24212f; color: #f4f2fa; font-size: 14px; }
+.hestia-footer p { margin: 6px 0 0; color: #c9c3d7; font-size: 12px; }
+.skip-link { position: absolute; top: -100px; left: 16px; background: white; padding: 8px 16px; }
+.skip-link:focus { top: 8px; }
+@media (max-width: 600px) {
+    .header-label { display: none; }
+    .header-inner { padding-block: 18px; }
+    main { padding-block: 28px 40px; }
+    .search-field { flex-basis: 100%; }
+    .task-card { padding: 20px; }
+}
