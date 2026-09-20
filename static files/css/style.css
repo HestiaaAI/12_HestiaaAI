@@ -26,6 +26,10 @@ main { flex: 1; padding-block: 42px 60px; }
 .page-header h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; letter-spacing: -1px; margin: 7px 0 12px; }
 .page-header p { margin: 0; color: var(--hestia-muted); }
 .page-header .eyebrow { color: var(--hestia-primary); font-size: 12px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+.view-demo { margin-bottom: 28px; }
+.view-demo p { margin: 0 0 6px; color: var(--hestia-muted); font-size: 13px; }
+.view-examples { display: flex; flex-wrap: wrap; gap: 8px; }
+.view-examples a { padding: 10px 14px; border: 1px solid var(--hestia-border); border-radius: 8px; background: white; font-size: 14px; }
 .search-form { display: flex; align-items: flex-end; flex-wrap: wrap; gap: 12px; margin-bottom: 32px; }
 .search-field { flex: 1; min-width: 200px; }
 .search-field label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }

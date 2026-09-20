@@ -17,13 +17,13 @@ def task_manual_view(request):
     """Section 2: load and render the template manually into HttpResponse."""
     tasks = filter_tasks(Task.objects.all(), request)
     template = loader.get_template("tasks/task_list.html")
-    return HttpResponse(template.render({"tasks": tasks}, request))
+    return HttpResponse(template.render({"tasks": tasks, "view_style": "HttpResponse FBV"}, request))
 
 
 def task_render_view(request):
     """Section 2: the render shortcut combines loading and responding."""
     tasks = filter_tasks(Task.objects.all(), request)
-    return render(request, "tasks/task_list.html", {"tasks": tasks})
+    return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "render() FBV"})
 
 
 class TaskBaseView(View):
@@ -31,7 +31,7 @@ class TaskBaseView(View):
 
     def get(self, request):
         tasks = filter_tasks(Task.objects.all(), request)
-        return render(request, "tasks/task_list.html", {"tasks": tasks})
+        return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "Base CBV"})
 
 
 class TaskListView(ListView):
@@ -40,6 +40,7 @@ class TaskListView(ListView):
     model = Task
     template_name = "tasks/task_list.html"
     context_object_name = "tasks"
+    extra_context = {"view_style": "Generic CBV"}
 
     def get_queryset(self):
         return filter_tasks(super().get_queryset(), self.request)

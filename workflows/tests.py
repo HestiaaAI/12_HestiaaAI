@@ -1,8 +1,25 @@
-from django.test import TestCase
-from django.urls import reverse
+from django.template.loader import render_to_string
+from django.test import SimpleTestCase, TestCase
+from django.urls import resolve, reverse
 
 from households.models import Workspace
 from .models import Task
+from .views import TaskBaseView, TaskListView, task_manual_view, task_render_view
+
+
+class AssignmentRoutingTests(SimpleTestCase):
+    def test_routes_reach_four_distinct_implementations(self):
+        expected = {
+            "task-manual": task_manual_view,
+            "task-render": task_render_view,
+            "task-cbv-base": TaskBaseView,
+            "task-cbv-generic": TaskListView,
+        }
+        for name, target in expected.items():
+            with self.subTest(name=name):
+                resolved = resolve(reverse("workflows:" + name))
+                actual = getattr(resolved.func, "view_class", resolved.func)
+                self.assertIs(actual, target)
 
 
 class TaskTemplateTests(TestCase):
@@ -47,3 +64,24 @@ class TaskTemplateTests(TestCase):
             with self.subTest(route=route):
                 response = self.client.get(reverse("workflows:" + route))
                 self.assertContains(response, "Your household has no tasks yet.")
+
+    def test_each_demonstration_identifies_its_style_and_links_all_four_routes(self):
+        styles = {
+            "task-manual": "HttpResponse FBV",
+            "task-render": "render() FBV",
+            "task-cbv-base": "Base CBV",
+            "task-cbv-generic": "Generic CBV",
+        }
+        for route, style in styles.items():
+            with self.subTest(route=route):
+                response = self.client.get(reverse("workflows:" + route))
+                self.assertContains(response, "Assignment demonstration: " + style)
+                self.assertContains(response, 'aria-label="View implementation examples"')
+                for name in styles:
+                    self.assertContains(response, 'href="' + reverse("workflows:" + name) + '"')
+
+    def test_shared_template_without_view_style_omits_teaching_controls(self):
+        html = render_to_string("tasks/task_list.html", {"tasks": []})
+        self.assertNotIn("Assignment demonstration:", html)
+        self.assertNotIn('aria-label="View implementation examples"', html)
+        self.assertIn("Your household has no tasks yet.", html)
