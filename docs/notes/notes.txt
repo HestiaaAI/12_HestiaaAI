@@ -9,3 +9,123 @@ Week of 2026-09-16
 - DEBUG is True only in development and False in production
 - Moved SECRET_KEY and a dummy OPENAI_API_KEY into .env; added .env.example
 - Reminder: copy .env.example to .env before running. Never commit .env
+
+
+Phase 0–1 implementation and Section 2 evidence — September 20, 2026
+
+The submission uses Task for all four demonstrations. Each page reads Task rows,
+searches titles through the GET parameter q, and renders the same inherited
+Task-list template. The four links switch Python implementations, not business
+actions. Matching results are intentional. Creating/editing/assigning/completing
+work is outside this phase. Task is a reusable definition; occurrence dates and
+progress belong to TaskOccurrence, and personal responses belong to Assignment.
+
+View map (all routes are prefixed with http://127.0.0.1:8001 in the captures):
+
+A01 | task_manual_view | Manual function-based view
+URL: /tasks/manual/ | Name: workflows:task-manual
+Queries Task, applies title search, loads tasks/task_list.html explicitly,
+renders it with the request, and wraps the result in HttpResponse.
+Screenshot: docs/screenshots/section-2/01-httpresponse.jpg
+
+A02 | task_render_view | Shortcut function-based view
+URL: /tasks/render/ | Name: workflows:task-render
+Queries the same Task data and returns Django's render() shortcut.
+Screenshot: docs/screenshots/section-2/02-render.jpg
+
+A03 | TaskBaseView | Base class-based view, directly inherits View
+URL: /tasks/cbv-base/ | Name: workflows:task-cbv-base
+Its explicit get() method queries Task and renders the shared template.
+Screenshot: docs/screenshots/section-2/03-base-cbv.jpg
+
+A04 | TaskListView | Generic class-based view, inherits ListView
+URL: /tasks/cbv-generic/ | Name: workflows:task-cbv-generic
+Declares model=Task, template_name and context_object_name=tasks;
+get_queryset() applies the same optional title search.
+Screenshot: docs/screenshots/section-2/04-generic-cbv.jpg
+
+Evidence and observed results
+- 01–04: actual 1280x720 browser viewport captures; the visible method label
+  identifies each route. Browser chrome is not included. All four show the same
+  three fictional tasks from seed_template_demo, not live household records.
+- 05-populated-details.jpg: lower portion of the generic page, showing type,
+  location, recurrence, and added date for all three fictional tasks.
+- 06-search-match.jpg: generic page with q="  GROCERIES  "; one matching task.
+- 07-search-no-match.jpg: generic page with q=XYZNOTAREALTASK123; no-match state.
+- 08-empty-database.jpg: generic page on port 8002, no q parameter and ZERO Task
+  rows in a separate migrated database. This is not merely a no-match search.
+- 09-mobile-375.jpg: 375x812 viewport; links wrap, cards stack, no horizontal overflow.
+- 10-keyboard-320.jpg: 320x812 viewport; Tab from search reaches the Search tasks
+  button, which shows a 3px focus outline. No horizontal overflow.
+All evidence files above are under docs/screenshots/section-2/.
+
+Manual browser checks: all four links reached the named methods; each route
+returned the groceries match for trimmed uppercase input, showed the no-match
+message for an absent title, and restored all tasks through Show all tasks.
+Enter submits search. Browser console warnings/errors: none observed. Native
+in-app browser viewport overrides were reset after testing. Full-page capture
+had a browser scaling artifact, so evidence uses unmodified viewport captures
+with a separate lower-page capture instead.
+
+Reproduce safely from the project root
+Use the .venv environment configured in README.md. The following command creates
+a NEW temporary SQLite database, applies migrations, optionally seeds fictional
+tasks and starts the demo server. It never uses the project's db.sqlite3.
+Stop with Ctrl-C. Run again in a second terminal with HESTIA_DEMO_MODE=empty for
+the empty database on port 8002. Temporary databases are not submission files.
+
+```bash
+HESTIA_DEMO_MODE=populated .venv/bin/python - <<'PYDEMO'
+import os
+import tempfile
+from pathlib import Path
+
+mode = os.environ["HESTIA_DEMO_MODE"]
+assert mode in {"populated", "empty"}
+os.environ["DJANGO_SETTINGS_MODULE"] = "hestia_config.settings.development"
+from django.conf import settings
+settings.DATABASES = {"default": {
+    "ENGINE": "django.db.backends.sqlite3",
+    "NAME": Path(tempfile.mkdtemp(prefix="hestia-demo-")) / "db.sqlite3",
+}}
+import django
+django.setup()
+from django.core.management import call_command
+call_command("migrate", interactive=False, verbosity=0)
+if mode == "populated":
+    call_command("seed_template_demo")
+port = "8001" if mode == "populated" else "8002"
+call_command("runserver", "127.0.0.1:" + port, use_reloader=False)
+PYDEMO
+```
+
+Verification commands (run from project root)
+.venv/bin/python -m pip check
+.venv/bin/python manage.py test --verbosity 1
+.venv/bin/python manage.py check --settings=hestia_config.settings.development
+.venv/bin/python manage.py check --settings=hestia_config.settings.production
+.venv/bin/python manage.py makemigrations --check --dry-run
+
+Observed: 6 tests pass. AssignmentRoutingTests verifies the four URL names point
+to the intended distinct functions/classes. TaskTemplateTests covers populated
+fields, escaping, search/no-match/empty states, correct method labels and links,
+and omission of teaching controls when the shared template has no view_style.
+Before implementation, the new label test failed for all four missing labels;
+after implementation the complete suite passed. No migration drift detected.
+
+Technical observations, not a student-authored personal reflection
+- Manual HttpResponse makes template loading and response construction explicit.
+- render() combines those steps without changing the displayed data.
+- Base View exposes GET dispatch while ListView supplies the ordinary list flow.
+- Shared templates keep cards, search and empty states consistent across handlers.
+Student reflection: pending the student's own comparison/experience before final
+submission. Do not present the observations above as an invented personal account.
+
+Limits and handoff
+These anonymous teaching routes still query all Task rows. Use fictional data
+only; Phase 2 adds authentication and household isolation before real use.
+The final product can reuse the code patterns, search and templates; ordinary
+navigation will expose user tasks rather than four implementation-style links.
+No grade, production readiness, personal reflection, commit or submission is claimed.
+
+Capture format: the native browser returns JPEG bytes; evidence uses .jpg extensions to match that format. Images are unaltered browser captures.

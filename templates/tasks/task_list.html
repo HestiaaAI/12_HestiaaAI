@@ -14,6 +14,17 @@ Use Django comments for template examples: HTML comments still execute tags.
     <h1>Household Tasks</h1>
     <p>Keep recurring routines and one-time responsibilities in one place.</p>
 </section>
+{% if view_style %}
+<section class="view-demo" aria-label="Assignment demonstration">
+    <p class="eyebrow">Assignment demonstration: {{ view_style }}</p>
+    <nav class="view-examples" aria-label="View implementation examples">
+        <a href="{% url 'workflows:task-manual' %}">HttpResponse</a>
+        <a href="{% url 'workflows:task-render' %}">render()</a>
+        <a href="{% url 'workflows:task-cbv-base' %}">Base CBV</a>
+        <a href="{% url 'workflows:task-cbv-generic' %}">Generic CBV</a>
+    </nav>
+</section>
+{% endif %}
 {% endblock %}
 
 {% block send_search %}
