@@ -1,0 +1,3 @@
+Verify your Hestia email by opening this link and choosing Verify email:
+{{ activate_url }}
+This link expires after 24 hours. If you did not create this account, do not confirm it. You can ignore this email.

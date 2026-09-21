@@ -1,0 +1,14 @@
+{% extends "layouts/auth.html" %}
+{% block title %}Confirm email · Hestia{% endblock %}
+{% block auth_content %}
+<h1 id="auth-title">Confirm your email</h1>
+{% if confirmation and can_confirm %}
+<p>Confirm that <strong>{{ confirmation.email_address.email }}</strong> is your email address.</p>
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+    {% csrf_token %}<button type="submit">Verify email</button>
+</form>
+{% else %}
+<p>This verification link is invalid, expired, or has already been used.</p>
+{% endif %}
+<p><a href="{% url 'accounts:login' %}">Return to sign in</a>. Sign in with your email and password to request another link if needed.</p>
+{% endblock %}

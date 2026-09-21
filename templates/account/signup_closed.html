@@ -1,0 +1,7 @@
+{% extends "layouts/auth.html" %}
+{% block title %}Registration unavailable · Hestia{% endblock %}
+{% block auth_content %}
+<h1 id="auth-title">Registration is unavailable</h1>
+<p>Email delivery is not enabled for this environment yet. Contact your administrator.</p>
+<p><a href="{% url 'accounts:login' %}">Return to sign in</a></p>
+{% endblock %}

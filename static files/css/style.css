@@ -67,3 +67,24 @@ button:hover, .button-link:hover { background: var(--hestia-primary-dark); }
     .search-field { flex-basis: 100%; }
     .task-card { padding: 20px; }
 }
+
+/* Authentication uses the shared shell without household navigation. */
+.auth-card { max-width: 460px; margin: 16px auto; padding: clamp(20px, 5vw, 36px); background: white; border: 1px solid var(--hestia-border); border-radius: 16px; box-shadow: 0 8px 32px #24232a08; overflow-wrap: anywhere; }
+.auth-card h1 { margin: 8px 0 12px; font-size: clamp(26px, 5vw, 32px); line-height: 1.2; }
+.auth-card .eyebrow { color: var(--hestia-primary); font-size: 13px; font-weight: 700; margin: 0; }
+.auth-intro, .auth-help, .field-help { color: var(--hestia-muted); }
+.auth-intro { margin-bottom: 28px; }
+.auth-help { font-size: 14px; margin: 24px 0 0; }
+.form-field { margin-bottom: 20px; }
+.form-field label { display: block; margin-bottom: 6px; font-weight: 600; }
+.form-field input { min-width: 0; }
+.auth-submit { width: 100%; min-height: 44px; }
+.form-errors { background: #fff0ee; color: #852b20; padding: 12px 16px; border-left: 4px solid #a53528; border-radius: 6px; margin-bottom: 20px; }
+.form-errors p { margin: 0; }
+.field-errors { color: #852b20; margin: 6px 0 0; padding-left: 20px; font-size: 14px; }
+input[aria-invalid="true"] { border-color: #a53528; }
+
+/* Keep sign-out reachable when the header wraps on narrow screens. */
+.header-inner { flex-wrap: wrap; }
+.logout-form { margin: 0; }
+.logout-form button { border: 1px solid #eeeafa; min-height: 44px; }
