@@ -1,0 +1,8 @@
+{% extends "layouts/auth.html" %}
+{% block title %}Verify your email · Hestia{% endblock %}
+{% block auth_content %}
+<h1 id="auth-title">Check your verification email</h1>
+<p>Check your inbox for verification instructions. A new email may be delayed by request limits; wait at least 3 minutes before trying again. Follow the link and confirm your address before signing in.</p>
+<p>The link expires after 24 hours. Check your spam folder. In local development, the email appears in the server terminal.</p>
+<p>Need another link? <a href="{% url 'accounts:login' %}">Sign in with your email and password</a> to request it. Repeated requests are limited.</p>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layouts/auth.html" %}
+{% block title %}Sign in · Hestia{% endblock %}
+{% block auth_content %}
+{% if user.is_authenticated %}
+    <p class="eyebrow">Welcome to Hestia</p>
+    <h1 id="auth-title">You’re signed in</h1>
+    <p>Signed in as <strong>{{ user.email|default:user.get_username }}</strong>.</p>
+    <p class="auth-help">Household selection is not available yet.</p>
+{% else %}
+    <p class="eyebrow">Welcome home</p>
+    <h1 id="auth-title">Sign in to Hestia</h1>
+    <p class="auth-intro">A little more order. A little more home.</p>
+    <form method="post" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        {{ redirect_field }}
+        {% if form.errors %}
+        <div class="form-errors" role="alert">
+            {% if form.non_field_errors %}
+                {% for error in form.non_field_errors %}<p>{{ error }}</p>{% endfor %}
+            {% else %}<p>Please correct the fields below.</p>{% endif %}
+        </div>
+        {% endif %}
+        {% include "includes/form_field.html" with field=form.login %}
+        {% include "includes/form_field.html" with field=form.password %}
+        <button class="auth-submit" type="submit">Sign in</button>
+    </form>
+    <p><a href="{% url 'accounts:signup' %}">Create an account</a></p>
+    {% if local_email_preview %}<p class="auth-help">Local development: verification emails appear in the server terminal; they are not delivered to an inbox.</p>{% endif %}
+    <p class="auth-help">Use your verified email address. If you have not verified it yet, sign in to request another verification email.</p>
+{% endif %}
+{% endblock %}
