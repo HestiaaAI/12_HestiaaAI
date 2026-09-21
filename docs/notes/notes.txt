@@ -127,3 +127,26 @@ Limits
 These routes are anonymous and query every Task row, so use fictional data only.
 Phase 2 adds authentication and household isolation. The final product reuses the
 patterns and templates, with ordinary navigation replacing the four demo links.
+
+Week of 2026-09-21 — submission review of dev-cn32-v2
+- Reviewed the branch against Sections 1, 2, and 3 of the assignment.
+- Section 3 uses base.html inheritance, reusable content/search/results blocks,
+  a Task loop, conditional fields, and meaningful {% empty %} output. All four
+  view styles share tasks/task_list.html with the context name tasks.
+- Six tests passed with development settings and again with production settings.
+  No migration drift or dependency conflicts were detected. Static file discovery
+  found the shared CSS. .env is ignored and has no path history in this branch.
+- Fixed the README local production-settings preview: runserver with DEBUG=False
+  did not serve CSS (404). The documented localhost-only --insecure preview
+  returns 200 for all four pages, the empty search, and CSS. Public deployment
+  requires proper static serving; --insecure is only for the local demonstration.
+- Added docs/wireframes/v1/README.md so the required wireframes directory is
+  included in Git once committed. Added Windows setup and rubric/evidence links
+  to README.md. Existing section-2 screenshots include normal and empty states.
+- Submission still needs the new README, wireframe, and this note committed and
+  merged through the team workflow. Older untracked handoff/screenshots are not
+  necessary for the existing submission evidence.
+- Public repository check: unauthenticated GitHub API lookup for the configured
+  HestiaaAI/12_HestiaaAI remote returned 404. This does not prove the repo is
+  missing: it may be private. Confirm public access before submitting the link.
+  Instructor collaborator access could not be independently verified.

@@ -46,13 +46,54 @@ python manage.py runserver --settings=hestia_config.settings.development
 Household tasks: http://127.0.0.1:8000/tasks/cbv-generic/
 The root URL (`/`) does not currently have a page.
 
-## Production mode (`DEBUG = False`)
+## Local production-settings preview (`DEBUG = False`)
 
 ```bash
-python manage.py runserver --settings=hestia_config.settings.production
+python manage.py runserver 127.0.0.1:8000 --settings=hestia_config.settings.production --insecure
 ```
 
+`--insecure` lets Django's development server serve CSS while `DEBUG=False` for
+this local assignment preview. It does not change DEBUG. Do not use this command
+as a public production deployment. A deployed production server should run
+`python manage.py collectstatic --noinput --settings=hestia_config.settings.production`
+and serve `staticfiles/` through its configured web server.
+
 Django Admin: http://127.0.0.1:8000/admin/
+
+## Windows PowerShell setup
+
+```powershell
+python -m venv .venv
+.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
+# Replace the placeholder SECRET_KEY in .env before continuing.
+.\.venv\Scripts\python.exe manage.py migrate
+.\.venv\Scripts\python.exe manage.py seed_template_demo
+.\.venv\Scripts\python.exe manage.py runserver
+```
+
+## Assignment routes and template evidence
+
+All four routes reuse `templates/tasks/task_list.html`, which extends
+`templates/base.html`. The list uses `for`, `if`, and `empty`, and renders
+fields from `workflows.Task`. Supply an iterable named `tasks` from any view.
+
+| View | Local URL | Screenshot |
+| --- | --- | --- |
+| HttpResponse FBV | http://127.0.0.1:8000/tasks/manual/ | [Manual](docs/screenshots/section-2/01-httpresponse.jpg) |
+| render FBV | http://127.0.0.1:8000/tasks/render/ | [Render](docs/screenshots/section-2/02-render.jpg) |
+| Base View CBV | http://127.0.0.1:8000/tasks/cbv-base/ | [Base CBV](docs/screenshots/section-2/03-base-cbv.jpg) |
+| Generic ListView | http://127.0.0.1:8000/tasks/cbv-generic/ | [Normal list](docs/screenshots/section-2/04-generic-cbv.jpg) |
+
+[Populated details](docs/screenshots/section-2/05-populated-details.jpg) and
+[empty database](docs/screenshots/section-2/08-empty-database.jpg) provide Section 3
+evidence. To reproduce an empty result without deleting tasks, search for
+`XYZNOTAREALTASK123` on any of the four routes. The template's `empty` clause
+handles both a no-match search and a database with no tasks.
+
+See [team notes](docs/notes/notes.txt) for view purposes, comparisons, and evidence.
+Canvas requires only the team's public GitHub repository link; ensure the final
+changes are committed, pushed, and merged into the submission branch.
 
 ## Project structure
 
