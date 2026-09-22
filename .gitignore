@@ -33,12 +33,10 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Local reference material and planning documents
 Docs_old/
 P1-A1-Team_12/
 README_old.md
-
-# Local implementation plans (kept out of submissions pending review)
 /docs/superpowers/plans/
-# Living local project handbook and development history
 /docs/PROJECT_HANDBOOK.md
-venv/

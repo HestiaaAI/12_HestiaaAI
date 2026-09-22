@@ -1,129 +1,168 @@
 Hestia AI — Team 12 notes
 
-
-Week of 2026-09-16
-- Created the assignment repository 12_HestiaAI and added 27guptamohit as a collaborator
+Section 1
+================================
+- Created the assignment GitHub repository: 12_HestiaaAI
+- Added instructor 27guptamohit as a collaborator
 - Kept the existing Django apps: households, intake, inventory, workflows
-- Restructured to the assignment layout: README.md, docs/wireframes, docs/branching_strategy, docs/notes
-- Split settings into base.py, development.py and production.py; DEBUG is True only in development
-- Moved SECRET_KEY and a dummy OPENAI_API_KEY into .env, and added .env.example
-- Copy .env.example to .env before running. Never commit .env
+- Restructured the repo to the assignment layout: README.md, docs/wireframes, docs/branching_strategy, docs/notes
+- Split Django settings into base.py, development.py, and production.py
+- DEBUG is True only in development and False in production
+- Moved SECRET_KEY and a dummy OPENAI_API_KEY into .env; added .env.example
+- .env and .env example are present.
+- Settings and structure: hestia_config/settings/base.py,
+  development.py and production.py implement split settings. Development
+  DEBUG=True; production DEBUG=False. Both explicitly allow localhost and
+  127.0.0.1. A real deployment will require its actual host configuration.
+- Environment and security: secrets_environment.py loads .env via
+  django-environ; settings read SECRET_KEY and OPENAI_API_KEY from the
+  environment. .env.example contains placeholders. Git ignores .env, and
+  no .env path appears in the inspected history across local branches.
+  This path check is not an exhaustive historical secret scan.
+- GitHub hygiene and branching: .gitignore includes .env and local
+  runtime files. Existing commits include 640c656 (split settings/docs),
+  9f4b0ba (code update), and efdab1f (merge of dev-cn32-v1 through PR #1).
+  This demonstrates a non-main branch merged into main. Continue making
+  focused, descriptive commits after review; no new commit was made here.
+- Notes clarity: this dated update records URLs, implementation
+  mapping, verification, limitations and handoff reminders.
+- Required docs folders: docs/notes, docs/branching_strategy and
+  docs/wireframes/v1. The original team wireframes PDF has been copied
+  into docs/wireframes/v1 so it can be included in the repository.
+
+Section 2
+================================
+Selected domain model: workflows.models.Task.
+Paths are relative to the local development server (http://127.0.0.1:8000).
+All four views are in workflows/views.py; their named routes are in
+workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
+
+1. HttpResponse function-based view (manual)
+   Name: task_manual_view
+   URL: /tasks/manual/
+   Route name: workflows:task-manual
+   Purpose: list household task definitions, optionally filtered by title.
+   Implementation: query Task; load tasks/task_list.html with
+   loader.get_template(); render a context containing tasks; wrap the HTML
+   in HttpResponse.
+   Screenshot: docs/screenshots/01-httpresponse-fbv.png
+
+2. render() function-based view (shortcut)
+   Name: task_render_view
+   URL: /tasks/render/
+   Route name: workflows:task-render
+   Purpose: display the same task list through Django's render shortcut.
+   Implementation: query Task, supply {"tasks": tasks}, and return
+   render(request, "tasks/task_list.html", context).
+   Screenshot: docs/screenshots/02-render-fbv.png
+
+3. Base class-based view
+   Name: TaskBaseView
+   URL: /tasks/cbv-base/
+   Route name: workflows:task-cbv-base
+   Purpose: demonstrate explicit request handling in a View subclass.
+   Implementation: inherits django.views.View, implements get(), manually
+   queries Task and renders the shared template with context.
+   Screenshot: docs/screenshots/03-base-cbv.png
+
+4. Generic class-based view
+   Name: TaskListView
+   URL: /tasks/cbv-generic/
+   Route name: workflows:task-cbv-generic
+   Purpose: display tasks using Django's built-in list-view behavior.
+   Implementation: inherits ListView; model = Task;
+   template_name = "tasks/task_list.html"; context_object_name = "tasks".
+   get_queryset() applies the same optional title filter as the other views.
+   Screenshot: docs/screenshots/04-generic-cbv.png
+
+Section 3
+================================
+- templates/base.html supplies the HTML document, title block, local CSS,
+  header, navigation, main content, footer and reusable content blocks.
+- templates/tasks/task_list.html extends base.html. All four selected views
+  use this exact template and the same tasks context key.
+- The {% for task in tasks %} loop renders task title, description, priority,
+  type, location and recurrence. Missing optional values have fallbacks.
+- Its {% empty %} clause displays "No tasks found". Without a search query,
+  it explains that the household has no tasks yet. An unmatched search gets
+  separate guidance and a link to clear the filter.
+- Normal-list evidence: the four screenshots above (04 also serves as the
+  Section 3 normal-list screenshot).
+- Empty-list evidence: docs/screenshots/05-empty-list.png, showing the
+  no-query empty state. See docs/screenshots/README.md for the evidence index.
+- Templates use Django template syntax, HTML and local CSS. No JavaScript,
+  React, TypeScript, Node.js, frontend build step or CDN is required.
+
+Comparison notes — why each style is useful here
+------------------------------------------------
+HttpResponse vs render():
+The manual view makes the request-to-template-to-response steps visible,
+which is useful for understanding Django and for responses needing explicit
+control. It requires more plumbing for this ordinary HTML list. render()
+expresses the same query/context/template flow more concisely, making it a
+useful default for a small custom page.
+
+Base CBV vs generic CBV:
+TaskBaseView makes get() and its query explicit. This style is useful when
+request handling has custom steps or different GET/POST behavior.
+TaskListView is the shortest fit for a conventional model list: Django
+provides the list context and rendering behavior, while get_queryset()
+provides a focused extension point for title filtering.
+
+Template separation:
+Keeping identical tasks context and one list template means changing a card
+or empty-state message fixes the output of all four view styles. The choice
+of view style does not require duplicating presentation code.
+
+Verification and scope
+----------------------
+Run: python manage.py test workflows
+Three test methods exercise all four named routes, shared template/base
+inheritance, populated model fields, escaped user content, title search,
+no-match results and a genuinely empty Task queryset in an isolated test DB.
+The full main-branch test suite and Django system checks also pass.
+Browser screenshots have been visually reviewed; this is not a claim of a
+complete accessibility audit or a guaranteed instructor grade.
+
+These anonymous teaching pages query all Task records and should be used
+with fictional assignment data. Household-scoped product authorization is
+separate development work. Login/signup/logout and household-selection work
+on the development branch are not additional Section 2/3 grading URLs.
 
 
-Section 2 — four view implementations (September 20, 2026)
+Week of 2026-09-21 — Section 1 verification and access URLs
+==========================================================
+Repository: https://github.com/HestiaaAI/12_HestiaaAI
+Branch for this submission: main. Repository naming follows team_project.
+Instructor 27guptamohit collaborator access was verified through GitHub's
+collaborator endpoint (HTTP 204) on 2026-09-21.
 
-Demo (populated database): http://127.0.0.1:8001/tasks/cbv-generic/
+Development URL: http://127.0.0.1:8000/tasks/manual/
+Start: python manage.py runserver 8000 --settings=hestia_config.settings.development
 
-All four routes read Task rows, search titles through the GET parameter q, and
-render the same tasks/task_list.html. Only the implementation changes, so identical
-output is expected. Creating and assigning work comes later: Task is the reusable
-definition, dates live on TaskOccurrence and responses on Assignment.
+Production-mode LOCAL demo URL: http://127.0.0.1:8001/tasks/manual/
+Start: python manage.py runserver 8001 --settings=hestia_config.settings.production --insecure
+Public production URL: not deployed / not available yet.
+The --insecure flag only allows local static CSS serving with DEBUG=False.
+This is Django's development server, not a public deployment setup.
+These loopback URLs work on the machine running the corresponding command.
+Both modes on main use the same local db.sqlite3. Supabase staging and the
+login/signup/logout product work are on the separate development branch.
 
-  A01  task_manual_view  /tasks/manual/       Manual FBV: loader.get_template, then HttpResponse    http://127.0.0.1:8000/tasks/manual/
-  A02  task_render_view  /tasks/render/       FBV using the render() shortcut                       http://127.0.0.1:8000/tasks/render/
-  A03  TaskBaseView      /tasks/cbv-base/     CBV inheriting View, explicit get()                   http://127.0.0.1:8000/tasks/cbv-base/
-  A04  TaskListView      /tasks/cbv-generic/  CBV inheriting ListView, search in get_queryset()     http://127.0.0.1:8000/tasks/cbv-generic/
-
-URL names are workflows:task-manual, task-render, task-cbv-base, task-cbv-generic.
-
-
-What I found useful, and when
-
-HttpResponse vs render
-Writing task_manual_view first was worth doing once. Loading the template,
-rendering it to a string and wrapping that in HttpResponse shows the three steps,
-and made clear that render() returns the same HttpResponse rather than a different
-kind of thing. After that I used render() everywhere here, since every response is
-a full HTML page and the manual version only adds lines.
-
-HttpResponse earns its place when there is no template. The receipt upload flow
-will need JSON for fetch calls, a status code on a rejected duplicate, and a file
-download. Those are HttpResponse or JsonResponse, not render.
-
-Base CBV vs Generic CBV
-TaskBaseView made the GET path explicit: I wrote get() myself, queried Task and
-called render. More code than the generic version for the same page, but nothing
-hidden, which helped while I was still confirming the URL names resolved to the
-classes I expected.
-
-TaskListView removed most of that. Declaring model, template_name and
-context_object_name covered the list flow, and only get_queryset() needed
-overriding for the search. The rule I settled on: when a view is exactly "query a
-model, filter, render a list", ListView already does it; when it is not, the base
-View is easier than fighting the generic one.
-
-The trade-off showed up in something small. The view_style label was one dict key
-in the base view's get(), but needed extra_context on ListView. Accepting or
-declining an assignment is a POST that changes state with no matching generic
-view, so that will be a base View or a form view.
+Four grading URLs in each mode:
+Style          Development                                      Local production mode
+HttpResponse   http://127.0.0.1:8000/tasks/manual/                http://127.0.0.1:8001/tasks/manual/
+render()       http://127.0.0.1:8000/tasks/render/                http://127.0.0.1:8001/tasks/render/
+Base CBV       http://127.0.0.1:8000/tasks/cbv-base/              http://127.0.0.1:8001/tasks/cbv-base/
+Generic CBV    http://127.0.0.1:8000/tasks/cbv-generic/           http://127.0.0.1:8001/tasks/cbv-generic/
 
 
-Evidence — docs/screenshots/section-2/
+Verification: the three main-branch test methods pass with production
+settings, and the development system check reports no issues. Section 2/3
+mapping and screenshot evidence are documented above and in the screenshot
+index. Grading points are rubric references, not a promised score.
 
-01-04  the four routes, 1280x720 viewport, method label visible in each
-05     lower portion of the generic page: type, location, recurrence, added date
-06     search q="  GROCERIES  " returning the one matching task
-07     search q=XYZNOTAREALTASK123 showing the no-match state
-08     empty database on port 8002, no q parameter and zero Task rows
-09     375x812 viewport: links wrap, cards stack, no horizontal overflow
-10     320x812 viewport: Tab from search reaches the button, 3px focus outline
-
-Unaltered JPEG viewport captures, browser chrome excluded, showing three fictional
-tasks from seed_template_demo rather than live records. Manual checks: all four
-links reached the intended methods, search matched trimmed uppercase input, Enter
-submits, Show all tasks restores the list. No console warnings or errors.
-
-
-Reproducing the demo
-
-From the project root, using the .venv environment described in README.md. Creates
-a temporary SQLite database and never touches the project's db.sqlite3. Ctrl-C to
-stop. For the empty-database capture, run again in a second terminal with
-HESTIA_DEMO_MODE=empty, which serves on port 8002.
-
-```bash
-HESTIA_DEMO_MODE=populated .venv/bin/python - <<'PYDEMO'
-import os
-import tempfile
-from pathlib import Path
-
-mode = os.environ["HESTIA_DEMO_MODE"]
-assert mode in {"populated", "empty"}
-os.environ["DJANGO_SETTINGS_MODULE"] = "hestia_config.settings.development"
-from django.conf import settings
-settings.DATABASES = {"default": {
-    "ENGINE": "django.db.backends.sqlite3",
-    "NAME": Path(tempfile.mkdtemp(prefix="hestia-demo-")) / "db.sqlite3",
-}}
-import django
-django.setup()
-from django.core.management import call_command
-call_command("migrate", interactive=False, verbosity=0)
-if mode == "populated":
-    call_command("seed_template_demo")
-port = "8001" if mode == "populated" else "8002"
-call_command("runserver", "127.0.0.1:" + port, use_reloader=False)
-PYDEMO
-```
-
-
-Verification
-
-.venv/bin/python -m pip check
-.venv/bin/python manage.py test --verbosity 1
-.venv/bin/python manage.py check --settings=hestia_config.settings.development
-.venv/bin/python manage.py check --settings=hestia_config.settings.production
-.venv/bin/python manage.py makemigrations --check --dry-run
-
-Six tests pass, no migration drift. AssignmentRoutingTests checks the four URL
-names resolve to the intended distinct functions and classes. TaskTemplateTests
-covers populated fields, escaping, the search, no-match and empty states, the
-method labels, and omission of the teaching controls when the template has no
-view_style. The label test failed for all four before implementation.
-
-
-Limits
-
-These routes are anonymous and query every Task row, so use fictional data only.
-Phase 2 adds authentication and household isolation. The final product reuses the
-patterns and templates, with ordinary navigation replacing the four demo links.
+Reminders: keep credentials private; review and commit/push these
+assignment documents, wireframes and screenshots before submitting the
+repository URL. Local uncommitted files are invisible on GitHub. Keep the
+preserved B03 stash on its product development branch, not on main.
