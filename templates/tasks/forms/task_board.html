@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Task board | Hestia{% endblock %}
+{% block brand_url %}{% url 'task_forms:board' %}{% endblock %}
+{% block extra_css %}
+{# Increment this version when the asset changes to refresh browser caches. #}
+<link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20260926-1">
+<link rel="icon" type="image/svg+xml" href="{% static 'images/hestia-mark.svg' %}">
+{% endblock %}
+{% block content %}
+<div class="hf-board">
+    <header class="hf-hero">
+        <div class="hf-hero-copy">
+            <p class="hf-eyebrow">A home that works together</p>
+            <h1>Small tasks.<br><span>More room for life.</span></h1>
+            <p>Find what needs doing, make a plan, and keep your household moving.</p>
+        </div>
+        <img class="hf-hero-mark" src="{% static 'images/hestia-mark.svg' %}" width="112" height="112" alt="Hestia home and hearth logo">
+    </header>
+
+    {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
+    {% if not has_workspaces %}
+    <div class="hf-notice" role="status"><strong>Join a household to get started.</strong> Ask a household administrator to add an active membership for your account. Your tasks and creation form will be available here.</div>
+    {% endif %}
+
+    <section class="hf-filter-panel" aria-labelledby="filter-heading">
+        <div class="hf-section-heading"><h2 id="filter-heading">Find your next task</h2><span>Filter your household responsibilities</span></div>
+        {# GET puts read-only filters into a bookmarkable URL; it never saves data. #}
+        <form class="hf-filters" method="get" action="{% url 'task_forms:board' %}">
+            {% for field in filter_form %}{% include "tasks/forms/field.html" %}{% endfor %}
+            <button class="hf-button" type="submit">Apply filters</button>
+            {% if has_filters %}<a class="hf-clear" href="{% url 'task_forms:board' %}">Clear filters</a>{% endif %}
+        </form>
+    </section>
+
+    <div class="hf-columns">
+        <section class="hf-results" aria-labelledby="results-heading">
+            <div class="hf-section-heading hf-list-heading"><h2 id="results-heading">{% if has_filters %}Matching tasks{% else %}Your task board{% endif %}</h2><span class="hf-count">{{ paginator.count }} task{{ paginator.count|pluralize }}</span></div>
+            <div class="hf-task-grid">
+            {% for task in tasks %}
+                <article class="hf-task-card">
+                    <div class="hf-card-top"><span class="hf-type">{{ task.get_task_type_display }}</span><span class="hf-priority hf-priority-{{ task.priority|lower }}">{{ task.get_priority_display }}</span></div>
+                    <h3>{{ task.title }}</h3>
+                    <p class="hf-description">{{ task.description|default:"No description yet." }}</p>
+                    <dl><div><dt>Household</dt><dd>{{ task.workspace.name }}</dd></div><div><dt>Location</dt><dd>{{ task.default_location|default:"Not specified" }}</dd></div><div><dt>Repeats</dt><dd>{{ task.recurrence_rule|default:"One-time task" }}</dd></div></dl>
+                    <p class="hf-card-footer">Added {{ task.created_at|date:"M j, Y" }}</p>
+                </article>
+            {% empty %}
+                <div class="hf-empty">
+                    <span aria-hidden="true">&#10003;</span><h3>No tasks found</h3>
+                    {% if filter_form.errors %}<p>Check the highlighted filters and try again.</p>
+                    {% elif has_filters %}<p>No tasks match these filters. Try another title, household, or priority.</p><a href="{% url 'task_forms:board' %}">Show all my tasks</a>
+                    {% elif has_workspaces %}<p>A little planning goes a long way. Add your first task using the form.</p>
+                    {% else %}<p>Your household tasks will appear once an administrator adds your membership.</p>{% endif %}
+                </div>
+            {% endfor %}
+            </div>
+            {% if is_paginated %}<nav class="hf-pagination" aria-label="Task pages">
+                {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+                <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+                {% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+            </nav>{% endif %}
+        </section>
+
+        <aside class="hf-create-panel" aria-labelledby="create-heading">
+            <p class="hf-eyebrow">Make a little progress</p><h2 id="create-heading">Add a task</h2>
+            <p class="hf-intro">Give the next thing a place to start.</p>
+            {% if has_workspaces %}
+            {# POST modifies data. Django middleware validates this CSRF token. #}
+            <form method="post" action="{% url 'task_forms:board' %}" class="hf-create-form">
+                {% csrf_token %}
+                {% if create_form.errors %}<div class="hf-error-summary" role="alert"><strong>We couldn't add this task.</strong><p>Review the errors below. Your entries have been kept.</p>{{ create_form.non_field_errors }}</div>{% endif %}
+                {% for field in create_form %}{% include "tasks/forms/field.html" %}{% endfor %}
+                <p class="hf-help">Fields marked * are required.</p>
+                <button class="hf-button hf-create-button" type="submit">Create task <span aria-hidden="true">+</span></button>
+            </form>
+            {% else %}<p class="hf-help">Creating tasks requires an active household membership.</p>{% endif %}
+        </aside>
+    </div>
+</div>
+{% endblock %}
