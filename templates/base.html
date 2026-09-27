@@ -15,8 +15,8 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header class="hestia-header">
         <div class="container header-inner">
-            <a class="hestia-brand" href="{% block brand_url %}{% url 'workflows:task-cbv-generic' %}{% endblock %}">
-                <span class="hestia-logo" aria-hidden="true">H</span>
+            <a class="hestia-brand" href="{% block brand_url %}{% url 'home' %}{% endblock %}">
+                <img class="hestia-logo" src="{% static 'images/hestia-mark.svg' %}" alt="" width="48" height="48">
                 <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
             </a>
             {% if user.is_authenticated %}
@@ -31,8 +31,11 @@
     </header>
     {% block navigation %}
     <nav class="navigation" aria-label="Primary navigation">
-        <div class="container">
+        <div class="container nav-links">
+            <a class="nav-link" href="{% url 'home' %}">Home</a>
             <a class="nav-link" href="{% url 'workflows:task-cbv-generic' %}">Household tasks</a>
+            <a class="nav-link" href="{% url 'task_forms:board' %}">Task board</a>
+            <a class="nav-link" href="{% url 'accounts:login' %}">Sign in</a>
         </div>
     </nav>
     {% endblock %}

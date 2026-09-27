@@ -1,5 +1,4 @@
-"""Local integration harness; leaves Person 1's root URLconf untouched."""
-from django.urls import include, path
+"""Preview harness now reuses the shared root URLconf (includes /tasks/manage/)."""
 from hestia_config.urls import urlpatterns as project_patterns
 
-urlpatterns = [path("tasks/manage/", include("workflows.forms_urls")), *project_patterns]
+urlpatterns = list(project_patterns)

@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils import timezone
 
 from households.models import Membership, Workspace
@@ -101,6 +102,9 @@ class Task(models.Model):
                 name="unique_task_title_per_workspace",
             )
         ]
+
+    def get_absolute_url(self):
+        return reverse("workflows:task-detail", kwargs={"pk": self.pk})
 
     def __str__(self):
         return self.title

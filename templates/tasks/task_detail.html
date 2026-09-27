@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}{{ task.title }} | Hestia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">Task detail</p>
+    <h1>{{ task.title }}</h1>
+    <p>{{ task.description|default:"No description provided." }}</p>
+</section>
+<article class="task-card">
+    <dl class="task-details">
+        <div><dt>Workspace</dt><dd>{{ task.workspace }}</dd></div>
+        <div><dt>Type</dt><dd>{{ task.get_task_type_display }}</dd></div>
+        <div><dt>Priority</dt><dd>{{ task.get_priority_display }}</dd></div>
+        <div><dt>Location</dt><dd>{{ task.default_location|default:"No location specified" }}</dd></div>
+        <div><dt>Recurrence</dt><dd>{{ task.recurrence_rule|default:"One-time task" }}</dd></div>
+        {% if task.created_at %}
+        <div><dt>Added</dt><dd>{{ task.created_at|date:"M j, Y" }}</dd></div>
+        {% endif %}
+    </dl>
+    <p class="record-date">
+        <a class="button-link" href="{% url 'workflows:task-cbv-generic' %}">Back to household tasks</a>
+    </p>
+</article>
+{% endblock %}

@@ -166,3 +166,50 @@ Reminders: keep credentials private; review and commit/push these
 assignment documents, wireframes and screenshots before submitting the
 repository URL. Local uncommitted files are invisible on GitHub. Keep the
 preserved B03 stash on its product development branch, not on main.
+
+
+URL linking, navigation, and static files
+=========================================
+Home page
+The project needs a real page at /. HomePageView in hestia_config/views.py
+is mapped from hestia_config/urls.py with name="home" and renders
+templates/home.html. Without this route, the browser shows Django's 404
+at the site root.
+
+Navigation
+templates/base.html uses named {% url %} tags so paths are not hard-coded.
+The bar links Home ({% url 'home' %}), Household tasks
+({% url 'workflows:task-cbv-generic' %}), Task board
+({% url 'task_forms:board' %}), and Sign in ({% url 'accounts:login' %}).
+Named URLs stay correct if a path later changes.
+
+Why get_absolute_url() is useful
+Task.get_absolute_url() reverses workflows:task-detail with the task
+primary key. The same Task object is shown on several list pages and the
+Task board. Templates use {{ task.get_absolute_url }} instead of writing
+/tasks/{{ task.pk }}/ in each place. If the detail route later moves, only
+the model method needs to change. The list template uses this for the
+title and "View details" links.
+
+Model → URL → view → template
+Task → workflows/urls.py path "<int:pk>/" (name=task-detail) →
+TaskDetailView → templates/tasks/task_detail.html. Home follows the same
+pattern: hestia_config/urls.py → HomePageView → templates/home.html.
+
+Task board route
+The board lives at /tasks/manage/ through include("workflows.forms_urls")
+in the shared root URLconf so the nav link and login redirect resolve.
+
+Static file organization
+STATICFILES_DIRS points at the project-level "static files/" folder so
+shared CSS (css/style.css), board CSS (css/hestia.css), and
+images/hestia-mark.svg stay in one place. Templates load them with
+{% load static %}. Project-level static files are used because the header,
+nav, and cards are shared across apps, not owned by a single app.
+
+Cache busting
+base.html loads {% static 'css/style.css' %}?v={{ ts }} where ts is
+{% now "U" %}. The changing Unix timestamp gives the stylesheet a new URL
+after a refresh so the browser does not keep a stale copy while you edit
+CSS. hestia.css uses a manual version suffix (?v=20260926-1) that should
+be incremented when that file changes.
