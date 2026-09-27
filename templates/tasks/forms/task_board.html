@@ -1,7 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
 {% block title %}Task board | Hestia{% endblock %}
-{% block brand_url %}{% url 'task_forms:board' %}{% endblock %}
 {% block extra_css %}
 {# Increment this version when the asset changes to refresh browser caches. #}
 <link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20260926-1">
@@ -40,7 +39,7 @@
             {% for task in tasks %}
                 <article class="hf-task-card">
                     <div class="hf-card-top"><span class="hf-type">{{ task.get_task_type_display }}</span><span class="hf-priority hf-priority-{{ task.priority|lower }}">{{ task.get_priority_display }}</span></div>
-                    <h3>{{ task.title }}</h3>
+                    <h3><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></h3>
                     <p class="hf-description">{{ task.description|default:"No description yet." }}</p>
                     <dl><div><dt>Household</dt><dd>{{ task.workspace.name }}</dd></div><div><dt>Location</dt><dd>{{ task.default_location|default:"Not specified" }}</dd></div><div><dt>Repeats</dt><dd>{{ task.recurrence_rule|default:"One-time task" }}</dd></div></dl>
                     <p class="hf-card-footer">Added {{ task.created_at|date:"M j, Y" }}</p>

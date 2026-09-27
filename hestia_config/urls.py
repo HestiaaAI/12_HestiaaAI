@@ -17,9 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from hestia_config.views import HomePageView
+
 urlpatterns = [
-    path('accounts/', include('households.auth_urls')),
-    path('accounts/', include('households.account_routes')),
-    path('admin/', admin.site.urls),
-    path('tasks/', include('workflows.urls')),
+    path("", HomePageView.as_view(), name="home"),
+    path("accounts/", include("households.auth_urls")),
+    path("accounts/", include("households.account_routes")),
+    path("admin/", admin.site.urls),
+    path("tasks/manage/", include("workflows.forms_urls")),
+    path("tasks/", include("workflows.urls")),
 ]

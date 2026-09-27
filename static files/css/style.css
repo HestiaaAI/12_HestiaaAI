@@ -17,10 +17,13 @@ a:focus-visible, button:focus-visible, input:focus-visible { outline: 3px solid 
 .hestia-brand { display: flex; gap: 14px; align-items: center; color: white; text-decoration: none; }
 .hestia-brand strong { display: block; font-size: 26px; letter-spacing: -.5px; }
 .hestia-brand small { display: block; color: #eeeafa; font-size: 12px; }
-.hestia-logo { display: grid; place-items: center; width: 48px; height: 48px; border: 1px solid #a89bd2; border-radius: 14px; font-size: 28px; font-weight: 700; }
+.hestia-logo { display: block; width: 48px; height: 48px; border: 1px solid #a89bd2; border-radius: 14px; background: #eeeafa; }
 .header-label { font-size: 13px; color: #eeeafa; }
 .navigation { background: white; border-bottom: 1px solid var(--hestia-border); }
-.nav-link { display: inline-block; padding: 16px 0 12px; border-bottom: 3px solid var(--hestia-primary); font-size: 14px; font-weight: 600; text-decoration: none; }
+.nav-links { display: flex; flex-wrap: wrap; gap: 24px; }
+.nav-link { display: inline-block; padding: 16px 0 12px; border-bottom: 3px solid transparent; font-size: 14px; font-weight: 600; text-decoration: none; }
+.nav-link:hover { border-bottom-color: var(--hestia-primary); }
+.home-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: 20px; }
 main { flex: 1; padding-block: 42px 60px; }
 .page-header { margin-bottom: 28px; }
 .page-header h1 { font-size: clamp(28px, 4vw, 38px); line-height: 1.2; letter-spacing: -1px; margin: 7px 0 12px; }
@@ -43,6 +46,8 @@ button:hover, .button-link:hover { background: var(--hestia-primary-dark); }
 .task-card { background: white; border: 1px solid var(--hestia-border); border-radius: 14px; padding: 24px; box-shadow: 0 3px 12px #24232a06; overflow-wrap: anywhere; }
 .card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
 .task-card h3 { margin: 0; font-size: 19px; line-height: 1.4; }
+.task-card h3 a { text-decoration: none; }
+.task-card h3 a:hover { text-decoration: underline; }
 .status-badge { flex-shrink: 0; padding: 4px 10px; border-radius: 30px; background: #ece9fa; color: var(--hestia-primary-dark); font-size: 12px; font-weight: 700; }
 .priority-high, .priority-urgent { background: #fff0e4; color: #8b3b12; }
 .priority-low { background: #e7f3ed; color: #286045; }

@@ -43,8 +43,10 @@ Activate `.venv` in each new terminal before running Django commands.
 python manage.py runserver --settings=hestia_config.settings.development
 ```
 
+Home: http://127.0.0.1:8000/
 Household tasks: http://127.0.0.1:8000/tasks/cbv-generic/
-The root URL (`/`) does not currently have a page.
+Task board: http://127.0.0.1:8000/tasks/manage/
+Task titles on the list use `Task.get_absolute_url()` to open `/tasks/<pk>/`.
 
 ## Production mode (`DEBUG = False`)
 
@@ -89,6 +91,20 @@ Django Admin: http://127.0.0.1:8000/admin/
 ├── inventory/
 └── workflows/
 ```
+
+## Home, navigation, and task detail
+
+The home page is `/` so the root URL is no longer a 404. Shared navigation in
+`templates/base.html` uses named `{% url %}` links for Home, Household tasks,
+Task board, and Sign in. Each task card links through `Task.get_absolute_url()`
+to `/tasks/<pk>/`. Project CSS lives in `static files/` and is loaded with
+`{% load static %}` plus a `?v={{ ts }}` cache-busting query string.
+
+The Task board at `/tasks/manage/` lets signed-in household members filter tasks
+using bookmarkable GET parameters and create a Task through a CSRF-protected
+ModelForm handled by one ListView. Its responsive Hestia UI uses local
+`css/hestia.css` and `images/hestia-mark.svg`; validated errors retain input and
+successful submissions redirect to the list to prevent accidental resubmission.
 
 ## Sections 2 and 3: grading instructions
 

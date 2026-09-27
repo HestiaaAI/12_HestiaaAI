@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.template import loader
 from django.views import View
 from django.views.generic import ListView
@@ -44,3 +44,11 @@ class TaskListView(ListView):
 
     def get_queryset(self):
         return filter_tasks(super().get_queryset(), self.request)
+
+
+class TaskDetailView(View):
+    """Load one Task by primary key and render its detail template."""
+
+    def get(self, request, pk):
+        task = get_object_or_404(Task, pk=pk)
+        return render(request, "tasks/task_detail.html", {"task": task})
