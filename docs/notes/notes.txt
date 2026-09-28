@@ -45,7 +45,7 @@ workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
    Implementation: query Task; load tasks/task_list.html with
    loader.get_template(); render a context containing tasks; wrap the HTML
    in HttpResponse.
-   Screenshot: docs/screenshots/01-httpresponse-fbv.png
+   Screenshot: docs/screenshots/section-2/01-httpresponse.jpg
 
 2. render() function-based view (shortcut)
    Name: task_render_view
@@ -54,7 +54,7 @@ workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
    Purpose: display the same task list through Django's render shortcut.
    Implementation: query Task, supply {"tasks": tasks}, and return
    render(request, "tasks/task_list.html", context).
-   Screenshot: docs/screenshots/02-render-fbv.png
+   Screenshot: docs/screenshots/section-2/02-render.jpg
 
 3. Base class-based view
    Name: TaskBaseView
@@ -63,7 +63,7 @@ workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
    Purpose: demonstrate explicit request handling in a View subclass.
    Implementation: inherits django.views.View, implements get(), manually
    queries Task and renders the shared template with context.
-   Screenshot: docs/screenshots/03-base-cbv.png
+   Screenshot: docs/screenshots/section-2/03-base-cbv.jpg
 
 4. Generic class-based view
    Name: TaskListView
@@ -73,7 +73,7 @@ workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
    Implementation: inherits ListView; model = Task;
    template_name = "tasks/task_list.html"; context_object_name = "tasks".
    get_queryset() applies the same optional title filter as the other views.
-   Screenshot: docs/screenshots/04-generic-cbv.png
+   Screenshot: docs/screenshots/section-2/04-generic-cbv.jpg
 
 Section 3
 ================================
@@ -88,7 +88,7 @@ Section 3
   separate guidance and a link to clear the filter.
 - Normal-list evidence: the four screenshots above (04 also serves as the
   Section 3 normal-list screenshot).
-- Empty-list evidence: docs/screenshots/05-empty-list.png, showing the
+- Empty-list evidence: docs/screenshots/section-2/08-empty-database.jpg, showing the
   no-query empty state. See docs/screenshots/README.md for the evidence index.
 - Templates use Django template syntax, HTML and local CSS. No JavaScript,
   React, TypeScript, Node.js, frontend build step or CDN is required.
@@ -357,5 +357,5 @@ reading the body instead of the query string, empty states, HTML escaping,
 CSRF, 405 for unsupported methods, the exact JSON fields and both MIME
 types. ProjectUrlIntegrationTests checks the real routes and the nav link.
 Screenshots (with the URL in Chrome's address bar) and curl header output:
-docs/screenshots/P1-A3 Section-2/
+docs/screenshots/P1-A3 Section-2 Search-GET-POST/
 (indexed in docs/person-2-handoff.md).
