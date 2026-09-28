@@ -227,6 +227,80 @@ path("tasks/manage/", include("workflows.forms_urls")) and the nav uses
 {% url 'task_forms:board' %}.
 
 
+Week of 2026-09-28 — P1-A3 Person 3: ORM statistics and Matplotlib
+================================================================
+Implemented in analytics/views.py, analytics/urls.py and
+ templates/analytics/task_stats.html. Root URLconf includes analytics.urls.
+
+Grading mapping:
+- Section 2 full list: task_stats queries Task with select_related("workspace")
+  and displays every definition using a template for/empty loop.
+- Section 2 total: Task.objects.count().
+- Section 2 grouped summary: priority_counts uses
+  values("priority").annotate(count=Count("pk")); model choices supply ordered
+  labels and zero counts for unused categories.
+- Section 4 ORM aggregation (3 pts): the chart uses the same priority_counts
+  helper as the HTML summary and reads actual database rows.
+- Section 4 chart (4 pts): Matplotlib bar chart with title, axis labels,
+  integer ticks, legend and numeric bar labels.
+- Section 4 image endpoint (2 pts): task_priority_chart returns PNG bytes
+  with HttpResponse(content_type="image/png").
+- Section 4 BytesIO (1 pt): renders into an in-memory buffer instead of a
+  temporary file. The buffer closes and the figure is cleared after rendering.
+- Template integration: caption, descriptive alt text and equivalent textual
+  counts; an empty database gets zero counts and a "No tasks yet" state.
+Points above identify rubric criteria; the instructor determines the grade.
+
+Development commands (after activating venv and configuring .env):
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_template_demo
+python manage.py runserver 8021
+
+HTML: http://127.0.0.1:8021/analytics/tasks/
+Route name: analytics:task-stats
+PNG: http://127.0.0.1:8021/analytics/tasks/priority.png
+Route name: analytics:task-priority-chart
+These are local development URLs. Matplotlib is pinned in requirements.txt.
+
+Design decisions:
+Counts describe Task definitions, not scheduled occurrences or completions.
+Agg renders server-side without a GUI. A per-worker lock serializes Matplotlib
+rendering. BytesIO avoids disk files but still consumes RAM for the figure,
+raster and encoded PNG; the output is a fixed 960x540 chart. No-store prevents
+stale chart responses. HTML and PNG load separately, so a concurrent data edit
+can briefly make their counts differ. Large datasets would need pagination
+and high chart traffic would need measured caching/resource limits.
+
+Team integration:
+Person 1's home/detail/navigation and Person 4's forms/UI were already merged
+in PRs #5 and #4. Analytics now has a shared navigation link, task detail links
+using get_absolute_url(), and scoped Hestia card styling. The task board is
+membership-scoped, but assignment analytics and legacy list/detail pages are
+global demo pages. Use fictional data; private household use requires matching
+authorization on BOTH analytics endpoints.
+
+Verification:
+python manage.py test analytics — seven analytics tests.
+python manage.py test — 57 tests passed on 2026-09-28 during integration.
+Tests include exact counts, no occurrence double-counting, empty data, escaped
+content, valid PNGs, updated chart data, POST rejection, navigation/detail links,
+and task-board creation updating the statistics and chart.
+
+Saved browser evidence, 2026-09-28:
+- docs/screenshots/person-3/01-task-statistics.png: totals and priority summary.
+- docs/screenshots/person-3/02-priority-chart.png: direct PNG endpoint.
+- docs/screenshots/person-3/03-embedded-chart.png: embedded chart/caption and first task.
+- docs/screenshots/person-3/04-task-list.png: remaining tasks and footer.
+The page is captured in portions at the current narrow browser viewport.
+Observed demo counts: total 3; Low 1, Medium 1, High 1, Urgent 0.
+No existing application data was deleted to prepare these screenshots.
+
+Submission reminder: screenshots and these shared documents must be reviewed,
+committed and pushed before the instructor can see them on GitHub. No commit
+or push was made as part of this documentation/screenshot update.
+
+
 Search and API (Person 2)
 =========================
 Routes

@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Task statistics | Hestia{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20260926-1">
+{% endblock %}
+{% block content %}
+<div class="hf-board">
+<section aria-labelledby="stats-heading">
+    <h1 id="stats-heading">Task statistics</h1>
+    <p>All task definitions in this assignment database. Scheduled occurrences are not counted.</p>
+    <p><strong>Total tasks: {{ total_tasks }}</strong></p>
+    <h2>Priority summary</h2>
+    <ul>
+        {% for row in priority_counts %}
+        <li>{{ row.label }}: {{ row.count }}</li>
+        {% empty %}
+        <li>No priority groups available.</li>
+        {% endfor %}
+    </ul>
+    <figure>
+        <img src="{% url 'analytics:task-priority-chart' %}"
+             alt="Bar chart of task counts by priority. Exact counts are listed in the priority summary above."
+             width="960" height="540" style="max-width:100%;height:auto;">
+        <figcaption>Tasks grouped by priority, calculated from the database when the chart loads.</figcaption>
+    </figure>
+    <p><a href="{% url 'analytics:task-priority-chart' %}">Open the PNG chart</a></p>
+</section>
+<section aria-labelledby="task-list-heading">
+    <h2 id="task-list-heading">All tasks</h2>
+    <div class="hf-task-grid">
+        {% for task in tasks %}
+        <article class="hf-task-card">
+            <h3><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></h3>
+            <p>{{ task.description|default:"No description provided." }}</p>
+            <p>Household: {{ task.workspace.name }}</p>
+            <p>Priority: {{ task.get_priority_display }} · Type: {{ task.get_task_type_display }}</p>
+        </article>
+        {% empty %}
+        <p>No tasks yet. Add fictional tasks through the demo seed command or task creation page when available.</p>
+        {% endfor %}
+    </div>
+</section>
+</div>
+{% endblock %}
