@@ -213,3 +213,14 @@ base.html loads {% static 'css/style.css' %}?v={{ ts }} where ts is
 after a refresh so the browser does not keep a stale copy while you edit
 CSS. hestia.css uses a manual version suffix (?v=20260926-1) that should
 be incremented when that file changes.
+
+Task board behavior
+TaskBoardView uses a validated GET filter form and a POST Task ModelForm.
+The view limits reads and creation to active memberships and assigns the
+creator on the server. POST includes CSRF protection and uses
+POST/Redirect/GET; errors retain user input. Shared static assets remain
+in the existing project-level static files/ directory. The version suffix
+on hestia.css provides cache busting. The feature extends base.html
+through its existing blocks. The root URL is
+path("tasks/manage/", include("workflows.forms_urls")) and the nav uses
+{% url 'task_forms:board' %}.
