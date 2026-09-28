@@ -1,11 +1,10 @@
-from django.test import TestCase, override_settings
+from django.test import TestCase
 from django.urls import reverse
 
 from households.models import Workspace
 from .models import Task
 
 
-@override_settings(ROOT_URLCONF="workflows.test_person2_urls")
 class TaskApiTests(TestCase):
     @classmethod
     def setUpTestData(cls):
