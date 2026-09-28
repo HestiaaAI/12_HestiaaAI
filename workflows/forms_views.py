@@ -1,6 +1,5 @@
 """Person 4: one ListView handles read-only GET filters and Task creation POST."""
 from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import IntegrityError, transaction
 from django.shortcuts import redirect
 from django.urls import reverse
@@ -11,7 +10,7 @@ from .models import Task
 from .task_forms import TaskCreateForm, TaskFilterForm, available_workspaces
 
 
-class TaskBoardView(LoginRequiredMixin, ListView):
+class TaskBoardView(ListView):
     model = Task
     template_name = "tasks/forms/task_board.html"
     context_object_name = "tasks"
@@ -19,9 +18,9 @@ class TaskBoardView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         queryset = Task.objects.filter(
-            workspace__in=available_workspaces(self.request.user)
+            workspace__in=available_workspaces()
         ).select_related("workspace").order_by("-created_at", "-task_id")
-        self.filter_form = TaskFilterForm(self.request.GET, user=self.request.user)
+        self.filter_form = TaskFilterForm(self.request.GET)
         if not self.filter_form.is_valid():
             # An invalid/unauthorized filter must not silently expose a wider list.
             return queryset.none()
@@ -36,8 +35,8 @@ class TaskBoardView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = self.filter_form
-        context.setdefault("create_form", TaskCreateForm(user=self.request.user))
-        context["has_workspaces"] = available_workspaces(self.request.user).exists()
+        context.setdefault("create_form", TaskCreateForm())
+        context["has_workspaces"] = available_workspaces().exists()
         context["has_filters"] = any(self.request.GET.get(key) for key in self.filter_form.fields)
         params = self.request.GET.copy()
         params.pop("page", None)
@@ -56,29 +55,27 @@ class TaskBoardView(LoginRequiredMixin, ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = TaskCreateForm(request.POST, user=request.user)
+        form = TaskCreateForm(request.POST)
         if form.is_valid():
             # Never accept a creator ID from the browser.
-            membership = Membership.objects.filter(
-                user=request.user, workspace=form.cleaned_data["workspace"], is_active=True
-            ).first()
-            if membership is None:
-                form.add_error("workspace", "Your household membership is no longer active.")
+            membership = None
+            if request.user.is_authenticated:
+                membership = Membership.objects.filter(
+                    user=request.user, workspace=form.cleaned_data["workspace"], is_active=True
+                ).first()
+            # Anonymous submissions have no creator; never invent a membership.
+            form.instance.created_by_membership = membership
+            try:
+                with transaction.atomic():
+                    task = form.save()
+            except IntegrityError:
+                if not Task.objects.filter(workspace=form.cleaned_data["workspace"],
+                                           title=form.cleaned_data["title"]).exists():
+                    raise
+                form.add_error("title", "A task with this title already exists in this household.")
             else:
-                form.instance.created_by_membership = membership
-                try:
-                    with transaction.atomic():
-                        task = form.save()
-                except IntegrityError:
-                    # Cover a simultaneous duplicate submission as well as normal
-                    # ModelForm constraint validation. Unexpected DB errors still surface.
-                    if not Task.objects.filter(workspace=form.cleaned_data["workspace"],
-                                               title=form.cleaned_data["title"]).exists():
-                        raise
-                    form.add_error("title", "A task with this title already exists in this household.")
-                else:
-                    messages.success(request, f'Task “{task.title}” created.')
-                    # POST/Redirect/GET: refreshing the result cannot repeat the POST.
-                    return redirect(reverse("task_forms:board") + f"?workspace={task.workspace_id}")
+                messages.success(request, f'Task “{task.title}” created.')
+                # POST/Redirect/GET prevents accidental repeat submissions.
+                return redirect(reverse("task_forms:board") + f"?workspace={task.workspace_id}")
         self.object_list = self.get_queryset()
         return self.render_to_response(self.get_context_data(create_form=form))

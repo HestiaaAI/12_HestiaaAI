@@ -75,34 +75,39 @@ class TaskBoardTests(TestCase):
         self.assertTrue(response.context["create_form"].errors)
         self.assertEqual(Task.objects.count(), before)
 
-    def test_other_household_cannot_be_selected_or_forged(self):
+    def test_all_assignment_households_are_available(self):
         response = self.client.get(self.url)
-        self.assertNotContains(response, "Other household")
+        self.assertContains(response, "Other household")
         response = self.client.post(self.url, self.payload(workspace=self.other.pk))
+        self.assertEqual(response.status_code, 302)
+        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+
+    def test_inactive_membership_does_not_block_assignment_creation(self):
+        Membership.objects.filter(pk=self.membership.pk).update(is_active=False)
+        self.assertContains(self.client.get(self.url), "Buy groceries")
+        self.client.post(self.url, self.payload())
+        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+
+    def test_anonymous_get_and_post_without_forged_attribution(self):
+        self.client.logout()
+        self.assertContains(self.client.get(self.url), "Buy groceries")
+        response = self.client.post(self.url, self.payload(created_by_membership=self.membership.pk))
+        self.assertEqual(response.status_code, 302)
+        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+
+    def test_unknown_household_is_rejected(self):
+        self.client.logout()
+        response = self.client.post(self.url, self.payload(workspace=999999))
         self.assertTrue(response.context["create_form"].has_error("workspace"))
         self.assertFalse(Task.objects.filter(title="Water the plants").exists())
-        response = self.client.get(self.url, {"workspace": self.other.pk})
-        self.assertTrue(response.context["filter_form"].has_error("workspace"))
-        self.assertNotContains(response, "Private other task")
 
-    def test_inactive_membership_has_no_read_or_create_access(self):
-        Membership.objects.filter(pk=self.membership.pk).update(is_active=False)
-        response = self.client.get(self.url)
-        self.assertContains(response, "Join a household to get started.")
-        self.assertNotContains(response, "Buy groceries")
-        self.client.post(self.url, self.payload())
-        self.assertFalse(Task.objects.filter(title="Water the plants").exists())
-
-    def test_anonymous_get_and_post_require_login(self):
+    def test_no_households_explains_setup(self):
+        Workspace.objects.all().delete()
         self.client.logout()
-        for response in (self.client.get(self.url), self.client.post(self.url, self.payload())):
-            self.assertEqual(response.status_code, 302)
-            self.assertIn("/accounts/login/?next=", response.url)
-        self.assertFalse(Task.objects.filter(title="Water the plants").exists())
+        self.assertContains(self.client.get(self.url), "No households available")
 
     def test_real_csrf_protection_rejects_missing_token_and_accepts_valid_token(self):
         client = Client(enforce_csrf_checks=True)
-        client.force_login(self.user)
         page = client.get(self.url)
         self.assertContains(page, 'name="csrfmiddlewaretoken"')
         self.assertEqual(client.post(self.url, self.payload()).status_code, 403)

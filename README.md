@@ -25,8 +25,7 @@ python manage.py migrate
 
 Optional: add fictional example tasks with `python manage.py seed_template_demo`.
 For admin access, create your own login with `python manage.py createsuperuser`.
-A superuser alone cannot create tasks on the Task board; see
-[Task board demo login](#task-board-demo-login) below.
+The assignment Task board does not require sign-in; seed demo data before creating tasks.
 
 Verify the environment:
 
@@ -61,30 +60,25 @@ further down has full details.
 | 1. Home, named-URL navigation, detail page, static files, cache busting | Person 1 | http://127.0.0.1:8000/ and any task title, e.g. http://127.0.0.1:8000/tasks/1/ | [home-nav-detail/](docs/screenshots/home-nav-detail/) |
 | 2. GET and POST search, `workspace__name__icontains` | Person 2 | http://127.0.0.1:8000/tasks/search/ | [P1-A3 Section-2 Search-GET-POST/](docs/screenshots/P1-A3%20Section-2%20Search-GET-POST/) |
 | 2. Full list, total count, `annotate()` + `Count()` summary | Person 3 | http://127.0.0.1:8000/analytics/tasks/ | [person-3/](docs/screenshots/person-3/) |
-| 3. Hestia UI styling (`hestia.css`, logo, cards) | Person 4 | http://127.0.0.1:8000/tasks/manage/ (sign-in required) | [person-4/](docs/screenshots/person-4/) |
+| 3. Hestia UI styling (`hestia.css`, logo, cards) | Person 4 | http://127.0.0.1:8000/tasks/manage/ (no sign-in required) | [person-4/](docs/screenshots/person-4/) |
 | 4. Matplotlib chart from ORM data via `BytesIO` | Person 3 | http://127.0.0.1:8000/analytics/tasks/priority.png | [person-3/](docs/screenshots/person-3/) |
-| 5. GET filter form and POST ModelForm with `{% csrf_token %}` | Person 4 | http://127.0.0.1:8000/tasks/manage/ (sign-in required) | [person-4/](docs/screenshots/person-4/) |
+| 5. GET filter form and POST ModelForm with `{% csrf_token %}` | Person 4 | http://127.0.0.1:8000/tasks/manage/ (no sign-in required) | [person-4/](docs/screenshots/person-4/) |
 | 6. `JsonResponse` API with query filters; `HttpResponse` comparison | Person 2 | http://127.0.0.1:8000/api/tasks/?q=groceries&workspace_name=demo and http://127.0.0.1:8000/api/response-demo/ | [P1-A3 Section-2 Search-GET-POST/](docs/screenshots/P1-A3%20Section-2%20Search-GET-POST/) |
 
 All screenshots are indexed in [docs/screenshots/README.md](docs/screenshots/README.md).
 Written explanations are in [docs/notes/notes.txt](docs/notes/notes.txt).
 
-### Task board demo login
+### Task board access (no sign-in required)
 
-The Task board only shows and creates tasks for a signed-in user with an active
-household membership. A superuser alone is not enough. The quickest way to try it
-is Person 4's disposable demo, which uses a temporary database with fictional
-tasks and a generated login:
+Run `python manage.py migrate`, `python manage.py seed_template_demo`, and
+`python manage.py runserver`. Open http://127.0.0.1:8000/tasks/manage/ to
+filter and create tasks directly. No account, email verification, or household
+membership is required. Choose an existing demo household in the creation form.
 
-```bash
-python -m workflows.forms_demo
-```
-
-Open http://127.0.0.1:8015/tasks/manage/ and sign in with the email and temporary
-password printed in the terminal. Ctrl+C stops the demo and discards its data; your
-`db.sqlite3` is not touched. Port 8015 must be free. To use your own database
-instead, add a Workspace and an active Membership for your user in the admin. See
-[workflows/FORMS_UI_HANDOFF.md](workflows/FORMS_UI_HANDOFF.md) for details.
+`python -m workflows.forms_demo` remains an optional disposable preview on port
+8015; its printed credentials are not needed for the task board.
+Anonymous submissions have no creator membership. Signed-in submissions use an
+active membership only when it belongs to the selected household.
 
 ### Final verification
 
@@ -96,9 +90,9 @@ tests) are records from before the later merges.
 
 ### Data scope
 
-The Task board enforces household membership. The search, API, analytics and
-list/detail teaching pages show all tasks to anyone, so use them only with
-fictional data. Applying household authorization consistently to those routes is
+The assignment task board allows public reads and task creation in all settings.
+The search, API, analytics and list/detail teaching pages also show all tasks to
+anyone. Use only fictional data. Applying household authorization consistently to those routes is
 needed before Hestia holds real household data.
 
 ## Production mode (`DEBUG = False`)
@@ -153,7 +147,7 @@ Task board, Search tasks, and Sign in. Each task card links through `Task.get_ab
 to `/tasks/<pk>/`. Project CSS lives in `static files/` and is loaded with
 `{% load static %}` plus a `?v={{ ts }}` cache-busting query string.
 
-The Task board at `/tasks/manage/` lets signed-in household members filter tasks
+The Task board at `/tasks/manage/` lets visitors filter tasks
 using bookmarkable GET parameters and create a Task through a CSRF-protected
 ModelForm handled by one ListView. Its responsive Hestia UI uses local
 `css/hestia.css` and `images/hestia-mark.svg`; validated errors retain input and
@@ -294,6 +288,6 @@ The page screenshots cover successive portions of the current narrow browser
 viewport. They show three fictional tasks: Low=1, Medium=1, High=1, Urgent=0.
 
 Assignment analytics and the legacy task list/detail pages display global demo
-data; the task board separately enforces household memberships. Use fictional
+data; the task board now also allows public access for the assignment. Use fictional
 data for this assignment. Apply household authorization consistently to both
 analytics endpoints before using them for private household data.

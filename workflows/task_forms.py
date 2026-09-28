@@ -5,26 +5,22 @@ from households.models import Workspace
 from .models import Task
 
 
-def available_workspaces(user):
-    """Only active household memberships grant access to the new task board."""
-    if not user.is_authenticated:
-        return Workspace.objects.none()
-    return Workspace.objects.filter(
-        memberships__user=user, memberships__is_active=True
-    ).distinct()
+def available_workspaces():
+    """The public assignment board uses all fictional demo households."""
+    return Workspace.objects.all()
 
 
 class TaskFilterForm(forms.Form):
     q = forms.CharField(required=False, max_length=200, label="Search tasks",
                         widget=forms.TextInput(attrs={"type": "search", "placeholder": "Search by title…"}))
     workspace = forms.ModelChoiceField(queryset=Workspace.objects.none(), required=False,
-                                       empty_label="All my households", label="Household")
+                                       empty_label="All households", label="Household")
     priority = forms.ChoiceField(required=False, choices=[("", "All priorities"), *Task.Priority.choices])
     task_type = forms.ChoiceField(required=False, choices=[("", "All types"), *Task.TaskType.choices], label="Task type")
 
-    def __init__(self, *args, user, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, auto_id="filter_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces(user)
+        self.fields["workspace"].queryset = available_workspaces()
 
 
 class TaskCreateForm(forms.ModelForm):
@@ -43,9 +39,9 @@ class TaskCreateForm(forms.ModelForm):
             "recurrence_rule": forms.TextInput(attrs={"placeholder": "One-time task"}),
         }
 
-    def __init__(self, *args, user, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, auto_id="create_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces(user)
+        self.fields["workspace"].queryset = available_workspaces()
         workspaces = list(self.fields["workspace"].queryset[:2])
         if len(workspaces) == 1 and not self.is_bound:
             self.initial.setdefault("workspace", workspaces[0].pk)

@@ -359,3 +359,18 @@ types. ProjectUrlIntegrationTests checks the real routes and the nav link.
 Screenshots (with the URL in Chrome's address bar) and curl header output:
 docs/screenshots/P1-A3 Section-2 Search-GET-POST/
 (indexed in docs/person-2-handoff.md).
+
+
+2026-09-28 — Public assignment task board
+Removed LoginRequiredMixin and membership filtering from the assignment task
+board. All existing demo households can be selected without signing in.
+Anonymous tasks have a null creator; supplied creator IDs are ignored. Signed-in
+users receive creator attribution only for a matching active membership.
+CSRF, ModelForm validation, duplicate-title handling, pagination and redirect
+after POST remain enabled. Empty databases explain the seed command.
+This applies to all settings, not only a local toggle. Use fictional data only;
+restore authorization before using the app for real household information.
+No authentication routes or email verification settings were changed.
+README includes direct setup; optional disposable demo requires no login.
+Verification: 77 tests passed, including anonymous creation, invalid household,
+CSRF rejection/acceptance, no-household feedback, and analytics integration.

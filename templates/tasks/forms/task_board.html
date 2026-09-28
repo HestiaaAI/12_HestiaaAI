@@ -19,7 +19,7 @@
 
     {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
     {% if not has_workspaces %}
-    <div class="hf-notice" role="status"><strong>Join a household to get started.</strong> Ask a household administrator to add an active membership for your account. Your tasks and creation form will be available here.</div>
+    <div class="hf-notice" role="status"><strong>No households available.</strong> Load the assignment demo data with <code>python manage.py seed_template_demo</code>, then refresh this page.</div>
     {% endif %}
 
     <section class="hf-filter-panel" aria-labelledby="filter-heading">
@@ -50,7 +50,7 @@
                     {% if filter_form.errors %}<p>Check the highlighted filters and try again.</p>
                     {% elif has_filters %}<p>No tasks match these filters. Try another title, household, or priority.</p><a href="{% url 'task_forms:board' %}">Show all my tasks</a>
                     {% elif has_workspaces %}<p>A little planning goes a long way. Add your first task using the form.</p>
-                    {% else %}<p>Your household tasks will appear once an administrator adds your membership.</p>{% endif %}
+                    {% else %}<p>Tasks will appear after the assignment demo data is loaded.</p>{% endif %}
                 </div>
             {% endfor %}
             </div>
@@ -73,7 +73,7 @@
                 <p class="hf-help">Fields marked * are required.</p>
                 <button class="hf-button hf-create-button" type="submit">Create task <span aria-hidden="true">+</span></button>
             </form>
-            {% else %}<p class="hf-help">Creating tasks requires an active household membership.</p>{% endif %}
+            {% else %}<p class="hf-help">Load a demo household before creating tasks.</p>{% endif %}
         </aside>
     </div>
 </div>
