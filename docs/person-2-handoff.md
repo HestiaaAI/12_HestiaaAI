@@ -1,25 +1,23 @@
 # Person 2 Handoff: Search and API
 
-Person 2 delivers Section 2 GET/POST search and the Section 6 JSON API. The new routes live in their own modules. Person 1 mounts them in the shared files.
+Person 2 delivers Section 2 GET/POST search and the Section 6 JSON API. The new routes live in their own modules and are mounted in the project URL config.
 
-## For Person 1: shared-file changes
+## Integration (done)
 
-Add these includes to `hestia_config/urls.py` **before** the existing `path("tasks/", include("workflows.urls"))` line, so no current or future `tasks/` route can catch `/tasks/search/` first:
+Person 2 made the shared-file changes on branch `dev-ddhene2-search-integration`:
 
-```python
-path("tasks/search/", include("workflows.search_urls")),
-path("api/", include("api.urls")),
-```
+- `hestia_config/urls.py` mounts both includes above the `tasks/manage/` and `tasks/` includes, so no `tasks/` route can catch `/tasks/search/` first:
 
-Add a navigation link in `templates/base.html`:
+  ```python
+  path("api/", include("api.urls")),
+  path("tasks/search/", include("workflows.search_urls")),
+  ```
 
-```django
-<a class="nav-link" href="{% url 'task_search:get' %}">Search tasks</a>
-```
+- `templates/base.html` has a "Search tasks" nav link: `{% url 'task_search:get' %}`.
+- The test-only URL config (`workflows/test_person2_urls.py`) and the tests' `ROOT_URLCONF` overrides were removed. `ProjectUrlIntegrationTests` in `workflows/test_search.py` checks the real routes, the nav link, and that a result's detail link returns 200.
+- The README and `docs/notes/notes.txt` include the Search and API text below.
 
 `api` is a plain Python package, not an installed app, so `INSTALLED_APPS` stays the same. There are no migrations or new dependencies.
-
-After mounting, delete `workflows/test_person2_urls.py` and the `@override_settings(ROOT_URLCONF=...)` decorators in `workflows/test_search.py` and `workflows/test_api.py`, so each namespace is registered only once. Person 2 will then add the project-URL integration test.
 
 ## Routes
 
@@ -69,4 +67,14 @@ These tests cover title, related-name, and combined filtering, POST reading the 
 
 ## Evidence
 
-Screenshots (`docs/screenshots/person-2-*.png`) will be added after Person 1 mounts the routes, and linked here.
+Captured from the integrated local dev server (`hestia_config.settings.development`) with the fictional demo tasks, in `docs/screenshots/person-2/`:
+
+| File | Shows |
+| --- | --- |
+| [01-get-search.png](screenshots/person-2/01-get-search.png) | GET search `?q=groceries&workspace_name=DEMO`: the mixed-case household name matches through `workspace__name__icontains`. |
+| [02-post-form-unsubmitted.png](screenshots/person-2/02-post-form-unsubmitted.png) | The POST form before submission, with its prompt. |
+| [03-post-search-results.png](screenshots/person-2/03-post-search-results.png) | POST search `air` + `demo`. The page URL stayed `/tasks/search/post/`, with no terms in it. |
+| [04-no-match.png](screenshots/person-2/04-no-match.png) | The `{% empty %}` state for an unmatched search. |
+| [05-api-json-filtered.png](screenshots/person-2/05-api-json-filtered.png) | `/api/tasks/?q=groceries&workspace_name=demo` JSON. |
+| [06-httpresponse-text.png](screenshots/person-2/06-httpresponse-text.png) | `/api/response-demo/` plain text. |
+| [07-api-response-headers.txt](screenshots/person-2/07-api-response-headers.txt) | `curl -i` output: `Content-Type: application/json` vs `text/plain`, and 403 for a POST without a CSRF token. |

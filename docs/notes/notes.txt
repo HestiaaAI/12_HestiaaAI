@@ -180,7 +180,8 @@ Navigation
 templates/base.html uses named {% url %} tags so paths are not hard-coded.
 The bar links Home ({% url 'home' %}), Household tasks
 ({% url 'workflows:task-cbv-generic' %}), Task board
-({% url 'task_forms:board' %}), and Sign in ({% url 'accounts:login' %}).
+({% url 'task_forms:board' %}), Search tasks ({% url 'task_search:get' %}),
+and Sign in ({% url 'accounts:login' %}).
 Named URLs stay correct if a path later changes.
 
 Why get_absolute_url() is useful
@@ -224,3 +225,62 @@ on hestia.css provides cache busting. The feature extends base.html
 through its existing blocks. The root URL is
 path("tasks/manage/", include("workflows.forms_urls")) and the nav uses
 {% url 'task_forms:board' %}.
+
+
+Search and API (Person 2)
+=========================
+Routes
+hestia_config/urls.py mounts path("tasks/search/", include(
+"workflows.search_urls")) and path("api/", include("api.urls")) above the
+tasks/ includes, so no tasks/ route can catch /tasks/search/ first.
+  /tasks/search/          task_search:get     GET search
+  /tasks/search/post/     task_search:post    POST search
+  /api/tasks/             api:task-list       JSON list (JsonResponse)
+  /api/response-demo/     api:response-demo   plain text (HttpResponse)
+
+GET search vs POST search
+Both forms read the same two fields: q (task title) and workspace_name
+(household name). The GET view reads request.GET, so the terms appear in the
+URL and a search can be bookmarked or shared. The POST view reads
+request.POST, so the terms travel in the request body and the address bar
+stays at /tasks/search/post/. The POST form includes {% csrf_token %}; a
+POST without a token is rejected with 403. POST only changes where the
+terms travel. It does not encrypt them or add access control. The POST
+search is read-only: it never creates a Task and renders results directly.
+
+Relationship-spanning query
+workflows/task_queries.py filter_task_queryset() uses title__icontains for
+the title and workspace__name__icontains for the household. The double
+underscore follows the Task.workspace foreign key to Workspace.name, so
+Django adds the JOIN. When both terms are given, both must match. Blank
+terms are ignored. Results are ordered by task_id so tests are
+deterministic.
+
+Results template
+templates/tasks/search.html extends base.html and renders results with
+{% for task in tasks %} / {% empty %}. The empty clause shows
+"No tasks match" and repeats the escaped search terms. Each title links
+through {{ task.get_absolute_url }} to the detail page.
+
+API design and data served
+/api/tasks/ is GET-only. It accepts the same q and workspace_name query
+parameters, for example /api/tasks/?q=groceries&workspace_name=demo, and
+returns {"tasks": [{"id", "title", "task_type", "priority"}]}. id is the
+Task primary key; task_type and priority are raw choice values. An
+unmatched search returns {"tasks": []}. Descriptions, locations, documents
+and membership details are never included. Like the other teaching pages
+the API is public, so use it only with fictional demo data.
+
+HttpResponse vs JsonResponse
+HttpResponse sends whatever content and MIME type the view gives it:
+/api/response-demo/ returns "Hestia task API" with Content-Type text/plain.
+JsonResponse takes a Python dict, serializes it to JSON and sets
+Content-Type: application/json, so the view never builds JSON text by hand.
+
+Verification
+workflows/test_search.py and workflows/test_api.py cover filtering, POST
+reading the body instead of the query string, empty states, HTML escaping,
+CSRF, 405 for unsupported methods, the exact JSON fields and both MIME
+types. ProjectUrlIntegrationTests checks the real routes and the nav link.
+Screenshots and curl header output: docs/screenshots/person-2/
+(indexed in docs/person-2-handoff.md).

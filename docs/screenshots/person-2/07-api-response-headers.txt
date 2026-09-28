@@ -1,0 +1,22 @@
+$ curl -i "http://127.0.0.1:8765/api/tasks/?q=groceries&workspace_name=demo"
+HTTP/1.1 200 OK
+Content-Type: application/json
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+{"tasks": [{"id": 1, "title": "Plan the weekly groceries", "task_type": "SHOPPING", "priority": "HIGH"}]}
+
+$ curl -i http://127.0.0.1:8765/api/response-demo/
+HTTP/1.1 200 OK
+Content-Type: text/plain
+X-Frame-Options: DENY
+X-Content-Type-Options: nosniff
+Referrer-Policy: same-origin
+Cross-Origin-Opener-Policy: same-origin
+
+Hestia task API
+
+$ curl -i -X POST http://127.0.0.1:8765/api/tasks/   # no CSRF token
+HTTP/1.1 403 Forbidden
