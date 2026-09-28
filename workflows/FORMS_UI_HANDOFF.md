@@ -1,3 +1,10 @@
+> Current assignment update (2026-09-28): `/tasks/manage/` is public. No login or
+> active membership is needed to filter or create tasks. Run migrations and
+> `python manage.py seed_template_demo` first. Anonymous creation leaves the
+> creator membership blank. CSRF and ModelForm validation remain enabled.
+> The older membership/login instructions below describe the original design
+> and are superseded by this update. Use fictional data only.
+
 # P1-A3 — Person 4: Forms + UI
 
 Implemented on `dev-cn32-v3`, based on fetched `origin/main` at `1938f90`

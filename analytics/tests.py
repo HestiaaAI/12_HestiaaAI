@@ -79,12 +79,7 @@ class TaskAnalyticsTests(TestCase):
             self.assertEqual(self.client.get(task.get_absolute_url()).status_code, 200)
 
     def test_task_board_creation_updates_analytics_and_chart(self):
-        from django.contrib.auth import get_user_model
-        from households.models import Membership
-        user = get_user_model().objects.create_user(username="analytics-integration")
         home = Workspace.objects.get(name="Analytics demo")
-        Membership.objects.create(workspace=home, user=user, display_name="Demo member")
-        self.client.force_login(user)
         before = self.assert_png()
         response = self.client.post(reverse("task_forms:board"), {
             "workspace": home.pk, "title": "Created through task board",
