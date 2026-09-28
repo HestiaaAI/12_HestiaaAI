@@ -181,7 +181,8 @@ templates/base.html uses named {% url %} tags so paths are not hard-coded.
 The bar links Home ({% url 'home' %}), Household tasks
 ({% url 'workflows:task-cbv-generic' %}), Task board
 ({% url 'task_forms:board' %}), Search tasks ({% url 'task_search:get' %}),
-and Sign in ({% url 'accounts:login' %}).
+Task statistics ({% url 'analytics:task-stats' %}), and Sign in
+({% url 'accounts:login' %}).
 Named URLs stay correct if a path later changes.
 
 Why get_absolute_url() is useful
@@ -217,12 +218,13 @@ be incremented when that file changes.
 
 Task board behavior
 TaskBoardView uses a validated GET filter form and a POST Task ModelForm.
-The view limits reads and creation to active memberships and assigns the
-creator on the server. POST includes CSRF protection and uses
-POST/Redirect/GET; errors retain user input. Shared static assets remain
-in the existing project-level static files/ directory. The version suffix
-on hestia.css provides cache busting. The feature extends base.html
-through its existing blocks. The root URL is
+The assignment board is public: no sign-in is required to filter or create
+tasks. Anonymous creates leave creator empty; signed-in users get creator
+attribution only for a matching active membership. POST includes CSRF
+protection and uses POST/Redirect/GET; errors retain user input. Shared
+static assets remain in the existing project-level static files/ directory.
+The version suffix on hestia.css provides cache busting. The feature extends
+base.html through its existing blocks. The root URL is
 path("tasks/manage/", include("workflows.forms_urls")) and the nav uses
 {% url 'task_forms:board' %}.
 
@@ -275,8 +277,8 @@ and high chart traffic would need measured caching/resource limits.
 Team integration:
 Person 1's home/detail/navigation and Person 4's forms/UI were already merged
 in PRs #5 and #4. Analytics now has a shared navigation link, task detail links
-using get_absolute_url(), and scoped Hestia card styling. The task board is
-membership-scoped, but assignment analytics and legacy list/detail pages are
+using get_absolute_url(), and scoped Hestia card styling. The assignment
+task board is public, and analytics plus the legacy list/detail pages are
 global demo pages. Use fictional data; private household use requires matching
 authorization on BOTH analytics endpoints.
 

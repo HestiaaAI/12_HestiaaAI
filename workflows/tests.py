@@ -122,10 +122,14 @@ class Person1HomeNavDetailTests(TestCase):
         self.assertContains(response, 'href="' + reverse("home") + '"')
         self.assertContains(response, 'href="' + reverse("workflows:task-cbv-generic") + '"')
         self.assertContains(response, 'href="' + reverse("task_forms:board") + '"')
+        self.assertContains(response, 'href="' + reverse("task_search:get") + '"')
+        self.assertContains(response, 'href="' + reverse("analytics:task-stats") + '"')
         self.assertContains(response, 'href="' + reverse("accounts:login") + '"')
         self.assertContains(response, "Home")
         self.assertContains(response, "Household tasks")
         self.assertContains(response, "Task board")
+        self.assertContains(response, "Search tasks")
+        self.assertContains(response, "Task statistics")
         self.assertContains(response, "Sign in")
 
     def test_task_board_is_mounted_on_the_root_urlconf(self):

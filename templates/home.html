@@ -16,8 +16,18 @@
     </article>
     <article class="task-card">
         <h2>Task board</h2>
-        <p>Signed-in household members can filter and create tasks on the board.</p>
+        <p>Filter and create tasks.</p>
         <a class="button-link" href="{% url 'task_forms:board' %}">Open task board</a>
+    </article>
+    <article class="task-card">
+        <h2>Search tasks</h2>
+        <p>Use GET for a bookmarkable filter URL, or POST to keep search terms out of the address bar.</p>
+        <a class="button-link" href="{% url 'task_search:get' %}">Open search</a>
+    </article>
+    <article class="task-card">
+        <h2>Task statistics</h2>
+        <p>See ORM totals, grouped priority counts, and the Matplotlib chart for this database.</p>
+        <a class="button-link" href="{% url 'analytics:task-stats' %}">Open statistics</a>
     </article>
     <article class="task-card">
         <h2>Sign in</h2>

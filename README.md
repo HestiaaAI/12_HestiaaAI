@@ -47,6 +47,10 @@ python manage.py runserver --settings=hestia_config.settings.development
 Home: http://127.0.0.1:8000/
 Household tasks: http://127.0.0.1:8000/tasks/cbv-generic/
 Task board: http://127.0.0.1:8000/tasks/manage/
+Search: http://127.0.0.1:8000/tasks/search/
+Task statistics: http://127.0.0.1:8000/analytics/tasks/
+Priority chart PNG: http://127.0.0.1:8000/analytics/tasks/priority.png
+JSON API: http://127.0.0.1:8000/api/tasks/?q=groceries&workspace_name=demo
 Task titles on the list use `Task.get_absolute_url()` to open `/tasks/<pk>/`.
 
 ## P1-A3 grading guide (current assignment)
@@ -83,10 +87,10 @@ active membership only when it belongs to the selected household.
 ### Final verification
 
 On September 28, 2026, after all four members' work was merged into `main`,
-`python manage.py test` ran **75 tests, all passing**. `python manage.py check`
+`python manage.py test` ran **77 tests, all passing**. `python manage.py check`
 reported no issues and `python manage.py makemigrations --check --dry-run`
-reported no model changes. Earlier counts in this README and the notes (45 and 57
-tests) are records from before the later merges.
+reported no model changes. Earlier counts in this README and the notes (45, 57,
+and 75 tests) are records from before the later merges.
 
 ### Data scope
 
@@ -143,7 +147,7 @@ Django Admin: http://127.0.0.1:8000/admin/
 
 The home page is `/` so the root URL is no longer a 404. Shared navigation in
 `templates/base.html` uses named `{% url %}` links for Home, Household tasks,
-Task board, Search tasks, and Sign in. Each task card links through `Task.get_absolute_url()`
+Task board, Search tasks, Task statistics, and Sign in. Each task card links through `Task.get_absolute_url()`
 to `/tasks/<pk>/`. Project CSS lives in `static files/` and is loaded with
 `{% load static %}` plus a `?v={{ ts }}` cache-busting query string.
 
@@ -258,15 +262,17 @@ With the virtual environment activated and `.env` configured:
 python -m pip install -r requirements.txt
 python manage.py migrate
 python manage.py seed_template_demo
-python manage.py runserver 8021
+python manage.py runserver --settings=hestia_config.settings.development
 ```
 
-The seed command is optional when fictional tasks already exist.
+The seed command is optional when fictional tasks already exist. These routes
+are on the shared development server at port 8000 (Person 3 also captured
+evidence on port 8021).
 
 | Output | URL | Named route |
 |---|---|---|
-| Statistics, summaries and full list | http://127.0.0.1:8021/analytics/tasks/ | `analytics:task-stats` |
-| PNG chart | http://127.0.0.1:8021/analytics/tasks/priority.png | `analytics:task-priority-chart` |
+| Statistics, summaries and full list | http://127.0.0.1:8000/analytics/tasks/ | `analytics:task-stats` |
+| PNG chart | http://127.0.0.1:8000/analytics/tasks/priority.png | `analytics:task-priority-chart` |
 
 Use **Task statistics** in the shared navigation. Task titles link to detail
 pages through `get_absolute_url()`. The page reuses `base.html` and the shared
@@ -274,8 +280,8 @@ Hestia card styles. Tasks created through the task board appear after reloading
 the statistics page. These are local development URLs, not a deployed site.
 
 Run `python manage.py test analytics` for the seven analytics tests, or
-`python manage.py test` for the combined suite. The integration run on September
-28, 2026 passed all 57 tests.
+`python manage.py test` for the combined suite. The current `main` suite
+passes 77 tests.
 
 Screenshot evidence (captured September 28 from the local browser):
 
