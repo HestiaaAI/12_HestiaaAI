@@ -25,6 +25,8 @@ urlpatterns = [
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),
     path("admin/", admin.site.urls),
+    path("api/", include("api.urls")),
+    path("tasks/search/", include("workflows.search_urls")),
     path("tasks/manage/", include("workflows.forms_urls")),
     path("tasks/", include("workflows.urls")),
 ]

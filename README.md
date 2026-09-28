@@ -96,7 +96,7 @@ Django Admin: http://127.0.0.1:8000/admin/
 
 The home page is `/` so the root URL is no longer a 404. Shared navigation in
 `templates/base.html` uses named `{% url %}` links for Home, Household tasks,
-Task board, and Sign in. Each task card links through `Task.get_absolute_url()`
+Task board, Search tasks, and Sign in. Each task card links through `Task.get_absolute_url()`
 to `/tasks/<pk>/`. Project CSS lives in `static files/` and is loaded with
 `{% load static %}` plus a `?v={{ ts }}` cache-busting query string.
 
@@ -105,6 +105,33 @@ using bookmarkable GET parameters and create a Task through a CSRF-protected
 ModelForm handled by one ListView. Its responsive Hestia UI uses local
 `css/hestia.css` and `images/hestia-mark.svg`; validated errors retain input and
 successful submissions redirect to the list to prevent accidental resubmission.
+
+## Task search and JSON API
+
+Task search at `/tasks/search/` has two forms. The GET form reads `q` (title)
+and `workspace_name` (household) from `request.GET`, so each search has a
+shareable URL. The POST form at `/tasks/search/post/` reads the same fields
+from `request.POST` and includes `{% csrf_token %}`. It keeps the terms out of
+the address bar, but it does not encrypt them. The household filter spans the
+Task → Workspace foreign key with `workspace__name__icontains`. When both
+fields are given, both must match. Results use `{% for %}` / `{% empty %}`, and
+each title links to the task's detail page.
+
+`/api/tasks/` returns tasks as JSON through `JsonResponse`, filtered by the
+same query parameters, for example `/api/tasks/?q=groceries&workspace_name=demo`.
+Each task includes only `id`, `title`, `task_type`, and `priority`. For
+comparison, `/api/response-demo/` returns plain text through
+`HttpResponse(..., content_type="text/plain")`. Both endpoints are GET-only and
+public, so use them with the fictional demo data.
+
+| Page | Named route | Open locally |
+|---|---|---|
+| GET search | `task_search:get` | http://127.0.0.1:8000/tasks/search/?q=groceries&workspace_name=demo |
+| POST search | `task_search:post` | http://127.0.0.1:8000/tasks/search/post/ |
+| JSON API | `api:task-list` | http://127.0.0.1:8000/api/tasks/?q=groceries&workspace_name=demo |
+| HttpResponse text | `api:response-demo` | http://127.0.0.1:8000/api/response-demo/ |
+
+- [Search and API details, screenshots, and header evidence](docs/person-2-handoff.md)
 
 ## Sections 2 and 3: grading instructions
 

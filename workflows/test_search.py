@@ -1,11 +1,10 @@
-from django.test import Client, TestCase, override_settings
+from django.test import Client, TestCase
 from django.urls import reverse
 
 from households.models import Workspace
 from .models import Task
 
 
-@override_settings(ROOT_URLCONF="workflows.test_person2_urls")
 class TaskSearchTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -110,3 +109,26 @@ class TaskSearchTests(TestCase):
         detail = self.client.get(self.demo_laundry.get_absolute_url())
         self.assertContains(response, self.demo_laundry.get_absolute_url())
         self.assertEqual(detail.status_code, 200)
+
+
+class ProjectUrlIntegrationTests(TestCase):
+    """Person 2 routes are mounted in hestia_config/urls.py and linked from the nav."""
+
+    def test_routes_are_mounted_in_project_urlconf(self):
+        self.assertEqual(reverse("task_search:get"), "/tasks/search/")
+        self.assertEqual(reverse("task_search:post"), "/tasks/search/post/")
+        self.assertEqual(reverse("api:task-list"), "/api/tasks/")
+        self.assertEqual(reverse("api:response-demo"), "/api/response-demo/")
+
+    def test_navigation_links_to_search(self):
+        response = self.client.get(reverse("home"))
+        self.assertContains(response, f'href="{reverse("task_search:get")}"')
+
+    def test_search_result_detail_link_returns_200(self):
+        workspace = Workspace.objects.create(name="Integration Household")
+        task = Task.objects.create(workspace=workspace, title="Water the plants")
+        response = self.client.get("/tasks/search/", {"q": "plants"})
+        self.assertContains(response, task.get_absolute_url())
+        self.assertEqual(self.client.get(task.get_absolute_url()).status_code, 200)
+        api = self.client.get("/api/tasks/", {"q": "plants"}).json()
+        self.assertEqual(api["tasks"][0]["id"], task.pk)
