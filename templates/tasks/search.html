@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% comment %}
+Person 2 / Section 2: one template serves both search views.
+Context: tasks, q, workspace_name, submitted, search_method ("GET" or "POST").
+The workspace filter uses the related lookup workspace__name__icontains.
+{% endcomment %}
+
+{% block title %}Search Tasks | Hestia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">Section 2 &middot; Search</p>
+    <h1>Search Household Tasks</h1>
+    <p>Filter by task title, by household name, or both. Leave a field blank to ignore it.</p>
+</section>
+
+<section class="view-demo" aria-labelledby="get-search-heading">
+    <h2 id="get-search-heading">GET search</h2>
+    <p>Terms are sent in the query string (<code>request.GET</code>), so the results page has a shareable, bookmarkable URL.</p>
+    <form action="{% url 'task_search:get' %}" method="get" class="search-form" role="search">
+        <div class="search-field">
+            <label for="get-q">Task title</label>
+            <input id="get-q" type="search" name="q" value="{% if search_method == 'GET' %}{{ q }}{% endif %}" placeholder="e.g. groceries">
+        </div>
+        <div class="search-field">
+            <label for="get-workspace-name">Household name</label>
+            <input id="get-workspace-name" type="search" name="workspace_name" value="{% if search_method == 'GET' %}{{ workspace_name }}{% endif %}" placeholder="e.g. demo">
+        </div>
+        <button type="submit">Search with GET</button>
+    </form>
+</section>
+
+<section class="view-demo" aria-labelledby="post-search-heading">
+    <h2 id="post-search-heading">POST search</h2>
+    <p>Terms are sent in the request body (<code>request.POST</code>) and stay out of the address bar. POST does not encrypt data or add access control; it only changes where the terms travel.</p>
+    <form action="{% url 'task_search:post' %}" method="post" class="search-form" role="search">
+        {% csrf_token %}
+        <div class="search-field">
+            <label for="post-q">Task title</label>
+            <input id="post-q" type="search" name="q" value="{% if search_method == 'POST' %}{{ q }}{% endif %}" placeholder="e.g. groceries">
+        </div>
+        <div class="search-field">
+            <label for="post-workspace-name">Household name</label>
+            <input id="post-workspace-name" type="search" name="workspace_name" value="{% if search_method == 'POST' %}{{ workspace_name }}{% endif %}" placeholder="e.g. demo">
+        </div>
+        <button type="submit">Search with POST</button>
+    </form>
+</section>
+
+<section aria-labelledby="search-results-heading">
+    <div class="results-heading">
+        <h2 id="search-results-heading">Results ({{ search_method }})</h2>
+    </div>
+    {% if not submitted %}
+        <p class="empty-state">Submit the POST form to see results.</p>
+    {% else %}
+    <div class="task-grid">
+        {% for task in tasks %}
+            <article class="task-card">
+                <div class="card-heading">
+                    <h3><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></h3>
+                    <span class="status-badge priority-{{ task.priority|lower }}">{{ task.get_priority_display }}</span>
+                </div>
+                <dl class="task-details">
+                    <div><dt>Household</dt><dd>{{ task.workspace.name }}</dd></div>
+                    <div><dt>Type</dt><dd>{{ task.get_task_type_display }}</dd></div>
+                </dl>
+            </article>
+        {% empty %}
+            <section class="empty-state" aria-labelledby="search-empty-title">
+                <span class="empty-state-icon" aria-hidden="true">&#10003;</span>
+                <h3 id="search-empty-title">No tasks match</h3>
+                <p>
+                    {% if q or workspace_name %}Nothing matched{% if q %} title &ldquo;{{ q }}&rdquo;{% endif %}{% if workspace_name %} in household &ldquo;{{ workspace_name }}&rdquo;{% endif %}.
+                    {% else %}There are no tasks yet.{% endif %}
+                </p>
+            </section>
+        {% endfor %}
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
