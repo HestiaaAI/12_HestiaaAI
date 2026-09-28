@@ -25,6 +25,8 @@ python manage.py migrate
 
 Optional: add fictional example tasks with `python manage.py seed_template_demo`.
 For admin access, create your own login with `python manage.py createsuperuser`.
+A superuser alone cannot create tasks on the Task board; see
+[Task board demo login](#task-board-demo-login) below.
 
 Verify the environment:
 
@@ -47,6 +49,57 @@ Home: http://127.0.0.1:8000/
 Household tasks: http://127.0.0.1:8000/tasks/cbv-generic/
 Task board: http://127.0.0.1:8000/tasks/manage/
 Task titles on the list use `Task.get_absolute_url()` to open `/tasks/<pk>/`.
+
+## P1-A3 grading guide (current assignment)
+
+Everything below runs on `main` with the development server above and the
+fictional tasks from `python manage.py seed_template_demo`. Each owner's section
+further down has full details.
+
+| Section | Owner | What to open | Evidence |
+|---|---|---|---|
+| 1. Home, named-URL navigation, detail page, static files, cache busting | Person 1 | http://127.0.0.1:8000/ and any task title, e.g. http://127.0.0.1:8000/tasks/1/ | [home-nav-detail/](docs/screenshots/home-nav-detail/) |
+| 2. GET and POST search, `workspace__name__icontains` | Person 2 | http://127.0.0.1:8000/tasks/search/ | [P1-A3 Section-2 Search-GET-POST/](docs/screenshots/P1-A3%20Section-2%20Search-GET-POST/) |
+| 2. Full list, total count, `annotate()` + `Count()` summary | Person 3 | http://127.0.0.1:8000/analytics/tasks/ | [person-3/](docs/screenshots/person-3/) |
+| 3. Hestia UI styling (`hestia.css`, logo, cards) | Person 4 | http://127.0.0.1:8000/tasks/manage/ (sign-in required) | [person-4/](docs/screenshots/person-4/) |
+| 4. Matplotlib chart from ORM data via `BytesIO` | Person 3 | http://127.0.0.1:8000/analytics/tasks/priority.png | [person-3/](docs/screenshots/person-3/) |
+| 5. GET filter form and POST ModelForm with `{% csrf_token %}` | Person 4 | http://127.0.0.1:8000/tasks/manage/ (sign-in required) | [person-4/](docs/screenshots/person-4/) |
+| 6. `JsonResponse` API with query filters; `HttpResponse` comparison | Person 2 | http://127.0.0.1:8000/api/tasks/?q=groceries&workspace_name=demo and http://127.0.0.1:8000/api/response-demo/ | [P1-A3 Section-2 Search-GET-POST/](docs/screenshots/P1-A3%20Section-2%20Search-GET-POST/) |
+
+All screenshots are indexed in [docs/screenshots/README.md](docs/screenshots/README.md).
+Written explanations are in [docs/notes/notes.txt](docs/notes/notes.txt).
+
+### Task board demo login
+
+The Task board only shows and creates tasks for a signed-in user with an active
+household membership. A superuser alone is not enough. The quickest way to try it
+is Person 4's disposable demo, which uses a temporary database with fictional
+tasks and a generated login:
+
+```bash
+python -m workflows.forms_demo
+```
+
+Open http://127.0.0.1:8015/tasks/manage/ and sign in with the email and temporary
+password printed in the terminal. Ctrl+C stops the demo and discards its data; your
+`db.sqlite3` is not touched. Port 8015 must be free. To use your own database
+instead, add a Workspace and an active Membership for your user in the admin. See
+[workflows/FORMS_UI_HANDOFF.md](workflows/FORMS_UI_HANDOFF.md) for details.
+
+### Final verification
+
+On September 28, 2026, after all four members' work was merged into `main`,
+`python manage.py test` ran **75 tests, all passing**. `python manage.py check`
+reported no issues and `python manage.py makemigrations --check --dry-run`
+reported no model changes. Earlier counts in this README and the notes (45 and 57
+tests) are records from before the later merges.
+
+### Data scope
+
+The Task board enforces household membership. The search, API, analytics and
+list/detail teaching pages show all tasks to anyone, so use them only with
+fictional data. Applying household authorization consistently to those routes is
+needed before Hestia holds real household data.
 
 ## Production mode (`DEBUG = False`)
 
@@ -133,18 +186,21 @@ public, so use them with the fictional demo data.
 
 - [Search and API details, screenshots, and header evidence](docs/person-2-handoff.md)
 
-## Sections 2 and 3: grading instructions
+## P1-A2 (previous assignment): Sections 2 and 3 views and templates
 
-Use `main` for this assignment. The selected domain model is `Task`.
+This section documents the previous assignment. For the current assignment, see
+[P1-A3 grading guide](#p1-a3-grading-guide-current-assignment).
+
+The selected domain model is `Task`.
 The four grading views share one list template; authentication and other
 product features on the development branch are outside this grading set.
 
 Create and activate a virtual environment before the setup commands above:
 
 ```bash
-python3 -m venv venv
-source venv/bin/activate
-# Windows PowerShell: .\venv\Scripts\Activate.ps1
+python3 -m venv .venv
+source .venv/bin/activate
+# Windows PowerShell: .\.venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 ```
 
@@ -169,7 +225,7 @@ duplicating them or overwriting existing tasks. No login is needed.
 | Generic CBV | `TaskListView` | `workflows:task-cbv-generic` | http://127.0.0.1:8000/tasks/cbv-generic/ |
 
 - [View purposes and comparison notes](docs/notes/notes.txt)
-- [Four view screenshots and template empty-state evidence](docs/screenshots/README.md)
+- [Four view screenshots and template empty-state evidence](docs/screenshots/README.md#p1-a2-views-and-templates-previous-assignment)
 - [Shared base template](templates/base.html)
 - [Reused task list template](templates/tasks/task_list.html)
 
