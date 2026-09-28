@@ -9,5 +9,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path("tasks/search/", include("workflows.search_urls")),
+    path("api/", include("api.urls")),
     path("", include("hestia_config.urls")),
 ]
