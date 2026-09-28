@@ -282,5 +282,6 @@ workflows/test_search.py and workflows/test_api.py cover filtering, POST
 reading the body instead of the query string, empty states, HTML escaping,
 CSRF, 405 for unsupported methods, the exact JSON fields and both MIME
 types. ProjectUrlIntegrationTests checks the real routes and the nav link.
-Screenshots and curl header output: docs/screenshots/person-2/
+Screenshots (with the URL in Chrome's address bar) and curl header output:
+docs/screenshots/P1-A3 Section-2/
 (indexed in docs/person-2-handoff.md).

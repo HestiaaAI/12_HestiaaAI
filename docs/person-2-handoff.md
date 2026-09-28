@@ -67,14 +67,14 @@ These tests cover title, related-name, and combined filtering, POST reading the 
 
 ## Evidence
 
-Captured from the integrated local dev server (`hestia_config.settings.development`) with the fictional demo tasks, in `docs/screenshots/person-2/`:
+Captured in a Chrome window from the integrated local dev server at `http://127.0.0.1:8000` (`hestia_config.settings.development`) with the fictional demo tasks. Each screenshot shows the page's URL in Chrome's address bar. Files are in `docs/screenshots/P1-A3 Section-2/`:
 
 | File | Shows |
 | --- | --- |
-| [01-get-search.png](screenshots/person-2/01-get-search.png) | GET search `?q=groceries&workspace_name=DEMO`: the mixed-case household name matches through `workspace__name__icontains`. |
-| [02-post-form-unsubmitted.png](screenshots/person-2/02-post-form-unsubmitted.png) | The POST form before submission, with its prompt. |
-| [03-post-search-results.png](screenshots/person-2/03-post-search-results.png) | POST search `air` + `demo`. The page URL stayed `/tasks/search/post/`, with no terms in it. |
-| [04-no-match.png](screenshots/person-2/04-no-match.png) | The `{% empty %}` state for an unmatched search. |
-| [05-api-json-filtered.png](screenshots/person-2/05-api-json-filtered.png) | `/api/tasks/?q=groceries&workspace_name=demo` JSON. |
-| [06-httpresponse-text.png](screenshots/person-2/06-httpresponse-text.png) | `/api/response-demo/` plain text. |
-| [07-api-response-headers.txt](screenshots/person-2/07-api-response-headers.txt) | `curl -i` output: `Content-Type: application/json` vs `text/plain`, and 403 for a POST without a CSRF token. |
+| [01-get-search.png](screenshots/P1-A3%20Section-2/01-get-search.png) | GET search `?q=groceries&workspace_name=DEMO`: the mixed-case household name matches through `workspace__name__icontains`. |
+| [02-post-form-unsubmitted.png](screenshots/P1-A3%20Section-2/02-post-form-unsubmitted.png) | The POST form before submission, with its prompt. |
+| [03-post-search-results.png](screenshots/P1-A3%20Section-2/03-post-search-results.png) | POST search `air` + `demo`. The address bar shows `/tasks/search/post/` with no search terms. |
+| [04-no-match.png](screenshots/P1-A3%20Section-2/04-no-match.png) | The `{% empty %}` state for an unmatched search. |
+| [05-api-json-filtered.png](screenshots/P1-A3%20Section-2/05-api-json-filtered.png) | `/api/tasks/?q=groceries&workspace_name=demo` JSON. |
+| [06-httpresponse-text.png](screenshots/P1-A3%20Section-2/06-httpresponse-text.png) | `/api/response-demo/` plain text. |
+| [07-api-response-headers.txt](screenshots/P1-A3%20Section-2/07-api-response-headers.txt) | `curl -i` output: `Content-Type: application/json` vs `text/plain`, and 403 for a POST without a CSRF token. |
