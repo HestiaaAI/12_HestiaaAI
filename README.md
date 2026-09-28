@@ -156,8 +156,8 @@ python manage.py test
 python manage.py check
 ```
 
-The main-branch suite has three test methods covering all four grading views,
-normal and empty rendering, inheritance, search and escaping. All styling is
+The test suite covers the grading views, normal and empty rendering,
+inheritance, search, escaping, authentication, forms, navigation and analytics. All styling is
 local CSS; no additional frontend runtime or build tools are needed.
 
 The production-mode `runserver` command above is only a configuration demo,
@@ -165,3 +165,52 @@ not a deployment procedure. Both commands serve local CSS for grading.
 Submit the public GitHub repository link on Canvas after reviewing and
 committing/pushing the notes and screenshot files. Uncommitted files are not
 visible to the professor through GitHub.
+
+
+## P1-A3 — Person 3: Task statistics and charts
+
+The statistics page displays all Task definitions, their total count and counts
+grouped by priority using Django ORM `annotate()` and `Count()`. A Matplotlib
+bar chart uses those database counts and is served as an in-memory PNG through
+`BytesIO` and `HttpResponse`; the page includes a caption, alt text and textual
+counts. Scheduled task occurrences are not counted.
+
+With the virtual environment activated and `.env` configured:
+
+```bash
+python -m pip install -r requirements.txt
+python manage.py migrate
+python manage.py seed_template_demo
+python manage.py runserver 8021
+```
+
+The seed command is optional when fictional tasks already exist.
+
+| Output | URL | Named route |
+|---|---|---|
+| Statistics, summaries and full list | http://127.0.0.1:8021/analytics/tasks/ | `analytics:task-stats` |
+| PNG chart | http://127.0.0.1:8021/analytics/tasks/priority.png | `analytics:task-priority-chart` |
+
+Use **Task statistics** in the shared navigation. Task titles link to detail
+pages through `get_absolute_url()`. The page reuses `base.html` and the shared
+Hestia card styles. Tasks created through the task board appear after reloading
+the statistics page. These are local development URLs, not a deployed site.
+
+Run `python manage.py test analytics` for the seven analytics tests, or
+`python manage.py test` for the combined suite. The integration run on September
+28, 2026 passed all 57 tests.
+
+Screenshot evidence (captured September 28 from the local browser):
+
+- [Statistics totals and priority summary](docs/screenshots/person-3/01-task-statistics.png)
+- [Direct PNG endpoint](docs/screenshots/person-3/02-priority-chart.png)
+- [Embedded chart, caption and first task](docs/screenshots/person-3/03-embedded-chart.png)
+- [Remaining tasks and footer](docs/screenshots/person-3/04-task-list.png)
+
+The page screenshots cover successive portions of the current narrow browser
+viewport. They show three fictional tasks: Low=1, Medium=1, High=1, Urgent=0.
+
+Assignment analytics and the legacy task list/detail pages display global demo
+data; the task board separately enforces household memberships. Use fictional
+data for this assignment. Apply household authorization consistently to both
+analytics endpoints before using them for private household data.

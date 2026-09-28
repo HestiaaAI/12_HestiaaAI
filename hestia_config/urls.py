@@ -20,6 +20,7 @@ from django.urls import include, path
 from hestia_config.views import HomePageView
 
 urlpatterns = [
+    path("analytics/", include("analytics.urls")),
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),
