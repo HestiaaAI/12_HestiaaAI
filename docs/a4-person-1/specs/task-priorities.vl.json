@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "description": "Task definitions grouped by priority from the public Hestia database API.",
   "title": "Tasks by priority",
   "data": {"url": "http://127.0.0.1:8000/api/charts/task-priorities/", "format": {"type": "json"}},
