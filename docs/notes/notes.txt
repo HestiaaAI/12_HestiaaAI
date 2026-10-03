@@ -376,3 +376,21 @@ No authentication routes or email verification settings were changed.
 README includes direct setup; optional disposable demo requires no login.
 Verification: 77 tests passed, including anonymous creation, invalid household,
 CSRF rejection/acceptance, no-household feedback, and analytics integration.
+
+
+Week of 2026-10-02 — A4 Part 3: Exports and reports (Person 3)
+Public reports: /reports/tasks/; downloads: /reports/tasks/export.csv and
+/reports/tasks/export.json. reports/urls.py owns all three named routes.
+reports/views.py uses the existing Task model with no new tables/dependencies.
+Both formats export id, title, household, task_type and priority in ID order.
+CSV uses csv.writer for commas/quotes/newlines and a header row. Potential
+spreadsheet formulas are prefixed with an apostrophe; JSON keeps original text.
+JsonResponse uses indent=2 and generated_at, record_count, tasks metadata.
+Content-Disposition attachment filenames use UTC YYYY-MM-DD_HH-MM timestamps.
+The template extends base.html, offers both download buttons, and renders two
+ORM Count groupings (priority and task type), a total and table empty states.
+Six new tests cover public routes, groups, totals, filenames, metadata, CSV
+quoting, formula safety, empty data and rejection of POST. Full suite: 83 passed.
+Normal development setup works without login. Root include and Reports nav link
+are already wired; no changes to other members' API/chart/deployment code.
+SQLite publication remains Person 4's responsibility.
