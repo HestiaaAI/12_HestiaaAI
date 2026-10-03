@@ -20,6 +20,7 @@ from django.urls import include, path
 from hestia_config.views import HomePageView
 
 urlpatterns = [
+    path("vega-lite/", include("analytics.vega_urls")),
     path("reports/", include("reports.urls")),
     path("analytics/", include("analytics.urls")),
     path("", HomePageView.as_view(), name="home"),

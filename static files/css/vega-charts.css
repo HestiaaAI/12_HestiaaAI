@@ -1,0 +1,10 @@
+.chart-intro { max-width: 780px; padding: 32px 0 24px; }
+.chart-eyebrow { color: #5946a8; font-size: .8rem; font-weight: 700; letter-spacing: .15em; }
+.chart-intro h1 { font-size: clamp(1.8rem, 4vw, 2.6rem); line-height: 1.15; }
+.chart-card { background: white; border: 1px solid #ded9e9; border-radius: 16px; padding: 24px; margin: 0 0 24px; }
+.chart-card h2 { margin-top: 0; }
+.chart-host { width: 100%; min-height: 310px; overflow-x: auto; }
+.chart-host.vega-embed { display: block; }
+.chart-links { display: flex; flex-wrap: wrap; gap: 12px 24px; border-top: 1px solid #ece8f2; padding-top: 16px; }
+.chart-status { color: #5946a8; }
+@media (max-width: 600px) { .chart-card { padding: 16px; } }

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Task definitions grouped by priority from the public Hestia database API.",
+  "title": "Tasks by priority",
+  "data": {"url": "http://127.0.0.1:8000/api/charts/task-priorities/", "format": {"type": "json"}},
+  "width": "container",
+  "height": 280,
+  "mark": {"type": "bar", "color": "#5946a8", "cornerRadiusTopLeft": 5, "cornerRadiusTopRight": 5},
+  "encoding": {
+    "x": {"field": "label", "type": "ordinal", "sort": ["Low", "Medium", "High", "Urgent"], "title": "Priority", "axis": {"labelAngle": 0}},
+    "y": {"field": "count", "type": "quantitative", "title": "Number of tasks", "axis": {"tickMinStep": 1}, "scale": {"zero": true}},
+    "tooltip": [{"field": "label", "type": "nominal", "title": "Priority"}, {"field": "count", "type": "quantitative", "title": "Tasks", "format": "d"}]
+  },
+  "config": {"font": "Arial", "view": {"stroke": null}, "axis": {"labelFontSize": 12, "titleFontSize": 13}, "title": {"fontSize": 18, "anchor": "start", "offset": 20}}
+}
