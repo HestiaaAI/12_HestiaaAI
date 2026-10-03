@@ -17,7 +17,11 @@ env/
 NOTES.md
 
 # Django
-db.sqlite3
+# A4 requires the fictional assignment db.sqlite3 to be committed.
+*.sqlite3-journal
+*.sqlite3-wal
+*.sqlite3-shm
+.local-backups/
 staticfiles/
 media/
 *.log

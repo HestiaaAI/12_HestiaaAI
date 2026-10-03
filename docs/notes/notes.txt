@@ -394,3 +394,29 @@ quoting, formula safety, empty data and rejection of POST. Full suite: 83 passed
 Normal development setup works without login. Root include and Reports nav link
 are already wired; no changes to other members' API/chart/deployment code.
 SQLite publication remains Person 4's responsibility.
+
+Assignment 4 — Person 4 readiness (October 3, 2026)
+==================================================
+Current A4 instructions override earlier database-ignore guidance in this history.
+db.sqlite3 is now a committed fictional assignment dataset: one household,
+three tasks, all migrations, and no accounts or sessions. The previous local
+database was backed up privately. No authentication is required for A4 pages.
+
+Static assets use the existing project-level "static files/" directory.
+STATIC_URL is /static/ and collectstatic writes to ignored staticfiles/.
+base.html loads static and links the shared CSS with the static template tag.
+Reports and charts were visually checked with development and production settings.
+Production accepts the explicit DJANGO_ALLOWED_HOSTS environment list so the
+PythonAnywhere hostname can be configured without editing source code.
+
+Both settings passed 91 tests, with no migration drift or dependency conflicts.
+Twenty public assignment routes and their local static assets passed HTTP checks
+in each mode. See docs/a4-person-4/ for screenshots and verification.json.
+The requirements file pins the tested environment, including requests for the
+remaining external-API work. Local disk usage is below the 512 MB assignment cap;
+server disk usage must also be checked in class.
+
+Parts 4.3/4.4 and deployed Vega editor validation remain in class. Person 2's
+external API is not yet in the reviewed main branch. The full A4 submission is
+not marked complete until those requirements and branch integration are done.
+The deployment checklist and precise commands are in docs/a4-person-4/README.md.

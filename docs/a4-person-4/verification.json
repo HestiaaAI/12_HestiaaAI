@@ -1,0 +1,262 @@
+{
+  "checked_at": "2026-10-03T16:44:14.629157+00:00",
+  "modes": {
+    "development": {
+      "routes": [
+        {
+          "path": "/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/cbv-generic/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/1/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/manage/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/search/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/search/post/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/analytics/tasks/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/analytics/tasks/priority.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/reports/tasks/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/reports/tasks/export.csv",
+          "status": 200,
+          "content_type": "text/csv; charset=utf-8"
+        },
+        {
+          "path": "/reports/tasks/export.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/vega-lite/chart1.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/chart2.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/chart1.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/vega-lite/chart2.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/api/tasks/",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/api/response-demo/",
+          "status": 200,
+          "content_type": "text/plain"
+        },
+        {
+          "path": "/api/charts/task-priorities/",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/api/charts/task-creations/",
+          "status": 200,
+          "content_type": "application/json"
+        }
+      ],
+      "static_assets": [
+        "/static/css/hestia.css?v=20260926-1",
+        "/static/css/reports.css",
+        "/static/css/style.css?v=1791045854",
+        "/static/css/vega-charts.css",
+        "/static/images/hestia-mark.svg",
+        "/static/js/vega-charts.js"
+      ],
+      "all_static_assets_match_source": true
+    },
+    "production": {
+      "routes": [
+        {
+          "path": "/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/cbv-generic/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/1/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/manage/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/search/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/tasks/search/post/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/analytics/tasks/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/analytics/tasks/priority.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/reports/tasks/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/reports/tasks/export.csv",
+          "status": 200,
+          "content_type": "text/csv; charset=utf-8"
+        },
+        {
+          "path": "/reports/tasks/export.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/",
+          "status": 200,
+          "content_type": "text/html; charset=utf-8"
+        },
+        {
+          "path": "/vega-lite/chart1.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/chart2.json",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/vega-lite/chart1.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/vega-lite/chart2.png",
+          "status": 200,
+          "content_type": "image/png"
+        },
+        {
+          "path": "/api/tasks/",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/api/response-demo/",
+          "status": 200,
+          "content_type": "text/plain"
+        },
+        {
+          "path": "/api/charts/task-priorities/",
+          "status": 200,
+          "content_type": "application/json"
+        },
+        {
+          "path": "/api/charts/task-creations/",
+          "status": 200,
+          "content_type": "application/json"
+        }
+      ],
+      "static_assets": [
+        "/static/css/hestia.css?v=20260926-1",
+        "/static/css/reports.css",
+        "/static/css/style.css?v=1791045855",
+        "/static/css/vega-charts.css",
+        "/static/images/hestia-mark.svg",
+        "/static/js/vega-charts.js"
+      ],
+      "all_static_assets_match_source": true
+    }
+  },
+  "database": {
+    "integrity": "ok",
+    "foreign_key_errors": [],
+    "auth_user": 0,
+    "django_session": 0,
+    "account_emailaddress": 0,
+    "households_membership": 0,
+    "households_workspace": 1,
+    "workflows_task": 3,
+    "intake_sourcedocument": 0
+  },
+  "tests": {
+    "development": 91,
+    "production": 91,
+    "fresh_environment_production": 91,
+    "all_passed": true
+  },
+  "checks": [
+    "pip check",
+    "Django system checks",
+    "makemigrations --check --dry-run",
+    "migrate --check",
+    "collectstatic",
+    "SQLite integrity_check and foreign_key_check",
+    "documentation links"
+  ],
+  "limits": {
+    "pythonanywhere_verified": false,
+    "external_api_present": false,
+    "deployment_parts_4_3_4_4": "in class"
+  }
+}
