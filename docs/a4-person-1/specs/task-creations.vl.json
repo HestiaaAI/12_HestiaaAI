@@ -1,0 +1,16 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "description": "Daily task creation counts in UTC; missing dates between first and last creation are zero-filled by the API.",
+  "title": "Tasks created over time",
+  "data": {"url": "http://127.0.0.1:8000/api/charts/task-creations/", "format": {"type": "json"}},
+  "width": "container",
+  "height": 280,
+  "transform": [{"calculate": "utcFormat(toDate(datum.date), '%Y-%m-%d')", "as": "date_label"}],
+  "mark": {"type": "line", "point": true, "color": "#267c75", "strokeWidth": 3},
+  "encoding": {
+    "x": {"field": "date", "type": "temporal", "scale": {"type": "utc"}, "title": "Creation date (UTC)", "axis": {"format": "%b %d", "tickCount": 7}},
+    "y": {"field": "count", "type": "quantitative", "title": "Tasks created", "axis": {"tickMinStep": 1}, "scale": {"zero": true}},
+    "tooltip": [{"field": "date_label", "type": "nominal", "title": "Date (UTC)"}, {"field": "count", "type": "quantitative", "title": "Tasks created", "format": "d"}]
+  },
+  "config": {"font": "Arial", "view": {"stroke": null}, "axis": {"labelFontSize": 12, "titleFontSize": 13}, "title": {"fontSize": 18, "anchor": "start", "offset": 20}}
+}

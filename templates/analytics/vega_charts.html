@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Task charts | Hestia{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/vega-charts.css' %}">{% endblock %}
+{% block content %}
+<header class="chart-intro">
+    <p class="chart-eyebrow">HOUSEHOLD INSIGHTS</p>
+    <h1>A clearer picture of your tasks.</h1>
+    <p>Explore priorities and the rhythm of task creation across all households.</p>
+    <p>Live summaries of task definitions, refreshed when you open this page. These charts do not measure completed tasks.</p>
+    <a href="{% url 'reports:task-report' %}">View reports &amp; export task records &rarr;</a>
+</header>
+<section class="chart-card" aria-labelledby="priority-heading">
+    <h2 id="priority-heading">Tasks by priority</h2>
+    <p>Where does the work need attention? Each bar counts task definitions in one priority.</p>
+    <div id="priority-chart" class="chart-host" data-spec="{% url 'vega:spec' 'chart1' %}" aria-label="Bar chart of tasks by priority"></div>
+    <p class="chart-status" role="status">Loading chart…</p>
+    <div class="chart-links"><a href="{% url 'api:chart-priorities' %}">Source JSON</a><a href="{% url 'vega:spec' 'chart1' %}" download="task-priorities.vl.json">Download Vega-Lite spec</a><a href="{% url 'vega:image' 'chart1' %}">Saved PNG snapshot</a></div>
+</section>
+<section class="chart-card" aria-labelledby="creation-heading">
+    <h2 id="creation-heading">Tasks created over time</h2>
+    <p>Daily task creation in UTC. Days without new tasks between the first and last dates are shown as zero.</p>
+    <div id="creation-chart" class="chart-host" data-spec="{% url 'vega:spec' 'chart2' %}" aria-label="Line chart of daily task creation"></div>
+    <p class="chart-status" role="status">Loading chart…</p>
+    <div class="chart-links"><a href="{% url 'api:chart-creations' %}">Source JSON</a><a href="{% url 'vega:spec' 'chart2' %}" download="task-creations.vl.json">Download Vega-Lite spec</a><a href="{% url 'vega:image' 'chart2' %}">Saved PNG snapshot</a></div>
+</section>
+<p>PNG links show the saved submission snapshots. Use a chart’s menu to export its current live view or open it in the Vega editor.</p>
+<noscript><p>Enable JavaScript to view the interactive charts, or use the source JSON and saved PNG links above.</p></noscript>
+{% endblock %}
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/vega@5.30.0/build/vega.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-lite@5.20.1/build/vega-lite.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vega-embed@6.26.0/build/vega-embed.min.js"></script>
+<script src="{% static 'js/vega-charts.js' %}"></script>
+{% endblock %}

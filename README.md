@@ -1,5 +1,12 @@
 # 12_HestiaAI
 
+## A4 Person 1: Internal API and Vega-Lite
+
+Open `/vega-lite/` for the public task-priority bar chart and daily-creation line
+chart, both loaded from Hestia's database-backed JSON APIs. Downloadable specs,
+saved PNG endpoints, screenshots and deployment handoff are documented in
+[the Person 1 guide](docs/a4-person-1/README.md).
+
 Hestia AI is a household operations app for INFO 490 Team 12. It helps households organize documents, inventory, shopping needs, and shared responsibilities.
 
 ## Setup
@@ -17,7 +24,8 @@ cp -n .env.example .env
 Put a random Django `SECRET_KEY` in `.env`. You can generate one with
 `python -c 'import secrets; print(secrets.token_urlsafe(64))'`.
 `OPENAI_API_KEY` can be left blank for the current app; no AI API calls are
-implemented yet. Do not commit `.env`, `.venv`, or `db.sqlite3`.
+implemented yet. Do not commit `.env` or `.venv`. For A4, Person 4 must
+prepare and commit the assignment `db.sqlite3` and remove its ignore rule.
 
 ```bash
 python manage.py migrate
