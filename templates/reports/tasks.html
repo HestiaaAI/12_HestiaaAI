@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Task reports | Hestia{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/reports.css' %}">{% endblock %}
+{% block content %}
+<section class="reports" aria-labelledby="report-title">
+    <p class="report-eyebrow">HOUSEHOLD OVERVIEW</p>
+    <h1 id="report-title">Task reports</h1>
+    <p>Explore all assignment tasks by priority and type, or download the records.</p>
+    <p class="report-total">Total tasks <strong>{{ total_tasks }}</strong></p>
+    <div class="report-downloads">
+        <a href="{% url 'reports:tasks-csv' %}" class="report-button">Download CSV</a>
+        <a href="{% url 'reports:tasks-json' %}" class="report-button">Download JSON</a>
+    </div>
+    <p class="report-help">Both downloads include all tasks, ordered by ID. Filenames use UTC timestamps. Scheduled occurrences are not counted.</p>
+    <div class="report-grid">
+        <table>
+            <caption>Tasks by priority</caption>
+            <thead><tr><th scope="col">Priority</th><th scope="col">Tasks</th></tr></thead>
+            <tbody>{% for row in priority_summary %}
+                <tr><th scope="row">{{ row.label }}</th><td>{{ row.count }}</td></tr>
+            {% empty %}<tr><td colspan="2">No tasks yet. Add a task to see the summary.</td></tr>{% endfor %}</tbody>
+        </table>
+        <table>
+            <caption>Tasks by type</caption>
+            <thead><tr><th scope="col">Task type</th><th scope="col">Tasks</th></tr></thead>
+            <tbody>{% for row in type_summary %}
+                <tr><th scope="row">{{ row.label }}</th><td>{{ row.count }}</td></tr>
+            {% empty %}<tr><td colspan="2">No tasks yet. Add a task to see the summary.</td></tr>{% endfor %}</tbody>
+        </table>
+    </div>
+    <p><a href="{% url 'task_forms:board' %}">Go to task board</a></p>
+</section>
+{% endblock %}

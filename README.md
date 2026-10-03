@@ -297,3 +297,31 @@ Assignment analytics and the legacy task list/detail pages display global demo
 data; the task board now also allows public access for the assignment. Use fictional
 data for this assignment. Apply household authorization consistently to both
 analytics endpoints before using them for private household data.
+
+
+## A4 Part 3 — Exports and reports (Person 3)
+
+Open **Reports** in the navigation, or `/reports/tasks/`. No sign-in is required.
+The page shows the total number of Task definitions, grouped counts by priority,
+and grouped counts by task type. Tables have headers and empty-state messages.
+Scheduled occurrences are excluded. Use fictional assignment data only.
+
+| Output | URL | Named route |
+|---|---|---|
+| Reports page | `/reports/tasks/` | `reports:task-report` |
+| Download CSV | `/reports/tasks/export.csv` | `reports:tasks-csv` |
+| Download JSON | `/reports/tasks/export.json` | `reports:tasks-json` |
+
+Both download buttons export every Task, ordered by ID, with the same fields:
+`id`, `title`, `household`, `task_type`, `priority`. Choice values use model codes.
+CSV uses UTF-8, a header row and proper quoting. Formula-looking text is prefixed
+with an apostrophe for spreadsheet safety; JSON preserves the original text.
+JSON is indented by two spaces and includes `generated_at` (ISO UTC timestamp),
+`record_count`, and `tasks`. Both responses use attachment headers with filenames
+such as `tasks_2026-10-02_20-00.csv` or `.json` (UTC).
+
+Use the normal setup, migrations and optional `seed_template_demo` command above.
+No dependencies or migrations were added. Run `python manage.py test reports`
+for the six Part 3 tests; the full suite passed **83 tests** on October 2, 2026.
+Integration changes are one root URL include and one Reports navigation link.
+Person 4 still owns preparing and publishing the clean assignment SQLite database.
