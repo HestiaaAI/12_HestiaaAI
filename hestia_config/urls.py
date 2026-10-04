@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from api.views import product_compare_page
 from hestia_config.views import HomePageView
 
 urlpatterns = [
@@ -27,6 +28,7 @@ urlpatterns = [
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),
     path("admin/", admin.site.urls),
+    path("lookup/", product_compare_page, name="product-lookup"),
     path("api/", include("api.urls")),
     path("tasks/search/", include("workflows.search_urls")),
     path("tasks/manage/", include("workflows.forms_urls")),

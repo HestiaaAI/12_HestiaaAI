@@ -394,3 +394,17 @@ quoting, formula safety, empty data and rejection of POST. Full suite: 83 passed
 Normal development setup works without login. Root include and Reports nav link
 are already wired; no changes to other members' API/chart/deployment code.
 SQLite publication remains Person 4's responsibility.
+
+
+Week of 2026-10-04 — A4 Part 2: External API (Person 2)
+Product lookup: /lookup/?q=eggs. JSON: /api/external/products/?q=eggs.
+Open Food Facts is the keyless source (not Open-Meteo). requests.get uses
+params, timeout=5, and raise_for_status(). A blank q returns 400 and does
+not call the service. An upstream failure returns 502. Public rows are not
+saved.
+The eggs page shows 1 Maple Street product named Eggs, 1 SUGGESTED shopping
+item named Eggs, and 0 shopping tasks. Open Food Facts contributes 5 products
+out of at least 10000 matches. Nutri-Score is counted from those 5: 3 grade A
+and 2 unknown. All 5 names contain "eggs", so all 5 count as already in the
+household by name only. Screenshot and walkthrough:
+docs/a4-person-2/screenshots/eggs-lookup.jpg and docs/a4-person-2/README.md.
