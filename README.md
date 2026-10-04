@@ -7,6 +7,15 @@ chart, both loaded from Hestia's database-backed JSON APIs. Downloadable specs,
 saved PNG endpoints, screenshots and deployment handoff are documented in
 [the Person 1 guide](docs/a4-person-1/README.md).
 
+## A4 Person 2: External API
+
+`/lookup/?q=eggs` searches [Open Food Facts](https://world.openfoodfacts.org/)
+(keyless) and compares the result with Hestia products,
+shopping-list items, and shopping tasks. Nothing from the public API is stored.
+The same comparison is JSON at `/api/external/products/?q=eggs`.
+The eggs search, including a screenshot, is explained in
+[the Person 2 guide](docs/a4-person-2/README.md).
+
 Hestia AI is a household operations app for INFO 490 Team 12. It helps households organize documents, inventory, shopping needs, and shared responsibilities.
 
 ## Setup

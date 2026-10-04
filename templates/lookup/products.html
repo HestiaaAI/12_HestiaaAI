@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Product lookup | Hestia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">A4 &middot; External API</p>
+    <h1>Product lookup</h1>
+    <p>Search a public food database and compare it with products, shopping items, and shopping tasks already in Hestia. Public results are not saved.</p>
+</section>
+
+<form action="{% url 'product-lookup' %}" method="get" class="search-form" role="search">
+    <div class="search-field">
+        <label for="product-q">Food or product</label>
+        <input id="product-q" type="search" name="q" value="{{ q }}" placeholder="e.g. oat milk" maxlength="80">
+    </div>
+    <button type="submit">Look up</button>
+</form>
+
+{% if not q %}
+    <p class="empty-state">Enter a product name. Try <a href="{% url 'product-lookup' %}?q=oat+milk">oat milk</a>.</p>
+{% elif error %}
+    <section class="empty-state" aria-labelledby="lookup-error-title">
+        <h3 id="lookup-error-title">Lookup failed</h3>
+        <p>{{ error }}</p>
+    </section>
+{% else %}
+    <section class="view-demo" aria-labelledby="lookup-summary-heading">
+        <h2 id="lookup-summary-heading">Comparison</h2>
+        <p>{{ result.analysis.summary }}</p>
+        <p>
+            Source: {{ result.source.name }}.
+            <a href="{% url 'api:product-compare' %}?q={{ q|urlencode }}">Open the JSON API</a>
+        </p>
+    </section>
+
+    <section aria-labelledby="nutriscore-heading">
+        <div class="results-heading"><h2 id="nutriscore-heading">Nutri-Score in these public results</h2></div>
+        <div class="task-grid">
+            {% for row in result.analysis.nutriscore_counts %}
+                <article class="task-card">
+                    <h3>Grade {{ row.grade|upper }}</h3>
+                    <p class="task-description">{{ row.count }} product{{ row.count|pluralize }}</p>
+                </article>
+            {% empty %}
+                <p class="empty-state">No public products returned a Nutri-Score.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <section aria-labelledby="household-heading">
+        <div class="results-heading"><h2 id="household-heading">Already in Hestia</h2></div>
+        <div class="task-grid">
+            {% for product in result.internal.products %}
+                <article class="task-card">
+                    <div class="card-heading">
+                        <h3>{{ product.name }}</h3>
+                        <span class="status-badge">Product</span>
+                    </div>
+                    <dl class="task-details">
+                        <div><dt>Household</dt><dd>{{ product.workspace }}</dd></div>
+                    </dl>
+                </article>
+            {% endfor %}
+            {% for item in result.internal.shopping_items %}
+                <article class="task-card">
+                    <div class="card-heading">
+                        <h3>{{ item.name }}</h3>
+                        <span class="status-badge">{{ item.state }}</span>
+                    </div>
+                    <dl class="task-details">
+                        <div><dt>Household</dt><dd>{{ item.workspace }}</dd></div>
+                    </dl>
+                </article>
+            {% endfor %}
+            {% for task in result.internal.shopping_tasks %}
+                <article class="task-card">
+                    <div class="card-heading">
+                        <h3>{{ task.title }}</h3>
+                        <span class="status-badge">Task</span>
+                    </div>
+                    <dl class="task-details">
+                        <div><dt>Household</dt><dd>{{ task.workspace }}</dd></div>
+                    </dl>
+                </article>
+            {% endfor %}
+            {% if not result.internal.products and not result.internal.shopping_items and not result.internal.shopping_tasks %}
+                <p class="empty-state">No household product, shopping item, or shopping task matches &ldquo;{{ q }}&rdquo;.</p>
+            {% endif %}
+        </div>
+    </section>
+
+    <section aria-labelledby="public-heading">
+        <div class="results-heading"><h2 id="public-heading">Public products</h2></div>
+        <div class="task-grid">
+            {% for product in result.external.products %}
+                <article class="task-card">
+                    <div class="card-heading">
+                        <h3>{{ product.name }}</h3>
+                        <span class="status-badge">{{ product.nutriscore|upper }}</span>
+                    </div>
+                    <dl class="task-details">
+                        <div><dt>Brand</dt><dd>{{ product.brands|default:"Unknown" }}</dd></div>
+                        <div><dt>Quantity</dt><dd>{{ product.quantity|default:"Unknown" }}</dd></div>
+                    </dl>
+                </article>
+            {% empty %}
+                <p class="empty-state">Open Food Facts returned no named products for &ldquo;{{ q }}&rdquo;.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endif %}
+{% endblock %}
