@@ -1,5 +1,18 @@
 # 12_HestiaAI
 
+## Assignment 4 submission status
+
+See the [Person 4 static and deployment checklist](docs/a4-person-4/README.md)
+for local results, screenshots, and the PythonAnywhere in-class steps.
+The repository includes a migrated `db.sqlite3` containing three fictional tasks
+and no accounts. A4 pages require no sign-in. Keep this database tracked for A4;
+keep `.env`, virtual environments, local backups, and `staticfiles/` ignored.
+
+Internal APIs, Vega-Lite charts, external product lookup, exports, and reports
+are integrated after syncing `origin/main` at `d8b7ec1`. Both charts were also
+verified in the official Vega editor running locally. PythonAnywhere deployment
+and deployed-URL verification remain; local checks are not deployment proof.
+
 ## A4 Person 1: Internal API and Vega-Lite
 
 Open `/vega-lite/` for the public task-priority bar chart and daily-creation line
@@ -33,8 +46,8 @@ cp -n .env.example .env
 Put a random Django `SECRET_KEY` in `.env`. You can generate one with
 `python -c 'import secrets; print(secrets.token_urlsafe(64))'`.
 `OPENAI_API_KEY` can be left blank for the current app; no AI API calls are
-implemented yet. Do not commit `.env` or `.venv`. For A4, Person 4 must
-prepare and commit the assignment `db.sqlite3` and remove its ignore rule.
+implemented yet. Do not commit `.env` or `.venv`. A4 explicitly requires committing
+the fictional `db.sqlite3` included here.
 
 ```bash
 python manage.py migrate

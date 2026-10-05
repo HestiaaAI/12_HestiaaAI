@@ -1,3 +1,1 @@
-from django.shortcuts import render
-
-# Create your views here.
+"""Intake page views will be added in a later assignment."""

@@ -1,7 +1,7 @@
 Hestia AI — Team 12 notes
 
 Section 1
-================================
+=========================
 - Created the assignment GitHub repository: 12_HestiaaAI
 - Added instructor 27guptamohit as a collaborator
 - Kept the existing Django apps: households, intake, inventory, workflows
@@ -31,7 +31,7 @@ Section 1
   into docs/wireframes/v1 so it can be included in the repository.
 
 Section 2
-================================
+=========================
 Selected domain model: workflows.models.Task.
 Paths are relative to the local development server (http://127.0.0.1:8000).
 All four views are in workflows/views.py; their named routes are in
@@ -76,7 +76,7 @@ workflows/urls.py and are included under /tasks/ by hestia_config/urls.py.
    Screenshot: docs/screenshots/section-2/04-generic-cbv.jpg
 
 Section 3
-================================
+=========================
 - templates/base.html supplies the HTML document, title block, local CSS,
   header, navigation, main content, footer and reusable content blocks.
 - templates/tasks/task_list.html extends base.html. All four selected views
@@ -131,7 +131,7 @@ on the development branch are not additional Section 2/3 grading URLs.
 
 
 Week of 2026-09-21 — Section 1 verification and access URLs
-==========================================================
+===================================================
 Repository: https://github.com/HestiaaAI/12_HestiaaAI
 Branch for this submission: main. Repository naming follows team_project.
 Instructor 27guptamohit collaborator access was verified through GitHub's
@@ -169,7 +169,7 @@ preserved B03 stash on its product development branch, not on main.
 
 
 URL linking, navigation, and static files
-=========================================
+==================================
 Home page
 The project needs a real page at /. HomePageView in hestia_config/views.py
 is mapped from hestia_config/urls.py with name="home" and renders
@@ -230,7 +230,7 @@ path("tasks/manage/", include("workflows.forms_urls")) and the nav uses
 
 
 Week of 2026-09-28 — P1-A3 Person 3: ORM statistics and Matplotlib
-================================================================
+=========================================================
 Implemented in analytics/views.py, analytics/urls.py and
  templates/analytics/task_stats.html. Root URLconf includes analytics.urls.
 
@@ -304,7 +304,7 @@ or push was made as part of this documentation/screenshot update.
 
 
 Search and API (Person 2)
-=========================
+==================
 Routes
 hestia_config/urls.py mounts path("tasks/search/", include(
 "workflows.search_urls")) and path("api/", include("api.urls")) above the
@@ -395,6 +395,32 @@ Normal development setup works without login. Root include and Reports nav link
 are already wired; no changes to other members' API/chart/deployment code.
 SQLite publication remains Person 4's responsibility.
 
+Assignment 4 — Person 4 readiness (October 3, 2026)
+===========================================
+Current A4 instructions override earlier database-ignore guidance in this history.
+db.sqlite3 is now a committed fictional assignment dataset: one household,
+three tasks, all migrations, and no accounts or sessions. The previous local
+database was backed up privately. No authentication is required for A4 pages.
+
+Static assets use the existing project-level "static files/" directory.
+STATIC_URL is /static/ and collectstatic writes to ignored staticfiles/.
+base.html loads static and links the shared CSS with the static template tag.
+Reports and charts were visually checked with development and production settings.
+Production accepts the explicit DJANGO_ALLOWED_HOSTS environment list so the
+PythonAnywhere hostname can be configured without editing source code.
+
+Both settings passed 91 tests, with no migration drift or dependency conflicts.
+Twenty public assignment routes and their local static assets passed HTTP checks
+in each mode. See docs/a4-person-4/ for screenshots and verification.json.
+The requirements file pins the tested environment, including requests for the
+remaining external-API work. Local disk usage is below the 512 MB assignment cap;
+server disk usage must also be checked in class.
+
+Parts 4.3/4.4 and deployed Vega editor validation remain in class. Person 2's
+external API is not yet in the reviewed main branch. The full A4 submission is
+not marked complete until those requirements and branch integration are done.
+The deployment checklist and precise commands are in docs/a4-person-4/README.md.
+
 
 Week of 2026-10-04 — A4 Part 2: External API (Person 2)
 Product lookup: /lookup/?q=eggs. JSON: /api/external/products/?q=eggs.
@@ -408,3 +434,9 @@ out of at least 10000 matches. Nutri-Score is counted from those 5: 3 grade A
 and 2 unknown. All 5 names contain "eggs", so all 5 count as already in the
 household by name only. Screenshot and walkthrough:
 docs/a4-person-2/screenshots/eggs-lookup.jpg and docs/a4-person-2/README.md.
+
+October 4 integration update
+Person 2 external API and Person 1 local Vega editor verification are now merged
+from origin/main at d8b7ec1. Earlier October 3 pending-feature notes are historical.
+The dependency conflict retains the tested requests 2.34.2 environment; both
+settings are rechecked with the external API tests. PythonAnywhere is next.
