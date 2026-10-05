@@ -1,5 +1,5 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
   "description": "Daily task creation counts in UTC; missing dates between first and last creation are zero-filled by the API.",
   "title": "Tasks created over time",
   "data": {"url": "http://127.0.0.1:8000/api/charts/task-creations/", "format": {"type": "json"}},

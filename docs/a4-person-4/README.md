@@ -1,7 +1,7 @@
 # A4 Person 4: static files and deployment readiness
 
 Prepared October 3, 2026 on `dev-ddhene2-a4-static-deployment`, based on
-`origin/main` at `0ff762f` (Persons 1 and 3 merged). This guide implements
+`origin/main` at `0ff762f`, then synchronized October 4 with `d8b7ec1` (external API and Vega editor fixes included). This guide implements
 Parts 4.1/4.2 and prepares the in-class Parts 4.3/4.4. It does not claim a live
 deployment or completion of another member's missing feature.
 
@@ -74,7 +74,7 @@ username/domain displayed in the team's account. Confirm a Python 3.13 runtime
 is available in both the Bash console and Web tab for the pinned environment;
 otherwise verify the dependency set on an available supported runtime first.
 
-- [ ] Merge the Person 4 branch and Person 2 external API into `main`; confirm
+- [ ] Merge the Person 4 branch into `main` (Person 2 is already merged); confirm
   GitHub shows `db.sqlite3`. Keep the deployment on SQLite for A4.
 - [ ] In a PythonAnywhere Bash console:
 
@@ -139,15 +139,21 @@ The project's settings load `.env` from its absolute project path automatically.
 
 ## Remaining team requirements
 
-As of the reviewed base, there are no open PRs and no external-API implementation
-in the fetched branches. Person 2 still needs a keyless API other than Open-Meteo,
-query input, `requests.get(params=..., timeout=5)`, `raise_for_status()`, proper
-error handling, and processing that combines external and internal data without
-storing external results, exposed through a new internal endpoint.
+Person 2's Open Food Facts integration is now merged: `/lookup/?q=eggs`
+and `/api/external/products/?q=eggs`. It performs the required keyless request,
+handles failures, combines internal records, and does not store external rows.
+The committed fictional database has three tasks but no product/shopping-list
+rows, so the older Person 2 screenshot's Maple Street counts are illustrative
+historical evidence, not expected counts for this database.
 
-Person 1's guide explicitly leaves online Vega editor rendering for the deployed
-URL; local embedding is verified. This and in-class deployment are remaining
-submission requirements, not passes inferred from automated tests.
+Person 1 has supplied screenshots of both charts working in the official Vega
+editor locally. The updated website/specs use compatible Vega 6 / Vega-Lite 6
+versions. The deployment and editor recheck against public HTTPS URLs remain.
+
+October 3's `verification.json` is historical evidence. See `sync-verification.txt`
+for the October 4 integrated branch check. The dependency merge retains our
+pinned `requests==2.34.2`, verified against Person 2's tests rather than downgrading
+the frozen environment to their separate `2.32.5` pin.
 
 Official deployment references:
 [PythonAnywhere existing Django projects](https://help.pythonanywhere.com/pages/DeployExistingDjangoProject/)

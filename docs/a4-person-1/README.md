@@ -36,13 +36,15 @@ These counts describe task definitions, not scheduled occurrences or completions
 - [Bar Vega-Lite JSON](specs/task-priorities.vl.json)
 - [Line Vega-Lite JSON](specs/task-creations.vl.json)
 - [Working embedded charts screenshot](screenshots/charts-page.jpg)
+- [Bar chart working in the official Vega-Lite editor](screenshots/editor-bar.jpg)
+- [Line chart working in the official Vega-Lite editor](screenshots/editor-line.jpg)
 - [Bar PNG output](outputs/task-priorities.png)
 - [Line PNG output](outputs/task-creations.png)
 
 Both specifications use `data.url`; neither includes inline task data. The
 checked-in specs target `127.0.0.1:8000`. The JSON routes substitute the current
 request origin, so downloading them after deployment gives the deployed API URL.
-The page uses pinned Vega 5.30.0, Vega-Lite 5.20.1 and Vega-Embed 6.26.0 from
+The page uses pinned Vega 6.4.0, Vega-Lite 6.4.3 and Vega-Embed 7.1.0 from
 jsDelivr; internet access is required for these scripts. Source JSON and saved
 PNG links remain available when JavaScript fails.
 
@@ -51,9 +53,11 @@ are explicitly labeled snapshots, not live images. To refresh them, open the
 chart menu, choose Save as PNG and replace the corresponding file in `outputs/`.
 The embedded charts always load current API data when the page opens.
 
-The screenshots and PNGs use the existing three demo tasks created on September
-19, 2026. The line chart therefore has one point. Add tasks on other dates to
-produce additional points; no historical timestamps were altered for screenshots.
+The original PNG snapshots use three demo tasks created on September 19, 2026.
+The editor screenshots were captured on October 3, 2026 with four actual Task
+records: three created September 19 and one created October 3. The editor bar
+counts are Low 1, Medium 2, High 1, Urgent 0. The line shows 3 and 1 on those
+dates, with zero-count dates between them. No timestamps were altered.
 
 ## Vega editor and deployment handoff
 
@@ -63,11 +67,24 @@ server running. The API permits cross-origin reads for the editor. A browser may
 still restrict an HTTPS editor's access to localhost; after deployment, download
 the spec from the deployed JSON route and use its public HTTPS API URL.
 
-Local embedding and PNG export were verified. The online editor accepted both
-specifications but did not render their localhost data in the available
-browser; editor verification against the deployed URL remains a class handoff.
-The current online editor also warns about its v6 runtime when loading the v5
-specifications used by this website.
+Both specifications were loaded and run successfully in the **official Vega
+editor running locally**, with `data.url` fetching the live Django API on port
+8000. No inline data or substitute data files were used. See the two editor
+screenshots above. The local editor is the upstream `vega/editor` application,
+not a custom chart preview. Its source revision is
+`84a605ccc791fd73644ab86b7e25547af044accb`; Vega 6.4.0 and Vega-Lite 6.4.3.
+The website and specs now use matching major versions, avoiding the old v5/v6
+warning and displaying integer count-axis ticks correctly.
+
+The hosted HTTPS editor did not render localhost data in the available browser.
+Running the official editor locally resolved this without changing browser
+security settings or exposing the development server publicly. The repeatable
+Windows setup is in [local-editor.md](local-editor.md).
+
+**Still pending for class:** deploy Hestia, download the specs from the deployed
+`/vega-lite/chart1.json` and `/vega-lite/chart2.json` routes, and repeat the editor
+check using the public HTTPS API URLs. Local editor verification does not claim
+that deployment or the deployed-URL check is complete.
 
 Person 4 still needs to remove `db.sqlite3` from `.gitignore`, prepare the team's
 assignment database, and commit/push it before deployment. Parts 4.3/4.4 stay in

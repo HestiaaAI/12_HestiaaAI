@@ -1,0 +1,26 @@
+October 4, 2026 — integrated A4 verification
+Merged origin/main d8b7ec1 into dev-ddhene2-a4-static-deployment.
+
+Conflict resolutions:
+- docs/notes/notes.txt: retain both Person 4 and Person 2 entries; add current status.
+- requirements.txt: retain the frozen tested environment, requests==2.34.2.
+- Update README and deployment guide to reflect merged external API and local editor proof.
+
+Results:
+- Development settings: 98 tests passed.
+- Production settings: 98 tests passed.
+- pip check: no broken requirements.
+- Django system checks: no issues.
+- makemigrations --check --dry-run: no changes detected.
+- Production collectstatic: 135 assets present, no updates needed.
+- /lookup/: HTTP 200.
+- /api/external/products/?q=eggs: live HTTP 200, ok=true, five external products.
+- /vega-lite/, /vega-lite/chart1.json, /vega-lite/chart2.json: HTTP 200.
+- SHA-256 of db.sqlite3 unchanged before/after read-only live requests.
+- No unresolved merge markers or unmerged files.
+
+Still to perform on PythonAnywhere:
+Configure web app/runtime/hostname/WSGI/static mapping, install pinned requirements,
+verify the tracked SQLite database, reload, and check deployed APIs and charts.
+Repeat the external request there because outbound networking differs by account.
+Repeat Vega editor checks with public HTTPS API URLs.

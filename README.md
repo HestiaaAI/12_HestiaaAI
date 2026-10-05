@@ -8,10 +8,10 @@ The repository includes a migrated `db.sqlite3` containing three fictional tasks
 and no accounts. A4 pages require no sign-in. Keep this database tracked for A4;
 keep `.env`, virtual environments, local backups, and `staticfiles/` ignored.
 
-Internal APIs, Vega-Lite charts, exports, and reports are merged. The external API
-integration (Person 2) is not present in the reviewed base `0ff762f` and remains
-a team submission requirement. PythonAnywhere deployment and deployed Vega
-editor verification remain in-class work; local checks are not deployment proof.
+Internal APIs, Vega-Lite charts, external product lookup, exports, and reports
+are integrated after syncing `origin/main` at `d8b7ec1`. Both charts were also
+verified in the official Vega editor running locally. PythonAnywhere deployment
+and deployed-URL verification remain; local checks are not deployment proof.
 
 ## A4 Person 1: Internal API and Vega-Lite
 
@@ -19,6 +19,15 @@ Open `/vega-lite/` for the public task-priority bar chart and daily-creation lin
 chart, both loaded from Hestia's database-backed JSON APIs. Downloadable specs,
 saved PNG endpoints, screenshots and deployment handoff are documented in
 [the Person 1 guide](docs/a4-person-1/README.md).
+
+## A4 Person 2: External API
+
+`/lookup/?q=eggs` searches [Open Food Facts](https://world.openfoodfacts.org/)
+(keyless) and compares the result with Hestia products,
+shopping-list items, and shopping tasks. Nothing from the public API is stored.
+The same comparison is JSON at `/api/external/products/?q=eggs`.
+The eggs search, including a screenshot, is explained in
+[the Person 2 guide](docs/a4-person-2/README.md).
 
 Hestia AI is a household operations app for INFO 490 Team 12. It helps households organize documents, inventory, shopping needs, and shared responsibilities.
 

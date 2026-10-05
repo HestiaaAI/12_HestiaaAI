@@ -1,8 +1,11 @@
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from workflows.models import Task
 from workflows.task_queries import filter_task_queryset
+
+from .external import ExternalAPIError, compare_products
 
 # Explicit allowlist: descriptions, locations, documents, and membership
 # details stay out of the public response.
@@ -29,3 +32,39 @@ def task_list_api(request):
 def response_demo(request):
     """Section 6 comparison: HttpResponse returns raw text with the MIME type we choose."""
     return HttpResponse("Hestia task API", content_type="text/plain")
+
+
+@require_GET
+def product_compare_api(request):
+    """A4: JSON comparison of ?q= against Open Food Facts and Hestia rows."""
+    try:
+        payload = compare_products(request.GET.get("q", ""))
+    except ExternalAPIError as exc:
+        return JsonResponse({"ok": False, "error": exc.message}, status=exc.status)
+    return JsonResponse(payload)
+
+
+@require_GET
+def product_compare_page(request):
+    """Same comparison as the JSON API, rendered for a browser."""
+    query = request.GET.get("q", "")
+    if not query.strip():
+        return render(
+            request,
+            "lookup/products.html",
+            {"q": "", "result": None, "error": None},
+        )
+    try:
+        result = compare_products(query)
+    except ExternalAPIError as exc:
+        return render(
+            request,
+            "lookup/products.html",
+            {"q": query.strip(), "result": None, "error": exc.message},
+            status=exc.status,
+        )
+    return render(
+        request,
+        "lookup/products.html",
+        {"q": result["query"], "result": result, "error": None},
+    )
