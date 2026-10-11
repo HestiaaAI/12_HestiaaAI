@@ -1,0 +1,19 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Live task priority totals from Hestia's public production database API. No task titles or household identifiers are exposed.",
+  "title": "Hestia: tasks by priority",
+  "data": {
+    "url": "https://hestia12.pythonanywhere.com/api/charts/task-priorities/",
+    "format": {"type": "json"}
+  },
+  "width": 460,
+  "height": 300,
+  "mark": {"type": "bar", "cornerRadiusTopLeft": 4, "cornerRadiusTopRight": 4},
+  "encoding": {
+    "x": {"field": "label", "type": "ordinal", "sort": ["Low", "Medium", "High", "Urgent"], "title": "Priority", "axis": {"labelAngle": 0}},
+    "y": {"field": "count", "type": "quantitative", "title": "Number of tasks", "axis": {"tickMinStep": 1}, "scale": {"zero": true}},
+    "color": {"field": "label", "type": "nominal", "scale": {"domain": ["Low", "Medium", "High", "Urgent"], "range": ["#4c956c", "#e9b44c", "#df7a32", "#b83b4b"]}, "legend": null},
+    "tooltip": [{"field": "label", "type": "nominal", "title": "Priority"}, {"field": "count", "type": "quantitative", "title": "Tasks", "format": "d"}]
+  },
+  "config": {"view": {"stroke": null}, "font": "Arial", "axis": {"labelFontSize": 12, "titleFontSize": 13}, "title": {"fontSize": 18, "anchor": "start", "offset": 20}}
+}
