@@ -1,4 +1,4 @@
-"""Public A4 reports and downloads for fictional assignment Task data."""
+"""Reports and downloads protected by ApiAccessMiddleware."""
 import csv
 
 from django.db.models import Count, F

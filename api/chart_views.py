@@ -1,5 +1,6 @@
-"""Public, aggregate-only Task data for the A4 Vega-Lite charts."""
+"""Task aggregates: priorities are public; daily creation data requires login."""
 from datetime import timedelta, timezone
+from django.contrib.auth.decorators import login_not_required
 
 from django.db.models import Count
 from django.db.models.functions import TruncDate
@@ -10,17 +11,19 @@ from analytics.views import priority_counts
 from workflows.models import Task
 
 
-def chart_response(rows):
+def chart_response(rows, *, public=False):
     response = JsonResponse(rows, safe=False)
-    # These anonymous aggregate endpoints can also be read by the Vega editor.
-    response["Access-Control-Allow-Origin"] = "*"
+    if public:
+        # No credentials or task-level details are exposed to the editor.
+        response["Access-Control-Allow-Origin"] = "*"
     response["Cache-Control"] = "no-store"
     return response
 
 
+@login_not_required
 @require_GET
 def task_priority_summary(request):
-    return chart_response(priority_counts())
+    return chart_response(priority_counts(), public=True)
 
 
 @require_GET

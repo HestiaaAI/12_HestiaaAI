@@ -8,7 +8,7 @@
     <h1>A clearer picture of your tasks.</h1>
     <p>Explore priorities and the rhythm of task creation across all households.</p>
     <p>Live summaries of task definitions, refreshed when you open this page. These charts do not measure completed tasks.</p>
-    <a href="{% url 'reports:task-report' %}">View reports &amp; export task records &rarr;</a>
+    {% if user.is_authenticated %}<a href="{% url 'reports:task-report' %}">View reports &amp; export task records &rarr;</a>{% endif %}
 </header>
 <section class="chart-card" aria-labelledby="priority-heading">
     <h2 id="priority-heading">Tasks by priority</h2>
@@ -17,6 +17,7 @@
     <p class="chart-status" role="status">Loading chart…</p>
     <div class="chart-links"><a href="{% url 'api:chart-priorities' %}">Source JSON</a><a href="{% url 'vega:spec' 'chart1' %}" download="task-priorities.vl.json">Download Vega-Lite spec</a><a href="{% url 'vega:image' 'chart1' %}">Saved PNG snapshot</a></div>
 </section>
+{% if user.is_authenticated %}
 <section class="chart-card" aria-labelledby="creation-heading">
     <h2 id="creation-heading">Tasks created over time</h2>
     <p>Daily task creation in UTC. Days without new tasks between the first and last dates are shown as zero.</p>
@@ -24,7 +25,10 @@
     <p class="chart-status" role="status">Loading chart…</p>
     <div class="chart-links"><a href="{% url 'api:chart-creations' %}">Source JSON</a><a href="{% url 'vega:spec' 'chart2' %}" download="task-creations.vl.json">Download Vega-Lite spec</a><a href="{% url 'vega:image' 'chart2' %}">Saved PNG snapshot</a></div>
 </section>
-<p>PNG links show the saved submission snapshots. Use a chart’s menu to export its current live view or open it in the Vega editor.</p>
+{% else %}
+<p><a href="{% url 'accounts:login' %}?next={{ request.path|urlencode }}">Log in</a> to view daily task creation and reports.</p>
+{% endif %}
+<p>PNG links show saved snapshots. Use the public priority chart’s menu to open it in the Vega editor. The daily chart requires a session on this website.</p>
 <noscript><p>Enable JavaScript to view the interactive charts, or use the source JSON and saved PNG links above.</p></noscript>
 {% endblock %}
 {% block extra_js %}

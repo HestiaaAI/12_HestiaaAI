@@ -1,5 +1,11 @@
 # 12_HestiaAI
 
+## A5 public API and Vega-Lite submission
+
+See [Member 3's A5 handoff](docs/a5-member-3/README.md) for the production API,
+submission `.txt`, hosted-editor screenshot, and public/private API contract.
+The A5 access rules supersede older A3/A4 references to public task APIs and exports.
+
 ## Assignment 4 submission status
 
 See the [Person 4 static and deployment checklist](docs/a4-person-4/README.md)
