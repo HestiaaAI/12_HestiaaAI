@@ -1,4 +1,5 @@
 from django.test import TestCase
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 from households.models import Workspace
@@ -6,6 +7,9 @@ from .models import Task
 
 
 class TaskApiTests(TestCase):
+    def setUp(self):
+        self.client.force_login(get_user_model().objects.create_user(username="api-reader"))
+
     @classmethod
     def setUpTestData(cls):
         demo = Workspace.objects.create(name="Demo Household")

@@ -1,4 +1,5 @@
 from unittest.mock import patch
+from django.contrib.auth import get_user_model
 
 import requests
 from django.test import TestCase
@@ -55,6 +56,9 @@ PUBLIC_HITS = {
 
 
 class ProductCompareApiTests(TestCase):
+    def setUp(self):
+        self.client.force_login(get_user_model().objects.create_user(username="api-reader"))
+
     @classmethod
     def setUpTestData(cls):
         demo = Workspace.objects.create(name="Demo Household")

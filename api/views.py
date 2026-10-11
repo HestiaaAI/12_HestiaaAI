@@ -8,7 +8,7 @@ from workflows.task_queries import filter_task_queryset
 from .external import ExternalAPIError, compare_products
 
 # Explicit allowlist: descriptions, locations, documents, and membership
-# details stay out of the public response.
+# details stay out of the authenticated response.
 API_FIELDS = ("task_id", "title", "task_type", "priority")
 
 
