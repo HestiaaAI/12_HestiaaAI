@@ -71,3 +71,19 @@ Use the same public endpoint for the alternative demonstrations.
 
 Do not commit real credentials or account-bearing local database changes.
 The tracked A4 demonstration database is unchanged by this implementation.
+
+
+## Integration update — October 12, 2026
+
+Integrated origin/main at 071914d, including Member 2 Google OAuth and Member 3
+API access control and chart deliverables. Google buttons/configuration and
+social-account tests are preserved. Username signup remains enabled.
+Member 3's ApiAccessMiddleware owns API, export and private chart-output access
+(including no-store responses). AssignmentAccessMiddleware protects the remaining
+private HTML pages. Anonymous exports return JSON 401 rather than redirecting.
+The public Vega page and chart1 outputs remain available; chart2 remains private.
+The private navigation links are hidden for anonymous visitors.
+117 combined tests passed. This supersedes the original implementation notes
+about all Vega routes being private and Google code still needing implementation.
+Real Google credentials, callback behavior and production deployment require
+Member 2's live verification. No credentials were added to this branch.

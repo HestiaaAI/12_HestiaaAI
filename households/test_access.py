@@ -12,8 +12,8 @@ class AssignmentAuthTests(TestCase):
     def test_private_pages_redirect_and_navigation_is_hidden(self):
         for url in ('/tasks/manage/', '/tasks/manual/', '/tasks/render/', '/tasks/cbv-base/',
                     '/tasks/cbv-generic/', '/tasks/1/', '/tasks/search/', '/tasks/search/post/',
-                    '/reports/tasks/', '/reports/tasks/export.csv', '/reports/tasks/export.json',
-                    '/analytics/tasks/', '/analytics/tasks/priority.png', '/lookup/', '/vega-lite/'):
+                    '/reports/tasks/',
+                    '/analytics/tasks/', '/analytics/tasks/priority.png', '/lookup/'):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 302)
@@ -27,7 +27,7 @@ class AssignmentAuthTests(TestCase):
         response = self.client.get('/api/charts/task-priorities/')
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response['Content-Type'], 'application/json')
-        for url in ('/api/tasks/', '/api/response-demo/', '/api/external/products/', '/api/charts/task-creations/'):
+        for url in ('/api/tasks/', '/api/response-demo/', '/api/external/products/', '/api/charts/task-creations/', '/reports/tasks/export.csv', '/reports/tasks/export.json'):
             response = self.client.get(url)
             self.assertEqual(response.status_code, 401)
             self.assertEqual(response.json(), {'error': 'Authentication required.'})

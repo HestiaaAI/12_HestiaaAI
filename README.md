@@ -9,9 +9,15 @@ The only public API is `/api/charts/task-priorities/`.
 
 See the [Member 1 authentication guide](docs/a5-member-1-authentication.md)
 for implementation, team handoff and production checks. Local verification:
-**105 tests passed on October 11, 2026**. Google OAuth and production verification
-remain with Member 2. The A4 sections below describe historical public access;
+**117 tests passed on October 12, 2026** after integrating Members 2 and 3.
+Google OAuth code is integrated; live OAuth and production verification remain. The A4 sections below describe historical public access;
 A5's access rules supersede them.
+
+## A5 public API and Vega-Lite submission
+
+See [Member 3's A5 handoff](docs/a5-member-3/README.md) for the production API,
+submission `.txt`, hosted-editor screenshot, and public/private API contract.
+The A5 access rules supersede older A3/A4 references to public task APIs and exports.
 
 ## Assignment 4 submission status
 

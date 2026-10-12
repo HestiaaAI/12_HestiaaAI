@@ -1,7 +1,6 @@
 """A5 route access policy shared by HTML views and JSON APIs."""
 from django.conf import settings
 from django.contrib.auth.views import redirect_to_login
-from django.http import JsonResponse
 from django.utils.deprecation import MiddlewareMixin
 
 
@@ -12,8 +11,6 @@ class AssignmentAccessMiddleware(MiddlewareMixin):
             return None
         if match.view_name in settings.PUBLIC_API_VIEW_NAMES:
             return None
-        if match.app_name == "api":
-            return JsonResponse({"error": "Authentication required."}, status=401)
-        if match.app_name in {"workflows", "task_forms", "task_search", "reports", "analytics", "vega"} or match.view_name == "product-lookup":
+        if match.app_name in {"workflows", "task_forms", "task_search", "reports", "analytics"} or match.view_name == "product-lookup":
             return redirect_to_login(request.get_full_path(), settings.LOGIN_URL)
         return None

@@ -11,11 +11,15 @@ class ProductionHostTests(SimpleTestCase):
     def hosts(self, value=None):
         environment = os.environ.copy()
         environment.pop("DJANGO_ALLOWED_HOSTS", None)
+        environment["SECRET_KEY"] = "test-only-production-host-settings"
         if value is not None:
             environment["DJANGO_ALLOWED_HOSTS"] = value
         result = subprocess.run(
             [sys.executable, "-c",
-             "import json; from hestia_config.settings.production import ALLOWED_HOSTS; "
+             "import json; from unittest.mock import patch; "
+             # Patch inside the subprocess before settings can load the server's .env.
+             "patch('environ.Env.read_env').start(); "
+             "from hestia_config.settings.production import ALLOWED_HOSTS; "
              "print(json.dumps(ALLOWED_HOSTS))"],
             env=environment, capture_output=True, text=True, check=True,
         )

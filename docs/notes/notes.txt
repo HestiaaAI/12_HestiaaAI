@@ -449,3 +449,6 @@ required for A5 development/production. Only /api/charts/task-priorities/ stays
 public. This supersedes the A4 no-sign-in behavior documented above.
 105 tests passed; no migrations required. Production verification and Google
 OAuth remain pending Member 2 deployment. See docs/a5-member-1-authentication.md.
+
+A5 integration October 12: Members 2/3 code combined; 117 tests passed. Public
+Vega page retained, exports/private APIs return 401; production checks pending.

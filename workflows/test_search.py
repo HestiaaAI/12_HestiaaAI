@@ -135,6 +135,8 @@ class ProjectUrlIntegrationTests(TestCase):
         self.assertContains(response, f'href="{reverse("task_search:get")}"')
 
     def test_search_result_detail_link_returns_200(self):
+        from django.contrib.auth import get_user_model
+        self.client.force_login(get_user_model().objects.create_user(username="api-reader"))
         workspace = Workspace.objects.create(name="Integration Household")
         task = Task.objects.create(workspace=workspace, title="Water the plants")
         response = self.client.get("/tasks/search/", {"q": "plants"})
