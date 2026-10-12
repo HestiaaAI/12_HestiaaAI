@@ -10,7 +10,9 @@ from django.test import Client, TestCase, override_settings
 from django.urls import reverse
 
 
-@override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend", ACCOUNT_SIGNUP_ENABLED=True)
+@override_settings(EMAIL_BACKEND="django.core.mail.backends.locmem.EmailBackend", ACCOUNT_SIGNUP_ENABLED=True,
+                   ACCOUNT_EMAIL_VERIFICATION="mandatory", ACCOUNT_LOGIN_METHODS={"email"},
+                   ACCOUNT_SIGNUP_FIELDS=["email*", "password1*", "password2*"])
 class SignupTests(TestCase):
     def setUp(self):
         cache.clear()

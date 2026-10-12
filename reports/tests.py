@@ -2,6 +2,7 @@ import csv
 import io
 from datetime import datetime
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
@@ -10,6 +11,10 @@ from workflows.models import Task
 
 
 class ReportTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     @classmethod
     def setUpTestData(cls):
         home = Workspace.objects.create(name="Reports demo")
@@ -17,7 +22,7 @@ class ReportTests(TestCase):
         cls.second = Task.objects.create(workspace=home, title="Shopping", priority="LOW", task_type="SHOPPING")
         Task.objects.create(workspace=home, title="Laundry", priority="HIGH", task_type="CHORE")
 
-    def test_public_report_totals_groups_and_download_links(self):
+    def test_authenticated_report_totals_groups_and_download_links(self):
         response = self.client.get(reverse("reports:task-report"))
         self.assertEqual(response.context["total_tasks"], 3)
         self.assertEqual({r["label"]: r["count"] for r in response.context["priority_summary"]}, {"High": 2, "Low": 1})

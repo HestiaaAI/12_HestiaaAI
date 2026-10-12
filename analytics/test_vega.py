@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
@@ -8,6 +9,10 @@ from workflows.models import Task
 
 
 class VegaChartTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     @classmethod
     def setUpTestData(cls):
         home = Workspace.objects.create(name="Chart demo")
@@ -18,6 +23,7 @@ class VegaChartTests(TestCase):
         Task.objects.filter(pk=third.pk).update(created_at=datetime(2026, 9, 21, 0, 1, tzinfo=timezone.utc))
 
     def test_public_priority_api_counts_and_zero_categories(self):
+        self.client.logout()
         response = self.client.get(reverse("api:chart-priorities"))
         self.assertEqual(response["Content-Type"], "application/json")
         self.assertEqual(response["Access-Control-Allow-Origin"], "*")

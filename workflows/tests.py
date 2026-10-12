@@ -1,4 +1,5 @@
 from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
 from django.test import SimpleTestCase, TestCase
 from django.urls import resolve, reverse
 
@@ -30,6 +31,10 @@ class AssignmentRoutingTests(SimpleTestCase):
 
 
 class TaskTemplateTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     routes = ("task-manual", "task-render", "task-cbv-base", "task-cbv-generic")
 
     @classmethod
@@ -97,6 +102,10 @@ class TaskTemplateTests(TestCase):
 
 
 class Person1HomeNavDetailTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     """P1-A3 Person 1: home /, named nav, and Task.get_absolute_url() detail."""
 
     @classmethod
@@ -124,13 +133,13 @@ class Person1HomeNavDetailTests(TestCase):
         self.assertContains(response, 'href="' + reverse("task_forms:board") + '"')
         self.assertContains(response, 'href="' + reverse("task_search:get") + '"')
         self.assertContains(response, 'href="' + reverse("analytics:task-stats") + '"')
-        self.assertContains(response, 'href="' + reverse("accounts:login") + '"')
+        self.assertContains(response, 'action="' + reverse("accounts:logout") + '"')
         self.assertContains(response, "Home")
         self.assertContains(response, "Household tasks")
         self.assertContains(response, "Task board")
         self.assertContains(response, "Search tasks")
         self.assertContains(response, "Task statistics")
-        self.assertContains(response, "Sign in")
+        self.assertContains(response, "Sign out")
 
     def test_task_board_is_mounted_on_the_root_urlconf(self):
         self.assertEqual(reverse("task_forms:board"), "/tasks/manage/")

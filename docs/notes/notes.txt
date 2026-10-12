@@ -440,3 +440,12 @@ Person 2 external API and Person 1 local Vega editor verification are now merged
 from origin/main at d8b7ec1. Earlier October 3 pending-feature notes are historical.
 The dependency conflict retains the tested requests 2.34.2 environment; both
 settings are rechecked with the external API tests. PythonAnywhere is next.
+
+
+A5 Member 1 — October 11, 2026
+Username/password signup and login, POST logout, private HTML/API access gates,
+and authentication-aware navigation are implemented. Email verification is not
+required for A5 development/production. Only /api/charts/task-priorities/ stays
+public. This supersedes the A4 no-sign-in behavior documented above.
+105 tests passed; no migrations required. Production verification and Google
+OAuth remain pending Member 2 deployment. See docs/a5-member-1-authentication.md.

@@ -5,7 +5,7 @@
     <p class="eyebrow">Welcome to Hestia</p>
     <h1 id="auth-title">You’re signed in</h1>
     <p>Signed in as <strong>{{ user.email|default:user.get_username }}</strong>.</p>
-    <p class="auth-help">Household selection is not available yet.</p>
+    <p class="auth-help"><a href="{% url 'task_forms:board' %}">Open your task board</a>.</p>
 {% else %}
     <p class="eyebrow">Welcome home</p>
     <h1 id="auth-title">Sign in to Hestia</h1>
@@ -26,6 +26,7 @@
     </form>
     <p><a href="{% url 'accounts:signup' %}">Create an account</a></p>
     {% if local_email_preview %}<p class="auth-help">Local development: verification emails appear in the server terminal; they are not delivered to an inbox.</p>{% endif %}
-    <p class="auth-help">Use your verified email address. If you have not verified it yet, sign in to request another verification email.</p>
+    {% if email_verification_required %}<p class="auth-help">Use your verified email address. If you have not verified it yet, sign in to request another verification email.</p>
+    {% else %}<p class="auth-help">Sign in with your username or email and password. No email verification is required.</p>{% endif %}
 {% endif %}
 {% endblock %}

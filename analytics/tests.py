@@ -1,5 +1,6 @@
 from io import BytesIO
 
+from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
@@ -8,6 +9,10 @@ from workflows.models import Task, TaskOccurrence
 
 
 class TaskAnalyticsTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     @classmethod
     def setUpTestData(cls):
         home = Workspace.objects.create(name="Analytics demo")
