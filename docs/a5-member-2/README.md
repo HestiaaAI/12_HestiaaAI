@@ -65,3 +65,24 @@ for character with the production URI above, including `https` and the slash.
 If the server creates an `http` callback despite an HTTPS browser request,
 check the PythonAnywhere Web app's HTTPS configuration before changing Google
 Cloud settings.
+
+## Production verification (October 12, 2026)
+
+The deployed site at <https://hestia12.pythonanywhere.com/> runs GitHub main
+commit `071914d` (PR #20). On PythonAnywhere, the OAuth dependencies installed,
+the six `socialaccount` migrations completed, `manage.py check` reported no
+issues, and all five `households.test_google_oauth` tests passed under the
+production settings. `collectstatic` found 135 files already current, and the
+web app was reloaded from the Web tab. The server reports Google OAuth enabled
+without exposing its credentials.
+
+Live checks found the Google button on both `/accounts/login/` and
+`/accounts/signup/`. Posting the login form redirects to `accounts.google.com`
+with `https://hestia12.pythonanywhere.com/accounts/google/login/callback/` as
+its callback. `/api/charts/task-priorities/` remains public (HTTP 200), while
+`/api/charts/task-creations/` and `/api/tasks/` reject anonymous requests
+(HTTP 401). The [production login screenshot](screenshots/production-login.png)
+shows the deployed button.
+
+The Google account-selection, consent, and return-to-site steps still require
+an authorized Google test account. They have not been verified end to end.
