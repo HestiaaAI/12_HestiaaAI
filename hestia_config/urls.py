@@ -27,6 +27,8 @@ urlpatterns = [
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),
+    path("accounts/3rdparty/", include("allauth.socialaccount.urls")),
+    path("accounts/", include("allauth.socialaccount.providers.google.urls")),
     path("admin/", admin.site.urls),
     path("lookup/", product_compare_page, name="product-lookup"),
     path("api/", include("api.urls")),
