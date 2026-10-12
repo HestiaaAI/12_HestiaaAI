@@ -1,0 +1,7 @@
+{% load socialaccount %}
+{% if google_oauth_enabled %}
+<form method="post" action="{% provider_login_url 'google' %}">
+    {% csrf_token %}
+    <button class="auth-submit" type="submit">Continue with Google</button>
+</form>
+{% endif %}

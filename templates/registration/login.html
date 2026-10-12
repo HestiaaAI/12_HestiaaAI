@@ -24,6 +24,7 @@
         {% include "includes/form_field.html" with field=form.password %}
         <button class="auth-submit" type="submit">Sign in</button>
     </form>
+    {% include "includes/google_login_button.html" %}
     <p><a href="{% url 'accounts:signup' %}">Create an account</a></p>
     {% if local_email_preview %}<p class="auth-help">Local development: verification emails appear in the server terminal; they are not delivered to an inbox.</p>{% endif %}
     <p class="auth-help">Use your verified email address. If you have not verified it yet, sign in to request another verification email.</p>

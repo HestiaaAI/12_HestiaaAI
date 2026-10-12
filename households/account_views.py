@@ -20,6 +20,7 @@ class MailFailureMixin:
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["local_email_preview"] = settings.EMAIL_BACKEND == "django.core.mail.backends.console.EmailBackend"
+        context["google_oauth_enabled"] = settings.GOOGLE_OAUTH_ENABLED
         return context
 
 
@@ -29,6 +30,13 @@ class LoginView(MailFailureMixin, AllauthLoginView):
 
 class SignupView(MailFailureMixin, AllauthSignupView):
     template_name = "registration/signup.html"
+
+    def closed(self):
+        return self.response_class(
+            request=self.request,
+            template=self.template_name_signup_closed,
+            context={"google_oauth_enabled": settings.GOOGLE_OAUTH_ENABLED},
+        )
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
