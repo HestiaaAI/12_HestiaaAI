@@ -84,12 +84,17 @@ button:hover, .button-link:hover { background: var(--hestia-primary-dark); }
 .form-field label { display: block; margin-bottom: 6px; font-weight: 600; }
 .form-field input { min-width: 0; }
 .auth-submit { width: 100%; min-height: 44px; }
+.google-login-form { margin-top: 16px; }
 .form-errors { background: #fff0ee; color: #852b20; padding: 12px 16px; border-left: 4px solid #a53528; border-radius: 6px; margin-bottom: 20px; }
 .form-errors p { margin: 0; }
 .field-errors { color: #852b20; margin: 6px 0 0; padding-left: 20px; font-size: 14px; }
 input[aria-invalid="true"] { border-color: #a53528; }
 
-/* Keep sign-out reachable when the header wraps on narrow screens. */
+/* Keep account controls together when the header wraps on narrow screens. */
 .header-inner { flex-wrap: wrap; }
+.header-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.logout-name { font-weight: 600; color: #eeeafa; overflow-wrap: anywhere; }
 .logout-form { margin: 0; }
-.logout-form button { border: 1px solid #eeeafa; min-height: 44px; }
+.logout-form button, .header-signin { border: 1px solid #eeeafa; min-height: 44px; }
+.header-signin { display: inline-flex; align-items: center; padding: 9px 22px; border-radius: 8px; color: white; font-weight: 600; text-decoration: none; }
+.header-signin:hover { background: #ffffff20; }

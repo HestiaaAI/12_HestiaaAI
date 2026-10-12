@@ -29,13 +29,13 @@ class LoginTests(TestCase):
         self.assertContains(response, 'autocomplete="current-password"')
         self.assertNotContains(response, "Household tasks")
 
-    def test_success_without_next_opens_task_board(self):
+    def test_success_without_next_opens_home(self):
         response = self.client.post("/accounts/login/", {
             "login": "priya@example.com", "password": "test-only-password"
         }, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.client.session["_auth_user_id"], str(self.user.pk))
-        self.assertRedirects(response, "/tasks/manage/")
+        self.assertRedirects(response, "/")
         self.assertNotContains(response, 'type="password"')
 
     def test_safe_local_next_is_preserved_on_error_and_used_on_success(self):
@@ -57,7 +57,7 @@ class LoginTests(TestCase):
                 response = self.client.post("/accounts/login/", {
                     "login": "priya@example.com", "password": "test-only-password", "next": target
                 }, secure=True)
-                self.assertRedirects(response, "/tasks/manage/", fetch_redirect_response=False)
+                self.assertRedirects(response, "/", fetch_redirect_response=False)
 
     def test_bad_credentials_retain_username_never_password(self):
         response = self.client.post("/accounts/login/", {
@@ -121,8 +121,19 @@ class LogoutTests(TestCase):
         self.assertContains(response, 'method="post"')
         self.assertContains(response, 'name="csrfmiddlewaretoken"')
         self.assertContains(response, '>Sign out</button>')
+        self.assertContains(response, 'logout-name">logout-test</span>')
         self.client.logout()
-        self.assertNotContains(self.client.get("/accounts/login/"), '>Sign out</button>')
+        response = self.client.get("/")
+        self.assertNotContains(response, '>Sign out</button>')
+        self.assertContains(response, 'header-signin')
+        self.assertNotContains(response, 'class="nav-link" href="/accounts/login/"')
+
+    def test_authenticated_header_shows_full_name_when_available(self):
+        self.user.first_name = "Hestia"
+        self.user.last_name = "Preview"
+        self.user.save(update_fields=["first_name", "last_name"])
+        response = self.client.get("/")
+        self.assertContains(response, 'logout-name">Hestia Preview</span>')
 
     def test_csrf_required_and_valid_token_ends_session(self):
         client = Client(enforce_csrf_checks=True)

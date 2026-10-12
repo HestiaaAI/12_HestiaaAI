@@ -36,7 +36,7 @@ class AssignmentAuthTests(TestCase):
     def test_username_signup_login_and_logout(self):
         data = dict(username='newmember', email='member@example.test', password1='New-member-passphrase-903!', password2='New-member-passphrase-903!')
         response = self.client.post('/accounts/signup/', data)
-        self.assertRedirects(response, '/tasks/manage/')
+        self.assertRedirects(response, '/')
         user = get_user_model().objects.get(username='newmember')
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
@@ -72,7 +72,7 @@ class AssignmentAuthTests(TestCase):
         page = client.get("/accounts/signup/")
         self.assertContains(page, 'name="username"')
         data["csrfmiddlewaretoken"] = client.cookies["csrftoken"].value
-        self.assertRedirects(client.post("/accounts/signup/", data), "/tasks/manage/")
+        self.assertRedirects(client.post("/accounts/signup/", data), "/")
         self.assertIn("_auth_user_id", client.session)
 
     def test_weak_password_and_invalid_email_do_not_create_accounts(self):
