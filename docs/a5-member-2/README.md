@@ -69,7 +69,7 @@ Cloud settings.
 ## Production verification (October 12, 2026)
 
 The deployed site at <https://hestia12.pythonanywhere.com/> runs GitHub main
-commit `071914d` (PR #20). On PythonAnywhere, the OAuth dependencies installed,
+commit `00d1f4c` (including PRs #19 and #22). On PythonAnywhere, the OAuth dependencies installed,
 the six `socialaccount` migrations completed, `manage.py check` reported no
 issues, and all five `households.test_google_oauth` tests passed under the
 production settings. `collectstatic` found 135 files already current, and the
@@ -83,6 +83,15 @@ its callback. `/api/charts/task-priorities/` remains public (HTTP 200), while
 `/api/charts/task-creations/` and `/api/tasks/` reject anonymous requests
 (HTTP 401). The [production login screenshot](screenshots/production-login.png)
 shows the deployed button.
+
+After merging Member 1's authentication work and the account-header update,
+PythonAnywhere was fast-forwarded to `00d1f4c`, static files were collected,
+and the web app was reloaded. The updated production login screenshot shows
+the upper-right Sign in control and spacing above Continue with Google. A
+signed-in browser shows the user's full name beside Sign out and no duplicate
+Sign in navigation link. Direct password login returns home unless a safe
+`next` URL was supplied. The public priority API returns 200, private APIs
+return 401 anonymously, and the reports and chart pages work after login.
 
 The Google account-selection, consent, and return-to-site steps still require
 an authorized Google test account. They have not been verified end to end.
