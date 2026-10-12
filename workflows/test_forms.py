@@ -88,26 +88,25 @@ class TaskBoardTests(TestCase):
         self.client.post(self.url, self.payload())
         self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
 
-    def test_anonymous_get_and_post_without_forged_attribution(self):
+    def test_anonymous_get_and_post_require_login_without_creating_task(self):
         self.client.logout()
-        self.assertContains(self.client.get(self.url), "Buy groceries")
-        response = self.client.post(self.url, self.payload(created_by_membership=self.membership.pk))
-        self.assertEqual(response.status_code, 302)
-        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+        before = Task.objects.count()
+        for response in (self.client.get(self.url), self.client.post(self.url, self.payload())):
+            self.assertRedirects(response, "/accounts/login/?next=" + self.url, fetch_redirect_response=False)
+        self.assertEqual(Task.objects.count(), before)
 
     def test_unknown_household_is_rejected(self):
-        self.client.logout()
         response = self.client.post(self.url, self.payload(workspace=999999))
         self.assertTrue(response.context["create_form"].has_error("workspace"))
         self.assertFalse(Task.objects.filter(title="Water the plants").exists())
 
     def test_no_households_explains_setup(self):
         Workspace.objects.all().delete()
-        self.client.logout()
         self.assertContains(self.client.get(self.url), "No households available")
 
     def test_real_csrf_protection_rejects_missing_token_and_accepts_valid_token(self):
         client = Client(enforce_csrf_checks=True)
+        client.force_login(self.user)
         page = client.get(self.url)
         self.assertContains(page, 'name="csrfmiddlewaretoken"')
         self.assertEqual(client.post(self.url, self.payload()).status_code, 403)

@@ -33,6 +33,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "api.middleware.ApiAccessMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "households.access.AssignmentAccessMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -86,18 +87,20 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "accounts:login"
-# B03 will replace this confirmation page with the household selector.
-LOGIN_REDIRECT_URL = "accounts:login"
+# A5: return to the task board unless a safe local next URL is supplied.
+LOGIN_REDIRECT_URL = "task_forms:board"
+LOGOUT_REDIRECT_URL = "accounts:login"
+PUBLIC_API_VIEW_NAMES = {"api:chart-priorities"}
 
-# Keep the existing User model and admin login; public login uses verified email.
+# Keep the existing User model and allauth for later Google OAuth integration.
 AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
     "allauth.account.auth_backends.AuthenticationBackend",
 ]
 ACCOUNT_ADAPTER = "households.account_adapter.AccountAdapter"
-ACCOUNT_LOGIN_METHODS = {"email"}
-ACCOUNT_SIGNUP_FIELDS = ["email*", "password1*", "password2*"]
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
+ACCOUNT_SIGNUP_FIELDS = ["username*", "email*", "password1*", "password2*"]
+ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_UNIQUE_EMAIL = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
 ACCOUNT_CONFIRM_EMAIL_ON_GET = False
@@ -105,7 +108,7 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = False
 ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 ACCOUNT_EMAIL_CONFIRMATION_ANONYMOUS_REDIRECT_URL = "accounts:login"
 ACCOUNT_EMAIL_CONFIRMATION_AUTHENTICATED_REDIRECT_URL = "accounts:login"
-ACCOUNT_SIGNUP_ENABLED = False
+ACCOUNT_SIGNUP_ENABLED = True
 SOCIALACCOUNT_ADAPTER = "households.social_adapter.GoogleSocialAccountAdapter"
 GOOGLE_CLIENT_ID = env("GOOGLE_CLIENT_ID", default="")
 GOOGLE_CLIENT_SECRET = env("GOOGLE_CLIENT_SECRET", default="")

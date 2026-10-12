@@ -2,8 +2,8 @@ import csv
 import io
 from datetime import datetime
 
-from django.test import TestCase
 from django.contrib.auth import get_user_model
+from django.test import TestCase
 from django.urls import reverse
 
 from households.models import Workspace
@@ -12,7 +12,8 @@ from workflows.models import Task
 
 class ReportTests(TestCase):
     def setUp(self):
-        self.client.force_login(get_user_model().objects.create_user(username="report-reader"))
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
 
     @classmethod
     def setUpTestData(cls):

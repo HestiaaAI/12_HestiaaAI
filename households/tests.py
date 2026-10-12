@@ -29,13 +29,13 @@ class LoginTests(TestCase):
         self.assertContains(response, 'autocomplete="current-password"')
         self.assertNotContains(response, "Household tasks")
 
-    def test_success_without_next_has_working_confirmation(self):
+    def test_success_without_next_opens_task_board(self):
         response = self.client.post("/accounts/login/", {
             "login": "priya@example.com", "password": "test-only-password"
         }, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.client.session["_auth_user_id"], str(self.user.pk))
-        self.assertContains(response, "You’re signed in")
+        self.assertRedirects(response, "/tasks/manage/")
         self.assertNotContains(response, 'type="password"')
 
     def test_safe_local_next_is_preserved_on_error_and_used_on_success(self):
@@ -57,7 +57,7 @@ class LoginTests(TestCase):
                 response = self.client.post("/accounts/login/", {
                     "login": "priya@example.com", "password": "test-only-password", "next": target
                 }, secure=True)
-                self.assertRedirects(response, "/accounts/login/", fetch_redirect_response=False)
+                self.assertRedirects(response, "/tasks/manage/", fetch_redirect_response=False)
 
     def test_bad_credentials_retain_username_never_password(self):
         response = self.client.post("/accounts/login/", {

@@ -19,7 +19,8 @@ class MailFailureMixin:
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["local_email_preview"] = settings.EMAIL_BACKEND == "django.core.mail.backends.console.EmailBackend"
+        context["email_verification_required"] = settings.ACCOUNT_EMAIL_VERIFICATION == "mandatory"
+        context["local_email_preview"] = context["email_verification_required"] and settings.EMAIL_BACKEND == "django.core.mail.backends.console.EmailBackend"
         context["google_oauth_enabled"] = settings.GOOGLE_OAUTH_ENABLED
         return context
 

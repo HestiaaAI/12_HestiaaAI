@@ -1,5 +1,18 @@
 # 12_HestiaAI
 
+## Assignment 5: Django authentication
+
+A5 now requires sign-in for task pages, reports/exports, analytics, lookup and
+private APIs. Create an account at `/accounts/signup/`, then sign in with a
+username (or email) and password. Email verification is not required.
+The only public API is `/api/charts/task-priorities/`.
+
+See the [Member 1 authentication guide](docs/a5-member-1-authentication.md)
+for implementation, team handoff and production checks. Local verification:
+**117 tests passed on October 12, 2026** after integrating Members 2 and 3.
+Google OAuth code is integrated; live OAuth and production verification remain. The A4 sections below describe historical public access;
+A5's access rules supersede them.
+
 ## A5 public API and Vega-Lite submission
 
 See [Member 3's A5 handoff](docs/a5-member-3/README.md) for the production API,

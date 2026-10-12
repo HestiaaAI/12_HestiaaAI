@@ -1,3 +1,4 @@
+from django.contrib.auth import get_user_model
 from django.test import Client, TestCase
 from django.urls import reverse
 
@@ -6,6 +7,10 @@ from .models import Task
 
 
 class TaskSearchTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     @classmethod
     def setUpTestData(cls):
         demo = Workspace.objects.create(name="Demo Household")
@@ -89,6 +94,7 @@ class TaskSearchTests(TestCase):
 
     def test_post_requires_csrf(self):
         csrf_client = Client(enforce_csrf_checks=True)
+        csrf_client.force_login(self.auth_user)
         url = reverse("task_search:post")
         response = csrf_client.post(url, {"q": "groceries"})
         self.assertEqual(response.status_code, 403)
@@ -112,6 +118,10 @@ class TaskSearchTests(TestCase):
 
 
 class ProjectUrlIntegrationTests(TestCase):
+    def setUp(self):
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
+
     """Person 2 routes are mounted in hestia_config/urls.py and linked from the nav."""
 
     def test_routes_are_mounted_in_project_urlconf(self):

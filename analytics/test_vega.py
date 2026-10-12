@@ -1,7 +1,7 @@
 from datetime import datetime, timezone
 
-from django.test import TestCase, override_settings
 from django.contrib.auth import get_user_model
+from django.test import TestCase, override_settings
 from django.urls import reverse
 
 from households.models import Workspace
@@ -10,7 +10,8 @@ from workflows.models import Task
 
 class VegaChartTests(TestCase):
     def setUp(self):
-        self.client.force_login(get_user_model().objects.create_user(username="chart-reader"))
+        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        self.client.force_login(self.auth_user)
 
     @classmethod
     def setUpTestData(cls):

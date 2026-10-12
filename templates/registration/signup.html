@@ -3,7 +3,8 @@
 {% block auth_content %}
 <p class="eyebrow">Welcome home</p>
 <h1 id="auth-title">Create your account</h1>
-<p>Register an adult account with your email address. Verify your email before signing in.</p>
+<p>Create an account to access household tasks and reports.</p>
+{% if email_verification_required %}<p>Verify your email before signing in.</p>{% endif %}
 {% if local_email_preview %}<p class="auth-help">Local development: verification emails appear in the server terminal; they are not delivered to an inbox.</p>{% endif %}
 <form method="post" action="{% url 'accounts:signup' %}">
     {% csrf_token %}
