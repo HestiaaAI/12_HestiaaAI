@@ -59,14 +59,13 @@ authorization. Existing signed-in queries still have their previous scope.
 The authentication owner should handle private HTML pages and any membership
 restrictions as part of the combined application.
 
-**Deployment status:** the public production API and hosted-editor chart were
-verified against the already-deployed site. The new private API protections
-are verified locally in this branch; they still require merging this PR and
-reloading the PythonAnywhere application. A Git push alone does not deploy.
-After deployment, check the table above in a logged-out browser, then log in
-and confirm protected APIs and the daily embedded chart still load. Re-run
-the submitted spec in the hosted editor to confirm the public exception
-survives the team's authentication changes.
+**Deployment status (October 12, 2026):** The combined A5 changes are deployed
+on PythonAnywhere at `00d1f4c`. Anonymous live requests to the priority API
+return 200, while the daily-creation and task APIs return JSON 401. Anonymous
+report exports return 401 and private HTML redirects to login. A signed-in
+browser renders both the priority bar chart and daily creation line chart.
+The submitted production-API Vega-Lite spec and editor screenshot remain the
+chart evidence.
 
 Run regression checks with:
 
