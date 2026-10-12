@@ -87,8 +87,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 LOGIN_URL = "accounts:login"
-# A5: return to the task board unless a safe local next URL is supplied.
-LOGIN_REDIRECT_URL = "task_forms:board"
+# Return to home after a direct sign-in; honor an explicit safe local next URL.
+LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "accounts:login"
 PUBLIC_API_VIEW_NAMES = {"api:chart-priorities"}
 

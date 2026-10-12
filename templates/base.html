@@ -20,12 +20,15 @@
                 <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
             </a>
             {% if user.is_authenticated %}
-            <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
-                {% csrf_token %}
-                <button type="submit">Sign out</button>
-            </form>
+            <div class="header-actions">
+                <span class="logout-name">{{ user.get_full_name|default:user.get_username }}</span>
+                <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Sign out</button>
+                </form>
+            </div>
             {% else %}
-            <span class="header-label">A little more order. A little more home.</span>
+            <a class="header-signin" href="{% url 'accounts:login' %}">Sign in</a>
             {% endif %}
         </div>
     </header>
@@ -42,7 +45,6 @@
             <a class="nav-link" href="{% url 'reports:task-report' %}">Reports</a>
             <a class="nav-link" href="{% url 'vega:charts' %}">Charts</a>
             {% else %}
-            <a class="nav-link" href="{% url 'accounts:login' %}">Sign in</a>
             <a class="nav-link" href="{% url 'accounts:signup' %}">Create account</a>
             {% endif %}
         </div>
