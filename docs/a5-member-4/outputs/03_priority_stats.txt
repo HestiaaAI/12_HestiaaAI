@@ -1,0 +1,30 @@
+GET https://hestia12.pythonanywhere.com/api/charts/task-priorities/
+
+Raw JSON response:
+[
+  {
+    "label": "Low",
+    "count": 1
+  },
+  {
+    "label": "Medium",
+    "count": 1
+  },
+  {
+    "label": "High",
+    "count": 2
+  },
+  {
+    "label": "Urgent",
+    "count": 0
+  }
+]
+
+Statistical summary:
+  Observations (priority buckets): 4
+  Total tasks: 4
+  Mean tasks per priority bucket: 1.00
+  Max tasks in one bucket: 2 (High)
+  Urgent bucket empty: True
+  Attention score (Low=1 … Urgent=4): 9
+  Interpretation: score rises when more tasks sit in High/Urgent; current average weight per task is 2.25.

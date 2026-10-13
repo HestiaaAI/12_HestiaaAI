@@ -1,0 +1,27 @@
+GET https://hestia12.pythonanywhere.com/api/charts/task-priorities/
+
+Raw JSON response:
+[
+  {
+    "label": "Low",
+    "count": 1
+  },
+  {
+    "label": "Medium",
+    "count": 1
+  },
+  {
+    "label": "High",
+    "count": 2
+  },
+  {
+    "label": "Urgent",
+    "count": 0
+  }
+]
+
+Aggregation result:
+  Total tasks across all priorities: 4
+  Priorities with at least one task: 3
+  High + Urgent share of workload: 2/4 (50.0%)
+  Largest bucket: High (2 task(s))
