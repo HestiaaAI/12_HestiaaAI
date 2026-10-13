@@ -1,0 +1,33 @@
+GET https://hestia12.pythonanywhere.com/api/charts/task-priorities/
+
+Raw JSON response:
+[
+  {
+    "label": "Low",
+    "count": 1
+  },
+  {
+    "label": "Medium",
+    "count": 1
+  },
+  {
+    "label": "High",
+    "count": 2
+  },
+  {
+    "label": "Urgent",
+    "count": 0
+  }
+]
+
+CSV written for spreadsheet import:
+  /Users/anushkagosavi/Documents/INFO490/hestiaaAI 2/docs/a5-member-4/outputs/task_priorities.csv
+
+CSV contents:
+label,count
+Low,1
+Medium,1
+High,2
+Urgent,0
+
+Next step: open this file in Excel or File > Import in Google Sheets.
