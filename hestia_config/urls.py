@@ -34,5 +34,6 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("tasks/search/", include("workflows.search_urls")),
     path("tasks/manage/", include("workflows.forms_urls")),
+    path("tasks/ai/", include("workflows.ai_urls")),
     path("tasks/", include("workflows.urls")),
 ]

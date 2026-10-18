@@ -39,6 +39,8 @@
             {% if user.is_authenticated %}
             <a class="nav-link" href="{% url 'workflows:task-cbv-generic' %}">Household tasks</a>
             <a class="nav-link" href="{% url 'task_forms:board' %}">Task board</a>
+            {% url 'ai_tasks:brain-dump' as ai_brain_dump_url %}
+            {% if ai_brain_dump_url %}<a class="nav-link" href="{{ ai_brain_dump_url }}">AI Brain Dump</a>{% endif %}
             <a class="nav-link" href="{% url 'task_search:get' %}">Search tasks</a>
             <a class="nav-link" href="{% url 'product-lookup' %}">Product lookup</a>
             <a class="nav-link" href="{% url 'analytics:task-stats' %}">Task statistics</a>

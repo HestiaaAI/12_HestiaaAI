@@ -1,0 +1,17 @@
+.ai-input { max-width: 800px; }
+.ai-input h2, .ai-confirm h2 { margin-top: 0; }
+.ai-notice { padding: 14px 18px; background: #ece9fa; border-radius: 8px; }
+.ai-review { margin: 24px 0; align-items: start; }
+.ai-review legend { padding: 0 8px; color: var(--hestia-primary); font-weight: 700; }
+.ai-input textarea, .ai-review textarea, .ai-input select, .ai-review select {
+    width: 100%; padding: 12px; border: 1px solid #bdbbc9; border-radius: 8px;
+    background: white; color: inherit; font: inherit;
+}
+.ai-input textarea, .ai-review textarea { resize: vertical; }
+.ai-checkbox { display: flex; gap: 10px; align-items: baseline; margin-bottom: 20px; }
+.ai-checkbox input { width: auto; flex-shrink: 0; }
+.ai-checkbox label { margin: 0; }
+.ai-confirm .clear-link { display: inline-block; margin-left: 16px; }
+.errorlist { color: #852b20; }
+.ai-review textarea:focus-visible, .ai-input textarea:focus-visible,
+.ai-review select:focus-visible, .ai-input select:focus-visible { outline: 3px solid #b77d13; outline-offset: 3px; }

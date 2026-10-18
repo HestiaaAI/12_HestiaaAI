@@ -4,6 +4,14 @@ __pycache__/
 *$py.class
 *.pyo
 
+# Local AI weights and caches
+*.bin
+*.safetensors
+*.pt
+*.pth
+model_cache/
+llm-test/models/
+
 # Virtual environments
 .venv/
 venv/
