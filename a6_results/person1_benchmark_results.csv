@@ -1,0 +1,167 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+distilbert/distilgpt2,BD1,zero,0.942,1.81,220,False,No valid JSON object found,"Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+JSON output:
+Assistant:
+Household message: Guests are coming tomorrow. The kitchen is messy, we need",0,Repeated the prompt; no tasks or JSON.
+distilbert/distilgpt2,BD1,one,0.942,1.51,220,True,,"Example input: ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+You can use the same JSON output to create a new home.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+You can use the same JSON output to create a new home.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+You can use the same JSON output to create a new home.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household",1,Copied an example instead of extracting the user's concerns.
+distilbert/distilgpt2,BD1,few,0.942,1.619,220,True,,"Example input: The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""",1,Repeated examples; the parsed task is unrelated to the input.
+distilbert/distilgpt2,BD1,many,0.942,1.777,220,True,,"Example input: The kitchen is clean and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book vet appointment for the dog.""}, {""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book vet appointment for the dog.""}]}
+Example input: The kitchen is clean and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book vet appointment for the dog.""}]}
+Example input: The kitchen is clean and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book vet appointment",1,Copied the vet example and missed all requested tasks.
+distilbert/distilgpt2,BD2,zero,0.942,1.381,220,False,No valid JSON object found,"Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Household message: This week I need to book",0,Repeated the prompt; no tasks or JSON.
+distilbert/distilgpt2,BD2,one,0.942,1.959,220,True,,"Example input: The trash is full and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Example input: The trash is full and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and wash the guest-room sheets.
+JSON output:
+Assistant:
+Example input: The trash is full and we are out of milk.
+Example output: {""tasks"":",1,Copied the milk example and missed the four concerns.
+distilbert/distilgpt2,BD2,few,0.942,1.42,220,True,,"Example input: The trash is full and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy milk for the household.""}]}
+Example input: {""tasks"": [{""title"": ""Take out the",1,Repeated examples rather than producing input-specific tasks.
+distilbert/distilgpt2,BD2,many,0.942,1.464,220,True,,"Example input: The dog needs a vet appointment and the living room needs vacuuming.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book the dog.""}]}
+Example input: The dog needs a vet appointment and the living room needs vacuuming.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book the dog.""}]}
+Example input: The dog needs a vet appointment and the living room needs vacuuming.
+Example output: {""tasks"": [{""title"": ""Book vet appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Book the dog.""}]}
+Example input: The dog needs a vet appointment and the living room needs vacuuming.
+Example output: {""tasks"": [{""",1,Copied the vet example and missed the four concerns.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD1,zero,0.862,0.859,62,False,Task 1 has invalid task_type | Task 1 has invalid priority,"{""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}",0,"Returned the schema placeholder, not extracted tasks."
+HuggingFaceTB/SmolLM2-135M-Instruct,BD1,one,0.862,3.545,220,False,No valid JSON object found,"{""tasks"":[{""title"":""Take out the trash"", ""task_type"":""CHORE"", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"", ""description"":""Empty the full",0,Repeated one example until the output was truncated.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD1,few,0.862,3.488,220,False,No valid JSON object found,"{""tasks"":[{""title"":""Take out the trash"", ""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"",""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin."", ""description"":""Take out the trash."", ""description"":""Empty the full household trash bin",0,Repeated example fields and produced incomplete JSON.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD1,many,0.862,3.544,220,False,No valid JSON object found,"{""tasks"":[{""title"":""Guests are coming tomorrow"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Matter of fact, we are coming tomorrow."",""priority"":""MEDIUM"",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact, we are coming tomorrow."",""description"":""Matter of fact",1,Mentioned guests but missed the three actionable concerns.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD2,zero,0.862,0.801,62,False,Task 1 has invalid task_type | Task 1 has invalid priority,"{""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}",0,"Returned the schema placeholder, not extracted tasks."
+HuggingFaceTB/SmolLM2-135M-Instruct,BD2,one,0.862,1.552,103,False,Duplicate JSON key: priority,"{""tasks"":[{""title"":""Book the dentist"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Empty the full household trash bin."", ""priority"":""MEDIUM"",""description"":""Buy milk"",""priority"":""MEDIUM"",""description"":""Purchase milk for the household."", ""priority"":""MEDIUM"",""description"":""Return the library book by Friday"",""priority"":""MEDIUM"",""description"":""Wash the guest-room sheets"",""priority"":""MEDIUM"",""description"":""Other""}]}",2,Recognized some concerns but collapsed them into duplicate JSON keys.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD2,few,0.862,2.329,155,False,Duplicate JSON key: priority,"{""tasks"":[{""title"":""Book the dentist"", ""task_type"":""MAINTENANCE"", ""priority"":""MEDIUM"", ""description"":""Book the dentist."", ""priority"":""HIGH"", ""description"":""Return the smoke detector batteries."", ""priority"":""MEDIUM"", ""description"":""Replace the burned-out smoke detector."", ""priority"":""HIGH"", ""description"":""Wash the guest-room sheets."", ""priority"":""MEDIUM"", ""description"":""Return the library book by Friday."", ""priority"":""MEDIUM"", ""description"":""Replace the smoke detector."", ""priority"":""HIGH"", ""description"":""Replace the burned-out smoke detector."", ""priority"":""HIGH"", ""description"":""Return the library book by Friday.""}}",2,Mentioned the concerns but collapsed them into malformed JSON.
+HuggingFaceTB/SmolLM2-135M-Instruct,BD2,many,0.862,3.603,220,False,Duplicate JSON key: description,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book the dentist"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Book the dentist by Friday."",
+      ""description"": ""Schedule a veterinary appointment for the dog."",
+      ""description"": ""Vacuum the living-room floor."",
+      ""description"": ""Vacuum the guest-room sheets.""
+    },
+    {
+      ""title"": ""Replace the smoke detector batteries"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Replace the burned-out smoke detector."",
+      ""description"": ""Replace the smoke detector batteries."",
+      ""description"": ""Vacuum the living-room floor.""
+    },
+    {
+      ""title"": ""Return the library book by Friday"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Return the library book by Friday."",
+      ""description",3,Started separate relevant tasks but repeated keys and was truncated.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD1,zero,1.105,2.695,146,False,Task 1 has invalid task_type | Task 2 has invalid task_type | Task 3 has invalid task_type,"{
+  ""tasks"": [
+    {
+      ""title"": ""Merge kitchen into a clean space"",
+      ""task_type"": ""Merge"",
+      ""priority"": ""LOW"",
+      ""description"": ""Clean up the kitchen and organize the mess""
+    },
+    {
+      ""title"": ""Buy groceries"",
+      ""task_type"": ""Buy"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Buy groceries and organize the pantry""
+    },
+    {
+      ""title"": ""Check bathroom tap"",
+      ""task_type"": ""Check"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Check the bathroom tap and fix it if necessary""
+    }
+  ]
+}",7,Extracted all three concerns clearly; task_type values were outside Hestia's choices.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD1,one,1.105,2.33,120,True,,"{""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""}, {""title"": ""Clean the bathroom tap"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Clean the bathroom tap.""}]}",5,Found groceries and the tap but replaced kitchen cleaning with the example trash task.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD1,few,1.105,2.756,126,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean the kitchen area and organize the mess.""}, {""title"": ""Gather groceries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Gather all the necessary groceries for the guests.""}, {""title"": ""Check bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Check the bathroom tap for leaks and arrange for a repair.""}]}",7,Extracted all concerns; grocery type and priorities need correction.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD1,many,1.105,2.951,122,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen and organize the mess.""}, {""title"": ""Buy groceries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Buy groceries for the household.""}, {""title"": ""Check bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Check the bathroom tap for leaks.""}]}",6,Extracted all concerns but overused MAINTENANCE and weak priorities.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD2,zero,1.105,4.062,220,False,Root must be an object containing a tasks list,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book the dentist"",
+      ""task_type"": ""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",
+      ""priority"": ""LOW|MEDIUM|HIGH|URGENT"",
+      ""description"": ""Book the dentist and return the book by Friday""
+    },
+    {
+      ""title"": ""Replace the smoke detector batteries"",
+      ""task_type"": ""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",
+      ""priority"": ""LOW|MEDIUM|HIGH|URGENT"",
+      ""description"": ""Replace the smoke detector batteries and return the book by Friday""
+    },
+    {
+      ""title"": ""Wash the guest-room sheets"",
+      ""task_type"": ""SHOPPING|OTHER"",
+      ""priority"": ""MEDIUM|HIGH|URGENT"",",3,Recognized several concerns but used placeholder enums and incomplete JSON.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD2,one,1.105,3.309,167,True,,"{""tasks"": [{""title"": ""Book the dentist"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment.""}, {""title"": ""Replace the smoke detector batteries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy replacement batteries for the smoke detector.""}, {""title"": ""Return the library book"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Return the library book to the library.""}, {""title"": ""Wash the guest-room sheets"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Wash the guest-room sheets.""}]}",7,Extracted all four tasks clearly; most task types were incorrect.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD2,few,1.105,3.328,152,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Schedule a dentist appointment.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace smoke detector batteries.""}, {""title"": ""Return library book"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Return library book.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Wash guest-room sheets.""}]}",7,Extracted all four tasks; types and deadline priority were weak.
+HuggingFaceTB/SmolLM2-360M-Instruct,BD2,many,1.105,3.756,155,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment for the week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detector batteries.""}, {""title"": ""Return library book"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Return the library book.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""SHOPPING"", ""priority"": ""LOW"", ""description"": ""Wash the guest-room sheets.""}]}",8,Extracted four clear tasks; two classifications still need editing.
+Qwen/Qwen2.5-0.5B-Instruct,BD1,zero,1.476,2.278,102,True,,"{""tasks"":[{""title"":""Clean the kitchen"", ""task_type"":""CHORE"", ""priority"":""LOW"", ""description"":""Wash dishes, clean countertops, mop floors.""}, {""title"":""Buy groceries"", ""task_type"":""OTHER"", ""priority"":""MEDIUM"", ""description"":""Go to the store with the guests.""}, {""title"":""Fix the leaky bathroom tap"", ""task_type"":""MAINTENANCE"", ""priority"":""HIGH"", ""description"":""Call plumber to fix the leak.""}]}",9,Extracted all three concerns with useful priorities; groceries should be SHOPPING.
+Qwen/Qwen2.5-0.5B-Instruct,BD1,one,1.476,2.286,105,True,,"{""tasks"": [{""title"": ""Prepare dinner"", ""task_type"": ""OTHER"", ""priority"": ""HIGH"", ""description"": ""Cook and prepare food for guests.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""购入所需食材和调料。""}, {""title"": ""Fix bathroom leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""修复漏水的卫生间。""}]}",6,Handled groceries and the leak but invented dinner and switched descriptions to Chinese.
+Qwen/Qwen2.5-0.5B-Instruct,BD1,few,1.476,2.606,115,True,,"{""tasks"": [{""title"": ""Prepare dinner"", ""task_type"": ""OTHER"", ""priority"": ""LOW"", ""description"": ""Make sure everything is ready for guests.""}, {""title"": ""Order groceries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Get new groceries to replace the leaking tap.""}, {""title"": ""Fix bathroom leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the leaking tap with a new one.""}]}",5,Invented dinner and mixed the grocery and tap descriptions.
+Qwen/Qwen2.5-0.5B-Instruct,BD1,many,1.476,2.972,115,True,,"{""tasks"": [{""title"": ""Prepare dinner"", ""task_type"": ""OTHER"", ""priority"": ""LOW"", ""description"": ""Make sure everyone has their meals ready.""}, {""title"": ""Order groceries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Get new groceries to replace the leaking tap.""}, {""title"": ""Fix broken tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the leaking tap with a new one.""}]}",5,Missed kitchen cleaning and mixed grocery and maintenance details.
+Qwen/Qwen2.5-0.5B-Instruct,BD2,zero,1.476,2.344,121,True,,"{""tasks"":[{""title"":""BOOK DENTIST"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Book a dentist appointment.""},{""title"":""REPLACE SMOKE DETECTOR BATTERIES"",""task_type"":""MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Replace battery on smoke detector.""},{""title"":""RETURN LIBRARY BOOKS"",""task_type"":""OTHER"",""priority"":""HIGH"",""description"":""Return books by Friday.""},{""title"":""WASH GUEST-ROOM SHEETS"",""task_type"":""OTHER"",""priority"":""URGENT"",""description"":""Wash guest room sheets.""}]}",7,Extracted all four tasks; several types and the sheet priority were incorrect.
+Qwen/Qwen2.5-0.5B-Instruct,BD2,one,1.476,3.355,169,False,Task 1 has invalid task_type | Task 3 has invalid task_type | Task 4 has invalid task_type,"{""tasks"": [{""title"": ""Book a dentist appointment"", ""task_type"": ""DOCTOR_APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Request a dental check-up with Dr. Smith.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the batteries on the smoke detector in the living room.""}, {""title"": ""Return library book"", ""task_type"": ""RETURN_BOOK"", ""priority"": ""URGENT"", ""description"": ""Return the last book from the library by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""DIY_TASK"", ""priority"": ""MEDIUM"", ""description"": ""Use detergent and water to clean guest rooms.""}]}",6,Extracted four tasks but invented details and ignored allowed task types.
+Qwen/Qwen2.5-0.5B-Instruct,BD2,few,1.476,3.241,154,True,,"{""tasks"": [{""title"": ""Book dental appointment"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dentist appointment with the dentist.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detector batteries on the house.""}, {""title"": ""Return book"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Return the library book by Friday.""}, {""title"": ""Wash guest room sheets"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Wash the guest room sheets.""}]}",7,Extracted four clear tasks; most types need correction.
+Qwen/Qwen2.5-0.5B-Instruct,BD2,many,1.476,3.924,164,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up with Dr. Smith on Monday.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detectors in all rooms with new batteries.""}, {""title"": ""Return library book"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Return the last library book from the shelf by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Wash the guest-room sheets and pillowcases.""}]}",8,Produced four usable tasks; invented a dentist/date detail and understated Friday urgency.
