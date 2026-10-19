@@ -1,0 +1,237 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+tiiuae/Falcon3-7B-Instruct,BD1,zero,298.308,17.783,184,True,,"```json
+{
+  ""tasks"": [
+    {
+      ""title"": ""Clean the kitchen"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Prepare the kitchen for guests arriving tomorrow.""
+    },
+    {
+      ""title"": ""Go shopping"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Buy groceries needed for tomorrow's guests.""
+    },
+    {
+      ""title"": ""Fix the bathroom tap"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""URGENT"",
+      ""description"": ""The tap is leaking badly and needs immediate attention.""
+    }
+  ]
+}
+```",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD1,one,298.308,14.002,139,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""URGENT"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy necessary groceries for the guests.""}, {""title"": ""Fix the leaking tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the bathroom tap to prevent further damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD1,few,298.308,14.805,137,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Purchase necessary groceries for the guests.""}, {""title"": ""Fix leaking tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Address the leaking bathroom tap to prevent further damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD1,many,298.308,14.858,134,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Purchase necessary groceries for the guests.""}, {""title"": ""Fix leaking tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the badly leaking bathroom tap.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD2,zero,298.308,20.094,220,False,Root must be an object containing a tasks list,"```json
+{
+  ""tasks"": [
+    {
+      ""title"": ""Book Dentist Appointment"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Schedule a dental check-up this week.""
+    },
+    {
+      ""title"": ""Replace Smoke Detector Batteries"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""LOW"",
+      ""description"": ""Ensure the smoke detector is functioning properly.""
+    },
+    {
+      ""title"": ""Return Library Book"",
+      ""task_type"": ""DEADLINE"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Return the library book by Friday to avoid late fees.""
+    },
+    {
+      ""title"": ""Wash Guest-Room Sheets"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW"",
+      ""description"":",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD2,one,298.308,18.573,192,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Ensure the smoke detector is functioning properly.""}, {""title"": ""Return library book"", ""task_type"": ""DEADLINE"", ""priority"": ""URGENT"", ""description"": ""Library book due date is Friday, ensure timely return.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and launder the sheets in the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD2,few,298.308,19.488,192,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""LOW"", ""description"": ""Schedule a dental check-up.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Ensure the smoke detector is functioning properly.""}, {""title"": ""Return library book"", ""task_type"": ""DEADLINE"", ""priority"": ""URGENT"", ""description"": ""Return the library book by Friday to avoid late fees.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and launder the sheets in the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+tiiuae/Falcon3-7B-Instruct,BD2,many,298.308,20.021,191,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental visit this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Ensure the smoke detector is functioning properly.""}, {""title"": ""Return library book"", ""task_type"": ""DEADLINE"", ""priority"": ""URGENT"", ""description"": ""Return the library book by Friday to avoid late fees.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and launder the guest-room sheets.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD1,zero,557.104,15.637,89,True,,"{""tasks"":[{""title"":""Clean Kitchen"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Clean the kitchen before guests arrive.""},
+{""title"":""Buy Groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Get necessary groceries for upcoming guests.""},
+{""title"":""Fix Leaky Bathroom Tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Repair the leaking tap in the bathroom.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD1,one,557.104,16.719,91,True,,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE"",""priority"":""HIGH"",""description"":""Tidy up the kitchen before guests arrive.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Purchase necessary groceries for upcoming meals.""},{""title"":""Fix the bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Repair the leaking bathroom tap to prevent water damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD1,few,557.104,18.502,92,True,,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Tidy up the kitchen before guests arrive.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Purchase necessary groceries for upcoming meals.""},{""title"":""Fix leaking bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Address the leaking bathroom tap to prevent water damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD1,many,557.104,20.047,91,True,,"{""tasks"":[{""title"":""Clean kitchen"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Tidy up the kitchen before guests arrive.""},{""title"":""Grocery shopping"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Purchase necessary groceries for upcoming meals.""},{""title"":""Fix bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Address the leaking bathroom tap to prevent water damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD2,zero,557.104,22.498,121,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up this week.""},
+{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Change the batteries in the smoke detectors.""},
+{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the borrowed library book by Friday.""},
+{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Wash the sheets from the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD2,one,557.104,22.77,122,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Change the batteries in the smoke detectors.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the borrowed library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Wash the sheets from the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD2,few,557.104,24.443,124,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Change the batteries in the smoke detectors.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the borrowed library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Wash and dry the sheets from the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen2.5-14B-Instruct,BD2,many,557.104,25.609,124,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Change the batteries in the smoke detectors.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the borrowed library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Wash and dry the sheets from the guest bedroom.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD1,zero,546.427,29.402,177,False,Root must be an object containing a tasks list,"{
+  ""urgent_tasks"": [
+    {
+      ""task"": ""Clean the kitchen"",
+      ""priority"": ""high"",
+      ""notes"": ""Guests are coming tomorrow, so it's important to have a clean and tidy space.""
+    },
+    {
+      ""task"": ""Go grocery shopping"",
+      ""priority"": ""high"",
+      ""notes"": ""Ensure to buy necessary items for the guests and any meals planned.""
+    },
+    {
+      ""task"": ""Fix the leaking bathroom tap"",
+      ""priority"": ""high"",
+      ""notes"": ""A leaking tap can cause water damage and waste water. It should be fixed before the guests arrive.""
+    }
+  ]
+}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD1,one,546.427,36.945,218,True,,"```json
+
+{
+
+  ""tasks"": [
+
+    {
+
+      ""title"": ""Clean the kitchen"",
+
+      ""task_type"": ""CHORE"",
+
+      ""priority"": ""HIGH"",
+
+      ""description"": ""Thoroughly clean the kitchen to prepare for guests.""
+
+    },
+
+    {
+
+      ""title"": ""Grocery shopping"",
+
+      ""task_type"": ""SHOPPING"",
+
+      ""priority"": ""MEDIUM"",
+
+      ""description"": ""Buy necessary groceries for the household.""
+
+    },
+
+    {
+
+      ""title"": ""Fix the bathroom tap"",
+
+      ""task_type"": ""MAINTENANCE"",
+
+      ""priority"": ""HIGH"",
+
+      ""description"": ""Repair the leaking tap in the bathroom.""
+
+    }
+
+  ]
+
+}
+
+```",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD1,few,546.427,31.704,175,True,,"```json
+
+{
+
+  ""tasks"": [
+
+    {""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Thoroughly clean the kitchen to prepare for guests.""},
+
+    {""title"": ""Grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Buy necessary groceries for the upcoming visit.""},
+
+    {""title"": ""Fix bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the leaking tap in the bathroom to prevent water damage.""}
+
+  ]
+
+}
+
+```",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD1,many,546.427,34.247,179,True,,"```json
+
+{
+
+  ""tasks"": [
+
+    {""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Thoroughly clean the kitchen surfaces, appliances, and floors.""},
+
+    {""title"": ""Grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Buy necessary groceries for the upcoming guests.""},
+
+    {""title"": ""Fix bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the leaking tap in the bathroom to prevent water damage.""}
+
+  ]
+
+}
+
+```",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD2,zero,546.427,21.449,131,False,"Task 1 missing: ['description', 'priority', 'task_type', 'title'] | Task 1 has invalid task_type | Task 1 has invalid priority | Task 1 has an empty title | Task 1 has an empty description | Task 2 missing: ['description', 'priority', 'task_type', 'title'] | Task 2 has invalid task_type | Task 2 has invalid priority | Task 2 has an empty title | Task 2 has an empty description | Task 3 missing: ['description', 'priority', 'task_type', 'title'] | Task 3 has invalid task_type | Task 3 has invalid priority | Task 3 has an empty title | Task 3 has an empty description | Task 4 missing: ['description', 'priority', 'task_type', 'title'] | Task 4 has invalid task_type | Task 4 has invalid priority | Task 4 has an empty title | Task 4 has an empty description","{
+  ""tasks"": [
+    {
+      ""task"": ""Book the dentist"",
+      ""deadline"": ""This week""
+    },
+    {
+      ""task"": ""Replace smoke detector batteries"",
+      ""deperadline"": ""This week""
+    },
+    {
+      ""task"": ""Return library book"",
+      ""deadline"": ""Friday""
+    },
+    {
+      ""task"": ""Wash guest-room sheets"",
+      ""deadline"": ""This week""
+    }
+  ]
+}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD2,one,546.427,37.252,220,False,Root must be an object containing a tasks list,"```json
+
+{
+
+  ""tasks"": [
+
+    {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Schedule a dental check-up for this week.""},
+
+    {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Change the batteries in the smoke detector to ensure it's functioning properly.""},
+
+    {""title"": ""Return library book"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Return the overdue library book before the due date on Friday.""},
+
+    {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and replace the sheets in the guest room for a fresh and welcoming environment.""",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD2,few,546.427,39.277,220,False,Root must be an object containing a tasks list,"```json
+
+{
+
+  ""tasks"": [
+
+    {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""},
+
+    {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Ensure the safety of the household by changing the batteries in the smoke detectors.""},
+
+    {""title"": ""Return library book"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Return the overdue library book before the due date on Friday.""},
+
+    {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean the sheets in the guest room for a fresh and welcoming environment.""}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+microsoft/Phi-3-medium-4k-instruct,BD2,many,546.427,41.072,220,False,Root must be an object containing a tasks list,"```json
+
+{
+
+  ""tasks"": [
+
+    {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""},
+
+    {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Change the batteries in the smoke detectors to ensure they are functioning properly.""},
+
+    {""title"": ""Return library book"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Return the overdue library book before the due date on Friday.""},
+
+    {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Launder the sheets in the guest room for a clean and welcoming environment.""}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD1,zero,358.341,20.681,108,True,,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE"",""priority"":""HIGH"",""description"":""The kitchen is currently messy and needs to be cleaned before guests arrive tomorrow.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""HIGH"",""description"":""We need to purchase groceries before the guests arrive tomorrow.""},{""title"":""Fix the leaking bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""URGENT"",""description"":""The bathroom tap is leaking badly and needs immediate attention to prevent water damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD1,one,358.341,19.125,99,True,,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE"",""priority"":""HIGH"",""description"":""Tidy up the kitchen in preparation for guests arriving tomorrow.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""HIGH"",""description"":""Purchase necessary groceries for the household.""},{""title"":""Fix leaking bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""URGENT"",""description"":""Address the leaking bathroom tap to prevent water damage and ensure guest comfort.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD1,few,358.341,18.906,94,True,,"{""tasks"":[{""title"":""Clean kitchen"",""task_type"":""CHORE"",""priority"":""HIGH"",""description"":""Clean the kitchen thoroughly in preparation for guests.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Purchase necessary groceries for the household.""},{""title"":""Fix leaking bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Address the leaking bathroom tap to prevent water damage and ensure guest comfort.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD1,many,358.341,19.525,91,True,,"{""tasks"":[{""title"":""Clean kitchen"",""task_type"":""CHORE"",""priority"":""HIGH"",""description"":""Clean and organize the kitchen before guests arrive.""},{""title"":""Shop for groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Purchase necessary groceries for the household.""},{""title"":""Fix leaking bathroom tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Address the leaking bathroom tap to prevent water damage.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD2,zero,358.341,22.637,123,True,,"{""tasks"":[{""title"":""Book the dentist"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental appointment for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Check and replace the batteries in the smoke detector.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Wash the sheets in the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD2,one,358.341,24.477,126,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Check and replace batteries in the smoke detectors.""},{""title"":""Return library book"",""task_type"":""DEADLINE"",""priority"":""HIGH"",""description"":""Return the library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Clean and wash the sheets from the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD2,few,358.341,24.389,125,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""LOW"",""description"":""Check and replace batteries in the smoke detector.""},{""title"":""Return library book"",""task_type"":""DEADLINE"",""priority"":""HIGH"",""description"":""Ensure the library book is returned by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Clean and launder the guest-room bedding.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.
+Qwen/Qwen3-14B,BD2,many,358.341,24.671,120,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental appointment for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE"",""priority"":""LOW"",""description"":""Replace the batteries in the smoke detector.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""HIGH"",""description"":""Return the library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""Wash the sheets in the guest room.""}]}",,NF4 weights; FP32 compute/non-quantized modules; eager CUDA; pending raw-output review.

@@ -1,0 +1,500 @@
+{
+  "reviewed_at_utc": "2026-10-19T04:29:37.976595+00:00",
+  "reviewed_responses": 32,
+  "reviewer": "Codex assistant-assisted content review",
+  "independent_human_approval": false,
+  "rubric": {
+    "extraction": 3,
+    "task_types": 2,
+    "priorities": 2,
+    "clarity": 2,
+    "shared_contract_format": 1
+  },
+  "calibration": "ERRAND or DEADLINE is acceptable for a library return when Friday is preserved. MEDIUM/HIGH can both be reasonable for preventive battery replacement without a stated failure; LOW merits review. URGENT requires explicit immediate safety evidence or a known deadline within 24 hours. Partial/truncated text can receive semantic credit, but format credit requires the shared schema. Fenced JSON is accepted by that parser.",
+  "archive_sha256": "f471c3e53964b86bf6b320b0744a4eb83ac75ac9f97a45287954a30dd6419cf5",
+  "raw_csv_sha256": "4bfd4a3e0b976cbac34ba9d84b3f8f50d1d3a86542761dc072f7ee65ea1f24a9",
+  "reviewed_csv_sha256": "ec42208e351a9d933437c7bf698eaf1d9e173f8a763fe733bfbb5915b200bcab",
+  "generation_metadata_sha256": "baa72c46f1b60ab584b5e3f740f57750099762a5d66b96dd93b51e9ca11a5b4f",
+  "reviews": [
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        0,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 8,
+      "note": "Three distinct concerns with correct types. Kitchen MEDIUM understates tomorrow's preparation and tap URGENT assumes an immediate safety risk; grocery urgency may reflect the next-day deadline. Fenced JSON passes the shared contract.",
+      "raw_output_sha256": "3a190d57d7980119f122012f0bbffc0fdec0a36d20eecc3343477b8f6711dd86"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        0,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 8,
+      "note": "Three clear, correctly typed tasks. Kitchen urgency can reflect tomorrow's visit, but groceries MEDIUM are understated and tap URGENT lacks stated immediate safety evidence.",
+      "raw_output_sha256": "87d87daf3e6e87ab4b0416dbf6d78e671136ac9317b6ad40eb5f40383d5ee9c6"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "All three concerns are clear and correctly typed; preparation HIGH is useful. Tap URGENT still assumes an immediate safety risk not explicitly stated.",
+      "raw_output_sha256": "a0d57d0bcccd8a166e665cb8a00bbc1deaa5cdc21fd215131e4d50e8d016a35a"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "All three concerns are preserved with appropriate types and HIGH preparation priorities; tap URGENT needs human calibration to the actual leak severity.",
+      "raw_output_sha256": "580b13d4483653178d1c47b8ba08dafbc08812a312e8636ded2e1ca2cb51b976"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        1,
+        0
+      ],
+      "quality_score_0_to_10": 7,
+      "note": "All four actions and correct types are visible, but the 220-token response ends at the sheets description and is unusable JSON. Batteries LOW under-ranks safety maintenance; Friday URGENT assumes Friday is within 24 hours.",
+      "raw_output_sha256": "dd724b7c182bcbf4dc3a962bdec661ac0bcebc021ca11d9a0ee41a2abb1f7918"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Four clear, correctly typed actions and the Friday deadline are preserved. Batteries LOW and Friday URGENT need review; the input does not establish an immediate safety failure or current weekday.",
+      "raw_output_sha256": "b7b4427ff42a11f8d68ed699a1ef2d117622150ba8d54a8548dd13eb8f5a7ed2"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Four distinct tasks and appropriate types; Friday is preserved. Batteries LOW under-ranks safety maintenance and URGENT assumes an unknown current weekday; routine dentist LOW is plausible.",
+      "raw_output_sha256": "31d50623565e02d1fd458192cdfeb90ac6a7e4af4660365982f9caafd2ce25b2"
+    },
+    {
+      "model_id": "tiiuae/Falcon3-7B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Four clear actions, appropriate types and explicit Friday deadline. Battery replacement LOW and library URGENT need calibration to actual safety status and time remaining.",
+      "raw_output_sha256": "2eec5fc83dd6fee3d54c77454ac97c341556f922b2c15cfe24aacd1e80815309"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three concise, correctly typed concerns with no unsupported immediate urgency. Both preparation tasks MEDIUM understate the next-day visit; leak HIGH is reasonable.",
+      "raw_output_sha256": "495b3e73e46c621c9b5183194eb0643c90ba9ed8a1c4abd7158fb823f7d05cc7"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear, correctly typed actions. Kitchen and tap HIGH are reasonable; groceries MEDIUM understate the same upcoming guest preparation.",
+      "raw_output_sha256": "793155f1de50f08e6f2a270daf1ded597be40a958ec427ef923295a4ac536f82"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "All three concerns are preserved with correct types. Both preparation tasks MEDIUM need review for tomorrow's visit; tap HIGH avoids assuming an immediate safety emergency.",
+      "raw_output_sha256": "1ca11b5d00ddb0230fbf4bd7dee347cac274ecf4b31168e8a792d514da788f4a"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD1",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear, correctly typed tasks. Preparation MEDIUM remains weak for tomorrow; the model does not invent urgent safety evidence for the tap.",
+      "raw_output_sha256": "11913ad7a3b21d8dfdd2333ad8605dbbef6de302fe9b36b39bea45aa0667c2ba"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "All four actions and Friday deadline preserved. APPOINTMENT/MAINTENANCE/ERRAND/CHORE are appropriate; safety maintenance and book HIGH, dentist MEDIUM and sheets LOW are reasonable.",
+      "raw_output_sha256": "ec61f2d165334c9555cba11599aa3a9d6e117330b46976edc209b61fcf7d56bf"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "Four distinct, correctly typed actions with Friday retained. Preventive batteries MEDIUM is plausible without a stated detector failure; no unjustified URGENT or invented due date.",
+      "raw_output_sha256": "ec0cc860afbc4dba6a28af04b643904789d2ffd85d4a38dd590f1cd0d01aa9cc"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "Four clear actions, correct types, preserved Friday deadline and reasonable relative priorities. Washing/drying sheets is a harmless elaboration of the requested chore.",
+      "raw_output_sha256": "99a176567674b170cea61f9005b4bba17cff3190ee2d33d1c8fb8de8ac8a30cd"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-14B-Instruct",
+      "input_id": "BD2",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "Four clear, correctly typed actions and the Friday deadline. Priorities are reasonable without assuming the current weekday or an immediate detector failure.",
+      "raw_output_sha256": "69aa6d9a4b3d6c148c25622f635cf0b430e43f7e20b5ed849e17bec7bfe7ee84"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD1",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        0,
+        0,
+        2,
+        0
+      ],
+      "quality_score_0_to_10": 5,
+      "note": "Recognizes all three concerns clearly, but uses urgent_tasks/task/notes, omits task_type, and emits lowercase high rather than valid priority values. It does not meet the required schema.",
+      "raw_output_sha256": "166319640439672ff24a4699af8cffca611ca944d3efb79f89cf449ffb67815f"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD1",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear, correctly typed tasks. Groceries MEDIUM understate the upcoming visit; kitchen and tap HIGH are reasonable. Fenced JSON is accepted by the shared parser.",
+      "raw_output_sha256": "7b931db173a9f5f6e5992dfe83936f6b3c19504e46bd937e29caf44500b0f8f5"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD1",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "All three concerns and correct types, with HIGH preparation priorities. Tap URGENT assumes an immediate safety risk not explicitly established; fenced JSON passes.",
+      "raw_output_sha256": "197f19bebb8df45bff9a21a7409e9a2b49422ab6967ded889b9e47883d3a716a"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD1",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear, correctly typed tasks. Expanded cleaning details stay within the stated chore; tap URGENT still needs calibration to the actual leak risk.",
+      "raw_output_sha256": "f9aa43646f8f237834145a674caca6fd11d08f8e11a41301f0a3e2954a0dd122"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD2",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        0,
+        0,
+        1,
+        0
+      ],
+      "quality_score_0_to_10": 4,
+      "note": "Four recognizable actions and Friday are present, but task/deadline/deperadline replace required title/type/priority/description fields. No task types or priorities are supplied.",
+      "raw_output_sha256": "845ff0da41310b6029ba0f8a36869436c5f3ed808a4e3ef000a8ed9adc42f8ad"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD2",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        1,
+        1,
+        1,
+        0
+      ],
+      "quality_score_0_to_10": 6,
+      "note": "All four actions are visible but the response reaches 220 tokens without closing JSON. Library SHOPPING is incorrect; overdue is invented and contradicts before the due date. Dentist HIGH is unsupported and library MEDIUM is weak.",
+      "raw_output_sha256": "5c9e4cd8d80b6fb4aa5b4c737f0e6eb32e6b33d4edfa0641d0e557fb0ebf5c12"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD2",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        1,
+        1,
+        1,
+        0
+      ],
+      "quality_score_0_to_10": 6,
+      "note": "All four actions are visible but closing JSON is truncated at 220 tokens. Library SHOPPING is incorrect and overdue is invented; the Friday deadline remains, though MEDIUM under-ranks it.",
+      "raw_output_sha256": "aa630ce3553e9e2357b6d9b6be60c30520aeac3d3cfbe762df08db0df6fc1847"
+    },
+    {
+      "model_id": "microsoft/Phi-3-medium-4k-instruct",
+      "input_id": "BD2",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        1,
+        2,
+        1,
+        0
+      ],
+      "quality_score_0_to_10": 7,
+      "note": "Four concerns and Friday are present with reasonable relative priorities, but library APPOINTMENT is incorrect and overdue is unsupported. The response reaches 220 tokens without closing the JSON envelope.",
+      "raw_output_sha256": "008005f38d4c1d6d95a7fd7abb4bbda38a1f339b6f59316eb738d9a7edc1f6e8"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD1",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear tasks with correct types and explicit tomorrow preparation. Tap URGENT assumes an immediate safety risk; HIGH preparation priorities are reasonable.",
+      "raw_output_sha256": "a166d68bfaff38a2ac247867108cb195038267e9d298453e3c4f9a8555dfc4e5"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD1",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear, correctly typed concerns and HIGH preparation priorities. Tap URGENT needs human risk calibration; guest comfort does not itself establish immediate safety urgency.",
+      "raw_output_sha256": "8bb032935fb65fa0a5ef4594457fc588ecf1a02276b4810282e9b746c9d073c1"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD1",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three concise, correctly typed actions. Kitchen/tap HIGH are reasonable, while groceries MEDIUM understate the upcoming guest preparation.",
+      "raw_output_sha256": "45a989fd3056aa88fb22c00d8de4da368cbf6e6068a76ff773313fad8c4114cf"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD1",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Three clear actions with correct types and no unsupported URGENT. Groceries MEDIUM still understate the same next-day preparation.",
+      "raw_output_sha256": "bcb414ef0c0b71ef8aa87f1801717de5515041fe30b8703386314a702d343337"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD2",
+      "shot_mode": "zero",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "All four concerns, appropriate types and explicit Friday deadline. Relative priorities are reasonable: safety maintenance/book HIGH and routine dentist/sheets MEDIUM.",
+      "raw_output_sha256": "6412b34c82af0546119dbbdc2c45cf2b351122171d3811d5f00ca775a109e73b"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD2",
+      "shot_mode": "one",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 10,
+      "note": "Four clear actions with correct types, the Friday deadline and sensible relative priorities. Batteries MEDIUM is plausible for preventive maintenance without a stated immediate failure.",
+      "raw_output_sha256": "9e4163853be2208a37e734a249a256eab99134362e4690e89d95412630b6cb73"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD2",
+      "shot_mode": "few",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Four clear tasks, correct types and Friday deadline preserved. Battery replacement LOW under-ranks safety maintenance; remaining priorities are reasonable.",
+      "raw_output_sha256": "cd1d270dbd7f6f97dbaecc7af2da7b0b65d9df20f8c44a0984492949f3eda616"
+    },
+    {
+      "model_id": "Qwen/Qwen3-14B",
+      "input_id": "BD2",
+      "shot_mode": "many",
+      "points_E_T_P_C_F": [
+        3,
+        2,
+        1,
+        2,
+        1
+      ],
+      "quality_score_0_to_10": 9,
+      "note": "Four clear, correctly typed actions and Friday deadline. Battery replacement LOW needs review; dentist MEDIUM, library HIGH and sheets LOW are reasonable.",
+      "raw_output_sha256": "33323cce8a4afa3ad289fbeb9ccb2d0325e8f7a91a41b73fded381a2f517e417"
+    }
+  ]
+}

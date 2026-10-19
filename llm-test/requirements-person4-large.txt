@@ -1,0 +1,8 @@
+# Dedicated Colab CUDA runtime, not Django runtime requirements.
+transformers==4.57.6
+huggingface-hub==0.36.2
+accelerate==1.15.0
+bitsandbytes==0.50.2
+sentencepiece>=0.2,<0.3
+protobuf>=6,<7
+psutil>=7,<8

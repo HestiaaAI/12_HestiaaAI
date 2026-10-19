@@ -122,7 +122,7 @@ notebook = nb.v4.new_notebook(cells=cells, metadata={
     "kernelspec": {"display_name": "Python 3.11 (P4 benchmark)", "language": "python", "name": "python3"},
     "language_info": {"name": "python", "version": "3.11.15"},
 })
-destination = ROOT / "llm-test/ai_prototype.ipynb"
+destination = ROOT / "llm-test/person4_small_reference.ipynb"
 destination.parent.mkdir(exist_ok=True)
 nb.write(notebook, destination)
 print(destination)

@@ -4,6 +4,7 @@ Before running: python -m ipykernel install --prefix .venv --name hestia-p4
 Run with the Python 3.11 benchmark environment from the repository root.
 """
 import os
+import argparse
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -15,7 +16,9 @@ os.environ["IPYTHONDIR"] = str(ROOT / ".local-backups/ipython")
 import nbformat
 from nbclient import NotebookClient
 
-path = ROOT / "llm-test/ai_prototype.ipynb"
+parser = argparse.ArgumentParser()
+parser.add_argument("--notebook", default="llm-test/person4_small_reference.ipynb")
+path = ROOT / parser.parse_args().notebook
 notebook = nbformat.read(path, as_version=4)
 client = NotebookClient(notebook, timeout=900, kernel_name="hestia-p4", resources={"metadata": {"path": str(ROOT)}})
 try:
