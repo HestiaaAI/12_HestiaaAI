@@ -17,8 +17,12 @@ llm-test/models/
 venv/
 env/
 
+# Local notebook state
+.ipynb_checkpoints/
+
 # Environment variables and secrets
 .env
+.env.*
 !.env.example
 
 # Local notes that contain credentials

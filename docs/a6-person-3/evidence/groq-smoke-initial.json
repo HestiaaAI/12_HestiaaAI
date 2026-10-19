@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-10-18T21:33:45.988472+00:00",
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "input": "Fictional guest-room task; no real household data",
+  "plan": {
+    "summary": "Prepare the guest room for Friday arrival by cleaning, washing bedding, and setting out fresh towels and d\u00e9cor.",
+    "steps": [
+      {
+        "title": "Gather cleaning supplies",
+        "description": "Collect all necessary items such as cleaning spray, microfiber cloth, vacuum, laundry detergent, fresh linens, towels, decorative items, and a scented candle."
+      },
+      {
+        "title": "Dust surfaces",
+        "description": "Use a microfiber cloth to dust all surfaces, including shelves, picture frames, and baseboards."
+      },
+      {
+        "title": "Vacuum carpet",
+        "description": "Vacuum the carpet or rug thoroughly to remove dust and debris."
+      },
+      {
+        "title": "Wash bedding",
+        "description": "Place used bedding in the washing machine with detergent, wash on a suitable cycle, and dry completely."
+      },
+      {
+        "title": "Fold and arrange linens",
+        "description": "Fold fresh sheets, pillowcases, and blankets neatly and place them on the bed."
+      },
+      {
+        "title": "Set out towels",
+        "description": "Fold and arrange fresh towels on the bathroom shelf and a towel rack in the guest room."
+      },
+      {
+        "title": "Arrange d\u00e9cor",
+        "description": "Place decorative items such as a vase, photo frame, or small plant to enhance the room's appearance."
+      },
+      {
+        "title": "Check lighting",
+        "description": "Ensure all lights are working and adjust brightness or add lamps if needed."
+      },
+      {
+        "title": "Add scent",
+        "description": "Light a scented candle or use a subtle room spray to create a welcoming aroma."
+      },
+      {
+        "title": "Final inspection",
+        "description": "Walk through the room to confirm cleanliness, proper arrangement, and overall readiness."
+      }
+    ],
+    "supplies": [
+      "cleaning spray",
+      "microfiber cloth",
+      "vacuum",
+      "laundry detergent",
+      "fresh linens",
+      "towels",
+      "decorative items",
+      "scented candle"
+    ],
+    "cautions": [
+      "Avoid using harsh chemicals on delicate surfaces",
+      "Ensure towels are fully dry before use",
+      "Do not overload the dryer",
+      "Keep the room well-ventilated"
+    ]
+  }
+}

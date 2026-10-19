@@ -1,4 +1,5 @@
 from django.urls import path
+from workflows.action_plan_views import action_plan_api
 
 from .views import product_compare_api, response_demo, task_list_api
 from .chart_views import task_creation_summary, task_priority_summary
@@ -7,6 +8,7 @@ from .brain_dump import brain_dump_extract
 app_name = "api"
 
 urlpatterns = [
+    path("tasks/<int:pk>/action-plan/", action_plan_api, name="task-action-plan"),
     path("charts/task-priorities/", task_priority_summary, name="chart-priorities"),
     path("charts/task-creations/", task_creation_summary, name="chart-creations"),
     path("external/products/", product_compare_api, name="product-compare"),

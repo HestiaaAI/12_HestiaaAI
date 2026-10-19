@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Action plan | Hestia{% endblock %}
+
+{% block content %}
+<section class="page-header">
+    <p class="eyebrow">A little help getting started</p>
+    <h1>Plan your next steps</h1>
+    <p>Turn a complex task into smaller steps you can review.</p>
+</section>
+<article class="task-card">
+    <h2>{{ task.title }}</h2>
+    <p>{{ task.description|default:"No description provided." }}</p>
+    <p>{{ task.get_task_type_display }} · {{ task.get_priority_display }} priority</p>
+    <p>Generating a plan sends this task's title, type, priority and description to Groq.
+       Avoid including private or sensitive details. The draft is shown here for your review;
+       generating it does not change or save any tasks.</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Send task to Groq and generate a plan</button>
+    </form>
+</article>
+{% if error %}
+<div class="form-errors" role="alert"><p>{{ error }}</p></div>
+{% endif %}
+{% if plan %}
+<section aria-labelledby="plan-title">
+    <h2 id="plan-title">Your draft action plan</h2>
+    <p>{{ plan.summary }}</p>
+    <ol>
+        {% for step in plan.steps %}
+        <li><h3>{{ step.title }}</h3><p>{{ step.description }}</p></li>
+        {% endfor %}
+    </ol>
+    <h3>Supplies</h3>
+    <ul>{% for item in plan.supplies %}<li>{{ item }}</li>{% empty %}<li>No supplies suggested.</li>{% endfor %}</ul>
+    <h3>Things to keep in mind</h3>
+    <ul>{% for caution in plan.cautions %}<li>{{ caution }}</li>{% empty %}<li>No additional cautions suggested.</li>{% endfor %}</ul>
+    <p>AI suggestions can be wrong. Review every step, use professional help for hazardous work,
+       and make changes in your task board only when you are ready.</p>
+</section>
+{% endif %}
+<p><a href="{{ task.get_absolute_url }}">Back to task</a></p>
+{% endblock %}

@@ -1,0 +1,5 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+microsoft/Phi-3.5-mini-instruct,MODEL_LOAD,n/a,,,,False,Preflight only: estimated 12.0 GiB > available device capacity 8.0 GiB.,,,No generation measured. This row is not a completed benchmark.
+meta-llama/Llama-3.2-3B-Instruct,MODEL_LOAD,n/a,,,,False,Preflight only: estimated 10.4 GiB > available device capacity 8.0 GiB. HF license/access approval and authenticated downloads are also required.,,,No generation measured. This row is not a completed benchmark.
+Qwen/Qwen2.5-7B-Instruct,MODEL_LOAD,n/a,,,,False,Preflight only: estimated 21.9 GiB > available device capacity 8.0 GiB.,,,No generation measured. This row is not a completed benchmark.
+mistralai/Mistral-7B-Instruct-v0.3,MODEL_LOAD,n/a,,,,False,Preflight only: estimated 20.9 GiB > available device capacity 8.0 GiB.,,,No generation measured. This row is not a completed benchmark.

@@ -51,4 +51,7 @@ class TaskDetailView(View):
 
     def get(self, request, pk):
         task = get_object_or_404(Task, pk=pk)
-        return render(request, "tasks/task_detail.html", {"task": task})
+        can_plan = request.user.is_authenticated and task.workspace.memberships.filter(
+            user=request.user, is_active=True
+        ).exists()
+        return render(request, "tasks/task_detail.html", {"task": task, "can_generate_action_plan": can_plan})
