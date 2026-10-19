@@ -661,3 +661,79 @@ Forty original generations are preserved, including Qwen's failed float16
 configuration. Qwen's float32-compute rerun is labeled separately. See
 llm-test/person3_benchmark_handoff.ipynb and person3_colab_run.ipynb.
 The preflight file is historical resource-check evidence, not generation data.
+
+
+
+A6 - Person 1: Size vs Quality Trade-off (Final Team Results)
+================================================================
+Route A used the same two Hestia Brain Dump inputs and zero-, one-, few- and
+many-shot modes for every selected model. The four canonical CSV files contain
+120 reviewed runs across 15 distinct models. Each model has eight runs. Quality
+was scored from 0 to 10 using task extraction, task type, priority, clarity and
+JSON-format criteria; schema validity was measured separately.
+
+Measured result by model
+------------------------
+| Tested model | Params | Mean quality /10 | Valid JSON | Mean generation |
+| --- | ---: | ---: | ---: | ---: |
+| distilbert/distilgpt2 | 0.082B | 0.750 | 6/8 | 1.617s |
+| HuggingFaceTB/SmolLM2-135M-Instruct | 0.135B | 1.000 | 0/8 | 2.465s |
+| HuggingFaceTB/SmolLM-360M-Instruct | 0.360B | 0.000 | 0/8 | 26.817s |
+| HuggingFaceTB/SmolLM2-360M-Instruct | 0.360B | 6.250 | 6/8 | 3.148s |
+| Qwen/Qwen2-0.5B-Instruct | 0.494B | 5.125 | 1/8 | 18.891s |
+| Qwen/Qwen2.5-0.5B-Instruct | 0.494B | 6.625 | 7/8 | 2.876s |
+| Qwen/Qwen3-0.6B | 0.600B | 6.375 | 7/8 | 23.354s |
+| TinyLlama/TinyLlama-1.1B-Chat-v1.0 | 1.100B | 4.375 | 7/8 | 8.628s |
+| Qwen/Qwen2.5-1.5B-Instruct | 1.540B | 5.250 | 6/8 | 11.024s |
+| HuggingFaceTB/SmolLM2-1.7B-Instruct | 1.700B | 7.000 | 8/8 | 10.354s |
+| Qwen/Qwen2.5-3B-Instruct | 3.090B | 5.250 | 6/8 | 24.367s |
+| meta-llama/Llama-3.2-3B-Instruct | 3.210B | 7.750 | 1/8 | 6.881s |
+| microsoft/Phi-3.5-mini-instruct | 3.820B | 8.000 | 6/8 | 9.326s |
+| mistralai/Mistral-7B-Instruct-v0.3 | 7.250B | 8.562 | 6/8 | 10.074s |
+| Qwen/Qwen2.5-7B-Instruct | 7.620B | 9.375 | 8/8 | 12.385s |
+
+Size generally improved quality within the tested range. Mean reviewed quality
+was 3.292 for tiny models, 5.750 for small models, 7.000 for medium models and
+8.969 for large models. Qwen2.5-7B was the strongest at 9.375/10 and 8/8 valid
+JSON outputs. However, size was not the only cause. The two 360M SmolLM versions
+scored 0.000 and 6.250, showing that architecture and instruction tuning matter.
+Llama-3.2-3B scored 7.750 but only 1/8 outputs passed the strict schema, so useful
+content cannot replace application-level validation.
+
+The practical sweet spot for Hestia is the small-to-medium range when local
+resource use matters. SmolLM2-1.7B reached 7.000/10 and 8/8 valid JSON, making it
+a lighter compromise. If quality is the priority and suitable GPU capacity is
+available, Qwen2.5-7B performed best. Prompting also mattered: team-wide mean
+quality increased from 4.617 zero-shot to 5.483 one-shot, 5.817 few-shot and
+5.867 many-shot, although some models copied examples or became distracted.
+
+Approximate local compute requirement per tested model
+------------------------------------------------------
+Weight memory is estimated as parameter count x two bytes for FP16/BF16 or x
+0.5 bytes for idealized 4-bit storage, before runtime, KV cache, framework and
+operating-system overhead. Open-source weights have no per-token license charge,
+but the user pays for hardware, electricity and operations.
+
+| Model size | Models in this test | Approx FP16 weights | Approx 4-bit weights | Expected serving cost |
+| --- | ---: | ---: | ---: | --- |
+| 0.082B-0.600B | 7 | 0.16GB-1.20GB | 0.04GB-0.30GB | Lowest; feasible on ordinary CPU/RAM, but latency varies widely |
+| 1.100B-1.700B | 3 | 2.20GB-3.40GB | 0.55GB-0.85GB | Low/moderate; CPU possible, GPU improves interactive latency |
+| 3.090B-3.820B | 3 | 6.18GB-7.64GB | 1.55GB-1.91GB | Moderate; a GPU is preferable for concurrent interactive use |
+| 7.250B-7.620B | 2 | 14.50GB-15.24GB | 3.63GB-3.81GB | Highest tested tier; typically needs a suitable GPU or quantization |
+
+Using Person 4's illustrative published rental example, one always-on $0.50/hour
+GPU costs about $360 for a 30-day month before storage, traffic, electricity and
+operations. Small models may avoid that rental on owned CPU hardware but may be
+too slow under concurrency. Larger models can require more expensive GPU tiers.
+At low or spiky demand, the API estimates elsewhere in these notes can cost less
+than keeping a GPU idle; at steady high utilization or when data locality matters,
+owned/local hardware can be preferable.
+
+Coverage limitation
+-------------------
+The current submitted evidence contains six tiny, four small, three medium and
+two large models, with no completed model above 10B. It therefore has 15 models
+but does NOT yet satisfy the assignment's exact requirement of three models in
+each of five size categories. The team must supply replacement benchmark runs so
+the final selected matrix is 3 x 5 before claiming full compliance. Planned but
+untested 14B models are not counted as evidence.
