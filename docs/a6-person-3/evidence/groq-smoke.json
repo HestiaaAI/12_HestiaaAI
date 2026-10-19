@@ -1,0 +1,46 @@
+{
+  "generated_at": "2026-10-18T21:38:07.085838+00:00",
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "input": {
+    "title": "Prepare the guest room",
+    "task_type": "CHORE",
+    "priority": "MEDIUM",
+    "description": "Guests arrive Friday. Clean the room, wash bedding and set out towels."
+  },
+  "elapsed_seconds": 1.113,
+  "plan": {
+    "summary": "Prepare the guest room for arrival: clean surfaces, wash bedding, and set out fresh towels.",
+    "steps": [
+      {
+        "title": "Gather supplies",
+        "description": "Collect a microfiber cloth, mild all\u2011purpose cleaner, vacuum or broom, laundry detergent, fresh towels, and clean bedding."
+      },
+      {
+        "title": "Clean room surfaces",
+        "description": "Wipe down all surfaces (bedside tables, dresser, windowsills) with the cleaner, vacuum or sweep the floor, and dust any visible spots."
+      },
+      {
+        "title": "Wash bedding",
+        "description": "Remove old sheets and pillowcases, wash them in hot water with detergent, and dry completely before reassembling."
+      },
+      {
+        "title": "Set out towels and bedding",
+        "description": "Place fresh towels on the dresser or hook, arrange clean sheets on the bed, and add a decorative pillow or two for a welcoming touch."
+      }
+    ],
+    "supplies": [
+      "microfiber cloth",
+      "mild all\u2011purpose cleaner",
+      "vacuum or broom",
+      "laundry detergent",
+      "fresh towels",
+      "clean bedding"
+    ],
+    "cautions": [
+      "Avoid harsh chemicals that can damage surfaces or fabrics.",
+      "Ensure bedding is fully dry before placing it on the bed."
+    ]
+  },
+  "review": "Reviewed for structure and task relevance; fictional task; no DB writes."
+}

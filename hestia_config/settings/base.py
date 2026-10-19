@@ -7,6 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 SECRET_KEY = env("SECRET_KEY")
 OPENAI_API_KEY = env("OPENAI_API_KEY", default="")
+GROQ_API_KEY = env("GROQ_API_KEY", default="")
+GROQ_MODEL = env("GROQ_MODEL", default="openai/gpt-oss-20b")
 
 # A6 Person 2 — local Hugging Face Brain Dump (shared contract with ai_prototype.ipynb)
 HESTIA_BRAIN_DUMP_BACKEND = env("HESTIA_BRAIN_DUMP_BACKEND", default="local")

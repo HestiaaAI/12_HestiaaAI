@@ -20,6 +20,9 @@
         {% endif %}
     </dl>
     <p class="record-date">
+        {% if can_generate_action_plan %}
+        <a class="button-link" href="{% url 'workflows:task-action-plan' task.pk %}">Create an AI action plan</a>
+        {% endif %}
         <a class="button-link" href="{% url 'workflows:task-cbv-generic' %}">Back to household tasks</a>
     </p>
 </article>

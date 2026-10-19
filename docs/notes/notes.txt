@@ -559,3 +559,105 @@ https://console.groq.com/docs/models
 https://www.runpod.io/pricing
 Costs exclude app hosting, storage/network, retries, engineering and taxes.
 No exact quote for the hypothetical 16-core/64GB/1TB server is claimed.
+
+A6 - Person 3: Hybrid Potential (October 18, 2026)
+================================================
+Feature implemented on dev-ddhene2-a6-external-ai:
+  POST /api/tasks/<pk>/action-plan/ and GET/POST /tasks/<pk>/action-plan/.
+  Groq openai/gpt-oss-20b produces a validated draft action plan for one saved
+  Task. The endpoint uses the signed-in user's active workspace membership.
+  A real local fictional-task request succeeded; see
+  docs/a6-person-3/evidence/groq-smoke.json. This is not production evidence.
+
+How the local Hugging Face model and external API can work together
+-----------------------------------------------------------------
+The proposed complete team pipeline is:
+  1. P2's local model converts a Brain Dump into title/type/priority/description.
+  2. P4's UI lets the user edit, remove, confirm and save the extracted Tasks.
+  3. For a selected complex SAVED task, the user explicitly requests a Groq plan.
+  4. Only that task's four fields are transmitted, then the validated draft is
+     shown for review. No automatic write or subtask creation occurs in P3.
+
+The local extractor handles the frequent, short, well-defined extraction task.
+The hosted model handles occasional multi-step planning. The split avoids paying
+to send every simple task to the cloud and avoids loading a large planning model
+inside each Django worker. P3 does not import torch or load HF weights on requests.
+P2's actual extraction quality, latency and selected model remain P2/P1 evidence;
+P3 does not invent benchmark conclusions for the four assigned models.
+
+Routing examples (proposed full-team behavior)
+| User concern                         | Local/human path                  | Groq path                         |
+|--------------------------------------|-----------------------------------|-----------------------------------|
+| Buy milk; take out trash              | Extract/edit/save two tasks       | None needed                       |
+| Prepare guest room before Friday     | Save one reviewed task            | On click, cleaning/bedding steps  |
+| Organize household move               | Extract major responsibilities    | Plan one selected responsibility  |
+| Ambiguous or malformed local output   | Reject/ask user to edit or clarify | Only with explicit user consent   |
+| Possible gas leak                     | Flag urgent review/safe help      | Never treat AI as emergency care  |
+
+Structured JSON is not proof of correctness. Validate enum choices, field types,
+lengths and number of tasks locally; use human corrections to detect missed or
+invented concerns. Do not use a made-up model confidence threshold as a substitute
+for evaluation. A cloud fallback for failed extraction could be added later, but
+it must be labeled and explicitly authorized; it is not silently enabled here.
+
+Worked cost example (estimate, not measured usage)
+------------------------------------------------
+Let N be daily requests for planning, Tin/Tout be mean input/output tokens, and
+Pin/Pout be dollars per million tokens:
+  API dollars/day = N * (Tin * Pin + Tout * Pout) / 1,000,000.
+Groq's published model table checked October 18, 2026 lists gpt-oss-20b at
+$0.075 input / $0.30 output per million tokens. Assume 10,000 daily interactions,
+400 input + 600 output BILLABLE tokens per external call and a 30-day month.
+
+| Routing approach              | External calls/day | API $/day | API $/30 days |
+|-------------------------------|-------------------:|----------:|--------------:|
+| Send every interaction        |             10,000 |      2.10 |         63.00 |
+| Local first, 20% ask for plans |              2,000 |      0.42 |         12.60 |
+| Local first, 10% ask for plans |              1,000 |      0.21 |          6.30 |
+
+At a 10% routing rate, API usage is 90% lower than the all-cloud example, but the
+local hardware, electricity, operations and development costs are additional.
+Include billed reasoning tokens in Tout when applicable; a visible 600-token
+answer can cost more if hidden reasoning is also billed. The request cap here is
+2,048 completion tokens, not a promise that every call consumes 600. Measure the
+provider's usage counters and revise estimates. Free-tier quotas and price/model
+availability can change; do not assume a free tier serves 10,000 daily users.
+
+The hybrid approach is financially preferable to all-cloud only if:
+  incremental local cost/month < avoided API cost/month,
+at comparable quality and acceptable latency. In the 10% example the avoided
+API expense is $56.70/month. Renting a new GPU for extraction could exceed that
+saving; reusing existing adequately sized hardware might not. If local extraction
+causes many corrections, lost user time is another cost. Benchmark before choosing.
+
+Quality and privacy controls in P3
+---------------------------------
+- User clicks a button disclosing that Groq receives task details. GET is free of
+  provider calls. Only active members can send their household's task data.
+- Send title/type/priority/description only. Do not include workspace names,
+  membership records, uploaded documents, login information or the full Brain Dump.
+- Requests use a fixed HTTPS host, no redirects, connect/read timeouts, and no
+  automatic retries that could duplicate costs. Keys stay in ignored .env files.
+- Exact JSON fields/types/limits are checked. Invalid, refused or truncated
+  responses are discarded; external errors never expose provider bodies or keys.
+- Output is escaped, never interpreted as code, and never saved automatically.
+- A 15-second per-user cache cooldown limits repeat clicks. The default local
+  cache is per worker; production needs a shared cache/provider budget controls
+  for stronger quota enforcement. No plan is cached or logged by this feature.
+- Keep external processing optional. Users can edit tasks manually if the API is
+  unavailable or if they prefer not to transmit task descriptions to a provider.
+
+Sources and reproducibility
+---------------------------
+Groq models, availability and prices: https://console.groq.com/docs/models
+Groq JSON output behavior: https://console.groq.com/docs/structured-outputs
+Detailed setup, P4 API contract, model cards and benchmark handoff:
+docs/a6-person-3/README.md.
+All four assigned models now have eight selected real Colab generations each.
+The merge-ready file is a6_results/person3_benchmark_results.csv. Reviewed
+criterion scores and reasons are a6_results/person3_reviewed_scores.csv;
+these are assistant-assisted judgments, not independent human validation.
+Forty original generations are preserved, including Qwen's failed float16
+configuration. Qwen's float32-compute rerun is labeled separately. See
+llm-test/person3_benchmark_handoff.ipynb and person3_colab_run.ipynb.
+The preflight file is historical resource-check evidence, not generation data.

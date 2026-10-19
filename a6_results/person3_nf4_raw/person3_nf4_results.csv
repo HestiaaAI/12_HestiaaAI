@@ -1,0 +1,132 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+microsoft/Phi-3.5-mini-instruct,BD1,zero,272.716,7.269,129,True,,"{""tasks"":[
+  {""title"":""Kitchen Cleanup"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Clean the kitchen before guests arrive.""},
+  {""title"":""Grocery Shopping"",""task_type"":""SHOPPING"",""priority"":""HIGH"",""description"":""Buy necessary groceries for the guests.""},
+  {""title"":""Fix Leaky Tap"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Repair the bathroom tap to prevent water damage.""}
+]
+}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD1,one,272.716,7.402,147,True,,"{""tasks"": [
+  {""title"": ""Clean the kitchen"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Tidy up the kitchen before guests arrive.""},
+  {""title"": ""Repair the bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Fix the leaking bathroom tap.""},
+  {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for the household.""}
+]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD1,few,272.716,11.023,220,False,Task 3 missing: ['title']; Task 3 has an empty title,"{""tasks"": [
+  {""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Tidy up the kitchen before guests arrive.""},
+  {""title"": ""Grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy necessary groceries for the household.""},
+  {""title0"": ""Fix the bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Repair the leaking bathroom tap urgently.""}
+]}
+
+
+Note: The priority for fixing the bathroom tap is marked as ""HIGH"" due to the potential for water damage and inconvenience, which could be more pressing than the other tasks, especially with guests arriving soon. However, if there is an immediate safety risk associated with the gas smell, the priority for checking the",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD1,many,272.716,7.507,147,True,,"{""tasks"": [
+  {""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Tidy up the kitchen before guests arrive.""},
+  {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for the house.""},
+  {""title"": ""Repair bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Fix the leaking bathroom tap urgently.""}
+]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD2,zero,272.716,10.944,220,False,Root must be an object containing a tasks list,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book Dentist Appointment"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Schedule a dental check-up for this week.""
+    },
+    {
+      ""title"": ""Replace Smoke Detector Batteries"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Replace batteries in smoke detectors.""
+    },
+    {
+      ""title"": ""Return Library Book"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Return library book by Friday.""
+    },
+    {
+      ""title"": ""Wash Guest-Room Sheets"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW"",",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD2,one,272.716,9.401,187,True,,"{""tasks"": [
+  {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Schedule a dental visit for this week.""},
+  {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace batteries in the smoke detectors.""},
+  {""title"": ""Return library book"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Return library book by Friday.""},
+  {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Wash the sheets in the guest room.""}
+]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD2,few,272.716,9.847,193,True,,"{""tasks"": [
+  {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Schedule a dental check-up for this week.""},
+  {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace batteries in the smoke detector for safety.""},
+  {""title"": ""Return library book"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Return the borrowed library book by Friday.""},
+  {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Wash the sheets in the guest room.""}
+]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+microsoft/Phi-3.5-mini-instruct,BD2,many,272.716,11.217,220,True,,"{""tasks"": [
+  {""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up.""},
+  {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Change batteries in the smoke detectors.""},
+  {""title"": ""Return library book"", ""task_type"": ""SHOPPING"", ""priority"": ""HIGH"", ""description"": ""Return the borrowed library book by Friday.""},
+  {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean the guest-room bed linens.""}
+]}
+
+
+
+Note: The priority for returning the library book by Friday is marked as HIGH because it has a specific deadline within the week, which",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD1,zero,792.71,12.401,220,False,Root must be an object containing a tasks list,"{""!token"":""v3.1"",""tasks!"":[{""title!"":""!!Clean!!!!!Kitchen!"",""task!!type!"":""!!!!!!!!!!!!!!CHORE!"",""priority!"":""!MEDIUM!"",""description!"":""!Clean!!!!the!!!!k!i!t!!h!e!n!e!s!h!t!o!p!prepare!for!!!!!!guest!s!coming!tom!or!w!e!e!k!!""},{""title!"":""!!!!Buy!!!!!!!!Groceries!"",""task!!type!"":""!SHOP!PING!"",""priority!"":""!!!!M!I!D!E!!!!!!!!!!!!!!!!!!!!!!!!!!!"",""description!!"":""!!!Need!!basic!gro!c!e!e",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD1,one,792.71,12.487,220,False,Root must be an object containing a tasks list,"{""!token"":""c98d7f2b"",""tasks!"":[{""title!"":""Clean! the!!!! kitchen!"",""task!!!_type!"":""!!!!!!!!!!!CHORE!"",""priority!"":""!!HIGH!"",""description!"":""!Tidy! up!!!the!!!!k!itchen!for!!!guest!s!coming!!tom!orrow!.""},{""title!"":""!!!Buy!!!groceries!"",""!!task!_!type!"":""!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!SHOP!PING!"",""!!priority!"":""!!!!!!!HIGH!"",""!description!"":""!!Purchase!!!!!!necessary!!items!!for!!the!house!.""},{""title!"":""!!Fix!!!!!!!!!!!the",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD1,few,792.71,12.68,220,False,No valid JSON object found,"{""!response_type"":""application/json"",""!response_content!"":""{\""!json!\"":\""{\""!tasks!\"": [{\""!title!\"": \""!Clean!!!Kitchen!\"", !\""!task!!_type!\"": \""!!!!!!!!!!!!CHORE!\"", !\""!priority!\"": \""!!MEDIUM!\"", !\""!description!\"":!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""!\""",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD1,many,792.71,12.965,220,False,No valid JSON object found,"{""!response_type"":""message"",""content!"":""{\""tasks!\"": [{\""title!\"": \""Clean!! kitchen!\"",! \""task!!!!_!!!type!\"": \""!!!!!!!!!!!CHORE!\"",! \""!!priority!\"": \""!HIGH!\"",! \""!description!\"":! \""!Clean!!!!!!the!!k!itchen!for!!!guest!s!coming!tom!orrow!\""}, {\""!!!title!\"":!!\""!!!!!Buy!!!!groceries!\"",! \""!!!!!!!!!!!!!!task!!!!_!!!!type!\"":!!\""!!SHOP!PING!\"",! \""!priority!\"":!\""!!!!!M!!!!!EDIUM!\"",! \""!!!!!!!!!!!!!!!!!!!!!!!!!",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD2,zero,792.71,12.621,220,False,Root must be an object containing a tasks list,"{""!token"":""abcd1234"",""tasks!"":[{""title!"":""!Book!!!Dentist!appointment!"",""task!!!type!"":""!!!!!!!!!!!APPOINTMENT!"",""priority!"":""!!MEDIUM!"",""description!"":""!Book!!!!!dent!!appointment!for!!!!!this!!week!""},{""title!"":""!!!!!!!!!!!Replace!!!!!!!!!!!!!!!!!!!Smoke!!!!!!detector!!b!atter!ies!"",""task!!!!!!type!"":""!!!!MA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD2,one,792.71,12.562,220,False,Root must be an object containing a tasks list,"{""!token"":""987654321abc"",""tasks!"":[{""title!"":""!!Book!!dentist!appointment!"",""task!!!type!"":""!!!!!!!APPOINTMENT!"",""priority!"":""!MEDIUM!"",""description!"":""!Schedule!!!a!!!!!dentist!!!!!appointment!for!!!!!!!this!!week!.""},{""title!"":""!!!!!!!Replace!!!!!!!!!!!!!!!!!!sm!oke!!!!!!detector!!!!!!!!!!!!!!!!!!b!atter!ies!"",""task!!!!!!!type!"":""!!!MA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD2,few,792.71,12.554,220,False,Root must be an object containing a tasks list,"{""!response_type"":""application/json"",""!response_content!"":{""!json!"":{""!version!"":""1.1"",""tasks!"":[{""title!"":""!Book!!!dentist!appointment!"",""task!!!type!"":""!!!!!!!!APPOINTMENT!"",""priority!"":""!!!!!!!!MEDIUM!"",""description!"":""!!Book!!!a!!!!!dentist!!!!!appointment!for!!!!!this!!week!""},{""title!"":""!!!Replace!!!!!!!!!!!!!!!!!!sm!oke!!!!!!detector!!!!!b!atter!ies!"",""!!task!_!!type!"":""!!!!!!MA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+Qwen/Qwen2.5-7B-Instruct,BD2,many,792.71,12.648,220,False,No valid JSON object found,"{""!response_type"":""application/json"",""!response_content!"":""{\""!json!\"":\""{\""!tasks!\"": [{\""!title!\"": \""!!Book!!!dentist!appointment!!\"", \""!!!!!task!!!type!!\"": \""!!!!!!!!!!!!!!AP!!POINT!!MENT!!\"", \""!priority!\"": \""!!!M!!!I!!!D!!!E!!!N!!!O!!!U!!!T!!\"", \""!description!!\"":!\""!!Schedule!!a!!!!dent!!!ist!appointment!for!!!!!!this!!week!!\"", !}, {\""!!title!\"":!!\""!!!!!!Replace!!!!!!!!!!!!!!!!!!!!!!!sm!!!o!!!ke!!!!!!",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD1,zero,715.332,8.369,127,False,Task 1 missing: ['description']; Task 1 has an empty description; Task 2 missing: ['description']; Task 2 has an empty description; Task 3 missing: ['description']; Task 3 has an empty description,"{
+  ""tasks"": [
+    {
+      ""title"": ""Clean kitchen"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""HIGH""
+    },
+    {
+      ""title"": ""Buy groceries"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""MEDIUM""
+    },
+    {
+      ""title"": ""Fix leaking bathroom tap"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""HIGH""
+    }
+  ]
+}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD1,one,715.332,8.63,128,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary items for the meal.""}, {""title"": ""Fix leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the leaking bathroom tap to prevent water damage.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD1,few,715.332,8.665,126,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for the guests.""}, {""title"": ""Fix leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Repair the leaking bathroom tap to prevent water damage.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD1,many,715.332,8.454,128,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Prepare the kitchen for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for the guests.""}, {""title"": ""Fix leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Repair the leaking bathroom tap to prevent water damage.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD2,zero,715.332,13.684,218,True,,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book dentist appointment"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Schedule a dentist visit for this week""
+    },
+    {
+      ""title"": ""Replace smoke detector batteries"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""LOW"",
+      ""description"": ""Replace batteries in smoke detectors""
+    },
+    {
+      ""title"": ""Return library book"",
+      ""task_type"": ""ERRAND"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Return the library book by Friday""
+    },
+    {
+      ""title"": ""Wash guest-room sheets"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW"",
+      ""description"": ""Wash the guest-room sheets""
+    }
+  ]
+}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD2,one,715.332,10.953,169,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the batteries in the smoke detectors.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""URGENT"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Wash the sheets for the guest room.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD2,few,715.332,10.923,167,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace the batteries in the smoke detectors.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""URGENT"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Wash the sheets for the guest room.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.
+mistralai/Mistral-7B-Instruct-v0.3,BD2,many,715.332,10.912,167,False,Task 4 has invalid task_type,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dentist appointment for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace the batteries in the smoke detectors.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""URGENT"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""LAUNDRY"", ""priority"": ""LOW"", ""description"": ""Wash the sheets for the guest room.""}]}",,Precision: nf4. Not yet reviewed; score manually using P1's rubric.

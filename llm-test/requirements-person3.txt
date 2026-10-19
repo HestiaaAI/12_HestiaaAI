@@ -1,0 +1,5 @@
+# Benchmark environment only; no changes to Django's runtime are needed for Groq.
+torch>=2.6,<3
+transformers>=4.56,<5
+pandas>=2.2,<3
+sentencepiece>=0.2,<1
