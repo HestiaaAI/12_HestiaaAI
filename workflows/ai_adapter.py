@@ -1,4 +1,4 @@
-"""Person 4's temporary adapter; Person 2 owns ai_service and inference."""
+"""Person 4 review adapter; Person 2 owns the local inference service."""
 from django.conf import settings
 
 from .ai_forms import MAX_TASKS, ReviewTaskForm
@@ -9,7 +9,7 @@ class SuggestionsUnavailable(Exception):
 
 
 def get_suggestions(text):
-    mode = getattr(settings, "HESTIA_BRAIN_DUMP_BACKEND", "mock")
+    mode = getattr(settings, "HESTIA_BRAIN_DUMP_BACKEND", "local")
     if mode == "mock":
         result = {"tasks": [
             {"title": "Clean the kitchen", "task_type": "CHORE", "priority": "HIGH",
@@ -21,8 +21,8 @@ def get_suggestions(text):
         ], "error": None}
     elif mode == "local":
         # Lazy import: missing inference dependencies cannot break the rest of Hestia.
-        from .ai_service import analyze_brain_dump
-        result = analyze_brain_dump(text)
+        from .services.hf_local import extract_tasks
+        result = extract_tasks(text)
     else:
         raise SuggestionsUnavailable()
     return validate_suggestions(result)

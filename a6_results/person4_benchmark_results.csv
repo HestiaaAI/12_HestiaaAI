@@ -1,0 +1,182 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+Qwen/Qwen2-0.5B-Instruct,BD1,zero,5.557,14.99,134,False,Task 1 has invalid task_type,"{""tasks"":[{""title"":""Kitchen Cleaning"",""task_type"":""CLEANING"",""priority"":""MEDIUM"",""description"":""Clean the kitchen to make it ready for guests."",""urgency"":""LOW""},{""title"":""Groceries Shopping"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Buy groceries for the guests."",""urgency"":""MEDIUM""},{""title"":""Bathroom Repair"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""Fix the leaky bathroom faucet so the guests can come home safely.""},{""title"":""Other Tasks"",""task_type"":""OTHER"",""priority"":""LOW"",""description"":""Other household chores like dusting, vacuuming, etc.""}]}",5,"Assistant-assisted review; E/T/P/C/F=2/1/1/1/0. Found the three concerns but invented additional chores; CLEANING is invalid, adds urgency keys, and understates guest preparation."
+Qwen/Qwen2-0.5B-Instruct,BD1,one,5.557,15.099,127,False,Task 1 has invalid task_type | Task 3 has invalid task_type,"{""tasks"": [{""title"": ""Vacuum the kitchen"", ""task_type"": ""CLOTHES"", ""priority"": ""LOW"", ""description"": ""Clean the kitchen surfaces with a vacuum cleaner.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Go to the grocery store to buy necessary items for the guests.""}, {""title"": ""Fix the leaky bathroom faucet"", ""task_type"": ""DIY"", ""priority"": ""MEDIUM"", ""description"": ""Use a screwdriver to fix the leaky faucet.""}]}",4,"Assistant-assisted review; E/T/P/C/F=3/0/0/1/0. Found three tasks; CLOTHES/DIY are invalid types, preparation priorities are weak, and screwdriver repair advice is unsupported."
+Qwen/Qwen2-0.5B-Instruct,BD1,few,5.557,16.495,127,False,Task 1 has invalid task_type | Task 2 has invalid task_type | Task 3 has invalid task_type,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CLEANING"", ""priority"": ""LOW"", ""description"": ""Vacuum and clean the kitchen surfaces."", ""urgency"": ""NORMAL""}, {""title"": ""Buy groceries"", ""task_type"": ""COOKING"", ""priority"": ""LOW"", ""description"": ""Prepare and cook some meals for guests."", ""urgency"": ""NORMAL""}, {""title"": ""Fix bathroom faucet"", ""task_type"": ""HEALTHY"", ""priority"": ""LOW"", ""description"": ""Fix the leaking bathroom faucet."", ""urgency"": ""NORMAL""}]}",3,Assistant-assisted review; E/T/P/C/F=2/0/0/1/0. Recognized three concerns but grocery description becomes cooking; all types invalid and all priorities LOW despite guests tomorrow.
+Qwen/Qwen2-0.5B-Instruct,BD1,many,5.557,17.985,133,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Wipe down countertops with a damp cloth."", ""urgency"": ""MEDIUM""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Go to the grocery store and buy some food for the guests.""}, {""title"": ""Fix bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Fix the leaking faucet so it doesn't affect the guests' comfort.""}]}",7,Assistant-assisted review; E/T/P/C/F=3/1/0/2/1. Three clear tasks and valid required-field values; kitchen should be CHORE and preparation priorities are too low. Shared validator allows extra urgency key.
+Qwen/Qwen2-0.5B-Instruct,BD2,zero,5.557,19.04,162,False,Task 1 has invalid task_type | Task 2 has invalid task_type | Task 3 has invalid task_type | Task 4 has invalid task_type,"{""tasks"":[{""title"":""Book the Dentist"",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW"",""description"":""Schedule a dental appointment.""},{""title"":""Replace Smoke Detectors"",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""MEDIUM"",""description"":""Replace the smoke detectors.""},{""title"":""Return Library Book"",""task_type"":""RECYCLING|RETURN|OTHER"",""priority"":""LOW"",""description"":""Return a library book.""},{""title"":""Wash Guest Room Sheets"",""task_type"":""CLOTHESWASH|OTHER"",""priority"":""LOW"",""description"":""Wash the guest room sheets.""}]}",4,"Assistant-assisted review; E/T/P/C/F=2/0/1/1/0. Four concerns recognized, but replaces detectors rather than batteries; pipe-separated placeholder types invalid and Friday deadline omitted."
+Qwen/Qwen2-0.5B-Instruct,BD2,one,5.557,16.203,129,False,Task 2 has invalid task_type | Task 3 has invalid task_type | Task 4 has invalid task_type,"{""tasks"":[{""title"":""Book the dentist appointment"", ""task_type"":""CHORE"", ""priority"":""LOW"", ""description"":""Schedule an appointment with the dentist.""},{""title"":""Replace smoke detector batteries"", ""task_type"":""PERFORM"", ""priority"":""MEDIUM"", ""description"":""Replace the batteries in the smoke detector.""},{""title"":""Return library book"", ""task_type"":""PERFORM"", ""priority"":""MEDIUM"", ""description"":""Return the library book to the library.""},{""title"":""Wash guest room sheets"", ""task_type"":""PERFORM"", ""priority"":""MEDIUM"", ""description"":""Clean the guest room sheets.""}]}",6,"Assistant-assisted review; E/T/P/C/F=3/0/1/2/0. Extracted all four actions clearly; PERFORM is invalid, dentist is misclassified CHORE, and Friday deadline is absent."
+Qwen/Qwen2-0.5B-Instruct,BD2,few,5.557,25.338,144,False,Task 1 has invalid task_type | Task 3 has invalid task_type,"{""tasks"": [{""title"": ""Book the dentist appointment"", ""task_type"": ""BOOKING"", ""priority"": ""LOW"", ""description"": ""Schedule an appointment with the dentist.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detector battery.""}, {""title"": ""Return library book"", ""task_type"": ""RETURN"", ""priority"": ""LOW"", ""description"": ""Return the library book.""}, {""title"": ""Wash guest room sheets"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Clean the guest room sheets.""}]}",7,"Assistant-assisted review; E/T/P/C/F=3/1/1/2/0. Four actions preserved; BOOKING/RETURN are invalid, sheets misclassified MAINTENANCE, and safety/deadline priorities need review."
+Qwen/Qwen2-0.5B-Instruct,BD2,many,5.557,25.977,155,False,Task 3 has invalid task_type,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment for the week.""}, {""title"": ""Replace smoke detector battery"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Replace the smoke detector battery with a new one.""}, {""title"": ""Return library book"", ""task_type"": ""RECYCLING"", ""priority"": ""LOW"", ""description"": ""Return the library book to its original state.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean the guest-room sheets.""}]}",5,Assistant-assisted review; E/T/P/C/F=2/1/1/1/0. Four titles but book description incorrectly says return to original state; batteries misclassified APPOINTMENT and RECYCLING invalid.
+HuggingFaceTB/SmolLM-360M-Instruct,BD1,zero,2.493,24.302,220,False,Root must be an object containing a tasks list,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_tasks(message):
+    tasks = []
+    for item in message.split():
+        if item.startswith(""Guests are coming tomorrow""):
+            tasks.append({""title"": ""Guests are coming tomorrow"", ""task_type"": ""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER""})
+        elif item.startswith(""Kitchen is messy""):
+            tasks.append({""title"": ""Kitchen is messy"", ""task_type"": ""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER""})
+        elif item.startswith(""Bathroom tap is leaking badly""):
+            tasks.append({""title"": ""Bathroom tap is leaking badly"", ""task_type"": ""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|",0,"Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned truncated Python implementation with schema placeholder enums, not an extracted task payload."
+HuggingFaceTB/SmolLM-360M-Instruct,BD1,one,2.493,24.934,220,False,Root must be an object containing a tasks list,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_tasks(message):
+    tasks = []
+    for item in message.split():
+        if item.startswith(""Take out the trash""):
+            tasks.append({""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""})
+        elif item.startswith(""Buy milk""):
+            tasks.append({""title"": ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase milk for the household.""})
+        elif item.startswith(""The kitchen is messy, we need groceries""):
+            tasks.append({""title"": ""The kitchen is messy, we need groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""})
+        elif item.startswith(""The bathroom tap is leaking badly""):",0,Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned truncated Python code copying trash/milk examples rather than usable household task JSON.
+HuggingFaceTB/SmolLM-360M-Instruct,BD1,few,2.493,25.363,220,False,No valid JSON object found,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_json(message):
+    message_dict = {
+        ""title"": message[""title""],
+        ""task_type"": message[""task_type""],
+        ""priority"": message[""priority""],
+        ""description"": message[""description""],
+        ""entities"": [
+            {
+                ""title"": message[""entities""][0][""title""],
+                ""entities"": [
+                    {
+                        ""title"": message[""entities""][0][""entities""][0][""title""],
+                        ""entities"": [
+                            {
+                                ""title"": message[""entities""][0][""entities""][0][""entities""][0][""title""],
+                                ""entities"": [
+                                    {
+                                        ""title"": message[""entities""][0][""entities""][0][""entities""][0][""entities""][0][""title""],
+                                        ""entities"": [
+                                            {
+                                                ""title"": message[""entities""][0][""entities""][0][""entities""][0][""entities""][0][""entities""][0][""title""],
+                                                ""entities"": [
+                                                    {
+                                ""title"": message[""entities""][",0,"Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned recursively nested Python message/entities code, not any input-specific task output."
+HuggingFaceTB/SmolLM-360M-Instruct,BD1,many,2.493,27.256,220,False,No valid JSON object found,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message(message):
+    title = message[""title""]
+    task_type = message[""task_type""]
+    priority = message[""priority""]
+    description = message[""description""]
+    if ""urgent"" in priority:
+        priority = ""URGENT""
+    elif ""low"" in priority:
+        priority = ""LOW""
+    elif ""medium"" in priority:
+        priority = ""MEDIUM""
+    elif ""high"" in priority:
+        priority = ""HIGH""
+    elif ""other"" in priority:
+        priority = ""OTHER""
+    else:
+        priority = ""UNKNOWN""
+    if ""low"" in task_type:
+        task_type = ""LOW""
+    elif ""medium"" in task_type:
+        task_type = ""MEDIUM""
+    elif ""high"" in task_type:
+        task_type = ""HIGH""
+    elif ""other"" in task_type:
+        task_type = ""OTHER""
+    else",0,"Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned incomplete Python conversion code, incorrectly treating priorities as task types; no extracted tasks."
+HuggingFaceTB/SmolLM-360M-Instruct,BD2,zero,2.493,28.097,220,False,No valid JSON object found,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_tasks(message):
+    tasks = []
+    for task in message.split(""|""):
+        title = task.split(""|"")[0]
+        task_type = task.split(""|"")[1]
+        priority = task.split(""|"")[2]
+        description = task.split(""|"")[3]
+        if priority == ""LOW"":
+            tasks.append({""title"": title, ""task_type"": task_type, ""priority"": ""LOW"", ""description"": description})
+        elif priority == ""MEDIUM"":
+            tasks.append({""title"": title, ""task_type"": task_type, ""priority"": ""MEDIUM"", ""description"": description})
+        elif priority == ""HIGH"":
+            tasks.append({""title"": title, ""task_type"": task_type, ""priority"": ""HIGH"", ""description"": description})
+        elif priority == ""URGENT"":
+            tasks.append({""title"": title,",0,"Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned truncated Python splitting pipe-separated strings, not tasks from the natural-language input."
+HuggingFaceTB/SmolLM-360M-Instruct,BD2,one,2.493,29.014,220,False,Root must be an object containing a tasks list,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_tasks(message):
+    tasks = []
+    for item in message.split():
+        if item.startswith(""Take out the trash""):
+            tasks.append({""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""})
+        elif item.startswith(""Buy milk""):
+            tasks.append({""title"": ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase milk for the household.""})
+        elif item.startswith(""Return a library book by Friday""):
+            tasks.append({""title"": ""Return a library book by Friday"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase a library book for the household.""})
+        elif item.startswith(""Wash the guest-room sheets""):
+            tasks",0,"Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned Python example-matching code; book described as a purchase, and no complete task payload."
+HuggingFaceTB/SmolLM-360M-Instruct,BD2,few,2.493,26.947,220,False,Root must be an object containing a tasks list,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_json(message):
+    tasks = []
+    for task in message.split():
+        if task.startswith(""Take out the trash""):
+            tasks.append({""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""})
+        elif task.startswith(""Buy milk""):
+            tasks.append({""title"": ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase milk for the household.""})
+        elif task.startswith(""Check gas leak""):
+            tasks.append({""title"": ""Check gas leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Stop using the stove and arrange an immediate gas safety inspection.""})
+        elif task.startswith(""Replace hallway light bulb""):
+            tasks.append",0,Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned truncated Python copying trash/milk/gas/light-bulb examples unrelated to this input.
+HuggingFaceTB/SmolLM-360M-Instruct,BD2,many,2.493,28.62,220,False,No valid JSON object found,"Here's how you can implement this:
+
+```python
+import json
+
+def convert_message_to_tasks(message):
+    tasks = []
+    for item in message.split():
+        title = item.split(""|"")[0]
+        task_type = item.split(""|"")[1]
+        priority = item.split(""|"")[2]
+        description = item.split(""|"")[3]
+        if ""CHORE"" in task_type:
+            task_type = ""CHORE""
+        elif ""APPOINTMENT"" in task_type:
+            task_type = ""APPOINTMENT""
+        elif ""DEADLINE"" in task_type:
+            task_type = ""DEADLINE""
+        elif ""ERRAND"" in task_type:
+            task_type = ""ERRAND""
+        elif ""MAINTENANCE"" in task_type:
+            task_type = ""MAINTENANCE""
+        elif ""SHOPPING"" in task_type:
+            task_type = ""SHOPP",0,Assistant-assisted review; E/T/P/C/F=0/0/0/0/0. Returned truncated pipe-splitting Python implementation instead of input-specific JSON tasks.
+Qwen/Qwen3-0.6B,BD1,zero,5.249,18.099,119,True,,"{""tasks"":[{""title"":""APPOINTMENT"",""task_type"":""APPOINTMENT"",""priority"":""URGENT"",""description"":""APPOINTMENT""},{""title"":""CHORE"",""task_type"":""CHORE"",""priority"":""LOW"",""description"":""CHORE""},{""title"":""DEADLINE"",""task_type"":""DEADLINE"",""priority"":""HIGH"",""description"":""DEADLINE""},{""title"":""SHOPPING"",""task_type"":""SHOPPING"",""priority"":""LOW"",""description"":""SHOPPING""},{""title"":""MAINTENANCE"",""task_type"":""MAINTENANCE"",""priority"":""HIGH"",""description"":""MAINTENANCE""}]}",1,Assistant-assisted review; E/T/P/C/F=0/0/0/0/1. Schema-valid but titles/descriptions are category names; invents appointment/deadline and fails actual household extraction.
+Qwen/Qwen3-0.6B,BD1,one,5.249,13.878,75,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""HIGH"", ""description"": ""Clean the kitchen and fix the leaking bathroom tap.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""}]}",7,"Assistant-assisted review; E/T/P/C/F=2/2/1/1/1. Kitchen and groceries are relevant, but tap repair is merged into kitchen description rather than a separate task; grocery urgency understated."
+Qwen/Qwen3-0.6B,BD1,few,5.249,27.037,148,True,,"{""tasks"": [{""title"": ""Arrange for guests"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Schedule a time for guests to arrive.""}, {""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen and organize the mess.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""}, {""title"": ""Fix bathroom tap leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Fix the leaking bathroom tap immediately.""}]}",7,Assistant-assisted review; E/T/P/C/F=2/2/0/2/1. Extracted three concerns but invents an arrival-scheduling task; preparation is only MEDIUM while the tap is URGENT without an immediate safety basis.
+Qwen/Qwen3-0.6B,BD1,many,5.249,28.326,141,True,,"{""tasks"": [{""title"": ""Vacuum kitchen"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Vacuum the kitchen floor.""}, {""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen area.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""}, {""title"": ""Fix bathroom tap leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Fix the leaking bathroom tap.""}]}",7,Assistant-assisted review; E/T/P/C/F=2/2/0/2/1. Extracted concerns but duplicates kitchen work as vacuuming/cleaning; preparation priorities too low and tap urgency not justified by safety evidence.
+Qwen/Qwen3-0.6B,BD2,zero,5.249,18.008,118,False,Task 2 has invalid task_type | Task 3 has invalid task_type | Task 4 has invalid task_type,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""HIGH"",""description"":""Book the dentist appointment""},{""title"":""Replace smoke detector batteries"",""task_type"":""CHORE|APPOINTMENT"",""priority"":""LOW"",""description"":""Replace the smoke detector batteries""},{""title"":""Return library book"",""task_type"":""CHORE|APPOINTMENT"",""priority"":""HIGH"",""description"":""Return a library book by Friday""},{""title"":""Wash guest-room sheets"",""task_type"":""CHORE|APPOINTMENT"",""priority"":""LOW"",""description"":""Wash the guest-room sheets""}]}",7,Assistant-assisted review; E/T/P/C/F=3/1/1/2/0. Extracted all four concerns and Friday deadline clearly; three task types are invalid CHORE|APPOINTMENT composites and dentist priority is inflated.
+Qwen/Qwen3-0.6B,BD2,one,5.249,23.688,154,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Book a dentist appointment for the week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the smoke detector batteries in the household.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""URGENT"", ""description"": ""Return a library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Wash the guest-room sheets.""}]}",9,"Assistant-assisted review; E/T/P/C/F=3/2/1/2/1. Four distinct, clear tasks and appropriate types; dentist HIGH is unsupported and Friday URGENT assumes an unknown current day."
+Qwen/Qwen3-0.6B,BD2,few,5.249,27.985,155,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""HIGH"", ""description"": ""Book a dentist appointment for the upcoming week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""SHOPPING"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detector batteries in the household.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""URGENT"", ""description"": ""Return the library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Wash the guest-room sheets to maintain cleanliness.""}]}",7,"Assistant-assisted review; E/T/P/C/F=3/1/0/2/1. Four concerns extracted clearly, but replacing batteries is SHOPPING; dentist HIGH, batteries LOW and Friday URGENT need correction."
+Qwen/Qwen3-0.6B,BD2,many,5.249,29.813,150,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment for the week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""SHOPPING"", ""priority"": ""LOW"", ""description"": ""Replace the smoke detector batteries in the household.""}, {""title"": ""Return library book"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Return the library book to the library.""}, {""title"": ""Vacuum guest room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Vacuum the guest room sheets.""}]}",6,"Assistant-assisted review; E/T/P/C/F=2/1/1/1/1. Changes washing sheets to vacuuming; batteries SHOPPING and library return CHORE are poor types, with no Friday deadline in description."

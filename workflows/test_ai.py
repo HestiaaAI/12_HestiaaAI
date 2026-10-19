@@ -1,6 +1,5 @@
 from unittest.mock import patch
 import time
-from types import ModuleType
 
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
@@ -13,6 +12,7 @@ from .ai_forms import MAX_DESCRIPTION, ReviewTaskForm
 from .models import Task
 
 
+@override_settings(HESTIA_BRAIN_DUMP_BACKEND="mock")
 class BrainDumpTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -183,19 +183,18 @@ class BrainDumpTests(TestCase):
 
     @override_settings(HESTIA_BRAIN_DUMP_BACKEND="local")
     def test_local_missing_service_fails_gracefully(self):
-        with patch.dict("sys.modules", {"workflows.ai_service": None}):
+        with patch("workflows.services.hf_local.extract_tasks", side_effect=ImportError("Missing model dependency")):
             self.assertContains(self.generate(), "Suggestions are unavailable")
 
     @override_settings(HESTIA_BRAIN_DUMP_BACKEND="local")
     def test_local_contract_receives_trimmed_input_and_is_validated(self):
-        service = ModuleType("workflows.ai_service")
         from unittest.mock import Mock
-        service.analyze_brain_dump = Mock(return_value={"tasks": [
+        extract = Mock(return_value={"tasks": [
             {"title": "Local suggestion", "task_type": "ERRAND", "priority": "MEDIUM", "description": "Review me"}
         ], "error": None})
-        with patch.dict("sys.modules", {"workflows.ai_service": service}):
+        with patch("workflows.services.hf_local.extract_tasks", extract):
             response = self.generate(text="  Example input  ")
-        service.analyze_brain_dump.assert_called_once_with("Example input")
+        extract.assert_called_once_with("Example input")
         self.assertContains(response, "Local suggestion")
         self.assertNotContains(response, "Demo mode")
         self.assertFalse(Task.objects.exists())
@@ -206,3 +205,27 @@ class BrainDumpTests(TestCase):
         response = self.client.post(self.url, data)
         self.assertContains(response, "&lt;script&gt;")
         self.assertNotContains(response, "<script>evil()</script>")
+
+    @override_settings(HESTIA_TASK_BREAKDOWN_CALLABLE="team.provider")
+    def test_breakdown_is_explicit_review_only(self):
+        data = self.payload(self.generate())
+        data["breakdown_index"] = "0"
+        with patch("workflows.ai_breakdown.import_string") as loader:
+            loader.return_value.return_value = {"steps": ["Clear surfaces", "Wipe counters"], "error": None}
+            response = self.client.post(self.url, data)
+        self.assertContains(response, "Clear surfaces")
+        self.assertContains(response, "Nothing was saved")
+        self.assertFalse(Task.objects.exists())
+        self.assertFalse(response.context["confirmation"].is_bound)
+        loader.return_value.assert_called_once_with("Clean the kitchen", "Clean and organize the kitchen before guests arrive.")
+
+    def test_missing_or_invalid_breakdown_preserves_edits(self):
+        data = self.payload(self.generate())
+        data.update({"breakdown_index": "0", "form-0-title": "Edited task"})
+        self.assertContains(self.client.post(self.url, data), "Edited task")
+        self.assertFalse(Task.objects.exists())
+        with self.settings(HESTIA_TASK_BREAKDOWN_CALLABLE="team.provider"):
+            with patch("workflows.ai_breakdown.import_string") as loader:
+                loader.return_value.return_value = {"steps": ["x" * 501], "error": None}
+                self.assertContains(self.client.post(self.url, data), "breakdown is unavailable")
+        self.assertFalse(Task.objects.exists())

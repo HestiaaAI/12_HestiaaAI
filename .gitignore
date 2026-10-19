@@ -46,6 +46,19 @@ Thumbs.db
 .coverage
 htmlcov/
 
+# Hugging Face / local LLM weights and caches (A6 — never push model files)
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.gguf
+*.ggml
+.cache/
+models/
+checkpoints/
+offload/
+
 # Local reference material and planning documents
 Docs_old/
 P1-A1-Team_12/

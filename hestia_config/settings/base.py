@@ -8,6 +8,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 SECRET_KEY = env("SECRET_KEY")
 OPENAI_API_KEY = env("OPENAI_API_KEY", default="")
 
+# A6 Person 2 — local Hugging Face Brain Dump (shared contract with ai_prototype.ipynb)
+HESTIA_BRAIN_DUMP_BACKEND = env("HESTIA_BRAIN_DUMP_BACKEND", default="local")
+HESTIA_TASK_BREAKDOWN_CALLABLE = env("HESTIA_TASK_BREAKDOWN_CALLABLE", default="")
+HF_TOKEN = env("HF_TOKEN", default="")
+HF_BRAIN_DUMP_MODEL = env(
+    "HF_BRAIN_DUMP_MODEL",
+    default="TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+)
+HF_BRAIN_DUMP_DEVICE = env("HF_BRAIN_DUMP_DEVICE", default="cpu")
+HF_BRAIN_DUMP_MAX_NEW_TOKENS = env.int("HF_BRAIN_DUMP_MAX_NEW_TOKENS", default=220)
+HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
+
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",

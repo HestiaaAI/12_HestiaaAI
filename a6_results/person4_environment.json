@@ -1,0 +1,29 @@
+{
+  "generated_at_utc": "2026-10-19T01:18:52.472580+00:00",
+  "python": "3.11.15",
+  "torch": "2.14.1+cpu",
+  "transformers": "4.57.6",
+  "platform": "Windows-10-10.0.26200-SP0",
+  "device": "cpu",
+  "dtype": "float32",
+  "torch_threads": 4,
+  "ram_gib": 15.5,
+  "logical_processors": 18,
+  "max_new_tokens": 220,
+  "do_sample": false,
+  "seed": 0,
+  "models": {
+    "Qwen/Qwen2-0.5B-Instruct": {
+      "revision": "c540970f9e29518b1d8f06ab8b24cba66ad77b6d"
+    },
+    "HuggingFaceTB/SmolLM-360M-Instruct": {
+      "revision": "73b7144f76331266f5f45d5642fd8da653583b13"
+    },
+    "Qwen/Qwen3-0.6B": {
+      "revision": "c1899de289a04d12100db370d81485cdf75e47ca"
+    }
+  },
+  "qwen3_thinking": false,
+  "team_contract_sha256": "0a5cb229532575a932dbe520844861933bfdface6c3e49b3a436ceed7ca39abd",
+  "notes": "Shared P1/P2 inputs, instructions, examples and schema. Qwen3 uses non-thinking chat template; greedy decoding follows team contract rather than vendor sampling guidance. CPU timings are not controlled cross-hardware comparisons. Quality scores require review of raw outputs."
+}

@@ -10,6 +10,7 @@
 </header>
 {% for message in messages %}<p class="ai-notice" role="status">{{ message }}</p>{% endfor %}
 {% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+{% if review_notice %}<p class="ai-notice" role="status">{{ review_notice }}</p>{% endif %}
 {% if mock_mode %}<p class="ai-notice">Demo mode: suggestions are fixed sample tasks, regardless of your input. No AI model is running.</p>{% endif %}
 {% if not has_workspaces %}
 <section class="empty-state"><h2>No active household membership</h2><p>Ask a household administrator to add your account before organizing tasks.</p></section>
@@ -36,6 +37,10 @@
                 {{ field.errors }}
             </div>
             {% endfor %}
+            {% if breakdown_available %}
+            <p class="field-help">Optional: send this task's title and description to the configured external AI provider for suggested steps. Review the returned steps before saving.</p>
+            <button type="submit" name="breakdown_index" value="{{ forloop.counter0 }}" formnovalidate>Suggest steps</button>
+            {% endif %}
         </fieldset>
         {% endfor %}
         </div>

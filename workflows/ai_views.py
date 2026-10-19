@@ -12,6 +12,7 @@ from django.views.decorators.http import require_http_methods
 
 from households.models import Membership
 from .ai_adapter import get_suggestions
+from .ai_breakdown import suggest_steps
 from .ai_forms import BrainDumpForm, ConfirmationForm, TaskReviewFormSet
 
 SALT = "workflows.brain-dump-review"
@@ -23,9 +24,12 @@ DRAFT_KEY = "brain_dump_draft"
 @require_http_methods(["GET", "POST"])
 def brain_dump(request):
     context = {"input_form": BrainDumpForm(user=request.user),
-               "mock_mode": getattr(settings, "HESTIA_BRAIN_DUMP_BACKEND", "mock") == "mock"}
+               "breakdown_available": bool(getattr(settings, "HESTIA_TASK_BREAKDOWN_CALLABLE", "")),
+               "mock_mode": getattr(settings, "HESTIA_BRAIN_DUMP_BACKEND", "local") == "mock"}
     if request.method == "POST":
         action = request.POST.get("action")
+        if "breakdown_index" in request.POST:
+            action = "breakdown"
         if action == "generate":
             form = BrainDumpForm(request.POST, user=request.user)
             context["input_form"] = form
@@ -46,7 +50,7 @@ def brain_dump(request):
                         request.session[DRAFT_KEY] = draft
                         context.update(review=TaskReviewFormSet(initial=tasks, workspace=workspace),
                                        confirmation=ConfirmationForm(), draft_token=token, workspace=workspace)
-        elif action == "save":
+        elif action in {"save", "breakdown"}:
             token = request.POST.get("draft_token", "")
             try:
                 draft = signing.loads(token, salt=SALT, max_age=3600)
@@ -62,9 +66,24 @@ def brain_dump(request):
                 context.update(review=review, confirmation=confirmation, draft_token=token,
                                workspace=membership.workspace)
                 valid = review.is_valid()
-                confirmed = confirmation.is_valid()
+                confirmed = confirmation.is_valid() if action == "save" else False
                 if review.total_form_count() != draft["count"]:
                     context["error"] = "The review changed unexpectedly. Please organize your tasks again."
+                elif action == "breakdown" and valid:
+                    try:
+                        index = int(request.POST["breakdown_index"])
+                        if not 0 <= index < len(review.forms) or review.forms[index].cleaned_data.get("DELETE"):
+                            raise ValueError()
+                        task = review.forms[index].cleaned_data
+                        description = suggest_steps(task["title"], task["description"])
+                        edited = request.POST.copy()
+                        edited[f"form-{index}-description"] = description
+                        edited.pop("confirm", None)
+                        context["review"] = TaskReviewFormSet(edited, workspace=membership.workspace)
+                        context["confirmation"] = ConfirmationForm()
+                        context["review_notice"] = "Suggested steps added for review. Nothing was saved."
+                    except Exception:
+                        context["error"] = "Task breakdown is unavailable or invalid. Your edits are preserved; you can still save without steps."
                 elif valid and confirmed:
                     try:
                         with transaction.atomic():
