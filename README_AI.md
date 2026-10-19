@@ -95,36 +95,36 @@ claim prompt-injection resistance inside a model; validation and human review
 bound what can reach Task storage. The standalone Person 2 API's error responses
 are their existing implementation, separate from the UI's generic errors.
 
-## Person 3: optional external task breakdown
+## External Groq action plans (Person 3)
 
-No provider backend or API key is invented. Person 3 can expose:
-
-```python
-def break_down_task(title, description):
-    return {"steps": ["First action", "Second action"], "error": None}
-```
-
-Configure the server-owned dotted callable when that provider is ready:
+Person 3 implemented a separate external-AI feature for saved tasks. Add the
+provider credentials only to the ignored `.env` file:
 
 ```dotenv
-HESTIA_TASK_BREAKDOWN_CALLABLE=workflows.services.task_breakdown.break_down_task
+GROQ_API_KEY=your-real-key
+GROQ_MODEL=openai/gpt-oss-20b
 ```
 
-The review cards then display **Suggest steps**, with a disclosure that the title
-and description will be sent to the configured external provider. Only that
-explicit POST calls it. The adapter accepts 1–10 nonempty string steps, at most
-500 characters each, and enforces the final description cap. Steps are appended
-to the editable description; confirmation is cleared and nothing is saved.
-Errors preserve edits. The callable is disabled by default; the actual external
-provider remains Person 3's dependency and has not been live-tested by P4.
+Open a saved task as an active household member and choose **Create an AI action
+plan**. The review page explains that the task title, type, priority and description
+will be sent to Groq. The provider is called only after the user submits that page.
+The validated plan is displayed for review and is not saved as tasks or subtasks.
 
-## P4 model testing and team handoff
+The HTML route is `GET/POST /tasks/<pk>/action-plan/`; the protected JSON route is
+`POST /api/tasks/<pk>/action-plan/`. Both enforce login, active membership, CSRF,
+input limits and a short repeat-request cooldown. Provider credentials, raw error
+bodies and household membership data are never returned or sent. Network, quota,
+credential and malformed-output failures produce bounded status codes and safe
+messages. See `docs/a6-person-3/README.md` for the complete contract and evidence.
 
-`llm-test/ai_prototype.ipynb` is P4's reproducible contribution. It has an early
-model-download cell, the shared two inputs/four prompting modes, actual raw
-outputs and timings, and a results summary. The root `ai_prototype.ipynb` remains
-Person 1's existing notebook. P1's merge cell reads
-`a6_results/person4_benchmark_results.csv` without requiring concurrent edits.
+## Final team benchmark and Person 4 handoff
+
+Person 1 combined the four canonical benchmark CSV files into the final
+`llm-test/ai_prototype.ipynb`; the repository-root `ai_prototype.ipynb` is an
+identical convenience copy. The notebook has the required model-download cell,
+shared inputs and prompt modes, schema checks, all 120 reviewed runs, comparison
+tables, charts and the final Size vs Quality analysis. Each of the 15 models has
+eight runs: two fixed inputs across zero-, one-, few- and many-shot prompting.
 
 Three additional public models were selected under the user's instruction to use
 any models not already completed by teammates:
@@ -136,11 +136,11 @@ any models not already completed by teammates:
 | Qwen/Qwen3-0.6B | 0.6B | https://huggingface.co/Qwen/Qwen3-0.6B |
 
 These are distinct model IDs from teammates' completed Qwen2.5 and SmolLM2 runs.
-They replace the original P4 large-model roster locally because this computer has
-15.5 GiB RAM and no CUDA GPU. They do NOT satisfy the original missing large-model
-categories; the team must reconcile the final 15-model/five-category matrix.
-The existing roster already has category counts 4/3/3/3/2, rather than exactly
-3 per category. Additional small runs do not fix that team-level requirement.
+Because the team's completed models were unevenly distributed across conventional
+size ranges, Person 1 sorted the 15 tested models by parameter count and formed
+five balanced rank-based bands with exactly three models each. The notebook
+documents the method, including the alphabetical tie-break between two 360M
+models, and does not make claims about models larger than the tested 7.62B limit.
 
 ```powershell
 # Separate Python 3.11 benchmark environment
@@ -160,28 +160,31 @@ review, not lexical-overlap heuristics.
 P4's Part 3 analysis is in `docs/a6-person-4/local-vs-api.md`, with an entry in
 `docs/notes/notes.txt`. API costs are sourced estimates, not measured paid calls.
 
-## Verification and remaining team dependencies
+## Final verification
 
 ```powershell
 python manage.py test --settings=hestia_config.settings.development --noinput
 python manage.py check --settings=hestia_config.settings.development
 ```
 
-Tests cover the original Task flow, signed review drafts, editing/removal,
-confirmation, atomic rollback, membership boundaries, malformed output, CSRF,
-and the optional external-breakdown contract without paid calls. Real model
-benchmark evidence and environment details live in `a6_results/`.
+Tests cover the original Task flow, local Brain Dump API, signed review drafts,
+editing/removal, explicit confirmation, atomic saves, membership boundaries,
+malformed model output, CSRF and the external Groq action-plan feature. Real model
+benchmark evidence and environment details are stored under `a6_results/`.
 
-Remaining team dependencies are Person 3's actual external provider, P1's final
-matrix consolidation/category reconciliation, and final team submission review.
-No model weights, private environment files, demo database, or credentials belong
-in the commit.
+Final integrated verification on October 18, 2026:
 
-Verified on October 18: **151 Django tests passed** in the full Python 3.14.3
-requirements environment; system checks found no issues, and all 51 installed
-packages passed dependency compatibility checks. A separate real-model smoke test
-using downloaded Qwen2 weights and CSRF-enforced requests produced three drafts,
-saved zero before confirmation, excluded one, and saved two approved tasks with
-correct attribution and edits. See `a6_results/person4_django_integration.json`.
-This is programmatic verification; browser visual QA remains unverified because
-the available browser could not reach the host's local demo server.
+- **174 Django tests passed** and system checks reported no issues.
+- Both `ai_prototype.ipynb` copies executed all 12 code cells with no errors.
+- The notebook validated 120 unique runs, 15 distinct models, eight runs per model,
+  and exactly three models in each of five balanced parameter-size categories.
+- A real local-model flow generated editable drafts and saved only explicitly
+  confirmed tasks; see `a6_results/person4_django_integration.json`.
+- A real Groq request and browser flow produced a validated action-plan preview;
+  see `docs/a6-person-3/evidence/`.
+- `.env`, model weights and model caches remain ignored. No credentials or model
+  weight files belong in the repository.
+
+The remaining work is the team's final clean-clone/manual submission check and
+submission of the GitHub repository link. Production environments must provide
+their own secrets and confirm that outbound Groq requests are permitted.
