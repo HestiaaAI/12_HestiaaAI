@@ -452,3 +452,30 @@ OAuth remain pending Member 2 deployment. See docs/a5-member-1-authentication.md
 
 A5 integration October 12: Members 2/3 code combined; 117 tests passed. Public
 Vega page retained, exports/private APIs return 401; production checks pending.
+
+
+A6 Person 2 — Local HF Brain Dump + Cost & Scaling (October 18, 2026)
+====================================================================
+Uses the shared prompts/JSON schema from ai_prototype.ipynb on main.
+Django: POST /api/ai/brain-dump/ (login required), saved=false drafts.
+Default model: TinyLlama/TinyLlama-1.1B-Chat-v1.0, few-shot, max_new_tokens=220.
+Code: workflows/services/brain_dump.py, hf_local.py, api/brain_dump.py.
+Benchmark CSV for P1 merge: a6_results/person2_benchmark_results.csv
+(roster models TinyLlama-1.1B, Qwen2.5-1.5B, SmolLM2-1.7B, Qwen2.5-3B).
+
+Part 3 — Cost & Scaling (Person 2)
+----------------------------------
+At ~10,000 DAU × 2 dumps/user ≈ 20,000 extractions/day (~12M tokens/day if
+~600 tokens/request):
+
+| Approach | Cost driver | At 10k DAU |
+| --- | --- | --- |
+| Local Django HF (1–3B instruct) | Always-on CPU/GPU nodes | Expensive idle + hard concurrency |
+| Hosted API | Per-token | Scales with usage; simpler ops |
+| Hybrid | Local extract + API for complex plans | Best balance with Person 3 |
+
+Stay local for class demos / low traffic. Prefer API or hybrid at 10k DAU:
+interactive latency for TinyLlama/Qwen-class models needs many replicas on CPU.
+A fixed 16-core CPU / GPU / 64 GB box is acceptable when traffic is steady and
+data locality matters; switch to a paid API when traffic is spiky or idle GPU
+cost exceeds token spend.

@@ -1,0 +1,326 @@
+model_id,input_id,shot_mode,load_seconds,generation_seconds,output_tokens,schema_valid,validation_errors,raw_output,quality_score_0_to_10,review_notes
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD1,zero,58.098,10.089,186,True,,"{
+  ""tasks"": [
+    {
+      ""title"": ""Kitchen cleanup"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Clean the kitchen and make it look presentable for guests.""
+    },
+    {
+      ""title"": ""Groceries"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Arrange for groceries to be delivered to the house.""
+    },
+    {
+      ""title"": ""Bathroom leak"",
+      ""task_type"": ""DEADLINE"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Repair the bathroom leak immediately.""
+    }
+  ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD1,one,58.098,7.554,163,True,,"Example input: The kitchen is in disarray and the bathroom is flooded.
+Example output: {""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen and remove any food debris.""}, {""title"": ""Clean the bathroom"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the bathroom and remove any water stains.""}]}
+
+Household message: The living room is in disarray and the bedroom needs a new mattress. The kitchen is in disrepair, and the bathroom is flooded.
+JSON output:",5,"Provisional: schema OK, partial coverage."
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD1,few,58.098,8.152,178,True,,"Example input: Guests are coming tomorrow. The kitchen is messy, we need groceries, and the bathroom tap is leaking badly.
+Example output: {""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen and make it look presentable for the guests.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Arrange for groceries to be delivered to the house.""}, {""title"": ""Replace bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Replace the leaking bathroom tap.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD1,many,58.098,8.174,180,True,,"Example input: The guests are coming tomorrow, and the kitchen is in a mess. The bathroom tap is leaking badly.
+Example output: {""tasks"": [{""title"": ""Arrange for groceries"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Arrange for groceries to be delivered to the house.""}, {""title"": ""Clean kitchen"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Clean the kitchen thoroughly to ensure a clean and tidy environment for the guests.""}, {""title"": ""Repair bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Repair the bathroom tap to prevent further leaks.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD2,zero,58.098,9.513,220,False,Root must be an object containing a tasks list,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book dentist"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Replace the smoke detector batteries""
+    },
+    {
+      ""title"": ""Replace library book"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Wash guest-room sheets""
+    },
+    {
+      ""title"": ""Return library book"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Return a library book by Friday""
+    },
+    {
+      ""title"": ""Wash guest-room sheets"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""LOW"",
+      ""description"": ""Replace a broken toothbrush""
+    }",0,Schema invalid or unparseable.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD2,one,58.098,6.352,121,True,,"Example input: The guest-room sheets are dirty and need to be washed.
+Example output: {""tasks"": [{""title"": ""Wash guest-room sheets"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Wash guest-room sheets to remove dirt and stains.""}]}
+
+Household message: This week I need to book the dentist, replace the smoke detector batteries, return a library book by Friday, and book a massage for myself.
+JSON output:",3,Provisional: schema OK but weak relevance; review manually.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD2,few,58.098,9.554,220,True,,"Example input: The trash is full and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""}, {""title"": ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase milk for the household.""}]}
+
+Example input: The gas stove smells like gas, and the hallway light bulb needs replacing.
+Example output: {""tasks"": [{""title"": ""Check gas leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Stop using the stove and arrange an immediate gas safety inspection.""}, {""title"": ""Replace hallway light bulb"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace",3,Provisional: schema OK but weak relevance; review manually.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,BD2,many,58.098,9.637,220,True,,"Example input: The trash is full and we are out of milk.
+Example output: {""tasks"": [{""title"": ""Take out the trash"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Empty the full household trash bin.""}, {""title"": ""Buy milk"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase milk for the household.""}]}
+
+Example input: The gas stove smells like gas, and the hallway light bulb needs replacing.
+Example output: {""tasks"": [{""title"": ""Check gas leak"", ""task_type"": ""MAINTENANCE"", ""priority"": ""URGENT"", ""description"": ""Stop using the stove and arrange an immediate gas safety inspection.""}, {""title"": ""Replace hallway light bulb"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Replace",3,Provisional: schema OK but weak relevance; review manually.
+Qwen/Qwen2.5-1.5B-Instruct,BD1,zero,79.72,11.791,161,True,,"{
+  ""tasks"": [
+    {
+      ""title"": ""Clean kitchen"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Prepare the kitchen for guests by cleaning up any mess.""
+    },
+    {
+      ""title"": ""Buy groceries"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Go to the store to purchase necessary items for the guests.""
+    },
+    {
+      ""title"": ""Fix leaky bathroom tap"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""URGENT"",
+      ""description"": ""Identify and fix the leaky bathroom tap as soon as possible to prevent water damage.""
+    }
+  ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-1.5B-Instruct,BD1,one,79.72,10.438,164,True,,"{
+    ""tasks"": [
+        {
+            ""title"": ""Clean the kitchen"",
+            ""task_type"": ""CHORE"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Organize and clean the kitchen to prepare for guests.""
+        },
+        {
+            ""title"": ""Shop for groceries"",
+            ""task_type"": ""SHOPPING"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Visit the store to buy necessary groceries for the upcoming guests.""
+        },
+        {
+            ""title"": ""Fix the leaky bathroom tap"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Identify and fix the leaky bathroom tap as soon as possible to prevent water damage.""
+        }
+    ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-1.5B-Instruct,BD1,few,79.72,10.599,149,True,,"{
+    ""tasks"": [
+        {
+            ""title"": ""Clean kitchen"",
+            ""task_type"": ""CHORE"",
+            ""priority"": ""MEDIUM"",
+            ""description"": ""Organize and clean the kitchen to prepare for guests.""
+        },
+        {
+            ""title"": ""Grocery shopping"",
+            ""task_type"": ""SHOPPING"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Visit the store to purchase necessary items for guests.""
+        },
+        {
+            ""title"": ""Fix bathroom leak"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Identify and fix the leaking bathroom tap immediately.""
+        }
+    ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-1.5B-Instruct,BD1,many,79.72,10.168,151,True,,"{
+    ""tasks"": [
+        {
+            ""title"": ""Clean kitchen"",
+            ""task_type"": ""CHORE"",
+            ""priority"": ""MEDIUM"",
+            ""description"": ""Organize and clean the kitchen to prepare for guests.""
+        },
+        {
+            ""title"": ""Grocery shopping"",
+            ""task_type"": ""SHOPPING"",
+            ""priority"": ""MEDIUM"",
+            ""description"": ""Go grocery shopping to stock up on essentials for the guests.""
+        },
+        {
+            ""title"": ""Fix bathroom leak"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Address the severe bathroom leak immediately to prevent further damage.""
+        }
+    ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-1.5B-Instruct,BD2,zero,79.72,8.981,141,False,Task 1 missing: ['description'] | Task 1 has an empty description | Task 2 missing: ['description'] | Task 2 has an empty description | Task 3 missing: ['description'] | Task 3 has an empty description | Task 4 missing: ['description'] | Task 4 has an empty description,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book the dentist"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""URGENT""
+    },
+    {
+      ""title"": ""Replace the smoke detector batteries"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""MEDIUM""
+    },
+    {
+      ""title"": ""Return a library book by Friday"",
+      ""task_type"": ""DEADLINE"",
+      ""priority"": ""LOW""
+    },
+    {
+      ""title"": ""Wash the guest-room sheets"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW""
+    }
+  ]
+}",0,Schema invalid or unparseable.
+Qwen/Qwen2.5-1.5B-Instruct,BD2,one,79.72,12.181,195,False,Task 3 has invalid priority | Task 4 has invalid priority,"{
+    ""tasks"": [
+        {
+            ""title"": ""Book the dentist"",
+            ""task_type"": ""APPOINTMENT"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Schedule an appointment with the dentist.""
+        },
+        {
+            ""title"": ""Replace the smoke detector batteries"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Change the batteries in the household smoke detectors.""
+        },
+        {
+            ""title"": ""Return a library book by Friday"",
+            ""task_type"": ""DEADLINE"",
+            ""priority"": ""NORMAL"",
+            ""description"": ""Ensure the library book is returned before Friday.""
+        },
+        {
+            ""title"": ""Wash the guest-room sheets"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""NORMAL"",
+            ""description"": ""Clean the guest room bedding.""
+        }
+    ]
+}",0,Schema invalid or unparseable.
+Qwen/Qwen2.5-1.5B-Instruct,BD2,few,79.72,12.226,196,True,,"{
+    ""tasks"": [
+        {
+            ""title"": ""Book the dentist"",
+            ""task_type"": ""APPOINTMENT"",
+            ""priority"": ""URGENT"",
+            ""description"": ""Schedule an appointment with the dentist.""
+        },
+        {
+            ""title"": ""Replace smoke detector batteries"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""MEDIUM"",
+            ""description"": ""Change the batteries in the household smoke detectors.""
+        },
+        {
+            ""title"": ""Return library book by Friday"",
+            ""task_type"": ""DEADLINE"",
+            ""priority"": ""LOW"",
+            ""description"": ""Return the borrowed library book before the due date on Friday.""
+        },
+        {
+            ""title"": ""Wash guest-room sheets"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""LOW"",
+            ""description"": ""Clean the guest room bedding as needed.""
+        }
+    ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-1.5B-Instruct,BD2,many,79.72,11.808,184,True,,"{
+    ""tasks"": [
+        {
+            ""title"": ""Book dentist"",
+            ""task_type"": ""APPOINTMENT"",
+            ""priority"": ""MEDIUM"",
+            ""description"": ""Schedule an appointment with the dentist.""
+        },
+        {
+            ""title"": ""Replace smoke detector batteries"",
+            ""task_type"": ""MAINTENANCE"",
+            ""priority"": ""LOW"",
+            ""description"": ""Change the batteries in the household smoke detectors.""
+        },
+        {
+            ""title"": ""Return library book"",
+            ""task_type"": ""DEADLINE"",
+            ""priority"": ""LOW"",
+            ""description"": ""Return the borrowed library book by Friday.""
+        },
+        {
+            ""title"": ""Wash guest-room sheets"",
+            ""task_type"": ""CHORE"",
+            ""priority"": ""LOW"",
+            ""description"": ""Clean the guest bedroom linens.""
+        }
+    ]
+}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD1,zero,95.89,7.559,114,True,,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE"",""priority"":""MEDIUM"",""description"":""Clean the kitchen thoroughly to prepare for guests.""},{""title"":""Buy groceries"",""task_type"":""SHOPPING"",""priority"":""MEDIUM"",""description"":""Buy groceries to ensure we have enough food for the day.""},{""title"":""Fix the bathroom tap"",""task_type"":""DEADLINE"",""priority"":""HIGH"",""description"":""Fix the leaking bathroom tap as soon as possible to avoid any inconvenience.""}]}}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD1,one,95.89,8.518,124,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen to prepare for guests.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries for the household.""}, {""title"": ""Fix the bathroom tap"", ""task_type"": ""DEADLINE"", ""priority"": ""HIGH"", ""description"": ""Address the leaking bathroom tap to prevent further damage.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD1,few,95.89,9.639,134,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Prepare the kitchen for guests by cleaning and organizing the space.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary items for the guests.""}, {""title"": ""Fix the bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Address the leaking tap to prevent further damage and potential water waste.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD1,many,95.89,10.188,133,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean the kitchen to prepare for the upcoming guests.""}, {""title"": ""Buy groceries"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase groceries to prepare for the upcoming guests.""}, {""title"": ""Fix the bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Address the leaking tap in the bathroom to prevent further damage.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD2,zero,95.89,10.334,144,True,,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT"",""priority"":""MEDIUM"",""description"":""Schedule a dental check-up for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""DEADLINE"",""priority"":""MEDIUM"",""description"":""Replace the smoke detector batteries to ensure safety.""},{""title"":""Return library book"",""task_type"":""ERRAND"",""priority"":""MEDIUM"",""description"":""Return the library book by Friday.""},{""title"":""Wash guest-room sheets"",""task_type"":""SHOPPING"",""priority"":""LOW"",""description"":""Buy new guest-room sheets to replace the dirty ones.""}]}}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD2,one,95.89,11.872,172,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""DEADLINE"", ""priority"": ""MEDIUM"", ""description"": ""Change the smoke detector batteries this week.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""MEDIUM"", ""description"": ""Return the library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Buy new guest-room sheets to replace the dirty ones.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD2,few,95.89,12.372,173,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""DEADLINE"", ""priority"": ""MEDIUM"", ""description"": ""Replace the smoke detector batteries by this Friday.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""MEDIUM"", ""description"": ""Return the library book by this Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""SHOPPING"", ""priority"": ""LOW"", ""description"": ""Buy new guest-room sheets to replace the dirty ones.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+HuggingFaceTB/SmolLM2-1.7B-Instruct,BD2,many,95.89,12.351,169,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment for this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a replacement of smoke detector batteries.""}, {""title"": ""Return library book by Friday"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a return of a library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Wash the guest-room sheets.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD1,zero,178.853,13.198,102,False,Task 1 missing: ['description'] | Task 1 has an empty description | Task 2 missing: ['description'] | Task 2 has an empty description | Task 3 missing: ['description'] | Task 3 has an empty description,"{
+  ""tasks"": [
+    {
+      ""title"": ""Clean Kitchen"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""MEDIUM""
+    },
+    {
+      ""title"": ""Buy Groceries"",
+      ""task_type"": ""SHOPPING"",
+      ""priority"": ""MEDIUM""
+    },
+    {
+      ""title"": ""Fix Leaky Bathroom Tap"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""HIGH""
+    }
+  ]
+}",0,Schema invalid or unparseable.
+Qwen/Qwen2.5-3B-Instruct,BD1,one,178.853,15.545,119,True,,"{""tasks"": [{""title"": ""Clean the kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Make the kitchen tidy before guests arrive.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for the household.""}, {""title"": ""Fix the leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Address the dripping tap to prevent water waste and potential damage.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD1,few,178.853,17.607,111,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Make the kitchen tidy before guests arrive.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for guests.""}, {""title"": ""Fix leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Address the dripping bathroom tap urgently.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD1,many,178.853,15.983,109,True,,"{""tasks"": [{""title"": ""Clean kitchen"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Make the kitchen tidy for guests.""}, {""title"": ""Go grocery shopping"", ""task_type"": ""SHOPPING"", ""priority"": ""MEDIUM"", ""description"": ""Purchase necessary groceries for guests.""}, {""title"": ""Fix leaking bathroom tap"", ""task_type"": ""MAINTENANCE"", ""priority"": ""HIGH"", ""description"": ""Repair the dripping bathroom tap.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD2,zero,178.853,67.857,134,False,Task 1 missing: ['description'] | Task 1 has an empty description | Task 2 missing: ['description'] | Task 2 has an empty description | Task 3 missing: ['description'] | Task 3 has invalid task_type | Task 3 has an empty description | Task 4 missing: ['description'] | Task 4 has an empty description,"{
+  ""tasks"": [
+    {
+      ""title"": ""Book Dentist"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM""
+    },
+    {
+      ""title"": ""Replace Smoke Detector Batteries"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""LOW""
+    },
+    {
+      ""title"": ""Return Library Book"",
+      ""task_type"": ""RETURN"",
+      ""priority"": ""LOW""
+    },
+    {
+      ""title"": ""Wash Guest-Room Sheets"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW""
+    }
+  ]
+}",0,Schema invalid or unparseable.
+Qwen/Qwen2.5-3B-Instruct,BD2,one,178.853,23.876,153,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""MEDIUM"", ""description"": ""Change the smoke detector batteries.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""MEDIUM"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""MEDIUM"", ""description"": ""Clean and wash the guest room sheets.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD2,few,178.853,19.988,151,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental check-up this week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Change the smoke detector batteries.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""MEDIUM"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and wash the guest room sheets.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."
+Qwen/Qwen2.5-3B-Instruct,BD2,many,178.853,20.88,151,True,,"{""tasks"": [{""title"": ""Book dentist appointment"", ""task_type"": ""APPOINTMENT"", ""priority"": ""MEDIUM"", ""description"": ""Schedule a dental appointment for next week.""}, {""title"": ""Replace smoke detector batteries"", ""task_type"": ""MAINTENANCE"", ""priority"": ""LOW"", ""description"": ""Change the smoke detector batteries.""}, {""title"": ""Return library book"", ""task_type"": ""ERRAND"", ""priority"": ""MEDIUM"", ""description"": ""Return the overdue library book by Friday.""}, {""title"": ""Wash guest-room sheets"", ""task_type"": ""CHORE"", ""priority"": ""LOW"", ""description"": ""Clean and wash the guest-room sheets.""}]}",7,"Provisional: schema OK, multiple tasks, some lexical overlap with dump."

@@ -26,3 +26,13 @@ requests==2.34.2
 six==1.17.0
 sqlparse==0.6.0
 urllib3==2.8.0
+
+# A6 local Hugging Face (Person 2)
+accelerate==1.15.0
+huggingface-hub==0.36.2
+protobuf==6.33.6
+safetensors==0.8.0
+sentencepiece==0.2.2
+tokenizers==0.22.2
+torch==2.14.1
+transformers==4.57.6
