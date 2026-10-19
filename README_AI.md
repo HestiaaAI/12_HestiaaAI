@@ -136,11 +136,12 @@ any models not already completed by teammates:
 | Qwen/Qwen3-0.6B | 0.6B | https://huggingface.co/Qwen/Qwen3-0.6B |
 
 These are distinct model IDs from teammates' completed Qwen2.5 and SmolLM2 runs.
-Because the team's completed models were unevenly distributed across conventional
-size ranges, Person 1 sorted the 15 tested models by parameter count and formed
-five balanced rank-based bands with exactly three models each. The notebook
-documents the method, including the alphabetical tie-break between two 360M
-models, and does not make claims about models larger than the tested 7.62B limit.
+The final roster uses five fixed, non-overlapping parameter ranges with exactly
+three tested models in each range: under 0.2B, 0.2B to under 0.6B, 0.6B to under
+1.6B, 1.6B to under 3.5B, and 3.5B or larger. Person 1 benchmarked OPT-125M to
+complete the smallest range with real evidence. The notebook cites the Hugging
+Face Open LLM Leaderboard as the research starting point, links every model card,
+and does not make claims about models larger than the tested 7.62B limit.
 
 ```powershell
 # Separate Python 3.11 benchmark environment

@@ -672,35 +672,34 @@ many-shot modes for every selected model. The four canonical CSV files contain
 was scored from 0 to 10 using task extraction, task type, priority, clarity and
 JSON-format criteria; schema validity was measured separately.
 
-Five balanced parameter-size categories
----------------------------------------
-Person 1 sorted the 15 actually tested models by parameter count and split them
-into five equal-count bands. Each band therefore contains exactly three models
-and 24 reviewed runs. The two 360M models tie across the first boundary; model ID
-alphabetical order is used only as a reproducible tie-break.
+Five fixed parameter-size categories
+------------------------------------
+Person 1 began model research with the Hugging Face Open LLM Leaderboard, then
+verified parameter counts, access and Transformers compatibility on each model
+card. The final roster uses five fixed, non-overlapping parameter ranges. Each
+range contains exactly three models and 24 reviewed runs.
 
-| Category | Parameter ranks | Models | Mean quality | Valid JSON |
+| Category | Parameter range | Models | Mean quality | Valid JSON |
 | --- | ---: | ---: | ---: | ---: |
-| Ultra-light | 1-3 (0.082B-0.360B) | 3 | 0.583 | 25.0% |
-| Compact | 4-6 (0.360B-0.494B) | 3 | 6.000 | 58.3% |
-| Small | 7-9 (0.600B-1.540B) | 3 | 5.333 | 83.3% |
-| Medium | 10-12 (1.700B-3.210B) | 3 | 6.667 | 62.5% |
-| Large | 13-15 (3.820B-7.620B) | 3 | 8.646 | 83.3% |
+| Ultra-light | under 0.2B (0.082B-0.135B tested) | 3 | 0.833 | 33.3% |
+| Compact | 0.2B to under 0.6B (0.360B-0.494B tested) | 3 | 3.792 | 29.2% |
+| Small | 0.6B to under 1.6B (0.600B-1.540B tested) | 3 | 5.333 | 83.3% |
+| Medium | 1.6B to under 3.5B (1.700B-3.210B tested) | 3 | 6.667 | 62.5% |
+| Large | 3.5B or larger (3.820B-7.620B tested) | 3 | 8.646 | 83.3% |
 
-These are rank-based bands for this benchmark roster, not universal industry
-size definitions. The largest tested model is 7.62B, so the results do not
-support claims about models above that size.
+The largest tested model is 7.62B, so the results do not support claims about
+models above that size.
 
 Measured result by model
 ------------------------
 | Tested model | Params | Mean quality /10 | Valid JSON | Mean generation |
 | --- | ---: | ---: | ---: | ---: |
 | distilbert/distilgpt2 | 0.082B | 0.750 | 6/8 | 1.617s |
+| facebook/opt-125m | 0.125B | 0.750 | 2/8 | 3.270s |
 | HuggingFaceTB/SmolLM2-135M-Instruct | 0.135B | 1.000 | 0/8 | 2.465s |
 | HuggingFaceTB/SmolLM-360M-Instruct | 0.360B | 0.000 | 0/8 | 26.817s |
 | HuggingFaceTB/SmolLM2-360M-Instruct | 0.360B | 6.250 | 6/8 | 3.148s |
 | Qwen/Qwen2-0.5B-Instruct | 0.494B | 5.125 | 1/8 | 18.891s |
-| Qwen/Qwen2.5-0.5B-Instruct | 0.494B | 6.625 | 7/8 | 2.876s |
 | Qwen/Qwen3-0.6B | 0.600B | 6.375 | 7/8 | 23.354s |
 | TinyLlama/TinyLlama-1.1B-Chat-v1.0 | 1.100B | 4.375 | 7/8 | 8.628s |
 | Qwen/Qwen2.5-1.5B-Instruct | 1.540B | 5.250 | 6/8 | 11.024s |
@@ -715,14 +714,14 @@ Size generally improved quality within the tested range, but it was not the only
 cause. The two 360M SmolLM versions scored 0.000 and 6.250, showing that model
 architecture and instruction tuning matter. Llama-3.2-3B scored 7.750 but only
 1/8 outputs passed the strict schema, so useful content cannot replace validation.
-The compact band also outscored the small band (6.000 vs 5.333).
 
 The practical sweet spot for Hestia is the small-to-medium range when local
 resource use matters. SmolLM2-1.7B reached 7.000/10 and 8/8 valid JSON, making it
 a lighter compromise. If quality is the priority and suitable GPU capacity is
 available, Qwen2.5-7B performed best. Prompting also mattered: team-wide mean
-quality increased from 4.617 zero-shot to 5.483 one-shot, 5.817 few-shot and
-5.867 many-shot, although some models copied examples or became distracted.
+quality increased from 4.083 zero-shot to 5.150 one-shot, 5.483 few-shot and
+5.500 many-shot. Many-shot was the most structurally reliable method, with the
+highest valid-JSON rate (73.3%), although some models copied demonstrations.
 
 Approximate local compute requirement per balanced band
 -------------------------------------------------------
@@ -733,7 +732,7 @@ but the user pays for hardware, electricity and operations.
 
 | Category | Parameter range | Approx FP16 weights | Approx 4-bit weights | Expected serving cost |
 | --- | ---: | ---: | ---: | --- |
-| Ultra-light | 0.082B-0.360B | 0.16GB-0.72GB | 0.04GB-0.18GB | Lowest; ordinary CPU/RAM is feasible |
+| Ultra-light | 0.082B-0.135B | 0.16GB-0.27GB | 0.04GB-0.07GB | Lowest; ordinary CPU/RAM is feasible |
 | Compact | 0.360B-0.494B | 0.72GB-0.99GB | 0.18GB-0.25GB | Low; CPU possible, GPU improves latency |
 | Small | 0.600B-1.540B | 1.20GB-3.08GB | 0.30GB-0.77GB | Low/moderate; concurrency may need acceleration |
 | Medium | 1.700B-3.210B | 3.40GB-6.42GB | 0.85GB-1.61GB | Moderate; GPU preferred for interactive load |
