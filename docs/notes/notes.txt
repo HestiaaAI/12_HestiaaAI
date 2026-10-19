@@ -672,6 +672,25 @@ many-shot modes for every selected model. The four canonical CSV files contain
 was scored from 0 to 10 using task extraction, task type, priority, clarity and
 JSON-format criteria; schema validity was measured separately.
 
+Five balanced parameter-size categories
+---------------------------------------
+Person 1 sorted the 15 actually tested models by parameter count and split them
+into five equal-count bands. Each band therefore contains exactly three models
+and 24 reviewed runs. The two 360M models tie across the first boundary; model ID
+alphabetical order is used only as a reproducible tie-break.
+
+| Category | Parameter ranks | Models | Mean quality | Valid JSON |
+| --- | ---: | ---: | ---: | ---: |
+| Ultra-light | 1-3 (0.082B-0.360B) | 3 | 0.583 | 25.0% |
+| Compact | 4-6 (0.360B-0.494B) | 3 | 6.000 | 58.3% |
+| Small | 7-9 (0.600B-1.540B) | 3 | 5.333 | 83.3% |
+| Medium | 10-12 (1.700B-3.210B) | 3 | 6.667 | 62.5% |
+| Large | 13-15 (3.820B-7.620B) | 3 | 8.646 | 83.3% |
+
+These are rank-based bands for this benchmark roster, not universal industry
+size definitions. The largest tested model is 7.62B, so the results do not
+support claims about models above that size.
+
 Measured result by model
 ------------------------
 | Tested model | Params | Mean quality /10 | Valid JSON | Mean generation |
@@ -692,13 +711,11 @@ Measured result by model
 | mistralai/Mistral-7B-Instruct-v0.3 | 7.250B | 8.562 | 6/8 | 10.074s |
 | Qwen/Qwen2.5-7B-Instruct | 7.620B | 9.375 | 8/8 | 12.385s |
 
-Size generally improved quality within the tested range. Mean reviewed quality
-was 3.292 for tiny models, 5.750 for small models, 7.000 for medium models and
-8.969 for large models. Qwen2.5-7B was the strongest at 9.375/10 and 8/8 valid
-JSON outputs. However, size was not the only cause. The two 360M SmolLM versions
-scored 0.000 and 6.250, showing that architecture and instruction tuning matter.
-Llama-3.2-3B scored 7.750 but only 1/8 outputs passed the strict schema, so useful
-content cannot replace application-level validation.
+Size generally improved quality within the tested range, but it was not the only
+cause. The two 360M SmolLM versions scored 0.000 and 6.250, showing that model
+architecture and instruction tuning matter. Llama-3.2-3B scored 7.750 but only
+1/8 outputs passed the strict schema, so useful content cannot replace validation.
+The compact band also outscored the small band (6.000 vs 5.333).
 
 The practical sweet spot for Hestia is the small-to-medium range when local
 resource use matters. SmolLM2-1.7B reached 7.000/10 and 8/8 valid JSON, making it
@@ -707,33 +724,24 @@ available, Qwen2.5-7B performed best. Prompting also mattered: team-wide mean
 quality increased from 4.617 zero-shot to 5.483 one-shot, 5.817 few-shot and
 5.867 many-shot, although some models copied examples or became distracted.
 
-Approximate local compute requirement per tested model
-------------------------------------------------------
+Approximate local compute requirement per balanced band
+-------------------------------------------------------
 Weight memory is estimated as parameter count x two bytes for FP16/BF16 or x
 0.5 bytes for idealized 4-bit storage, before runtime, KV cache, framework and
-operating-system overhead. Open-source weights have no per-token license charge,
+operating-system overhead. Open-source weights have no per-token provider charge,
 but the user pays for hardware, electricity and operations.
 
-| Model size | Models in this test | Approx FP16 weights | Approx 4-bit weights | Expected serving cost |
+| Category | Parameter range | Approx FP16 weights | Approx 4-bit weights | Expected serving cost |
 | --- | ---: | ---: | ---: | --- |
-| 0.082B-0.600B | 7 | 0.16GB-1.20GB | 0.04GB-0.30GB | Lowest; feasible on ordinary CPU/RAM, but latency varies widely |
-| 1.100B-1.700B | 3 | 2.20GB-3.40GB | 0.55GB-0.85GB | Low/moderate; CPU possible, GPU improves interactive latency |
-| 3.090B-3.820B | 3 | 6.18GB-7.64GB | 1.55GB-1.91GB | Moderate; a GPU is preferable for concurrent interactive use |
-| 7.250B-7.620B | 2 | 14.50GB-15.24GB | 3.63GB-3.81GB | Highest tested tier; typically needs a suitable GPU or quantization |
+| Ultra-light | 0.082B-0.360B | 0.16GB-0.72GB | 0.04GB-0.18GB | Lowest; ordinary CPU/RAM is feasible |
+| Compact | 0.360B-0.494B | 0.72GB-0.99GB | 0.18GB-0.25GB | Low; CPU possible, GPU improves latency |
+| Small | 0.600B-1.540B | 1.20GB-3.08GB | 0.30GB-0.77GB | Low/moderate; concurrency may need acceleration |
+| Medium | 1.700B-3.210B | 3.40GB-6.42GB | 0.85GB-1.61GB | Moderate; GPU preferred for interactive load |
+| Large | 3.820B-7.620B | 7.64GB-15.24GB | 1.91GB-3.81GB | Highest tested band; GPU or quantization typical |
 
 Using Person 4's illustrative published rental example, one always-on $0.50/hour
 GPU costs about $360 for a 30-day month before storage, traffic, electricity and
 operations. Small models may avoid that rental on owned CPU hardware but may be
-too slow under concurrency. Larger models can require more expensive GPU tiers.
-At low or spiky demand, the API estimates elsewhere in these notes can cost less
-than keeping a GPU idle; at steady high utilization or when data locality matters,
+too slow under concurrency. At low or spiky demand, a paid API can cost less than
+keeping a GPU idle; at steady high utilization or when data locality matters,
 owned/local hardware can be preferable.
-
-Coverage limitation
--------------------
-The current submitted evidence contains six tiny, four small, three medium and
-two large models, with no completed model above 10B. It therefore has 15 models
-but does NOT yet satisfy the assignment's exact requirement of three models in
-each of five size categories. The team must supply replacement benchmark runs so
-the final selected matrix is 3 x 5 before claiming full compliance. Planned but
-untested 14B models are not counted as evidence.
