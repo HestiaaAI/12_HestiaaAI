@@ -744,3 +744,42 @@ operations. Small models may avoid that rental on owned CPU hardware but may be
 too slow under concurrency. At low or spiky demand, a paid API can cost less than
 keeping a GPU idle; at steady high utilization or when data locality matters,
 owned/local hardware can be preferable.
+
+A6 P4 closeout after P3 merge (October 18, 2026)
+----------------------------------------------
+README_AI.md now describes the actual Groq saved-task action-plan flow; the
+provider is implemented, not pending. Keep the older optional pre-save callable
+unset; it is not signature-compatible with P3's generate_action_plan(Task).
+P4's combined-path test enforces CSRF and verifies no provider call until explicit
+plan POST, no saves before task confirmation, and no automatic plan writes.
+Real Qwen2 local inference was rerun: three drafts, one excluded, two saved only
+after confirmation. Groq HTTP was mocked for this P4 check; no paid call or real
+provider key. See person4_django_integration.json and docs/a6-person-4/closeout.md.
+All 24 P4 raw outputs/score notes were reread and criterion totals verified;
+original scores, outputs and timings were retained. Attribution remains
+assistant-assisted, without fabricated independent human approval.
+Desktop/mobile visual QA remains blocked: Windows Computer Use automatically
+stopped because it could not confidently determine the browser URL for policy
+enforcement. Seven template snapshots are available privately for manual review.
+
+A6 P4 larger-category correction (October 18, 2026 CDT)
+----------------------------------------------------
+Completed actual Colab Tesla T4 inference for Falcon3-7B-Instruct,
+Qwen2.5-14B-Instruct, Phi-3-medium-4k-instruct and Qwen3-14B.
+Two shared inputs x four shot modes x four models = 32 real generations.
+NF4 weights, FP32 compute/non-quantized modules, eager attention, greedy
+220-token maximum; Qwen3 thinking disabled. No paid provider calls.
+Schema-valid counts: Falcon 7/8, Qwen2.5 8/8, Phi 3/8, Qwen3 8/8.
+Assistant-assisted reviewed quality: 8.5 / 9.5 / 6.875 / 9.25 respectively.
+Raw generation CSV/metadata are preserved; the audit records criterion points,
+per-output reasons and hashes. Independent human signoff is not asserted.
+P1 replacement input: a6_results/person4_large/person4_large_results.csv.
+Evidence notebook: llm-test/person4_large_results_review.ipynb.
+GPU reproduction: llm-test/person4_large_models_colab.ipynb.
+Handoff, limitations and Part 3 updates: docs/a6-person-4/large-models.md.
+If the team returns to the original size ranges, P1 can use this new CSV
+instead of the old P4 small-model CSV and select three of its four tiny models.
+Main PR #31 has since adopted different balanced ranges and retains the small
+selection; P4 preserves that final notebook. Do not silently aggregate both sets.
+The root final notebook remains P1-owned. The full Django suite passed 175
+tests; system checks and five benchmark-harness tests passed separately.

@@ -1,0 +1,4 @@
+# Preserve exported bytes/newlines used by the benchmark evidence hashes.
+*.csv text eol=lf
+*.json text eol=lf
+support/*.py text eol=lf

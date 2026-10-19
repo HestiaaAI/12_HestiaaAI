@@ -1,7 +1,8 @@
 # Person 4 handoff
 
+- Completed larger-category correction: [handoff](large-models.md), [32-run CSV](../../a6_results/person4_large/person4_large_results.csv), [review notebook](../../llm-test/person4_large_results_review.ipynb), and [GPU reproduction notebook](../../llm-test/person4_large_models_colab.ipynb).
 - UI and integration guide: [README_AI.md](../../README_AI.md)
-- Executed contribution notebook: [llm-test/ai_prototype.ipynb](../../llm-test/ai_prototype.ipynb)
+- Preserved executed small-model reference: [person4_small_reference.ipynb](../../llm-test/person4_small_reference.ipynb). `llm-test/ai_prototype.ipynb` is now P1's final team notebook.
 - Measured 24-run CSV: [person4_benchmark_results.csv](../../a6_results/person4_benchmark_results.csv)
 - Reviewed findings: [benchmark_summary.md](benchmark_summary.md)
 - Environment/model revisions: [person4_environment.json](../../a6_results/person4_environment.json)
@@ -34,7 +35,7 @@ python docs/a6-person-4/write_summary.py
 # Optional: regenerate the notebook source (clears executed cell outputs)
 python docs/a6-person-4/build_notebook.py
 python -m ipykernel install --prefix .venv --name hestia-p4
-python docs/a6-person-4/execute_notebook.py
+python docs/a6-person-4/execute_notebook.py --notebook llm-test/person4_small_reference.ipynb
 ```
 
 The executor expects the local `.venv` kernel registered by the command above.
@@ -42,7 +43,8 @@ Alternatively open the notebook normally in Jupyter with the matching environmen
 
 For the complete Django app use Python >=3.12 and root `requirements.txt`.
 The dependency set was installed and checked in an isolated Python 3.14.3
-environment; the full suite passed 151 tests. The real smoke check uses an
+environment; the full suite passed 175 tests after the P3 merge and P4 combined-flow
+test. The real smoke check uses an
 in-memory database and never modifies the committed assignment database:
 
 ```powershell
@@ -51,8 +53,13 @@ python manage.py test --settings=hestia_config.settings.development --noinput
 python manage.py check --settings=hestia_config.settings.development
 ```
 
-No paid API was called. Person 3's provider backend is still required for live
-external steps; the P4 UI's optional callable contract is implemented/tested.
-The team must also reconcile the original matrix's category counts and complete
-the missing larger-model categories. These three extra small-model runs do not
-stand in for a completed five-category team benchmark.
+No paid API was called by P4. Person 3's Groq provider is merged and is reached
+from a saved Task's detail page. Configure `GROQ_API_KEY` privately for live use;
+the earlier optional pre-save callable is unnecessary and remains disabled.
+P4's smoke check verifies the combined path with real local inference and mocked
+Groq HTTP, including disclosure-before-call and no plan writes.
+See [closeout.md](closeout.md) for the final verification scope and review audit.
+P4 completed the larger-model tests separately. Main PR #31 now uses different
+balanced size bands and retains the small-model selection. P1/the team decides
+whether to keep that plan or consolidate the new results under the original
+ranges. See [large-models.md](large-models.md); do not blindly aggregate both P4 CSVs.

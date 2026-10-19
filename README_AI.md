@@ -161,6 +161,44 @@ review, not lexical-overlap heuristics.
 P4's Part 3 analysis is in `docs/a6-person-4/local-vs-api.md`, with an entry in
 `docs/notes/notes.txt`. API costs are sourced estimates, not measured paid calls.
 
+## P4 larger-model extension
+
+P4 also completed actual Colab Tesla T4 inference for Falcon3-7B-Instruct,
+Qwen2.5-14B-Instruct, Phi-3-medium-4k-instruct and Qwen3-14B: **32 unique
+generations**, each with the same two inputs and four prompt modes. Weights
+use NF4 double quantization, FP32 computation/non-quantized modules and eager
+attention; generation is greedy with 220 new tokens and Qwen3 thinking disabled.
+
+| Model | Schema valid | Mean generation | Reviewed quality /10 |
+| --- | ---: | ---: | ---: |
+| Falcon3-7B | 7/8 | 17.453 s | 8.500 |
+| Qwen2.5-14B | 8/8 | 20.778 s | 9.500 |
+| Phi-3-medium-4k | 3/8 | 33.919 s | 6.875 |
+| Qwen3-14B | 8/8 | 21.801 s | 9.250 |
+
+The [executed review notebook](llm-test/person4_large_results_review.ipynb)
+contains every raw response and explicit criterion review. Original unscored
+CSV/metadata are preserved, with hashes in the review audit. Scores are
+assistant-assisted judgments, not independent human signoff. GPU/quantized
+timings cannot be treated as a controlled CPU/native or paid-API comparison.
+See the [reproduction notebook](llm-test/person4_large_models_colab.ipynb),
+[32-run CSV](a6_results/person4_large/person4_large_results.csv), and
+[handoff](docs/a6-person-4/large-models.md).
+
+Main PR #31 adopted the different balanced bands described above while these
+tests were running. That final notebook selection is preserved; the new runs
+remain separate evidence until P1/the team chooses whether to incorporate
+them under the original large/above-10B ranges. Do not concatenate both P4
+result sets without a deliberate 15-model selection. The earlier P4 notebook
+is preserved at `llm-test/person4_small_reference.ipynb`; P4's builder/executor
+now use that path to avoid overwriting P1's final notebook.
+
+The integrated Groq flow is reached after task confirmation from a saved
+task's detail page. P4's older optional pre-save callable remains disabled and
+is not needed for P3's `generate_action_plan(Task)` interface. P4's combined-flow
+test uses real view/service code with mocked Groq HTTP; it does not claim a paid
+call. See `docs/a6-person-4/closeout.md` for that test and remaining visual QA scope.
+
 ## Final verification
 
 ```powershell
@@ -175,7 +213,7 @@ benchmark evidence and environment details are stored under `a6_results/`.
 
 Final integrated verification on October 18, 2026:
 
-- **174 Django tests passed** and system checks reported no issues.
+- **175 Django tests passed** after P4's combined-flow test; system checks reported no issues.
 - Both `ai_prototype.ipynb` copies executed all 12 code cells with no errors.
 - The notebook validated 120 unique runs, 15 distinct models, eight runs per model,
   and exactly three models in each of five balanced parameter-size categories.
@@ -185,6 +223,8 @@ Final integrated verification on October 18, 2026:
   see `docs/a6-person-3/evidence/`.
 - `.env`, model weights and model caches remain ignored. No credentials or model
   weight files belong in the repository.
+- P4's larger-model harness passed five tests; its separate review notebook
+  executed all four code cells without errors and verified all 32 export rows.
 
 The remaining work is the team's final clean-clone/manual submission check and
 submission of the GitHub repository link. Production environments must provide

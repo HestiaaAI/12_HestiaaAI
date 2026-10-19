@@ -4,7 +4,7 @@
   "real_inference": true,
   "database": "temporary in-memory SQLite",
   "csrf_checks": true,
-  "generation_with_load_seconds": 44.454,
+  "generation_with_load_seconds": 41.478,
   "suggestions": 3,
   "tasks_after_generation": 0,
   "tasks_without_confirmation": 0,
@@ -13,5 +13,10 @@
   "protected_attribution_verified": true,
   "edits_verified": true,
   "replay_no_extra_writes": true,
-  "note": "Configured local snapshot; no inference mocks and no external API calls."
+  "saved_task_action_plan_link": true,
+  "plan_get_does_not_call_provider": true,
+  "explicit_plan_post_verified": true,
+  "external_http_mocked": true,
+  "plan_does_not_change_tasks": true,
+  "note": "Real local inference; Groq HTTP response is a labeled deterministic fixture. No live external API call or real key used."
 }

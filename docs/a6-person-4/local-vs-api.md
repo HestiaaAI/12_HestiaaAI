@@ -2,7 +2,9 @@
 
 Pricing checked October 18, 2026. These are transparent planning estimates, not
 paid API experiments or proof that different-sized models have equal quality.
-P4 local measured findings are in `benchmark_summary.md` and the benchmark CSV.
+P4's historical CPU findings are in `benchmark_summary.md`; the completed 7–14B
+GPU results are in [large-model-findings.md](large-model-findings.md) and the
+[32-run CSV](../../a6_results/person4_large/person4_large_results.csv).
 
 ## Workload and cost assumptions
 
@@ -57,10 +59,23 @@ Four-bit weights are about 0.5 byte/parameter before quantization metadata, but
 require supported kernels and a separate quality/latency evaluation. Host RAM is
 not interchangeable with GPU VRAM; disk capacity does not make inference fast.
 
-Our measured runs use CPU FP32 on approximately 15.5 GiB RAM and cannot establish
-how the hypothetical server or 7–14B models perform. Results support only the
-tested small models and two household inputs. There is no honest final
-15-model size sweet-spot conclusion until all required categories are measured.
+The earlier small-model runs used CPU FP32 on approximately 15.5 GiB RAM.
+P4 has now also measured Falcon3-7B and three 14B candidates on a Colab Tesla T4
+with NF4 weights and FP32 computation/non-quantized modules. Qwen2.5-14B passed
+the shared schema in 8/8 cases, averaged 20.778 seconds of generation, and scored
+9.5/10 in assistant-assisted content review. Qwen3-14B also passed 8/8, averaged
+21.801 seconds, and scored 9.25/10. Falcon passed 7/8; Phi passed 3/8 and had
+schema mismatches/truncation under the shared 220-token cap. Human review remains
+necessary even for valid JSON. These are two fixed inputs per model, not a
+production quality or load test; speed comparisons with CPU/native runs are
+not controlled. Main PR #31 uses a different balanced 15-model selection;
+P1/the team decides whether to extend that analysis with these above-10B runs.
+
+The Qwen2.5-14B last-case peak allocated VRAM was 12.751 GiB on the 14.563-GiB
+T4; this field is not an aggregate maximum over every case. Quantization made
+this test feasible, but does not establish the capacity of the hypothetical
+server. Colab is cloud-hosted model inference, not proof of on-premise/offline
+privacy. Only the fixed synthetic test paragraphs were used.
 
 ## When an API is preferable
 
@@ -82,6 +97,14 @@ average peak demand, multiply that by five. Use a production inference server,
 queue, bounded concurrency and a real load test rather than running many Django
 workers that each load an independent model.
 
+For scale only, applying the observed Qwen2.5-14B generation mean to 20,000
+requests gives 20,000 × 20.778 / 3,600 = **115.43 serialized GPU-hours/day**,
+or **4.81 fully occupied T4 equivalents** before peak headroom. This is arithmetic
+on a two-input sample, not a demonstrated serving capacity: the measured token
+counts differ from the planning 800/220 scenario. Batching, prompt processing,
+concurrency, model loading and end-to-end latency need an actual serving test.
+Five Django workers do not turn one T4 into five independent GPU replicas.
+
 ## Hybrid potential
 
 Use the local model to extract ordinary household tasks. Validate output and
@@ -101,8 +124,11 @@ Including the same breakdown volume in all-API yields $87.75/month. Hybrid is
 therefore not automatically cheaper; it can make sense with already-owned local
 capacity, privacy constraints, sustained utilization, or expensive API models.
 
-The implemented P4 UI provides the explicit optional breakdown action, validates
-returned steps, preserves edits on errors, and requires fresh confirmation after
-adding steps. Person 3 must supply/configure the actual provider and verify its
-pricing, limits and external behavior. No paid-provider quality/latency result is
-claimed here.
+The merged implementation reaches Person 3's Groq action-plan feature from a
+saved task's detail page, after Brain Dump review and confirmation. A separate
+disclosed POST sends the saved task fields and returns an unsaved plan preview.
+P4's earlier pre-save callable remains an optional, disabled extension and is
+not needed for this supported flow. Private Groq configuration is required for
+live use; Person 3's live-call evidence is stored separately. P4's combined-path
+test mocks the external HTTP response. The prices above remain planning estimates,
+not P4 measurements of paid-provider quality or latency.
