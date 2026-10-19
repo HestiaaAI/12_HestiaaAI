@@ -4,6 +4,14 @@ __pycache__/
 *$py.class
 *.pyo
 
+# Local AI weights and caches
+*.bin
+*.safetensors
+*.pt
+*.pth
+model_cache/
+llm-test/models/
+
 # Virtual environments
 .venv/
 venv/
@@ -37,6 +45,19 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+
+# Hugging Face / local LLM weights and caches (A6 — never push model files)
+*.bin
+*.safetensors
+*.pt
+*.pth
+*.onnx
+*.gguf
+*.ggml
+.cache/
+models/
+checkpoints/
+offload/
 
 # Local reference material and planning documents
 Docs_old/

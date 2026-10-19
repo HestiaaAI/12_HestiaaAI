@@ -1,0 +1,17 @@
+{
+  "model": "Qwen/Qwen2-0.5B-Instruct",
+  "shot_mode": "many",
+  "real_inference": true,
+  "database": "temporary in-memory SQLite",
+  "csrf_checks": true,
+  "generation_with_load_seconds": 44.454,
+  "suggestions": 3,
+  "tasks_after_generation": 0,
+  "tasks_without_confirmation": 0,
+  "removed": 1,
+  "saved_tasks": 2,
+  "protected_attribution_verified": true,
+  "edits_verified": true,
+  "replay_no_extra_writes": true,
+  "note": "Configured local snapshot; no inference mocks and no external API calls."
+}

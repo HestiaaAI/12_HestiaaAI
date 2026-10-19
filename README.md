@@ -1,5 +1,11 @@
 # 12_HestiaAI
 
+## Assignment 6: AI Brain Dump
+
+Local Hugging Face extraction: `POST /api/ai/brain-dump/` (see [`README_AI.md`](README_AI.md)).
+Shared notebook: [`ai_prototype.ipynb`](ai_prototype.ipynb). Person 2 results:
+[`a6_results/person2_benchmark_results.csv`](a6_results/person2_benchmark_results.csv).
+
 ## Assignment 5: Django authentication
 
 A5 now requires sign-in for task pages, reports/exports, analytics, lookup and

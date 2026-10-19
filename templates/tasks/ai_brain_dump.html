@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}AI Household Brain Dump | Hestia{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/ai_brain_dump.css' %}">{% endblock %}
+{% block content %}
+<header class="page-header">
+    <span class="eyebrow">A little less on your mind</span>
+    <h1>AI Household Brain Dump</h1>
+    <p>Put it into words. Review a plan. Keep what helps.</p>
+</header>
+{% for message in messages %}<p class="ai-notice" role="status">{{ message }}</p>{% endfor %}
+{% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+{% if review_notice %}<p class="ai-notice" role="status">{{ review_notice }}</p>{% endif %}
+{% if mock_mode %}<p class="ai-notice">Demo mode: suggestions are fixed sample tasks, regardless of your input. No AI model is running.</p>{% endif %}
+{% if not has_workspaces %}
+<section class="empty-state"><h2>No active household membership</h2><p>Ask a household administrator to add your account before organizing tasks.</p></section>
+{% endif %}
+{% if review %}
+<section aria-labelledby="review-heading">
+    <h2 id="review-heading">2. Review your tasks</h2>
+    <p>Saving to <strong>{{ workspace.name }}</strong>. Edit each suggestion and check “Remove” for anything you don't want. Nothing has been saved.</p>
+    <form method="post" action="{% url 'ai_tasks:brain-dump' %}">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save">
+        <input type="hidden" name="draft_token" value="{{ draft_token }}">
+        {{ review.management_form }}
+        {{ review.non_form_errors }}
+        <div class="task-grid ai-review">
+        {% for form in review %}
+        <fieldset class="task-card">
+            <legend>Task {{ forloop.counter }}</legend>
+            {{ form.non_field_errors }}
+            {% for field in form %}
+            <div class="form-field{% if field.name == 'DELETE' %} ai-checkbox{% endif %}">
+                {% if field.name == 'DELETE' %}{{ field }}<label for="{{ field.id_for_label }}">Remove this task (exclude from saving)</label>
+                {% else %}{{ field.label_tag }}{{ field }}{% endif %}
+                {{ field.errors }}
+            </div>
+            {% endfor %}
+            {% if breakdown_available %}
+            <p class="field-help">Optional: send this task's title and description to the configured external AI provider for suggested steps. Review the returned steps before saving.</p>
+            <button type="submit" name="breakdown_index" value="{{ forloop.counter0 }}" formnovalidate>Suggest steps</button>
+            {% endif %}
+        </fieldset>
+        {% endfor %}
+        </div>
+        <section class="task-card ai-confirm">
+            <h2>3. Confirm and save</h2>
+            <p>Only tasks you keep will be added to your household's existing task system.</p>
+            {{ confirmation.confirm.errors }}
+            <div class="ai-checkbox">{{ confirmation.confirm }}{{ confirmation.confirm.label_tag }}</div>
+            <button type="submit">Save approved tasks</button>
+            <a class="clear-link" href="{% url 'ai_tasks:brain-dump' %}">Start a new brain dump</a>
+        </section>
+    </form>
+</section>
+{% elif has_workspaces %}
+<section class="task-card ai-input">
+    <h2>1. Tell us what's on your mind</h2>
+    <p>Write naturally about chores, errands, appointments, or things that need fixing. Avoid sensitive personal information.</p>
+    <form method="post" action="{% url 'ai_tasks:brain-dump' %}">
+        {% csrf_token %}<input type="hidden" name="action" value="generate">
+        {{ input_form.non_field_errors }}
+        {% for field in input_form %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}
+        <p class="field-help">Up to 4,000 characters. You'll review every suggestion before saving.</p>
+        <button type="submit">Organize My Tasks</button>
+    </form>
+</section>
+{% endif %}
+<p><a href="{% url 'task_forms:board' %}">Go to Task board</a></p>
+{% endblock %}
