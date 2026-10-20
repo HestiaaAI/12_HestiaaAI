@@ -1,6 +1,9 @@
 .ai-input { max-width: 800px; }
 .ai-input h2, .ai-confirm h2 { margin-top: 0; }
 .ai-notice { padding: 14px 18px; background: #ece9fa; border-radius: 8px; }
+.ai-notice p { margin-bottom: 0; }
+.ai-input button:disabled { opacity: 0.7; cursor: wait; }
+.ai-loading[hidden] { display: none; }
 .ai-review { margin: 24px 0; align-items: start; }
 .ai-review legend { padding: 0 8px; color: var(--hestia-primary); font-weight: 700; }
 .ai-input textarea, .ai-review textarea, .ai-input select, .ai-review select {
