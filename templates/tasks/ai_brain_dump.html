@@ -58,14 +58,25 @@
 <section class="task-card ai-input">
     <h2>1. Tell us what's on your mind</h2>
     <p>Write naturally about chores, errands, appointments, or things that need fixing. Avoid sensitive personal information.</p>
-    <form method="post" action="{% url 'ai_tasks:brain-dump' %}">
+    {% if not mock_mode %}
+    <aside class="ai-notice" id="ai-first-use-note">
+        <strong>First use can take several minutes.</strong>
+        <p>Hestia downloads and loads its local AI model the first time you organize tasks on this server. Later requests reuse the downloaded model, but processing can still take time. Keep this page open while it works.</p>
+    </aside>
+    {% endif %}
+    <form method="post" action="{% url 'ai_tasks:brain-dump' %}" data-ai-generate{% if not mock_mode %} aria-describedby="ai-first-use-note"{% endif %}>
         {% csrf_token %}<input type="hidden" name="action" value="generate">
         {{ input_form.non_field_errors }}
         {% for field in input_form %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}
         <p class="field-help">Up to 4,000 characters. You'll review every suggestion before saving.</p>
-        <button type="submit">Organize My Tasks</button>
+        <button type="submit" data-ai-submit data-pending-label="{% if mock_mode %}Preparing sample tasks…{% else %}Organizing your tasks…{% endif %}">Organize My Tasks</button>
+        <p class="ai-notice ai-loading" role="status" aria-live="polite" aria-atomic="true" data-ai-loading hidden>
+            {% if mock_mode %}Preparing sample tasks. Nothing is saved until you review and confirm.
+            {% else %}Organizing your tasks. First use may take several minutes while the local AI model downloads and loads. Keep this page open; you don't need to submit again. Nothing is saved until you review and confirm.{% endif %}
+        </p>
     </form>
 </section>
 {% endif %}
 <p><a href="{% url 'task_forms:board' %}">Go to Task board</a></p>
 {% endblock %}
+{% block extra_js %}<script src="{% static 'js/ai_brain_dump.js' %}" defer></script>{% endblock %}
