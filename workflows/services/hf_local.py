@@ -149,7 +149,20 @@ def extract_tasks(
         mode = shot_mode or _config()["shot_mode"]
         user_prompt = build_user_prompt(brain_dump, shot_mode=mode)
         raw = _generate_raw(user_prompt)
-        tasks, warnings = parse_tasks_payload(raw)
+        try:
+            tasks, warnings = parse_tasks_payload(raw)
+        except BrainDumpError:
+            # Small local models can repeat root keys. Regenerate once instead
+            # of accepting duplicate keys or guessing how to repair the JSON.
+            retry_prompt = (
+                user_prompt
+                + '\n\nFormatting reminder: Return ONE JSON object with a single "tasks" key. '
+                'Put all requested tasks inside that one array. Do not repeat any JSON keys. '
+                'Include title, task_type, priority and description for each task. '
+                'Do not include markdown, explanations or additional tasks.\nJSON output:'
+            )
+            raw = _generate_raw(retry_prompt)
+            tasks, warnings = parse_tasks_payload(raw)
         return {
             "tasks": tasks,
             "warnings": warnings,

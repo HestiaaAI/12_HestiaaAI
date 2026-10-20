@@ -70,6 +70,18 @@ Set `HESTIA_BRAIN_DUMP_BACKEND=mock` only for a deterministic UI demo. A visible
 banner states that three fixed sample tasks are returned regardless of input.
 Local failures never silently fall back to mock output.
 
+On a Mac with limited memory, a smaller benchmarked option is
+`HF_BRAIN_DUMP_MODEL=HuggingFaceTB/SmolLM2-360M-Instruct`, with
+`HF_BRAIN_DUMP_DEVICE=mps` when Apple GPU acceleration is available. Model
+weights still download automatically through Transformers. Keep these choices
+in the private `.env`; generation quality varies, so review the drafts.
+
+If the local model returns JSON that cannot be parsed, Hestia regenerates once
+with an explicit single-object/single-`tasks`-array formatting reminder. Duplicate
+keys remain rejected; output is not silently repaired. A second invalid response
+returns an error. Runtime/loading failures are not retried, and this retry never
+calls Groq or writes tasks. The notebook benchmark outputs remain unchanged.
+
 ## Safety guardrails
 
 - Login, active household membership, POST-only mutations, and CSRF protection.
