@@ -51,26 +51,19 @@ coverage, clarity, and unsupported details. Its notes explain each score; Person
 1 must still review those notes before treating the CSV as final. Keep failed
 generations visible and rerun them under the same configuration.
 
-## Assignment 2 SLM dependency
+## Assignment 2: Person 1 SLM completed
 
-Person 1 must start from the professor-provided Week 7 SLM notebook. The required
-notebook was not present in the repository or the local Week 6 script folders
-when this foundation was created. Do not substitute a Hugging Face model or a
-new Transformer implementation. Once the class notebook is available:
+The supplied class notebook is preserved at `slm/class_source.ipynb`.
+`slm/slm_experiments.ipynb` contains executed baseline results, five architecture
+experiments, four temperatures, comparison tables and all six analysis answers.
+Every architecture runs the class's extended 1,000-step preset with the same
+corpus, batch size, learning rate, CPU device and seeds. The class Transformer
+architecture is unchanged.
 
-1. Copy it into `a7/slm/`.
-2. Preserve the original baseline values and training corpus.
-3. Run the five required architecture configurations from the assignment, each
-   from a newly initialized model.
-4. Select one trained checkpoint and use the same original checkpoint for RAG,
-   fine-tuning, and the final comparison.
-5. Run temperatures `0.2`, `0.5`, `1.0`, and `2.0` with unchanged weights,
-   prompt, maximum output length, and random seed.
-6. Record actual parameter counts, final loss, training time, and generated text.
-
-Checkpoint files must be shared privately if needed and must never be committed.
-The repository ignores `.bin`, `.safetensors`, `.pt`, `.pth`, `.ckpt`,
-`a7/checkpoints/`, and `a7/model_cache/`.
+`slm/results/` contains the measured tables and selected checkpoint manifest.
+The original baseline is selected for Parts 2–4. Follow `slm/HANDOFF.md` to share
+and verify the exact checkpoint with Persons 2 and 3. Weights are local only and
+excluded by Git; the PR contains no training checkpoints.
 
 ## Team handoff rules
 

@@ -1,0 +1,4 @@
+experiment,embedding_dim,num_heads,num_layers,feedforward_dim,context_length,parameters,training_steps,batch_size,learning_rate,seed,device,initial_loss,final_loss,training_seconds,prompt,max_new_tokens,temperature,generated_text
+baseline,48,2,1,192,32,32523,1000,16,0.001,42,cpu,3.440591335296631,0.5518336892127991,1.3638697089918423,students ,100,0.7,"students artificial in partificial intelligencers context tokearmers.
+the uning models previos.
+startificial "

@@ -1,0 +1,60 @@
+{
+  "selected_experiment": "baseline",
+  "checkpoint": "checkpoints/selected_baseline.pt",
+  "checkpoint_sha256": "ea5b43d934bed646d02183c50e371f89df57801cc1bc7ef45027ccb2d8de3f36",
+  "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "config": {
+    "embedding_dim": 48,
+    "num_heads": 2,
+    "num_layers": 1,
+    "feedforward_dim": 192,
+    "context_length": 32
+  },
+  "vocab": [
+    "\n",
+    " ",
+    ".",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y"
+  ],
+  "training": {
+    "steps": 1000,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "seed": 42,
+    "device": "cpu",
+    "dtype": "float32",
+    "threads": 2,
+    "weight_decay": 0.01,
+    "corpus_sha256": "5bbae6112f381ab1c092707ec459810133c6405bea1a3e3284dcae2ef894c6b0"
+  },
+  "generation": {
+    "seed": 42,
+    "temperature": 0.7,
+    "max_new_tokens": 100
+  },
+  "torch_version": "2.14.1",
+  "platform": "macOS-15.6-arm64-arm-64bit-Mach-O"
+}

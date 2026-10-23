@@ -1,0 +1,9 @@
+temperature,prompt,max_new_tokens,seed,generated_text,weights_sha256,observations
+0.2,students ,100,42,students useful software probation rkuse models learning res artual networks learning res are models can res ,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,More repetitive familiar fragments (models learning / res); low temperature does not correct the weak model.
+0.5,students ,100,42,"students artificial intention programeters.
+the univers artificial intelligence stuage models learning useful",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,"Recognizable topic words such as artificial intelligence, but invented words and incomplete sentences remain."
+1.0,students ,100,42,"students and cheuse previours anestartificial inngeartificial interes intext tkems.
+the models prexpe mouters",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,More varied word combinations and misspellings such as previours and tkems; coherence remains poor.
+2.0,students ,100,42,"students andes muse et .
+ttrbuivers are probapminghantion rni atteres int
+thearnimputerinining.offxt ionurage",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,More malformed words and unusual punctuation; highest randomness is least readable in this sample.
