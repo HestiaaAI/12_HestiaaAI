@@ -1,0 +1,6 @@
+criterion,max_points,description
+task_accuracy,3,Correctly addresses the household request without changing its meaning.
+instruction_adherence,2,Follows the requested task and output instructions.
+completeness,2,Includes all essential requested information.
+clarity,2,"Produces concise, understandable, usable text."
+no_unsupported_details,1,"Avoids invented facts, dates, people, or requirements."

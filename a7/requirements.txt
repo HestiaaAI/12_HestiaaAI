@@ -1,0 +1,7 @@
+accelerate>=1.0
+huggingface-hub>=0.26
+ipykernel>=6.29
+nbformat>=5.10
+pandas>=2.2
+torch>=2.2
+transformers>=4.46,<5

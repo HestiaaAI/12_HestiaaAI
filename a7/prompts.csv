@@ -1,0 +1,101 @@
+prompt_id,prompt_type,input,rendered_prompt
+extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}. Create one task per concern.
+Household request: Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.
+Answer:"
+extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}. Create one task per concern.
+Household request: This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.
+Answer:"
+extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}. Create one task per concern.
+Household request: Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.
+Answer:"
+extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}. Create one task per concern.
+Household request: Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.
+Answer:"
+extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""tasks"":[{""title"":""..."",""task_type"":""CHORE|APPOINTMENT|DEADLINE|ERRAND|MAINTENANCE|SHOPPING|OTHER"",""priority"":""LOW|MEDIUM|HIGH|URGENT"",""description"":""...""}]}. Create one task per concern.
+Household request: The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.
+Answer:"
+classification-01,classification,Buy milk and rice after work.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+Household request: Buy milk and rice after work.
+Answer:"
+classification-02,classification,Call the plumber about the dripping kitchen pipe.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+Household request: Call the plumber about the dripping kitchen pipe.
+Answer:"
+classification-03,classification,Schedule a yearly dental cleaning.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+Household request: Schedule a yearly dental cleaning.
+Answer:"
+classification-04,classification,Submit the apartment renewal form by Friday.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+Household request: Submit the apartment renewal form by Friday.
+Answer:"
+classification-05,classification,Sweep the porch and empty the recycling.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+Household request: Sweep the porch and empty the recycling.
+Answer:"
+priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: LOW, MEDIUM, HIGH, or URGENT. Use urgency and safety risk, not dramatic wording.
+Household request: The smoke detector is chirping because its battery is low.
+Answer:"
+priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: LOW, MEDIUM, HIGH, or URGENT. Use urgency and safety risk, not dramatic wording.
+Household request: Sort the photo drawer whenever there is free time.
+Answer:"
+priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: LOW, MEDIUM, HIGH, or URGENT. Use urgency and safety risk, not dramatic wording.
+Household request: Return the library book tomorrow to avoid a fee.
+Answer:"
+priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: LOW, MEDIUM, HIGH, or URGENT. Use urgency and safety risk, not dramatic wording.
+Household request: Water is rapidly leaking under the bathroom sink.
+Answer:"
+priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return exactly one label: LOW, MEDIUM, HIGH, or URGENT. Use urgency and safety risk, not dramatic wording.
+Household request: Buy coffee sometime this week; enough remains for two days.
+Answer:"
+summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+Household request: The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.
+Answer:"
+summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+Household request: Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.
+Answer:"
+summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+Household request: Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.
+Answer:"
+summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+Household request: Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.
+Answer:"
+summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.","You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+Household request: Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.
+Answer:"
+planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""steps"":[""step 1"",""step 2"",""step 3""]}. Use 3 to 5 practical ordered steps.
+Household request: Prepare the apartment for overnight guests tomorrow.
+Answer:"
+planning-02,action_planning,Organize a weekly grocery trip while staying under a $90 budget.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""steps"":[""step 1"",""step 2"",""step 3""]}. Use 3 to 5 practical ordered steps.
+Household request: Organize a weekly grocery trip while staying under a $90 budget.
+Answer:"
+planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""steps"":[""step 1"",""step 2"",""step 3""]}. Use 3 to 5 practical ordered steps.
+Household request: Deep-clean the kitchen safely in one afternoon.
+Answer:"
+planning-04,action_planning,Get ready for a move to a new apartment next month.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""steps"":[""step 1"",""step 2"",""step 3""]}. Use 3 to 5 practical ordered steps.
+Household request: Get ready for a move to a new apartment next month.
+Answer:"
+planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,"You are Hestia, a household coordination assistant. Do not invent private details or claim that an action is complete.
+Return JSON only: {""steps"":[""step 1"",""step 2"",""step 3""]}. Use 3 to 5 practical ordered steps.
+Household request: Create a simple plan for reducing household electricity use this week.
+Answer:"
