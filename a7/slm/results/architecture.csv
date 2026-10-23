@@ -1,0 +1,15 @@
+experiment,embedding_dim,num_heads,num_layers,feedforward_dim,context_length,parameters,training_steps,batch_size,learning_rate,seed,device,initial_loss,final_loss,training_seconds,prompt,max_new_tokens,temperature,generated_text
+experiment_1,24,2,1,96,32,9363,1000,16,0.001,42,cpu,3.428710460662842,1.5951448678970337,1.3060724170063622,students ,100,0.7,"students arte chaine in.
+ttrewerestusen prareams.
+sertutal ng aretul arete learedictseantinion ovall arause l"
+experiment_2,48,2,1,192,32,32523,1000,16,0.001,42,cpu,3.440591335296631,0.5518336892127991,1.4576116249954794,students ,100,0.7,"students artificial in partificial intelligencers context tokearmers.
+the uning models previos.
+startificial "
+experiment_3,48,4,1,192,32,32523,1000,16,0.001,42,cpu,3.4386589527130127,0.5701063871383667,1.7514227080100682,students ,100,0.7,"students are building pagoters.
+tran inencal inte textual int int intellligeantig intence sysys learn foul ge"
+experiment_4,48,2,2,192,32,60795,1000,16,0.001,42,cpu,3.4792845249176025,0.2937966585159302,2.6247607079858426,students ,100,0.7,"students are building useful software dunine.
+maninge models use contextual information.
+python is useful for"
+experiment_5,96,4,2,384,32,232155,1000,16,0.001,42,cpu,3.421055555343628,0.15417149662971497,4.4698670839716215,students ,100,0.7,"students are building useful software products.
+small language models can run on local computers.
+students bu"
