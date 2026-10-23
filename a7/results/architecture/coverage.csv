@@ -2,4 +2,4 @@ owner,expected,recorded,successful,scored,missing,remaining_successful
 P1,100,100,100,100,0,0
 P2,100,0,0,0,100,100
 P3,100,0,0,0,100,100
-P4,75,75,25,25,0,50
+architecture,75,75,50,50,0,25

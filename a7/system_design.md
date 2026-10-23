@@ -1,4 +1,4 @@
-# Hestia multi-model system — Person 4
+# Hestia multi-model system — Architecture lead
 
 Status: routing design and integration are implemented. Final empirical conclusions
 depend on completing the 375 evaluations and receiving Persons 2 and 3's costs.
@@ -7,27 +7,38 @@ The small classroom SLM experiment is separate from the 15 Hugging Face models.
 ## Evidence and experiment boundaries
 
 All members use `benchmark_contract.py`, `benchmark_runner.py`, the same 25 prompts,
-220 maximum new tokens, greedy decoding and the shared ten-point rubric. Person 4
+220 maximum new tokens, greedy decoding and the shared ten-point rubric. Architecture lead
 owns SmolLM-360M-Instruct, TinyLlama-1.1B-Chat-v1.0 and Llama-3.2-3B-Instruct.
 The last model requires approved Hugging Face access. Failed attempts are recorded
 as failures; they cannot establish latency or quality. First-pass automated rubric
 scores require inspection against raw responses before final submission.
 
-Person 4 local status: all 25 SmolLM-360M prompts completed on CPU/float32. Mean
+Architecture lead local status: all 25 SmolLM-360M prompts completed on CPU/float32. Mean
 assistant-inspected score is 2.48/10, median latency 19.0588 s and median output
 rate 11.4717 tokens/s. Frequent format violations, repetitive role-play and invented
 details make this model unsuitable for accepting unvalidated structured tasks in
-this run. Inspect `person4_review_audit.json` for response hashes and scoring notes;
+this run. Inspect `architecture_review_audit.json` for response hashes and scoring notes;
 student signoff is pending. This is not a speed comparison against Person 1's MPS.
 
-TinyLlama failed to load with Windows paging-file error 1455. Llama returned gated
+TinyLlama initially failed to load with Windows paging-file error 1455, then
+completed all 25 evaluations on a Google Colab Tesla T4 with float16. Its mean
+assistant-inspected score is 2.96/10, median latency 5.2453 s and median output rate
+37.7479 tokens/s. Several responses contain useful facts but routinely violate
+JSON/single-label requirements, so this run does not qualify it for the proposed
+8/10 quality gate. The raw GPU CSV, executed Colab notebook, environment and
+response-hash review audit are retained. These timings do not establish that
+TinyLlama is faster than CPU SmolLM because the hardware and precision differ.
+
+Llama returned gated
 repository HTTP 401 initially; after local authentication, the configuration check
 returned HTTP 403 stating the account was not in the authorized list. A separate
 three-row partial float16 SmolLM trial is exploratory and
 was stopped when observed available RAM dropped below 1 GB (about 95% used).
 These failures are retained in the evidence and do not count as successful
-benchmarks. `person4_gpu_benchmark.ipynb` prepares a common CUDA/float16 rerun of
-all three models without changing the shared prompts or runner.
+benchmarks. `architecture_gpu_benchmark.ipynb` prepares a common CUDA/float16 rerun of
+all three models without changing the shared prompts or runner. The latest Llama
+check explicitly says the author's access review is pending. Architecture lead now has
+50/75 successful evaluations; the remaining 25 require Llama approval.
 
 The runner measures one complete generation, including input prefill and decoding,
 excluding model download/loading. Tokens/sec means output tokens divided by that
@@ -36,13 +47,13 @@ warmup or repeated-trial protocol in the shared runner: retain the common proced
 label its limits, and do not interpret a single p95 over 25 different prompts as
 a production service-level guarantee. Token counts also differ between tokenizers.
 
-Person 1 used Apple MPS. Person 4 hardware must be recorded separately; CPU, MPS,
+Person 1 used Apple MPS. Architecture lead hardware must be recorded separately; CPU, MPS,
 and CUDA timings cannot establish an architecture-only speed ranking. Even the same
 device label on different machines does not establish equivalent hardware. Compare
 quality by model/prompt type, present device-stratified timings, and rerun leading
 candidates on one deployment machine before choosing the fastest production model.
 
-`python -m a7.person4_analysis` validates owner/prompt identities, reports missing,
+`python -m a7.architecture_analysis` validates owner/prompt identities, reports missing,
 failed and scored evaluations, and produces summary CSVs. All 15 models need 25
 successful reviewed rows each. A category requires all three models (75 rows) before
 making a complete category-level claim. Do not call partial results final.
@@ -100,7 +111,7 @@ result and estimated charge. Operational failures are not low-quality generation
 
 ## Scaling simulations
 
-`results/person4/routing_simulation.csv` contains 30 planning rows: five scenarios
+`results/architecture/routing_simulation.csv` contains 30 planning rows: five scenarios
 across all six required traffic levels. These assume one request/user/day and 500
 generated tokens/request, solely to demonstrate routing load arithmetic. Cache,
 local and API shares are explicit assumptions and sum to one; they are not an
@@ -122,7 +133,7 @@ It predicts load only; no simulated speed, quality or savings is presented as fa
 ## Local versus API cost comparison (Step 2.5)
 
 Pending Persons 2 and 3's 90-row cost tables. No observed crossover is available yet.
-Use the normalized input contract in `person4/README.md`; preserve their original
+Use the normalized input contract in `architecture/README.md`; preserve their original
 tables and record each conversion. Both tables must use the same workload,
 input/output token lengths, currency, day length and traffic counts.
 
@@ -182,7 +193,7 @@ With only Person 1 evidence, conclusions are preliminary, not a 15-model result.
 
 ## Assignment 2: baseline, RAG and fine-tuning
 
-See `slm/person4_comparison.ipynb`, whose Markdown comparison table belongs in the
+See `slm/architecture_comparison.ipynb`, whose Markdown comparison table belongs in the
 submitted SLM notebook. Use Person 2's five exact questions and facts, not new
 questions invented for this analysis. All conditions originate from the original
 checkpoint state hash in `slm/results/selected_checkpoint.json`.

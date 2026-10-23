@@ -1,5 +1,5 @@
 model_id,model_category,owner,prompt_id,prompt_type,prompt,latency_seconds,output_tokens,tokens_per_second,generated_output,status,error,device,max_new_tokens,generated_at_utc,task_accuracy_0_to_3,instruction_adherence_0_to_2,completeness_0_to_2,clarity_0_to_2,no_unsupported_details_0_to_1,self_evaluation_score_1_to_10,review_notes
-HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",25.3193,220,8.689,"Hestia, I understand your request. Cleaning the kitchen is a priority, as it's essential for maintaining a clean and hygienic environment. I'll provide you with a task list to help you complete this task.
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",25.3193,220,8.689,"Hestia, I understand your request. Cleaning the kitchen is a priority, as it's essential for maintaining a clean and hygienic environment. I'll provide you with a task list to help you complete this task.
 
 **Task 1: Clean the Kitchen**
 
@@ -23,7 +23,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-01,struc
 **Task 4: Fix the Leaky Bathtub Tap**
 
 * Turn off",ok,,cpu,220,2026-10-23T21:19:00.990259+00:00,,,,,,,
-HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",23.2799,220,9.4502,"Hestia, I understand your request. Here's a suggested task list:
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",23.2799,220,9.4502,"Hestia, I understand your request. Here's a suggested task list:
 
 **Dental appointment:**
 
@@ -60,7 +60,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-02,struc
 * Clean the bedroom by Friday
 * Clean the kitchen by Friday
 * Clean the",ok,,cpu,220,2026-10-23T21:19:24.272642+00:00,,,,,,,
-HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",23.0713,220,9.5357,"Hestia, I understand your request. Vacuuming the living room and picking up the birthday cake is a household concern. The loose stair rail also needs repair.
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",23.0713,220,9.5357,"Hestia, I understand your request. Vacuuming the living room and picking up the birthday cake is a household concern. The loose stair rail also needs repair.
 
 Hestia: Yes, I understand. I'll do the vacuuming and pick up the birthday cake.
 

@@ -1,0 +1,20 @@
+{
+  "timing_comparability": "Mixed devices/precision: compare within hardware groups only.",
+  "models": {
+    "HuggingFaceTB/SmolLM-360M-Instruct": {
+      "device": "cpu",
+      "dtype": "float32",
+      "environment_file": "architecture_environment.json"
+    },
+    "TinyLlama/TinyLlama-1.1B-Chat-v1.0": {
+      "device": "cuda",
+      "dtype": "float16",
+      "environment_file": "architecture_tinyllama_cuda.environment.json"
+    },
+    "meta-llama/Llama-3.2-3B-Instruct": {
+      "device": "cpu",
+      "dtype": "float32",
+      "status": "not successfully evaluated; gated access pending"
+    }
+  }
+}

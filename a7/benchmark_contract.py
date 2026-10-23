@@ -7,15 +7,15 @@ MODEL_REGISTRY = [
     {"model_id": "distilbert/distilgpt2", "params_b": 0.082, "category": "Ultra-light (<0.2B)", "owner": "P1"},
     {"model_id": "facebook/opt-125m", "params_b": 0.125, "category": "Ultra-light (<0.2B)", "owner": "P2"},
     {"model_id": "HuggingFaceTB/SmolLM2-135M-Instruct", "params_b": 0.135, "category": "Ultra-light (<0.2B)", "owner": "P3"},
-    {"model_id": "HuggingFaceTB/SmolLM-360M-Instruct", "params_b": 0.360, "category": "Compact (0.2B–<0.6B)", "owner": "P4"},
+    {"model_id": "HuggingFaceTB/SmolLM-360M-Instruct", "params_b": 0.360, "category": "Compact (0.2B–<0.6B)", "owner": "architecture"},
     {"model_id": "HuggingFaceTB/SmolLM2-360M-Instruct", "params_b": 0.360, "category": "Compact (0.2B–<0.6B)", "owner": "P1"},
     {"model_id": "Qwen/Qwen2-0.5B-Instruct", "params_b": 0.494, "category": "Compact (0.2B–<0.6B)", "owner": "P2"},
     {"model_id": "Qwen/Qwen3-0.6B", "params_b": 0.600, "category": "Small (0.6B–<1.6B)", "owner": "P3"},
-    {"model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0", "params_b": 1.100, "category": "Small (0.6B–<1.6B)", "owner": "P4"},
+    {"model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0", "params_b": 1.100, "category": "Small (0.6B–<1.6B)", "owner": "architecture"},
     {"model_id": "Qwen/Qwen2.5-1.5B-Instruct", "params_b": 1.540, "category": "Small (0.6B–<1.6B)", "owner": "P1"},
     {"model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct", "params_b": 1.700, "category": "Medium (1.6B–<3.5B)", "owner": "P2"},
     {"model_id": "Qwen/Qwen2.5-3B-Instruct", "params_b": 3.090, "category": "Medium (1.6B–<3.5B)", "owner": "P3"},
-    {"model_id": "meta-llama/Llama-3.2-3B-Instruct", "params_b": 3.210, "category": "Medium (1.6B–<3.5B)", "owner": "P4", "access": "gated"},
+    {"model_id": "meta-llama/Llama-3.2-3B-Instruct", "params_b": 3.210, "category": "Medium (1.6B–<3.5B)", "owner": "architecture", "access": "gated"},
     {"model_id": "microsoft/Phi-3.5-mini-instruct", "params_b": 3.820, "category": "Large (≥3.5B)", "owner": "P1"},
     {"model_id": "mistralai/Mistral-7B-Instruct-v0.3", "params_b": 7.250, "category": "Large (≥3.5B)", "owner": "P2"},
     {"model_id": "Qwen/Qwen2.5-7B-Instruct", "params_b": 7.620, "category": "Large (≥3.5B)", "owner": "P3"},
@@ -96,7 +96,7 @@ def validate_contract() -> None:
     assert len(MODEL_REGISTRY) == 15
     assert len({model["model_id"] for model in MODEL_REGISTRY}) == 15
     assert set(Counter(model["category"] for model in MODEL_REGISTRY).values()) == {3}
-    assert Counter(model["owner"] for model in MODEL_REGISTRY) == {"P1": 4, "P2": 4, "P3": 4, "P4": 3}
+    assert Counter(model["owner"] for model in MODEL_REGISTRY) == {"P1": 4, "P2": 4, "P3": 4, "architecture": 3}
     assert len(PROMPTS) == 25
     assert len({prompt["prompt_id"] for prompt in PROMPTS}) == 25
     assert set(Counter(prompt["prompt_type"] for prompt in PROMPTS).values()) == {5}

@@ -9,7 +9,7 @@ from jupyter_client.kernelspec import KernelSpec
 
 def main():
     root = Path(__file__).resolve().parents[1]
-    for relative in ('a7/multi_model_system.ipynb', 'a7/slm/person4_comparison.ipynb'):
+    for relative in ('a7/multi_model_system.ipynb', 'a7/slm/architecture_comparison.ipynb'):
         path = root/relative
         print(f'Executing {relative}', flush=True)
         notebook = nbformat.read(path, as_version=4)

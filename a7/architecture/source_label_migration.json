@@ -1,0 +1,15 @@
+{
+  "before_source_sha256": {
+    "__init__.py": "beb14e51bd4722c5a569637b9bf2930e1c67fe4ffeaa32c9ba5613cdc8ca5599",
+    "benchmark_contract.py": "2d8ed87f747bb729666da8ace851ef6547f456faedad783892a32add7cd44889",
+    "benchmark_runner.py": "dc849c2b83a046b87e70688e18aa5cb2f8386f835fcbfcfadd47c46e341dc239",
+    "review_results.py": "d7f20a79b6927631e865e9e1907d3603acd5be25670215e4ac5380bcd40aa1d0"
+  },
+  "after_source_sha256": {
+    "__init__.py": "beb14e51bd4722c5a569637b9bf2930e1c67fe4ffeaa32c9ba5613cdc8ca5599",
+    "benchmark_contract.py": "87d109d66ecc713e7692e98f1da5dda1e354e18324ead006304aa6159ab1df4d",
+    "benchmark_runner.py": "bae9e4be09584625ccb6849d04c089d41f00f1ece851d545adeb9aaef145a93b",
+    "review_results.py": "d7f20a79b6927631e865e9e1907d3603acd5be25670215e4ac5380bcd40aa1d0"
+  },
+  "note": "Owner labels and artifact names changed; all model IDs, prompts, output instructions and rubric criteria verified unchanged."
+}

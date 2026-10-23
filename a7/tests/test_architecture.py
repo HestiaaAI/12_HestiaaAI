@@ -6,11 +6,11 @@ from pathlib import Path
 import unittest
 
 from a7.benchmark_contract import MODEL_REGISTRY
-from a7.person4_analysis import TRAFFIC, benchmark_evidence, compare_costs, crossover_intervals, routing_simulation
-from a7.person4_comparison import comparison_markdown
+from a7.architecture_analysis import TRAFFIC, benchmark_evidence, compare_costs, crossover_intervals, routing_simulation
+from a7.architecture_comparison import comparison_markdown
 
 
-class Person4Tests(unittest.TestCase):
+class ArchitectureTests(unittest.TestCase):
     def test_missing_evidence_is_not_zero_cost_or_completed_benchmark(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

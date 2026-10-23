@@ -1,4 +1,4 @@
-"""Run Person 4's unchanged shared benchmark on CPU, with auditable environment."""
+"""Run Architecture lead's unchanged shared benchmark on CPU, with auditable environment."""
 import importlib.metadata
 import argparse
 import json
@@ -13,7 +13,7 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--dtype', choices=['float32', 'float16'], default='float32')
-    parser.add_argument('--output', type=Path, default=root/'a7/results/person4_benchmark.csv')
+    parser.add_argument('--output', type=Path, default=root/'a7/results/architecture_benchmark.csv')
     parser.add_argument('--check-access', action='store_true')
     args = parser.parse_args()
     # Keep downloaded weights within the repository's ignored cache directory.
@@ -39,6 +39,12 @@ def main():
     import psutil
     import torch
     from a7.benchmark_runner import run_matrix, select_models
+    if args.output.exists():
+        import csv
+        with args.output.open(encoding='utf-8',newline='') as handle:
+            previous = list(csv.DictReader(handle))
+        if any(r['status'] == 'ok' and r['device'] != 'cpu' for r in previous):
+            raise ValueError('This output already contains successful GPU evidence. Use a separate CPU --output file; do not overwrite mixed-run metadata.')
     torch.set_num_threads(4)
     out = root/'a7/results'
     out.mkdir(parents=True, exist_ok=True)
@@ -54,7 +60,7 @@ def main():
                   ('torch', 'transformers', 'huggingface-hub', 'numpy', 'pandas')})
     args.output.with_name(args.output.stem+'_environment.json').write_text(json.dumps(environment, indent=2), encoding='utf-8')
     print('Starting 75 evaluations on CPU; checkpoints after each prompt.', flush=True)
-    rows = run_matrix(select_models(owner='P4'), args.output,
+    rows = run_matrix(select_models(owner='architecture'), args.output,
                       device_request='cpu', dtype_request=args.dtype)
     print(f"Recorded {len(rows)} attempts, {sum(r['status']=='ok' for r in rows)} successful.", flush=True)
 

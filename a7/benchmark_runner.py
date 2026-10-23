@@ -259,7 +259,7 @@ def run_matrix(
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     selection = parser.add_mutually_exclusive_group()
-    selection.add_argument("--owner", choices=["P1", "P2", "P3", "P4"], default="P1")
+    selection.add_argument("--owner", choices=["P1", "P2", "P3", "architecture"], default="P1")
     selection.add_argument("--models", nargs="+")
     parser.add_argument("--output", type=Path, default=Path("a7/results/person1_benchmark.csv"))
     parser.add_argument("--device", choices=["auto", "cpu", "cuda", "mps"], default="auto")

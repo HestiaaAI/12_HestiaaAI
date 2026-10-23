@@ -1,4 +1,4 @@
-"""Evidence aggregation and explicit-assumption routing simulations for Person 4."""
+"""Evidence aggregation and explicit-assumption routing simulations for Architecture lead."""
 from __future__ import annotations
 
 import math
@@ -18,8 +18,9 @@ def benchmark_evidence(results_dir: Path):
     frames, coverage = [], []
     registry = {m['model_id']: m for m in MODEL_REGISTRY}
     prompts = {p['prompt_id']: p for p in PROMPTS}
-    for owner in ('P1', 'P2', 'P3', 'P4'):
-        path = results_dir / f'person{owner[1]}_benchmark.csv'
+    for owner in ('P1', 'P2', 'P3', 'architecture'):
+        filename = 'architecture_benchmark.csv' if owner == 'architecture' else f'person{owner[1]}_benchmark.csv'
+        path = results_dir / filename
         expected = {(m['model_id'], p['prompt_id']) for m in MODEL_REGISTRY
                     if m['owner'] == owner for p in PROMPTS}
         ok = scored = rows_count = 0
@@ -162,7 +163,7 @@ def routing_simulation():
 
 
 def write_analysis(repo_root: Path):
-    out = repo_root / 'a7/results/person4'
+    out = repo_root / 'a7/results/architecture'
     out.mkdir(parents=True, exist_ok=True)
     data, coverage = benchmark_evidence(repo_root / 'a7/results')
     model, category = benchmark_summaries(data)

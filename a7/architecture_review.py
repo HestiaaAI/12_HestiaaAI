@@ -34,8 +34,16 @@ for family in ('classification', 'priority'):
 
 
 def main():
-    path = ROOT/'a7/results/person4_benchmark.csv'
-    references = json.loads((ROOT/'a7/person4/response_review_reference.json').read_text(encoding='utf-8'))
+    path = ROOT/'a7/results/architecture_benchmark.csv'
+    references = json.loads((ROOT/'a7/architecture/response_review_reference.json').read_text(encoding='utf-8'))
+    tiny_notes_path = ROOT/'a7/architecture/tinyllama_review_notes.json'
+    tiny_refs_path = ROOT/'a7/architecture/tinyllama_review_reference.json'
+    tiny_notes = json.loads(tiny_notes_path.read_text(encoding='utf-8')) if tiny_notes_path.exists() else {}
+    tiny_refs = json.loads(tiny_refs_path.read_text(encoding='utf-8')) if tiny_refs_path.exists() else {}
+    for family in ('classification', 'priority'):
+        for i in range(1,6):
+            tiny_notes[f'{family}-{i:02}'] = ([0,0,0,0,0],
+                'Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.')
     review_csv(path)
     with path.open(encoding='utf-8', newline='') as handle:
         reader = csv.DictReader(handle)
@@ -44,11 +52,13 @@ def main():
                         'completeness_0_to_2', 'clarity_0_to_2', 'no_unsupported_details_0_to_1']
     audit = []
     for row in rows:
-        if row['model_id'] == SMOL and row['status'] == 'ok':
+        if row['model_id'] in (SMOL, 'TinyLlama/TinyLlama-1.1B-Chat-v1.0') and row['status'] == 'ok':
             digest = hashlib.sha256(row['generated_output'].encode()).hexdigest()
-            if digest != references[row['prompt_id']]:
+            refs = references if row['model_id'] == SMOL else tiny_refs
+            if digest != refs.get(row['prompt_id']):
                 raise ValueError('Output changed since inspection; review new evidence before reapplying scores')
-            points, notes = SMOL_REVIEW[row['prompt_id']]
+            reviews = SMOL_REVIEW if row['model_id'] == SMOL else tiny_notes
+            points, notes = reviews[row['prompt_id']]
             row.update(dict(zip(criterion_fields, points)))
             row['self_evaluation_score_1_to_10'] = max(1, sum(points))
             row['review_notes'] = 'Assistant response-level review; student signoff pending. ' + notes
@@ -61,7 +71,7 @@ def main():
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader(); writer.writerows(rows)
     temporary.replace(path)
-    (path.parent/'person4_review_audit.json').write_text(json.dumps(audit, indent=2), encoding='utf-8')
+    (path.parent/'architecture_review_audit.json').write_text(json.dumps(audit, indent=2), encoding='utf-8')
     print(f'Scored {len(rows)} attempts; {len(audit)} response-inspected rubric reviews.')
 
 

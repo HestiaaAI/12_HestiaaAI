@@ -1,0 +1,17 @@
+{
+  "extraction-01": [[2,0,2,1,1], "Mentions all three concerns but surrounds them with refusal, requests for already provided details and role-play; no required JSON task records."],
+  "extraction-02": [[0,0,0,0,0], "Does not extract any of the four actual concerns. Requests another task list and repeats generic fields instead of producing JSON."],
+  "extraction-03": [[0,0,0,0,0], "Fails to extract vacuuming, cake and rail repair; asks for existing information and incorrectly says urgent tasks should be completed last."],
+  "extraction-04": [[1,0,2,1,0], "All three tasks are present, but electricity billing is misclassified as a low-priority chore and detergent as high-priority maintenance; extra prose and fences violate JSON-only output."],
+  "extraction-05": [[1,0,1,1,1], "Gives generic refrigerator troubleshooting and merely starts mentioning closet and tax documents before truncation. No complete structured task list."],
+  "summary-01": [[3,0,2,1,1], "The actual title and summary accurately capture removing old food, wiping shelves and grouping items. Extra prose and a placeholder JSON template violate the required output format."],
+  "summary-02": [[1,0,1,0,0], "Repeats the source request rather than summarizing it and invents HTTP status/method/header requirements. Repeated placeholder schemas are not a useful summary."],
+  "summary-03": [[3,0,2,1,1], "Preserves the three-month comparison and conditional provider contact, but adds multiple explanation/action sections and a multi-sentence JSON summary instead of JSON only."],
+  "summary-04": [[2,0,2,1,0], "Useful action lines mention due-date checks, but narrative assumes all borrowed books are due by the end of the week. Final JSON remains literal placeholders."],
+  "summary-05": [[3,0,2,1,1], "Accurately preserves sheets, towels, bin and lamp, but returns a letter and plain-text fields rather than the required JSON."],
+  "planning-01": [[2,0,1,1,1], "Includes cleaning and bedding but expands into eight steps, decor and meal suggestions, omits some guest essentials and truncates; no JSON."],
+  "planning-02": [[2,0,1,1,1], "Contains price research and a shopping list, but lacks a running-total or explicit spending-allocation step and expands into a truncated nine-step list; no JSON."],
+  "planning-03": [[1,0,1,1,1], "Several kitchen cleaning actions are useful, but the response expands into bathroom/toilet cleaning, omits safety precautions and exceeds the step limit; no JSON."],
+  "planning-04": [[2,0,1,1,1], "Offers moving-company, packing and utility actions but lacks a timeline and becomes a repetitive ten-step list. Violates JSON and three-to-five-step constraints."],
+  "planning-05": [[0,0,0,0,0], "Asks the user to supply the plan and household data instead of proposing any electricity-saving actions; no required JSON steps."]
+}

@@ -1,23 +1,23 @@
-# Person 4 work and remaining handoffs
+# Architecture lead work and remaining handoffs
 
 Run from the repository root with `.venv/Scripts/python.exe` on Windows.
 
 ```powershell
-python -m a7.person4_run
-python -m a7.review_results a7/results/person4_benchmark.csv
-python -m a7.person4_review
-python -m a7.person4_analysis
-python -m a7.person4_execute
+python -m a7.architecture_run
+python -m a7.review_results a7/results/architecture_benchmark.csv
+python -m a7.architecture_review
+python -m a7.architecture_analysis
+python -m a7.architecture_execute
 python -m unittest discover -s a7/tests -v
 ```
 
-`person4_run` resumes the shared benchmark with four CPU threads and float32.
+`architecture_run` resumes the shared benchmark with four CPU threads and float32.
 It records an environment sidecar. Keep one environment for all three models.
 Downloaded weights stay in ignored `model_cache/`. Llama-3.2-3B needs an approved
 account and local Hugging Face authentication; never put credentials in notebooks.
 Review every successful response and score after the automated first pass. Error
 rows are not completed model evaluations. Do not replace the gated model silently.
-`person4_review` records assistant-inspected corrections for the observed float32
+`architecture_review` records assistant-inspected corrections for the observed float32
 SmolLM outputs and verifies response hashes before applying them. Student signoff
 is still pending. It will reject changed responses; inspect those before reusing
 the old scores. Other models initially receive the shared automated first pass.
@@ -25,21 +25,48 @@ the old scores. Other models initially receive the shared automated first pass.
 Local outcome: 25/75 successful float32 evaluations. TinyLlama hit Windows
 paging-file error 1455; Llama returned gated repository HTTP 401. The float16 trial
 was stopped at high RAM utilization; it remains a separate partial experiment.
-Use `../person4_gpu_benchmark.ipynb` for a common GPU/float16 run after Llama access
+Use `../architecture_gpu_benchmark.ipynb` for a common GPU/float16 run after Llama access
 is approved. Preserve CPU evidence before importing a completed GPU result file.
 
-A separate `person4_float16_benchmark.csv` run tests lower memory usage after the
+## TinyLlama Colab continuation
+
+`../architecture_tinyllama_colab.ipynb` is self-contained and embeds the exact shared
+contract, runner and reviewer with SHA256 checks. It runs only TinyLlama's 25
+prompts on CUDA/float16 and exports a ZIP containing the raw CSV and environment.
+No Hugging Face login is needed for TinyLlama. The current Colab notebook is:
+https://colab.research.google.com/drive/1rawE_2ImgxBE7cFPceUv9ke7Dg7mughx
+
+Import the downloaded ZIP with:
+
+```powershell
+python -m a7.architecture_import_colab "C:/path/to/architecture_tinyllama_cuda_results.zip"
+```
+
+The importer validates all 25 keys, successful CUDA status and source hashes,
+archives the older CPU table, and replaces only TinyLlama rows in the canonical
+Architecture lead matrix. CPU and GPU environment evidence stays separate. Automated
+scores require response-level inspection before treating them as final.
+TinyLlama completed 25/25 evaluations on Colab Tesla T4/float16; the canonical
+Architecture lead table now has 50/75 successful rows. The original CPU attempt table,
+raw GPU CSV, environment, executed Colab notebook and score-review hashes are
+preserved. CUDA and CPU timings are not directly comparable. Mean inspected
+TinyLlama score is 2.96/10, so successful inference does not establish usable
+structured-output quality. The latest local Llama check reports the author's
+access review is still pending.
+
+A separate `architecture_float16_benchmark.csv` run tests lower memory usage after the
 float32 TinyLlama load failed with Windows paging-file error 1455. Keep these
 precision conditions separate; do not silently mix their timings. The default
-analysis currently uses `person4_benchmark.csv` (float32). Promote a different run
+analysis currently uses `architecture_benchmark.csv`, which combines labeled CPU
+SmolLM and CUDA TinyLlama evidence. Promote a different run
 only after labeling its environment, preserving the earlier evidence, and reviewing
 the new responses.
 
 Open `multi_model_system.ipynb` for combined Assignment 1 analysis and
-`slm/person4_comparison.ipynb` for Assignment 2. Notebook execution does not launch
+`slm/architecture_comparison.ipynb` for Assignment 2. Notebook execution does not launch
 downloads or retrain the shared SLM. The SLM comparison is also included in the
 submitted `slm/slm_experiments.ipynb` as a Markdown section, to satisfy the brief.
-After new teammate evidence arrives, run `python -m a7.person4_build_notebooks`
+After new teammate evidence arrives, run `python -m a7.architecture_build_notebooks`
 to refresh Markdown comparison cells, then execute the notebooks again.
 
 ## Person 2 / Person 3 cost contract
@@ -52,7 +79,7 @@ Required columns:
 model_id,traffic_category,daily_active_users,requests_per_user,input_tokens_per_request,output_tokens_per_request,total_daily_cost_usd,assumptions_id,source_or_assumption
 ```
 
-Use registry model IDs and the six exact traffic labels from `person4_analysis.TRAFFIC`.
+Use registry model IDs and the six exact traffic labels from `architecture_analysis.TRAFFIC`.
 Total cost includes the appropriate local/API infrastructure and inference cost.
 Use common `assumptions_id` values to identify the same workload, inclusion rules
 and currency/day basis. `source_or_assumption` records price source/date or clearly
@@ -63,7 +90,7 @@ itemized assignment tables. No real prices or crossover results have been invent
 
 ## Person 2 / Person 3 SLM comparison contract
 
-Provide `a7/person4/inputs/slm_comparison.json` with these keys:
+Provide `a7/architecture/inputs/slm_comparison.json` with these keys:
 
 - `original_state_sha256`: selected manifest tensor hash.
 - `generation`: exactly `{"seed":42,"temperature":0.7,"max_new_tokens":100,"device":"cpu","threads":2}`.
@@ -93,7 +120,7 @@ No completed comparison can be produced before the five shared questions arrive.
 
 ## Integration checklist
 
-- [ ] P1–P4: 375 successful rows; all scores reviewed, model/prompt keys unique.
+- [ ] Full team: 375 successful rows; all scores reviewed, model/prompt keys unique.
 - [ ] Hardware labeled; no fastest-model conclusion across different machines.
 - [ ] Person 2: local 90-row itemized costs and assumptions.
 - [ ] Person 3: API 90-row itemized costs and assumptions.
