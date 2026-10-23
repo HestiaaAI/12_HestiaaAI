@@ -1,0 +1,79 @@
+model_id,model_category,owner,prompt_id,prompt_type,prompt,latency_seconds,output_tokens,tokens_per_second,generated_output,status,error,device,max_new_tokens,generated_at_utc,task_accuracy_0_to_3,instruction_adherence_0_to_2,completeness_0_to_2,clarity_0_to_2,no_unsupported_details_0_to_1,self_evaluation_score_1_to_10,review_notes
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",25.3193,220,8.689,"Hestia, I understand your request. Cleaning the kitchen is a priority, as it's essential for maintaining a clean and hygienic environment. I'll provide you with a task list to help you complete this task.
+
+**Task 1: Clean the Kitchen**
+
+* Clean the kitchen counters, sink, and refrigerator
+* Remove any clutter or dirty dishes from the sink
+* Wipe down the stove and oven
+* Clean the refrigerator and freezer
+
+**Task 2: Buy Snacks**
+
+* Buy a bag of chips, a container of crackers, and a packet of cheese
+* Purchase a bottle of water and a can of soda
+* Buy a bag of fruit and a container of nuts
+
+**Task 3: Fix the Leaking Bathtub Tap**
+
+* Turn off the faucet and let it drain
+* Use a plunger to try to drain the water
+* If the water doesn't come out, call a plumber
+
+**Task 4: Fix the Leaky Bathtub Tap**
+
+* Turn off",ok,,cpu,220,2026-10-23T21:19:00.990259+00:00,,,,,,,
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",23.2799,220,9.4502,"Hestia, I understand your request. Here's a suggested task list:
+
+**Dental appointment:**
+
+* Book the dentist appointment on Friday
+* Return the dentist's office by Friday
+* Wash the guest sheets by Friday
+
+**Library book:**
+
+* Replace the smoke-detector batteries by Friday
+* Return the library book by Friday
+
+**Other:**
+
+* Return the guest sheets by Friday
+* Clean the bathroom by Friday
+* Clean the kitchen by Friday
+
+**Additional tasks:**
+
+* Clean the bathroom by Friday
+* Clean the kitchen by Friday
+* Clean the living room by Friday
+* Clean the bedroom by Friday
+* Clean the kitchen by Friday
+* Clean the bathroom by Friday
+* Clean the kitchen by Friday
+* Clean the living room by Friday
+* Clean the bedroom by Friday
+* Clean the kitchen by Friday
+* Clean the bathroom by Friday
+* Clean the kitchen by Friday
+* Clean the living room by Friday
+* Clean the bedroom by Friday
+* Clean the kitchen by Friday
+* Clean the",ok,,cpu,220,2026-10-23T21:19:24.272642+00:00,,,,,,,
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),P4,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",23.0713,220,9.5357,"Hestia, I understand your request. Vacuuming the living room and picking up the birthday cake is a household concern. The loose stair rail also needs repair.
+
+Hestia: Yes, I understand. I'll do the vacuuming and pick up the birthday cake.
+
+Hestia: Great! I'll also make sure the living room is tidy and the birthday cake is in its place.
+
+Hestia: That's a good start. I'll also make sure the stairs are clear of clutter and the stair rail is in good condition.
+
+Hestia: I'll do the vacuuming and pick up the birthday cake.
+
+Hestia: Great! I'll also make sure the living room is tidy and the birthday cake is in its place.
+
+Hestia: That's a good start. I'll also make sure the stairs are clear of clutter and the stair rail is in good condition.
+
+Hestia: I'll do the vacuuming and pick up the birthday cake.
+
+Hestia:",ok,,cpu,220,2026-10-23T21:19:47.346512+00:00,,,,,,,
