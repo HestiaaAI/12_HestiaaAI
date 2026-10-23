@@ -1,0 +1,426 @@
+model_id,model_category,owner,prompt_id,prompt_type,prompt,latency_seconds,output_tokens,tokens_per_second,generated_output,status,error,device,max_new_tokens,generated_at_utc,task_accuracy_0_to_3,instruction_adherence_0_to_2,completeness_0_to_2,clarity_0_to_2,no_unsupported_details_0_to_1,self_evaluation_score_1_to_10,review_notes
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",7.2574,220,30.3138,"I am not capable of creating tasks or responding to household requests. However, I can provide you with a sample response to a household request.
+
+assistant: hi there, welcome to my household coordination assistant service. I'm glad to help you with your household request. can you please provide me with the details of your household request, including the concerns you're facing and the tasks you need help with?
+
+assistant: of course! please provide me with the following details:
+
+1. Household request: guests arrive tomorrow.
+2. Concerns: cleaning the kitchen, buying snacks, and fixing the leaking bathroom tap.
+3. Tasks: clean the kitchen, buy snacks, and fix the leaking bathroom tap.
+
+assistant: thank you for providing me with the details. I'll create a task for each concern and priority level. Please let me know if you have any further requests or if you'd like me to add any additional tasks.
+
+assistant: if",ok,,cuda,220,2026-10-23T22:20:20.035679+00:00,3,0,2,1,1,7,Covered 3/3 concerns; JSON task schema invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",5.9121,220,37.2121,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are requesting a household request for the week of [insert week number here]. Please provide me with the following information:
+
+1. Tasks: Please provide a list of tasks that need to be completed for the week. The tasks can be in any order and can be completed in any order.
+
+2. Priorities: Please indicate the priority level for each task. Low, medium, or high priority tasks should be completed first.
+
+3. Description: Please provide a detailed description for each task. This will help me understand the scope and urgency of each task.
+
+4. Dates: Please provide the dates for each task. This will help me plan my schedule accordingly.
+
+5. Tasks: Please provide a list of tasks that need to be completed for the week. The tasks can be in any order and can be completed in any order.
+
+6. Priorities: Please indicate the priority level for each",ok,,cuda,220,2026-10-23T22:20:25.950006+00:00,0,0,0,0,0,1,Covered 0/4 concerns; JSON task schema invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",5.7967,220,37.9526,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are tasked with coordinating household activities for your household. Please provide me with the following information:
+
+1. Tasks: Please provide me with a list of household tasks that need to be completed before Saturday. The tasks can be in any order and can be for any concern.
+
+2. Concerns: Please provide me with the concerns that need to be addressed before Saturday. These concerns can be in any order and can be for any concern.
+
+3. Priorities: Please indicate the priority level for each task or concern. Low, medium, or high priority tasks should be completed first, while urgent tasks should be completed last.
+
+4. Description: Please provide a detailed description for each task or concern. This will help me understand the task and ensure that it is completed correctly.
+
+5. Tasks: Please provide me with a list of tasks that need to be completed before Saturday. The tasks can be in",ok,,cuda,220,2026-10-23T22:20:31.748604+00:00,0,0,0,0,0,1,Covered 0/3 concerns; JSON task schema invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.",5.9035,220,37.2659,"Response: Of course! Here's a revised JSON response that includes the household request:
+
+```
+{
+  ""tasks"": [
+    {
+      ""title"": ""Pay electricity bill tonight"",
+      ""task_type"": ""CHORE"",
+      ""priority"": ""LOW"",
+      ""description"": ""Make sure the electricity bill is paid tonight.""
+    },
+    {
+      ""title"": ""Schedule dog's vet visit"",
+      ""task_type"": ""APPOINTMENT"",
+      ""priority"": ""MEDIUM"",
+      ""description"": ""Book a vet appointment for the dog.""
+    },
+    {
+      ""title"": ""Get laundry detergent"",
+      ""task_type"": ""MAINTENANCE"",
+      ""priority"": ""HIGH"",
+      ""description"": ""Buy laundry detergent for the next laundry day.""
+    }
+  ]
+}
+```",ok,,cuda,220,2026-10-23T22:20:37.653931+00:00,3,0,2,1,1,7,Covered 3/3 concerns; JSON task schema invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,5.8014,220,37.9221,"I am not capable of creating tasks or responding to household requests. However, I can provide you with a sample response to a household request.
+
+assistant: hi there, happy to help you with your household request. I'm hestia, a household coordination assistant. I'm glad to assist you with your request.
+
+assistant: regarding your request, I can provide you with a sample task list for your household. Here's a sample task list for your refrigerator noise concern:
+
+1. Check the refrigerator for any leaks or cracks.
+2. Inspect the door seals and hinges for any signs of wear and tear.
+3. Clean the interior and exterior of the refrigerator.
+4. Replace any damaged or worn-out parts.
+5. Ensure that the refrigerator is properly sealed and ventilated.
+
+assistant: regarding your request for organizing the hall closet and mail the tax documents before monday",ok,,cuda,220,2026-10-23T22:20:43.457192+00:00,3,0,2,1,1,7,Covered 3/3 concerns; JSON task schema invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-01,classification,Buy milk and rice after work.,4.1385,156,37.6947,"Response:
+
+Hestia,
+
+I apologize for any confusion or misunderstanding that may have occurred during our previous interaction. Please find the following response to your previous request:
+
+I am Hestia, a household coordination assistant. I am not capable of inventing private details or claiming that an action is complete.
+
+As per your request, I can confirm that you have requested the purchase of milk and rice after work. Please find the following label for this request: CHORE.
+
+I hope this information is helpful to you. If you have any further requests or concerns, please do not hesitate to contact me.
+
+Best regards,
+
+[Your Name]
+Household Coordination Assistant",ok,,cuda,220,2026-10-23T22:20:47.597623+00:00,0,0,0,0,0,1,Expected exact label SHOPPING; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-02,classification,Call the plumber about the dripping kitchen pipe.,2.3036,88,38.2017,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. Please do not invent private details or claim that an action is complete.
+
+Returning exactly one label:
+
+CHORE: Call the plumber about the dripping kitchen pipe.
+
+Answer:
+
+Thank you for your prompt response. I will call the plumber about the dripping kitchen pipe.",ok,,cuda,220,2026-10-23T22:20:49.902852+00:00,0,0,0,0,0,1,Expected exact label MAINTENANCE; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-03,classification,Schedule a yearly dental cleaning.,2.5477,97,38.0741,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. Please do not invent private details or claim that an action is complete.
+
+Returning exactly one label is CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
+
+In this case, the household request is to schedule a yearly dental cleaning.",ok,,cuda,220,2026-10-23T22:20:52.452218+00:00,0,0,0,0,0,1,Expected exact label APPOINTMENT; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-04,classification,Submit the apartment renewal form by Friday.,2.7283,103,37.7526,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I apologize for any confusion or inconvenience caused by my previous response.
+
+As per your request, I will be submitting the apartment renewal form by Friday. Please ensure that the form is submitted by the deadline to avoid any delays or inconvenience.
+
+Thank you for your understanding and cooperation.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:20:55.182275+00:00,0,0,0,0,0,1,Expected exact label DEADLINE; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-05,classification,Sweep the porch and empty the recycling.,2.507,92,36.6972,"Response:
+
+Hestia,
+
+I apologize for any confusion or misunderstanding regarding the household request you provided earlier. Please find the correct label for the household request you provided, which is ""Sweep the porch and empty the recycling.""
+
+Thank you for your prompt attention to this matter. Please let me know if you have any further questions or concerns.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:20:57.691128+00:00,0,0,0,0,0,1,Expected exact label CHORE; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,3.2689,124,37.9337,"Response:
+
+Hestia,
+
+I am pleased to provide you with the requested information regarding the household request for a smoke detector.
+
+As per the request, the smoke detector is chirping due to its low battery. The label ""LOW"" is appropriate for this situation as it indicates that the detector is low on power and needs to be replaced.
+
+I hope this information is helpful. Please let me know if you have any further questions or concerns.
+
+Best regards,
+
+[Your Name]
+
+[Your Title]
+
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:00.961917+00:00,0,0,0,0,0,1,Expected exact label HIGH; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,3.5513,135,38.0144,"Response:
+
+Hestia,
+
+I am pleased to provide you with the requested information. Please find below the label that corresponds to the household request you provided:
+
+Label: Urgent
+
+This label indicates that the household request is urgent and requires immediate attention. It is essential that you complete this task as soon as possible to avoid any safety or dramatic risks.
+
+Thank you for your prompt attention to this request. I hope this label helps you in your household coordination duties. If you have any further questions or concerns, please do not hesitate to contact me.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:04.515311+00:00,0,0,0,0,0,1,Expected exact label LOW; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,5.2453,198,37.7479,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. Please do not invent private details or claim that an action is complete. I understand that you are requesting the return of the library book tomorrow, but I need to know the urgency and safety risk associated with this request.
+
+Please provide me with the following information:
+
+- The name of the library where the book is located
+- The date and time of the book's return
+- The reason for the request (e.g. Avoiding a fee, avoiding damage to the book)
+- The urgency level (e.g. Emergency, high risk)
+
+I will then use this information to determine the appropriate label to use for the request. Please do not invent any private details or claim that an action is complete. Thank you for your cooperation.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:09.762569+00:00,0,0,0,0,0,1,Expected exact label HIGH; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,4.7219,180,38.1204,"Response:
+
+Hestia,
+
+I am sorry to hear about the leak in your bathroom sink. Please provide me with the following information:
+
+- The location of the leak: under the sink
+- The type of water that is leaking: water
+- The amount of water that is leaking: approximately 10 gallons
+- The time of day when the leak occurred: early morning
+- The severity of the leak: urgent
+- The safety risk associated with the leak: water is potentially dangerous to drink or use for cleaning purposes
+
+I will be in touch with you shortly to discuss the next steps in addressing the issue. Please do not hesitate to reach out if you have any further questions or concerns.
+
+Thank you for your cooperation and understanding.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:14.486310+00:00,0,0,0,0,0,1,Expected exact label URGENT; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,3.252,122,37.5156,"Response:
+
+Hestia,
+
+I am pleased to provide you with the requested information regarding your household request for coffee.
+
+As per your request, I have prepared a label for your coffee request. The label reads as follows:
+
+LOW
+
+This label indicates that the coffee is sufficient for two days, and it is safe to consume.
+
+I hope this information is helpful to you. Please let me know if you have any further questions or concerns.
+
+Best regards,
+
+[Your Name]
+
+[Your Title]
+
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:17.740253+00:00,0,0,0,0,0,1,Expected exact label MEDIUM; did not match.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.",3.9709,150,37.7747,"Response:
+
+Hestia,
+
+I am pleased to provide you with a short action title and summary for your household request.
+
+Title: Pantry Shelf Cleanup
+
+Summary: Remove old food, wipe each shelf, and group the remaining items.
+
+As a household coordination assistant, I am not able to provide you with a complete action. However, I can provide you with a return JSON format that meets the requirements.
+
+JSON format:
+
+```
+{
+  ""title"": ""short action title"",
+  ""summary"": ""one concise sentence""
+}
+```
+
+I hope this helps. Please let me know if you have any further questions.",ok,,cuda,220,2026-10-23T22:21:21.713204+00:00,2,0,1,1,1,5,Covered 2/3 details; summary JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.",5.8944,220,37.3233,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are requesting a household request for a household coordination assistant.
+
+I am happy to assist you with this request. Please provide me with the following information:
+
+1. The household request: Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.
+
+2. The requested action: Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+
+3. The expected format: Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+
+4. The expected response: Return JSON only: {""title"":""short action title"",""summary"":""one concise sentence""}.
+
+5. The expected return status: 200 OK.
+
+6. The expected HTTP method: GET.
+
+7. The expected HTTP headers: Accept: application/json.",ok,,cuda,220,2026-10-23T22:21:27.609844+00:00,3,0,2,1,1,7,Covered 3/3 details; summary JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,5.4742,206,37.6312,"Response:
+
+Title: Electricity Statement Compare and Contact Provider
+
+Summary:
+We have received electricity statements from the last three months and would like to compare them to ensure that there has been no unexplained increase. If the unexplained increase continues, we will contact the provider to discuss the matter.
+
+Action:
+1. Review the electricity statements from the last three months and compare them to ensure there has been no unexplained increase.
+2. If the unexplained increase continues, contact the provider to discuss the matter.
+
+Return JSON:
+{
+  ""title"": ""Electricity Statement Compare and Contact Provider"",
+  ""summary"": ""We have received electricity statements from the last three months and would like to compare them to ensure that there has been no unexplained increase. If the unexplained increase continues, we will contact the provider to discuss the matter.""
+}",ok,,cuda,220,2026-10-23T22:21:33.086117+00:00,3,0,2,1,1,7,Covered 3/3 details; summary JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.",3.9821,148,37.1665,"Response:
+
+Title: Household Request: Gather and Return Borrowed Books
+
+Summary:
+We have received a household request from the family to gather the borrowed books from the bedrooms and return them to the library this weekend. The borrowed books are due by the end of the week, and we need to ensure that everything is accounted for and returned on time.
+
+Action:
+1. Gather the borrowed books from the bedrooms and check their due dates.
+2. Return everything due this weekend to the library.
+
+Return JSON:
+{
+  ""title"": ""short action title"",
+  ""summary"": ""one concise sentence""
+}",ok,,cuda,220,2026-10-23T22:21:37.070700+00:00,3,0,2,1,1,7,Covered 3/3 details; summary JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.",3.5932,136,37.8496,"Response:
+
+Hestia,
+
+I am pleased to provide you with a short action title and summary for your household request.
+
+Title: Replace guest-room sheets, add clean towels, empty the bin, and check the bedside lamp
+
+Summary: Before the guests arrive, ensure that the guest-room sheets are replaced, towels are clean, the bin is emptied, and the bedside lamp is checked.
+
+I hope this helps, and please let me know if you have any further requests.
+
+Best regards,
+
+[Your Name]
+
+[Your Title]
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:40.666885+00:00,3,0,2,1,1,7,Covered 4/4 details; summary JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,5.8223,220,37.7856,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are preparing the apartment for overnight guests tomorrow. Please provide me with a list of practical ordered steps that will ensure a smooth and efficient preparation process.
+
+1. Clean the apartment thoroughly, including the kitchen and bathroom.
+2. Arrange the bedding and linens in the bedrooms.
+3. Prepare the breakfast items, including toast, cereal, and juice.
+4. Set the table with dinnerware, glasses, and utensils.
+5. Arrange the living room furniture, including a couch, chair, and TV.
+6. Set the table for dinner, including a dinner plate, utensils, and a glass of wine.
+7. Arrange the living room decor, including a blanket, a book, and a lamp.
+8. Ensure that the apartment is well-lit and free of any clutter",ok,,cuda,220,2026-10-23T22:21:46.491617+00:00,2,0,1,1,1,5,Covered 2/3 planning concepts; 3–5 step JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-02,action_planning,Organize a weekly grocery trip while staying under a $90 budget.,5.7676,220,38.1442,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I am happy to assist you with your household request.
+
+Please provide me with the following information:
+
+1. Household request: Organize a weekly grocery trip while staying under a $90 budget.
+
+2. Steps:
+
+- Step 1: Research local grocery stores and their prices.
+- Step 2: Plan a list of items to purchase based on the research.
+- Step 3: Arrange for transportation to the grocery store.
+- Step 4: Purchase the items on the list.
+- Step 5: Arrange for pickup or delivery of the items.
+- Step 6: Clean and organize the grocery bags and boxes.
+- Step 7: Store the items in a designated location.
+- Step 8: Measure and label the items for future reference.
+- Step 9: Clean and",ok,,cuda,220,2026-10-23T22:21:52.261967+00:00,3,0,2,1,1,7,Covered 3/3 planning concepts; 3–5 step JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,5.8798,220,37.4159,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are requesting a deep-clean of the kitchen in one afternoon. Please provide me with a list of practical ordered steps that can be completed in one afternoon.
+
+1. Clean the kitchen sink and drain.
+2. Clean the refrigerator and freezer.
+3. Clean the oven and range.
+4. Clean the stovetop and oven racks.
+5. Clean the countertops and backsplash.
+6. Clean the cabinets and drawers.
+7. Vacuum the floors and carpets.
+8. Clean the bathroom sink and mirror.
+9. Clean the bathroom vanity and mirror.
+10. Clean the toilet and toilet seat.
+11. Clean the shower and sink.
+12. Clean the toilet paper holder and toile",ok,,cuda,220,2026-10-23T22:21:58.144064+00:00,2,0,1,1,1,5,Covered 2/4 planning concepts; 3–5 step JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-04,action_planning,Get ready for a move to a new apartment next month.,5.8291,220,37.7414,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I understand that you are preparing for a move to a new apartment next month. Please provide me with a list of practical ordered steps that will help you get ready for the move.
+
+1. Research and prepare the new apartment.
+2. Arrange for a moving company.
+3. Pack and organize your belongings.
+4. Prepare your new apartment for move-in.
+5. Arrange for utilities and internet services.
+6. Prepare for any necessary paperwork and legal documents.
+7. Prepare for any necessary household items.
+8. Prepare for any necessary household tasks.
+9. Prepare for any necessary household finances.
+10. Prepare for any necessary household arrangements.
+
+I hope this list helps you get ready for your move. Please let me know if you have any further questions or concerns.
+
+Best regards,",ok,,cuda,220,2026-10-23T22:22:03.975808+00:00,2,0,1,1,1,5,Covered 2/4 planning concepts; 3–5 step JSON invalid.
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,5.4291,204,37.5752,"Response:
+
+Hestia,
+
+I am Hestia, a household coordination assistant. I am here to assist you with your household request.
+
+Please provide me with a simple plan for reducing household electricity use this week. The plan should include at least three practical steps that can be completed within a week. The plan should be practical, ordered, and practical.
+
+Please provide me with the following information:
+
+1. The number of household members.
+2. The average daily electricity consumption of each household member.
+3. The estimated electricity bill for the week.
+4. The estimated cost of reducing household electricity use.
+
+I will review your plan and provide feedback on its effectiveness. Please ensure that the plan is practical, ordered, and practical. If you have any questions or concerns, please do not hesitate to contact me.
+
+Thank you for your cooperation.
+
+Best regards,
+
+[Your Name]",ok,,cuda,220,2026-10-23T22:22:09.407931+00:00,0,0,0,0,0,1,Covered 0/4 planning concepts; 3–5 step JSON invalid.

@@ -52,7 +52,7 @@ continuation, just like the class function. For a response-only table use
 - Person 3 loads a fresh original checkpoint, uses Person 2's facts/questions,
   records the same baseline, then fine-tunes. Preserve original checkpoint;
   save changed weights under a different ignored filename.
-- Person 4 compares the three conditions with the same questions/settings.
+- Architecture lead compares the three conditions with the same questions/settings.
 - The selected baseline has 32,523 parameters, trained for 1,000 updates on the
   original repeated class corpus. It generates imperfect text. Record failures
   honestly; do not insert factual answers from retrieval as model output.

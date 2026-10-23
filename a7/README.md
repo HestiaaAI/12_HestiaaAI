@@ -73,5 +73,14 @@ excluded by Git; the PR contains no training checkpoints.
 - Return one CSV with all 25 rows per model and no duplicate model/prompt keys.
 - Person 2 and Person 3 must still calculate their respective 90-row cost tables
   across all 15 models, regardless of their four-model benchmark allocations.
-- Person 1 merges the four reviewed CSV files into the final notebook.
-- Person 4 owns the five routing strategies and `system_design.md`.
+- Architecture lead integrates the four reviewed CSV files into the final notebook.
+- Architecture lead owns the five routing strategies and `system_design.md`.
+
+## Architecture lead integration
+
+See `architecture/README.md` for run commands and the pending teammate input contracts.
+`architecture_analysis.py` validates and summarizes available evidence without filling
+missing costs or responses. `system_design.md` contains five Hestia routing
+scenarios and the local/API comparison methodology. `slm/architecture_comparison.ipynb`
+verifies the original checkpoint and prepares the three-condition comparison;
+the comparison Markdown is also included in the submitted SLM notebook.

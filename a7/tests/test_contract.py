@@ -26,7 +26,7 @@ class BenchmarkContractTests(unittest.TestCase):
         counts = {}
         for model in MODEL_REGISTRY:
             counts[model["owner"]] = counts.get(model["owner"], 0) + 1
-        self.assertEqual(counts, {"P1": 4, "P2": 4, "P3": 4, "P4": 3})
+        self.assertEqual(counts, {"P1": 4, "P2": 4, "P3": 4, "architecture": 3})
 
     def test_prompt_matrix_has_five_types_and_five_prompts_each(self):
         counts = {}

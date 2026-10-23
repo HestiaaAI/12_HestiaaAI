@@ -1,0 +1,702 @@
+[
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "extraction-01",
+    "output_sha256": "7d4e6e8e1e9938c3faad6ef885cee73800e6b5345b890c83db6a4c676b2d2146",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      1,
+      0
+    ],
+    "notes": "Mentions all three concerns but invents specific snack purchases, changes bathroom tap to bathtub, duplicates the repair and fails JSON-only format.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "extraction-02",
+    "output_sha256": "a4de774e72a84c4d76845e2403c0c7b72666fdb4aa9515dd2bfde70daf9f20b8",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "notes": "Conflates dentist/library/smoke-detector tasks, spreads Friday to unrelated tasks, invents cleaning chores and repeats them; no required JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "extraction-03",
+    "output_sha256": "0fbdd023c07ab41ad6f5a4b541ed685d7c672cdd464a7f1728e1168738384165",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      0,
+      0
+    ],
+    "notes": "Mentions all concerns but repeats dialogue, makes unrequested action promises and supplies no structured task records.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "extraction-04",
+    "output_sha256": "3dcbac56f57c92c78f771b6e917d4f77dada11f6ece7888364b2e1b7eb0929e8",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "notes": "Preserves only the electricity bill; omits vet and detergent, repeatedly assigns low priority without justification, and fails JSON format.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "extraction-05",
+    "output_sha256": "58a6d9b6455f9eeeeb7eba4f8963b482807f5cfc9fb40fa434db4a27305f9a9f",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "notes": "Falsely implies organizing the closet and mailing documents address refrigerator noise; invents specific tax-document contents and misses a usable refrigerator task.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "classification-01",
+    "output_sha256": "ee5972047183c1f3d9e61b3bde33364e87f53bbb87c18dc6ec28b759482550b3",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "classification-02",
+    "output_sha256": "54eb97ed6a2800de97a67dbcb42aad22c0701f672eac9c49c7be6c406c97e5cc",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "classification-03",
+    "output_sha256": "7615859ff389d5ff8d2c3ce6dfae6a4f2baecf7e0da1ee95ce0af7a2dea5dcfb",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "classification-04",
+    "output_sha256": "6cc5b7cacb9082698753aeee6fa516a38228eef6edc3e9a8c3646e37d6c7ccc1",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "classification-05",
+    "output_sha256": "4ccc46d48e8fdd1ef4d30e6fd67d9613e5043077e9385f9765b4e29d31f607e0",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "priority-01",
+    "output_sha256": "69789ed0eaeb60897f61629970533a5af86b58f2ca7c5d6968df679c81b37980",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "priority-02",
+    "output_sha256": "e2e98d8b4d80f293423992bd89dce18701a50a0fb4569a409b1a0b77e98ee1a9",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "priority-03",
+    "output_sha256": "a5307106fe216e5f82800ef70d8ee36fe32e637a85ef5b6eb3889ef0977385ce",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "priority-04",
+    "output_sha256": "6666f60b1c27dc2dfbc504e94753f165d7704f92418b4aa6b297fc2730d26b26",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "priority-05",
+    "output_sha256": "44c3d7864c7c139782754f3dbfe214951cff44ead336718b73d93e40ad59cdd5",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "summary-01",
+    "output_sha256": "2169424925b4ff126a141510ada8784d44dade2571e303714fb2aa4a2b931dec",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      1,
+      1
+    ],
+    "notes": "Includes removal, cleaning and grouping, but expands into unnecessary information requests rather than a concise one-sentence summary and is not JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "summary-02",
+    "output_sha256": "1d7e4014c70273d628b9e2203249989d31e1c387498023a49f4079ed9eedadf7",
+    "criterion_points": [
+      1,
+      0,
+      2,
+      0,
+      0
+    ],
+    "notes": "Repeats the requested details but introduces calling at 3 PM instead of only an appointment after 3 PM; repetitive, non-JSON and not a concise summary.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "summary-03",
+    "output_sha256": "1e150a2a1f9e0f491091a7f92006f97c6e9c666cb9ddf76e1104eca78e1145e2",
+    "criterion_points": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "notes": "Restates the original concern but fabricates 10 and 20 percent consumption increases; repetitive provider dialogue and no JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "summary-04",
+    "output_sha256": "cc463766c48b3359c6856b68bdb19dad11e819d7e93ff6193cbe46bee92d21ca",
+    "criterion_points": [
+      3,
+      0,
+      2,
+      0,
+      1
+    ],
+    "notes": "Accurately restates books, due dates and weekend return, but repeats the same paragraph to the token limit; neither concise nor JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "summary-05",
+    "output_sha256": "870720beaca90b79b997542688335a3bb0724c7d446dbf77bae0fc30d2d20449",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      0
+    ],
+    "notes": "Mentions the source details but turns lamp checking into transporting the lamp, omits a useful towel step and repeats a truncated task list instead of concise JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "planning-01",
+    "output_sha256": "8c592fd83d80e56056395ee50cbd1383a8b07e915d81da7fb6758c635f7b1dc9",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Offers cleaning and bedding suggestions, but spends too much space on room/furniture setup, omits guest essentials and truncates; no JSON steps.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "planning-02",
+    "output_sha256": "5e3e57cba15e8d000113dcbff17c50c747fc60612f17316e2c47093918ebd2ea",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Suggests a grocery list and repeats the budget but lacks price checking/running-total controls and is truncated after only two steps; no JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "planning-03",
+    "output_sha256": "0dcccd970323926288d44afbcb1fc6c82a9c8ab8b79c76e7d7d5f72d4e06ea71",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Produces Python code that sorts arbitrary steps, not a practical safe kitchen-cleaning plan or the required JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "planning-04",
+    "output_sha256": "3cbde3990028463ecb8a658b1d793048decc3f6124cb61c2ea2fc24a8f0395fe",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      0,
+      1
+    ],
+    "notes": "Includes packing but repeats the same step, lacks timing/transport/labeling and truncates; no JSON plan.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+    "prompt_id": "planning-05",
+    "output_sha256": "33bd6be7c9354800e5e4eaf1ee410aeeabc4da39f9fca92688f8109aeda99a2f",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Literal step 1/2/3 placeholders provide no energy-saving actions. Extra prose makes the response invalid JSON-only output.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "extraction-01",
+    "output_sha256": "c0653ef98819b22c6be99f403a0ed4a95b1a1578d4a1e194fbdb8ea965f92c82",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      1,
+      1
+    ],
+    "notes": "Mentions all three concerns but surrounds them with refusal, requests for already provided details and role-play; no required JSON task records.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "extraction-02",
+    "output_sha256": "6852ffb72c00c1ff17bf0cbdbaa1662730dc3e5162b2a5a1b85718c184d19ed9",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Does not extract any of the four actual concerns. Requests another task list and repeats generic fields instead of producing JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "extraction-03",
+    "output_sha256": "bd7b9242e4bc5a9351d0d1e1cf0032555cbe09d63845049fcc9b58126205b66e",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Fails to extract vacuuming, cake and rail repair; asks for existing information and incorrectly says urgent tasks should be completed last.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "extraction-04",
+    "output_sha256": "4447f5de7986553b9377d484b356bd158436933858309387dcbdb13408300263",
+    "criterion_points": [
+      1,
+      0,
+      2,
+      1,
+      0
+    ],
+    "notes": "All three tasks are present, but electricity billing is misclassified as a low-priority chore and detergent as high-priority maintenance; extra prose and fences violate JSON-only output.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "extraction-05",
+    "output_sha256": "185f6db4acdcc2f61925d861d31930f8bf508430a5dc5112e90846b405a236db",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Gives generic refrigerator troubleshooting and merely starts mentioning closet and tax documents before truncation. No complete structured task list.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "classification-01",
+    "output_sha256": "8f20e76e0987deb220f54d09f8c8c81f7fa10b1ad9545d3f02fa0903ab903e08",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "classification-02",
+    "output_sha256": "114a516ced152b70d83cc7b2cde32c47d92728c617445fd88b49cc22785825ba",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "classification-03",
+    "output_sha256": "3da7edcd06b01f6ef0e2fd69543c95c42ec4354885ac0d72a008edc14aa86019",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "classification-04",
+    "output_sha256": "759ff4fb7b0ef767f338b5763af4b56f506a19f53e5021b42fcf0545ff6e78f0",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "classification-05",
+    "output_sha256": "32db099bdce1efa5a9131f88392659c6e8e2c4d4afe3d0bd22cb99bb4c44a568",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "priority-01",
+    "output_sha256": "261eae23194afc2a10a062d3c7e8b00a0af1faea91c5ba361f1e7b64f813d19d",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "priority-02",
+    "output_sha256": "c44f5190f5ad867e48b32520701984b5185a2ab7609abc1ec8ccfd8130639b52",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "priority-03",
+    "output_sha256": "89c4c8d54b88dcb48955b7b6c1139d5e7fd08dd2f40a469f59a172145c54ebe6",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "priority-04",
+    "output_sha256": "519dde6c15001db5b058fc800abd0d6193d731d34cd448455fb39f2fd3681cad",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "priority-05",
+    "output_sha256": "9b29628bc425a861a12b1ec0535c975f85feccf22553ecb1d0f2e151dfb9110d",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "summary-01",
+    "output_sha256": "a6478d289ecf9dd0f2a58d8ec16bd3764e4cd2995f0298a19e4bbf5d35fb2fd8",
+    "criterion_points": [
+      3,
+      0,
+      2,
+      1,
+      1
+    ],
+    "notes": "The actual title and summary accurately capture removing old food, wiping shelves and grouping items. Extra prose and a placeholder JSON template violate the required output format.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "summary-02",
+    "output_sha256": "5c3155e518e937fac5d6e32e7c93f6fb86d46f968f30237d992c943d8116eff8",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      0,
+      0
+    ],
+    "notes": "Repeats the source request rather than summarizing it and invents HTTP status/method/header requirements. Repeated placeholder schemas are not a useful summary.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "summary-03",
+    "output_sha256": "cd3d9eeca942f5e19e60a8981f4970bb5bc4ca5c23d5fb351d6f6b84396226ca",
+    "criterion_points": [
+      3,
+      0,
+      2,
+      1,
+      1
+    ],
+    "notes": "Preserves the three-month comparison and conditional provider contact, but adds multiple explanation/action sections and a multi-sentence JSON summary instead of JSON only.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "summary-04",
+    "output_sha256": "0e70750e1e2876e1e9a05a004aa1364b2ab2064f0127cabb90b84aadc39bad0e",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      1,
+      0
+    ],
+    "notes": "Useful action lines mention due-date checks, but narrative assumes all borrowed books are due by the end of the week. Final JSON remains literal placeholders.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "summary-05",
+    "output_sha256": "db8a497e8449ed95267c3a396eede8db24512b948e5e91e5923c0d686c023682",
+    "criterion_points": [
+      3,
+      0,
+      2,
+      1,
+      1
+    ],
+    "notes": "Accurately preserves sheets, towels, bin and lamp, but returns a letter and plain-text fields rather than the required JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "planning-01",
+    "output_sha256": "4827229963521427a6ff3d7360a0b3ec7366bed8b89b37c39f862da2e2d074b6",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Includes cleaning and bedding but expands into eight steps, decor and meal suggestions, omits some guest essentials and truncates; no JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "planning-02",
+    "output_sha256": "8b5e0b1a82049e0a01e68ab9e8da55e0a5d904bf43914171a8753bdd54b11216",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Contains price research and a shopping list, but lacks a running-total or explicit spending-allocation step and expands into a truncated nine-step list; no JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "planning-03",
+    "output_sha256": "a3d7b35e81c95149d7536a6e433b279f31f2732f5d27b8f7ee07958beadedab5",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Several kitchen cleaning actions are useful, but the response expands into bathroom/toilet cleaning, omits safety precautions and exceeds the step limit; no JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "planning-04",
+    "output_sha256": "ea4ab2fc6cbaecfd8ed7d1d029987961dd4365e9bb10ded4a614e4ef5fc3a7b2",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Offers moving-company, packing and utility actions but lacks a timeline and becomes a repetitive ten-step list. Violates JSON and three-to-five-step constraints.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+    "prompt_id": "planning-05",
+    "output_sha256": "731143a5679eb4f7a00fd2a55bd813aee57a10faaebc113683372e4997f1c9bd",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "Asks the user to supply the plan and household data instead of proposing any electricity-saving actions; no required JSON steps.",
+    "review_stage": "assistant inspected; student signoff pending"
+  }
+]

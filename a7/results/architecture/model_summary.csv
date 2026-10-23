@@ -1,0 +1,7 @@
+model_id,model_category,device,max_new_tokens,evaluations,scored,mean_quality,median_latency_s,p95_latency_s,median_tokens_s
+HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),cpu,220,25,25,2.48,19.0588,19.95602,11.4717
+HuggingFaceTB/SmolLM2-360M-Instruct,Compact (0.2B–<0.6B),mps,220,25,25,3.84,0.5633,4.1776599999999995,50.8544
+Qwen/Qwen2.5-1.5B-Instruct,Small (0.6B–<1.6B),mps,220,25,25,7.56,1.5895,7.660199999999998,22.0191
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),cuda,220,25,25,2.96,5.2453,5.91038,37.7479
+distilbert/distilgpt2,Ultra-light (<0.2B),mps,220,25,25,2.28,0.7815,1.1078599999999998,281.508
+microsoft/Phi-3.5-mini-instruct,Large (≥3.5B),mps,220,25,25,7.32,5.3627,20.49218,10.881
