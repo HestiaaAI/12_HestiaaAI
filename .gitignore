@@ -9,6 +9,7 @@ __pycache__/
 *.safetensors
 *.pt
 *.pth
+*.ckpt
 model_cache/
 llm-test/models/
 
@@ -60,6 +61,8 @@ htmlcov/
 *.ggml
 .cache/
 models/
+a7/checkpoints/
+a7/model_cache/
 checkpoints/
 offload/
 
