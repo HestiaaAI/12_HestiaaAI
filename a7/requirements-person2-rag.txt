@@ -1,0 +1,5 @@
+# Colab supplies its own notebook runtime; do not install/upgrade kernel packages.
+torch>=2.2
+numpy>=1.26
+pandas>=2.2
+scikit-learn>=1.5,<2

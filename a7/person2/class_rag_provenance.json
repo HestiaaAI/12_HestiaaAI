@@ -1,0 +1,18 @@
+{
+  "original_filename": "3-RAG.ipynb",
+  "original_file_sha256": "33af0396e6b1cb4a29dfbac039337ce1818a0b183fd6b2a2e07e29bf2ce254e3",
+  "sanitized_file_sha256": "b82a58341c3268a05ac27dfc73bd60cc45b53b58e742c5999dd1862f11127030",
+  "changes": "Cleared outputs and interactive metadata only; every original code/markdown cell source retained.",
+  "retrieval_cells": [
+    10,
+    14
+  ],
+  "augmentation_cell": 18,
+  "retrieval": "TfidfVectorizer(stop_words=\"english\", ngram_range=(1,2)); cosine similarity; descending scores.argsort ranking",
+  "adaptations": [
+    "Replace Ollama/Qwen generator with selected class SLM.",
+    "Set minimum score to 0.0 to retain exactly K documents, including zero-overlap distractors.",
+    "Pack document text and question with newline separators; omit unsupported citation/label syntax.",
+    "Keep document IDs, scores and original/visible prompts in exported metadata."
+  ]
+}

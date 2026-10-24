@@ -1,0 +1,33 @@
+{
+  "started_utc": "2026-10-24T05:00:54.464808+00:00",
+  "condition": {
+    "models": [
+      "facebook/opt-125m",
+      "Qwen/Qwen2-0.5B-Instruct",
+      "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "mistralai/Mistral-7B-Instruct-v0.3"
+    ],
+    "gpu": "Tesla T4",
+    "gpu_bytes": 15637086208,
+    "python": "3.13.16",
+    "device": "cuda",
+    "quantization": "nf4",
+    "compute_dtype": "float32",
+    "attention": "eager",
+    "max_new_tokens": 220,
+    "do_sample": false,
+    "batch_size": 1,
+    "packages": {
+      "torch": "2.11.0+cu130",
+      "transformers": "4.57.6",
+      "accelerate": "1.15.0",
+      "bitsandbytes": "0.50.2"
+    },
+    "source_sha256": {
+      "a7/benchmark_runner.py": "c5d9b8d4158585ad150c20e5cfc263a2531f6537c49bc7e120557bd8224c5be7",
+      "a7/benchmark_contract.py": "87d109d66ecc713e7692e98f1da5dda1e354e18324ead006304aa6159ab1df4d",
+      "a7/model_registry.csv": "9b3f587cce095d1b9dea7cba5971fa51c652ce30a5603326ec95e4c455f2f62a",
+      "a7/prompts.csv": "0c856ed9b6c483c6b44b3b5805227cc6e09222e0b3998c1f86fce7a694bde68a"
+    }
+  }
+}

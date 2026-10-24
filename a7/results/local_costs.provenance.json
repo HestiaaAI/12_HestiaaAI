@@ -1,0 +1,10 @@
+{
+  "assumptions_sha256": "f852fa2217e12bd1ae53d3aa3f6006c4edafff57e0a5f189859a2712fb3d6080",
+  "benchmark_sha256": "e19c7cbff0f57dce7e819a7d3ecc0c3882f1bd97f92246731f1ac6d22b4fdeb5",
+  "code_sha256": "1727d84580428021a17189696d9d797e795a562f2592535f7ac7faada9bdeaa0",
+  "rows": 90,
+  "measured_T4_anchors": 4,
+  "unmeasured_model_capacity_proxies": 11,
+  "all_RTX3090_capacities_are_unvalidated": true,
+  "scope": "Planning estimates; no cloud resources provisioned or production load test performed."
+}

@@ -1,0 +1,21 @@
+question_id,question,prompt,response,state_sha256,response_quality,factual_accuracy,relevance,unsupported_information,review_notes,generation_seconds,visible_context,prompt_characters,context_truncated,expected_facts_visible
+Q1,when is laundry day.,"when is laundry day.
+","the predicts probabmenters are use models and un learning res artifining paplications.
+students crea",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.20208856900001138,"when is laundry day.
+",21,False,"{""monday"": false}"
+Q2,when is trash day.,"when is trash day.
+",the predicts probabilition paransmelld django application artificial intelligencers usefuse models l,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.10146023300001161,"when is trash day.
+",19,False,"{""friday"": false}"
+Q3,where are guest towels.,"where are guest towels.
+","artificial inngual networks are pytok
+stentraining hang helps artificial intelligencers artuage mode",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.18296056200006205,"where are guest towels.
+",24,False,"{""in the hall"": false}"
+Q4,where are spare bulbs.,"where are spare bulbs.
+","attention rkeach.
+trach.
+traning he students useful softworks learne predicts artuage models can re ",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07328271599999425,"where are spare bulbs.
+",23,False,"{""in the shed"": false}"
+Q5,where is dish soap.,"where is dish soap.
+","students expe models chartificial intelligencers con prevers artificial intelligencers.
+attion usegr",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06808798199995181,"where is dish soap.
+",20,False,"{""under the sink"": false}"
