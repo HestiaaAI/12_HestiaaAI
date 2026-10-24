@@ -1,0 +1,1322 @@
+{
+  "method": "AI-assisted response-level inspection, not independent human grading; student signoff pending",
+  "raw_csv_sha256": "e19c7cbff0f57dce7e819a7d3ecc0c3882f1bd97f92246731f1ac6d22b4fdeb5",
+  "component_order": [
+    "task_accuracy_0_to_3",
+    "instruction_adherence_0_to_2",
+    "completeness_0_to_2",
+    "clarity_0_to_2",
+    "no_unsupported_details_0_to_1"
+  ],
+  "policy": [
+    "Use shared 3+2+2+2+1 rubric; total is max(1,sum(components)).",
+    "Valid single labels can earn format/clarity credit even when semantically wrong; wrong reference labels receive no accuracy/completeness/support credit.",
+    "Case and one terminal period are normalized for label matching, as in shared reviewer; extra explanations lose adherence credit.",
+    "Priorities are scored against locked team references, not asserted to be universal urgency truths.",
+    "Strict JSON validity and legal enums/meaningful field contents affect adherence; copied placeholders are not substantive task completion.",
+    "Relevant open-ended suggested actions are allowed; fabricated personal facts/completion claims or changed deadlines lose support credit.",
+    "No independent inference rerun and no model outputs altered."
+  ],
+  "entries": [
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "extraction-01",
+      "response_sha256": "de5deec9eec0a0d11ef74a768a63a528ca4129d137881d21d1f4c8498ac9fffa",
+      "components": [
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "All three titles extracted, but PICKUP/MENDING are invalid types and every priority/description is missing."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "extraction-02",
+      "response_sha256": "b3a953c8f32ef009fa71695e06c268f26f64376864e05e3a0c951dfee96691ea",
+      "components": [
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "All four concerns extracted, but PERIOD/combined labels are invalid and every priority/description is missing."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "extraction-03",
+      "response_sha256": "f4b291914bcb89785c2b8ae4e067b335ff815f5358421877695f4743e1ead0ec",
+      "components": [
+        1,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "Omits loose stair-rail repair; cake pickup mislabeled REPAIR; priority/description fields absent."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "extraction-04",
+      "response_sha256": "65d1e8a2039130ac835ee428d3d826e010d2ebe81e3c6f53d2f83066351215a0",
+      "components": [
+        1,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "Omits laundry detergent; invalid combined/PERIOD types and missing priority/description fields."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "extraction-05",
+      "response_sha256": "3ba590dcadbabdcc96c9886ba602b7b6d2c32baf218bdb922582785c30648953",
+      "components": [
+        1,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "Omits refrigerator concern and Monday deadline; PERFORMING is invalid and required fields are absent."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "classification-01",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "Wrong reference class: CHORE instead of SHOPPING; otherwise one valid label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "classification-02",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "Wrong reference class: CHORE instead of MAINTENANCE; otherwise one valid label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "classification-03",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "Wrong reference class: CHORE instead of APPOINTMENT; otherwise one valid label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "classification-04",
+      "response_sha256": "be326310a135e12f32b653810fb7cfd3bfa973feef0fee1a5179bfdcd3f67661",
+      "components": [
+        0,
+        0,
+        0,
+        1,
+        0
+      ],
+      "notes": "Wrong class CHORE instead of DEADLINE, with extra title text rather than a single label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "classification-05",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct single CHORE label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "priority-01",
+      "response_sha256": "7261907bc09ed368a6be2413897bbed754d5e7f8b1124b2ebd09591a8164223e",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "URGENT differs from locked HIGH reference; one normalized allowed label."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "priority-02",
+      "response_sha256": "7261907bc09ed368a6be2413897bbed754d5e7f8b1124b2ebd09591a8164223e",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "URGENT differs from LOW reference for a discretionary drawer task."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "priority-03",
+      "response_sha256": "7261907bc09ed368a6be2413897bbed754d5e7f8b1124b2ebd09591a8164223e",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "URGENT differs from HIGH reference for tomorrow library deadline."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "priority-04",
+      "response_sha256": "7261907bc09ed368a6be2413897bbed754d5e7f8b1124b2ebd09591a8164223e",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct URGENT label; case and trailing period normalized consistently with shared reviewer."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "priority-05",
+      "response_sha256": "7261907bc09ed368a6be2413897bbed754d5e7f8b1124b2ebd09591a8164223e",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "URGENT differs from MEDIUM reference for coffee needed within two days."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "summary-01",
+      "response_sha256": "919c5b9a88cd597a8392ef454ad69718b6e7659c1eff323beaa9ce28cf6875e0",
+      "components": [
+        2,
+        2,
+        1,
+        2,
+        0
+      ],
+      "notes": "Valid summary JSON, but groups crumbs/expired cans into containers rather than clearly discarding old food and grouping remaining items."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "summary-02",
+      "response_sha256": "f33ab2abf3f306be9e070a46443e7bb87d7b326dd192bdb7ec7ecf62dd84a625",
+      "components": [
+        1,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "Valid JSON but changes after 3 PM to at 3 PM and omits booking request/calendar update."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "summary-03",
+      "response_sha256": "b63556c1ea2e9db23b3111dfe7ab455e374bf53407bee092b07c07b9f4c4fe21",
+      "components": [
+        2,
+        2,
+        1,
+        2,
+        1
+      ],
+      "notes": "Valid readable JSON, but loses the three-month comparison and conditional provider-contact action."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "summary-04",
+      "response_sha256": "b09e92250f2f79528dd98c73b5bf2ea6f50e2a409d81213ec8c542af9b6ee4e1",
+      "components": [
+        1,
+        2,
+        1,
+        2,
+        0
+      ],
+      "notes": "Valid JSON but falsely claims books have already been checked and dates confirmed; omits weekend return."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "summary-05",
+      "response_sha256": "201a49303628be5bdbecec3fc8e2e06111e52667aa7f01b5402ae268c674657a",
+      "components": [
+        1,
+        2,
+        0,
+        2,
+        1
+      ],
+      "notes": "Valid JSON but summarizes only lamp inspection, omitting sheets/towels/bin and guest-arrival context."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "planning-01",
+      "response_sha256": "a5fcea3189682cc54eb4f4dfceb25db0ccb1ac6798920a8c3d1cfb67e58d48ef",
+      "components": [
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "Eight practical-ish guest-preparation steps exceed the requested 3\u20135; sequencing and essentials could be clearer."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "planning-02",
+      "response_sha256": "ac06d9817828b9bc281ff2b9ffcf7d891d65643cf4d99902e7337081d790fcbc",
+      "components": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "notes": "Eight steps, no explicit $90 control, purchase before final list, and irrelevant tax-deduction/customer-delivery steps."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "planning-03",
+      "response_sha256": "a7da4dd4f5a50e3008953a599f74fdc0f02be9ccbf35503ba245b810038d6aef",
+      "components": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "notes": "Cut off at the 220-token cap; invalid JSON, far more than five steps and irrelevant painting/electrical tasks."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "planning-04",
+      "response_sha256": "dac89ca6a369d057991f13250b0e1c81967d219dce66de574bb7090c81ce3679",
+      "components": [
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "Seven mostly relevant steps exceed 3\u20135; viewing/new-landlord meeting distract from confirmed move preparation."
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "prompt_id": "planning-05",
+      "response_sha256": "45f053a19e98d5478c31b731ea126331bd72b505691c09bfb0a316f7fdca94af",
+      "components": [
+        2,
+        0,
+        1,
+        1,
+        1
+      ],
+      "notes": "Nine steps exceed 3\u20135; useful energy actions mixed with unrelated bags/straws/transport/tree suggestions."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "extraction-01",
+      "response_sha256": "c0fface09d34bbdc31d1c03c1322fc3c636f922ab1d076efc53e69c0824d84ea",
+      "components": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "notes": "Merges all three concerns into one task, copies pipe-separated enum and appends a period after JSON."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "extraction-02",
+      "response_sha256": "77498154d6d79fa77c43fe58fa37e9054ae12ce4e2729a065cac0be2f09ccc66",
+      "components": [
+        1,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Four complete JSON tasks, but dentist and battery replacement misclassified CHORE and safety prioritization weak."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "extraction-03",
+      "response_sha256": "e61f297444bd2ce5b9912cde91bb012e5c23999fb58ea2db8e92b356824d1dbb",
+      "components": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "notes": "Truncated malformed JSON; combines concerns and invents groceries, invitations, party appointment and Friday preparations."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "extraction-04",
+      "response_sha256": "f603a8fc0402c85e4a10505665ca256ee8755576c862f35aabaf4a526815bdd3",
+      "components": [
+        3,
+        0,
+        2,
+        2,
+        1
+      ],
+      "notes": "Three correct complete tasks, but trailing period makes raw JSON invalid without repair."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "extraction-05",
+      "response_sha256": "5b21dafbe22e0768e92bcc7ea040ad051e1b35240c21aba354b9f9f32cf119a4",
+      "components": [
+        1,
+        2,
+        1,
+        2,
+        0
+      ],
+      "notes": "Valid schema, but fridge noise becomes cleaning, tax mailing mislabeled SHOPPING and Monday delivery is invented."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "classification-01",
+      "response_sha256": "3982869c11ce1ac2ce9f4068dd1e4c1526a9c883f2ebb56bb24be45214ee30e7",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct SHOPPING label."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "classification-02",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "CHORE differs from MAINTENANCE reference."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "classification-03",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "CHORE differs from APPOINTMENT reference."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "classification-04",
+      "response_sha256": "98f4a7d62f228e2e565ed9159ea8e94e993cabaf7357e8597c49c89ea432265f",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "APPOINTMENT differs from DEADLINE reference."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "classification-05",
+      "response_sha256": "f9cc48b905f82e02bed675260732b21619caa56c1b56aff54c95a8363656a313",
+      "components": [
+        0,
+        0,
+        0,
+        1,
+        1
+      ],
+      "notes": "Echoes the request instead of classifying it; no usable label."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "priority-01",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from HIGH reference for low smoke-detector battery."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "priority-02",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from LOW reference for discretionary drawer sorting."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "priority-03",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from HIGH reference for tomorrow library deadline."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "priority-04",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from URGENT reference for rapidly leaking water."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "priority-05",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct MEDIUM label."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "summary-01",
+      "response_sha256": "a9fc9a48bb538a9c846e35d7e04bdd03f24a6912fd58114bba8282c8589f2740",
+      "components": [
+        3,
+        0,
+        2,
+        1,
+        1
+      ],
+      "notes": "Meaningful pantry summary follows a copied placeholder JSON object; combined output is not valid JSON only."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "summary-02",
+      "response_sha256": "e1e6c03fd78dace2429034f4bd599333ae04197cc03c3289eb9deb469fb0d928",
+      "components": [
+        1,
+        0,
+        1,
+        1,
+        0
+      ],
+      "notes": "Copies schema and input, then says 3 PM next week rather than after 3 PM; no usable requested JSON summary."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "summary-03",
+      "response_sha256": "7955a166fd08dc0dd67afda1af96b75496dee07f8158eef80ee45849725f8482",
+      "components": [
+        3,
+        1,
+        1,
+        2,
+        1
+      ],
+      "notes": "Summary preserves three months and conditional contact, but title remains literal placeholder short action title."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "summary-04",
+      "response_sha256": "2715922134ef4a7374d1b2c7df9235456a359809f1227e17a24453ab891d8147",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "notes": "Only placeholder JSON plus input echo; no actual synthesized title/summary. No new factual claims."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "summary-05",
+      "response_sha256": "4038afc624f5a68d5ab877e1e3c437d94e583710b8b943382e6fcd77b353a7a3",
+      "components": [
+        3,
+        1,
+        1,
+        2,
+        1
+      ],
+      "notes": "Summary preserves all guest-room tasks, but title is the literal placeholder short action title."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "planning-01",
+      "response_sha256": "969d181d3140abec81e71ab928426ae503feb05f293ab13a2157f58576732245",
+      "components": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "notes": "Literal step 1/step 2/step 3 placeholders; JSON shape exists but no practical guest plan."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "planning-02",
+      "response_sha256": "969d181d3140abec81e71ab928426ae503feb05f293ab13a2157f58576732245",
+      "components": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "notes": "Literal step placeholders; no grocery planning or $90 budget handling."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "planning-03",
+      "response_sha256": "969d181d3140abec81e71ab928426ae503feb05f293ab13a2157f58576732245",
+      "components": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "notes": "Literal step placeholders; no practical or safe kitchen-cleaning plan."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "planning-04",
+      "response_sha256": "969d181d3140abec81e71ab928426ae503feb05f293ab13a2157f58576732245",
+      "components": [
+        0,
+        1,
+        0,
+        0,
+        1
+      ],
+      "notes": "Literal step placeholders; no packing/transport/move preparation."
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "prompt_id": "planning-05",
+      "response_sha256": "4b9640dc7e6ab9fc5655844762e4d6681f1d2f617352669ed967c9704c17bb03",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Three concrete ordered steps: inspect bill, identify high consumption, implement energy measures; valid JSON."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "extraction-01",
+      "response_sha256": "e946b0790c97ff30bcd14ab1e43aecb926eab05443a009445c0091cf4f475f62",
+      "components": [
+        2,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Three complete valid tasks; kitchen cleaning marked URGENT without stated safety emergency, reducing prioritization quality."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "extraction-02",
+      "response_sha256": "d76eb3e65fba10a304d13c00c6b33b7cd05b948b7220c325f1e76fc8e3d68c65",
+      "components": [
+        1,
+        0,
+        1,
+        1,
+        1
+      ],
+      "notes": "Hits generation cap and ends mid-description; invalid JSON, HOUSEHOLD_CHORE enum invalid and battery replacement LOW is weak safety prioritization."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "extraction-03",
+      "response_sha256": "d14cef34430ca61582d1624f5b219e2711b05d19ae71b390704798836c42dceb",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "All three concerns become distinct complete valid tasks, including urgent stair-rail repair."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "extraction-04",
+      "response_sha256": "27477916f91f3829bee1675f25543314ec4137050f686fb62349c9773c37dac5",
+      "components": [
+        2,
+        1,
+        2,
+        2,
+        1
+      ],
+      "notes": "All concerns represented clearly, but PAYMENT is outside allowed task types."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "extraction-05",
+      "response_sha256": "f0b4b94835336b0c66817893a52c50acef20d247446646833b2088bf3c01849c",
+      "components": [
+        2,
+        0,
+        1,
+        2,
+        1
+      ],
+      "notes": "All concerns present, but all priority fields missing and five tasks include extra follow-ups instead of one per concern."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "classification-01",
+      "response_sha256": "3982869c11ce1ac2ce9f4068dd1e4c1526a9c883f2ebb56bb24be45214ee30e7",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct SHOPPING label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "classification-02",
+      "response_sha256": "7bdba5d37c1e69519065de5c0a135dd7278abe046949a6b8ed05b660dad4a798",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct MAINTENANCE label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "classification-03",
+      "response_sha256": "98f4a7d62f228e2e565ed9159ea8e94e993cabaf7357e8597c49c89ea432265f",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct APPOINTMENT label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "classification-04",
+      "response_sha256": "98cebc123a6f6bea8f35e2ebb5ab9de939af5d542c233ab0c0e98ff37343934e",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct DEADLINE label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "classification-05",
+      "response_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct CHORE label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "priority-01",
+      "response_sha256": "ed0d72ae47b4641b0d284b9a7fde21ae70bed5c83b39932187cbba73d4ed8276",
+      "components": [
+        0,
+        0,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from HIGH reference and adds an explanation despite single-label instruction; reasoning is readable but not the locked target."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "priority-02",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from LOW reference for a discretionary drawer task."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "priority-03",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        0,
+        2,
+        0,
+        2,
+        0
+      ],
+      "notes": "MEDIUM differs from HIGH reference for tomorrow deadline."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "priority-04",
+      "response_sha256": "1858fdb75f14a54c502aee042f0b47a65980d97bbfa83eecaea124b52cbba9bb",
+      "components": [
+        3,
+        1,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct URGENT classification with useful explanation, but violates exactly-one-label instruction."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "priority-05",
+      "response_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Correct MEDIUM label."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "summary-01",
+      "response_sha256": "d0e34bd7ddd112e6d99c0d1ea2c9a0c24f862e042c559b76f049721df5e356ce",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Concise valid JSON preserves discarding expired food, wiping shelves and grouping remaining items."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "summary-02",
+      "response_sha256": "c96ecc1dd8581c7cf55d00b572fac9a5a41c8352f69cc354e662d9ff4719af2a",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Valid concise JSON preserves clinic appointment request, after-3-PM next-week window and calendar update."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "summary-03",
+      "response_sha256": "c0e6609ab204a679d0925cb67bc60099a84c27b427729dc90c2a9f7436ed2537",
+      "components": [
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      "notes": "Valid readable JSON preserves comparison but changes contact condition from increase continues to increase detected."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "summary-04",
+      "response_sha256": "8b8f280833f5319846d50a59e74eaf2817520d8f53a229c025fead57624b5053",
+      "components": [
+        2,
+        2,
+        2,
+        2,
+        0
+      ],
+      "notes": "Summary body preserves the actions, but title invents overdue status; prompt only says due this weekend."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "summary-05",
+      "response_sha256": "639f4865ae7f889b643adeb726fe6e14cc629a0bc70569e6404c754c3e7dd488",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Valid concise JSON preserves sheets, towels, bin, lamp and guest-arrival context."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "planning-01",
+      "response_sha256": "6318e30e43c7db9b3c5007840b37f1165755ef464f018d0480ccdc46963039f3",
+      "components": [
+        3,
+        0,
+        2,
+        2,
+        1
+      ],
+      "notes": "Five sensible guest-preparation steps, but invalid JSON uses keyed entries inside an array and lacks proper array closure."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "planning-02",
+      "response_sha256": "e0bb5fae0cfb8172ad8ce3dedd14d38453ed2e891e6f37b43b09e69927ac4fd6",
+      "components": [
+        3,
+        0,
+        2,
+        2,
+        1
+      ],
+      "notes": "Five coherent grocery/budget steps including explicit $90, but invalid keyed-entry array syntax."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "planning-03",
+      "response_sha256": "c3e01d1ae4c18b9c8242ece9d1690b0f3381ae5e0c70dac6ce47599513d4e1e1",
+      "components": [
+        2,
+        0,
+        2,
+        2,
+        1
+      ],
+      "notes": "Five mostly useful cleaning steps, but JSON syntax invalid and order/safety detail could improve."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "planning-04",
+      "response_sha256": "afaf75923eece016e770e47f2495ae7129d54fd83ac327a199ab60c131a76344",
+      "components": [
+        3,
+        2,
+        2,
+        2,
+        1
+      ],
+      "notes": "Valid five-step plan covers checklist, packing/labels, transport, notice and utilities."
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "prompt_id": "planning-05",
+      "response_sha256": "7c1a98b879b505a525e5b444ff9133541a0a5b354da55be9d6ff15faebdb26d9",
+      "components": [
+        3,
+        0,
+        2,
+        2,
+        1
+      ],
+      "notes": "Five useful electricity-saving steps, but keyed-entry array syntax is invalid JSON."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "extraction-01",
+      "response_sha256": "5d8298f8d24734f76591d8a635546d7f15edccc4b4e11432b1c8ac4a643f1c13",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "extraction-02",
+      "response_sha256": "71ec6b730d4c9b90e7db93919dbab776ced80694c93e3863f7f4875eb1bf367e",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "extraction-03",
+      "response_sha256": "b6edba3352cea5a9181983aa2c164b9c52758d30397d3715b8f6136939bd07e8",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap. Invents that the house is too small for a vacuum cleaner."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "extraction-04",
+      "response_sha256": "b364001b0626c76f4c2a4731aa92a59a705ddf9e1b60777461dd6bb152458d0b",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "extraction-05",
+      "response_sha256": "d96f9c50651374a5c667f636669e26bfc8f770c6254e9b81ab7b3b9869832683",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "classification-01",
+      "response_sha256": "9b055aceec118e6ceb47d3ec72d23bd96068ef8759d26d0b19c4bf48ec9f849a",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "classification-02",
+      "response_sha256": "a796449606ca8af5243d8967c013ee397f9b907e4bf68e7e2864b7b40d12a75a",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "classification-03",
+      "response_sha256": "bec58ccd4645fd87d38056e1e458a7719b72f112b85058740f7a1bded30f20ad",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "classification-04",
+      "response_sha256": "d7b015e403841b7521b1fdf6cce732cf3290f46e62109060d3dda27025f9f73e",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "classification-05",
+      "response_sha256": "7ff1519124e1c3d8c9e28d61b0ab0e3e492d1c3ff8223043123191608c6c11ea",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "priority-01",
+      "response_sha256": "75064407096c20b288630c67d49fcdc25fa1d84b9963a9b95b27fb5a84023e05",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "priority-02",
+      "response_sha256": "28f82a15be40296183c5e3af6cf5a7960ebc3b24433f9de0dee39eeb346dbe03",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "priority-03",
+      "response_sha256": "a02e1c80d5519b1adfe71b24fbcede0012298a2ec0c18384044df35805941725",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "priority-04",
+      "response_sha256": "cd2cab254fd470386cfb17d95fb0061c2ad22faa714d8d66fc3281107c72effd",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "priority-05",
+      "response_sha256": "32bc1793b24530ffcde8accea0461081e185c6caea5ca4bb1104f64085d606e3",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "summary-01",
+      "response_sha256": "91bd4c6f38a13f126bf0fdc3939a3ece6a47702544d1823a01d93c82d92555ba",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "summary-02",
+      "response_sha256": "26862e9c4350e45e4ed13240326c6a3e0a9dfc25a6502624418f366dbcf4fb3d",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap. Invents being a registered pediatric nurse with 20 years of experience."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "summary-03",
+      "response_sha256": "e06c097af19690a8c3887a648f2778d924cea8d3086a86ee28dd3379db6da620",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "summary-04",
+      "response_sha256": "87287cbb10479cfd9b0601f4c1f1fa6ee6cfc4c94ea5e14cb2bb5854ea54032c",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "summary-05",
+      "response_sha256": "dc4998ad82eb0cda3ae7231caee712506eb7a6bd432bb0a4973b7f61561e16f4",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "planning-01",
+      "response_sha256": "da3d7df30c1d73ace5dc097711cf856175606dd60ef332e48c0a4cf10e7c1478",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "planning-02",
+      "response_sha256": "27fa50dcdc2f29912c40fd3a3ef2e85e132e36e8afb97d0fcbfec48eff59611d",
+      "components": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap. A relevant fragment is present (list creation or kitchen cleaning), but repetition supplies no ordered practical plan."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "planning-03",
+      "response_sha256": "48a1aa23e73f46b07500cd7f24bf03bab30d2780669e84f9679bc5a173f6b7cc",
+      "components": [
+        1,
+        0,
+        1,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap. A relevant fragment is present (list creation or kitchen cleaning), but repetition supplies no ordered practical plan."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "planning-04",
+      "response_sha256": "b8b59561c3889506ac8ed6aa4be87975d33b978a435a5e0eedf088bdb0fa41af",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "prompt_id": "planning-05",
+      "response_sha256": "a07a819be689b657bac9fccbb8f10888591a5bd3cbc67f11320c19f2e032c20b",
+      "components": [
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "notes": "Repetitive continuation/request echo rather than a task answer; no usable required structure or requested label. Reaches 220-token cap."
+    }
+  ]
+}

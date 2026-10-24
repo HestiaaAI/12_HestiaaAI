@@ -1,0 +1,52 @@
+[
+  {
+    "question_id": "Q1",
+    "question": "when is laundry day.",
+    "expected_facts": [
+      "monday"
+    ],
+    "source_document_ids": [
+      "D1"
+    ]
+  },
+  {
+    "question_id": "Q2",
+    "question": "when is trash day.",
+    "expected_facts": [
+      "friday"
+    ],
+    "source_document_ids": [
+      "D2"
+    ]
+  },
+  {
+    "question_id": "Q3",
+    "question": "where are guest towels.",
+    "expected_facts": [
+      "in the hall"
+    ],
+    "source_document_ids": [
+      "D3"
+    ]
+  },
+  {
+    "question_id": "Q4",
+    "question": "where are spare bulbs.",
+    "expected_facts": [
+      "in the shed"
+    ],
+    "source_document_ids": [
+      "D4"
+    ]
+  },
+  {
+    "question_id": "Q5",
+    "question": "where is dish soap.",
+    "expected_facts": [
+      "under the sink"
+    ],
+    "source_document_ids": [
+      "D5"
+    ]
+  }
+]

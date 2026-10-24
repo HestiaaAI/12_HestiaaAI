@@ -1,0 +1,31 @@
+{
+  "archive_sha256": "31b14d4c7d592881f866593e18a05d44ea6ca7544c6ef2bb301a65ccd7021a7e",
+  "files_sha256": {
+    "person2_baseline.csv": "d037869054055d9798b0a7694612903758de8e700749b5a832219262ce5d660b",
+    "person2_rag.csv": "24698c441ada344fefa40f57bec7bf800874a9faa30752899c908df2f097d9ae",
+    "person2_rag.json": "851d9b148786b8cc0b7f3dde3486c415713d0adf47b3bc92be3348f52e9c463b",
+    "person2_rag_reviewed.json": "3f9bb755e6935c33f9d2d933774d9a2b77f2085df68ab4bec7589989a7c7eb95"
+  },
+  "baseline_responses": 5,
+  "rag_responses": 20,
+  "review_complete": true,
+  "raw_reviewed_outputs_identical": true,
+  "csv_json_outputs_match": true,
+  "source_files_match": true,
+  "retrieval_scores_and_top_k_valid": true,
+  "reported_state_matches_original": true,
+  "review_method": "AI-assisted assessment exported by user; not independent human grading",
+  "reproducibility_note": "Equal-score zero-overlap document order differs on local NumPy/scikit-learn. Preserve exported prompts/order for the shared comparison; do not regenerate on different versions and assume identical prompts.",
+  "limitation": "Checkpoint hashes are verified against the export; model generation was not independently rerun.",
+  "executed_notebook": {
+    "path": "a7/slm/person2_rag_colab.ipynb",
+    "sha256": "c45b2ccdd06ed4e4792f246103087f633be618766114cef84f7c6eeb13e8aab4",
+    "schema_valid": true,
+    "all_code_cells_executed": true,
+    "saved_errors": 0,
+    "all_25_displayed_responses_match_raw_evidence": true,
+    "all_25_scores_match_reviewed_json": true,
+    "five_analysis_answers_present": true,
+    "credential_pattern_scan_passed": true
+  }
+}

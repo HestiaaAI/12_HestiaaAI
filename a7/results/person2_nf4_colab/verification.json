@@ -1,0 +1,55 @@
+{
+  "archive_sha256": "ab2ffa3d3429d7a33f7de8852edb258454031eab51b862b37a63e612f3df0e93",
+  "notebook_sha256": "23c7b279be4ee56e5643c46453d6242025012c9b483bef29505f8d8478d840ca",
+  "source_hashes_match": true,
+  "exact_100_case_coverage": true,
+  "all_runs_status_ok": true,
+  "latency_throughput_consistent": true,
+  "notebook_saved_errors": 0,
+  "notebook_success_output_matches_csv": true,
+  "quality_review_complete": false,
+  "all_quality_fields_blank": true,
+  "summary": [
+    {
+      "model_id": "facebook/opt-125m",
+      "successful_runs": 25,
+      "median_latency_seconds": 3.1447,
+      "median_tokens_per_second": 69.959,
+      "mean_output_tokens": 220,
+      "at_generation_cap": 25,
+      "empty_outputs": 0
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "successful_runs": 25,
+      "median_latency_seconds": 1.4941,
+      "median_tokens_per_second": 22.4989,
+      "mean_output_tokens": 45.48,
+      "at_generation_cap": 1,
+      "empty_outputs": 0
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "successful_runs": 25,
+      "median_latency_seconds": 0.8802,
+      "median_tokens_per_second": 20.5394,
+      "mean_output_tokens": 44.92,
+      "at_generation_cap": 1,
+      "empty_outputs": 0
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "successful_runs": 25,
+      "median_latency_seconds": 4.1807,
+      "median_tokens_per_second": 9.5678,
+      "mean_output_tokens": 76.68,
+      "at_generation_cap": 1,
+      "empty_outputs": 0
+    }
+  ],
+  "limitations": [
+    "No independent inference rerun; exported evidence validated.",
+    "NF4 batch-1 generation throughput is not a production capacity measurement.",
+    "Reaching the generation cap is a truncation risk requiring response review, not proof of truncation."
+  ]
+}

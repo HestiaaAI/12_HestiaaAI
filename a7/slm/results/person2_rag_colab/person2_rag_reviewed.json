@@ -1,0 +1,748 @@
+{
+  "original_state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "final_state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "weights_unchanged": true,
+  "generation": {
+    "seed": 42,
+    "temperature": 0.7,
+    "max_new_tokens": 100,
+    "device": "cpu",
+    "threads": 2
+  },
+  "retrieval": {
+    "method": "class TF-IDF + cosine similarity",
+    "stop_words": "english",
+    "ngram_range": [
+      1,
+      2
+    ],
+    "min_score": 0.0,
+    "top_k": [
+      1,
+      2,
+      3,
+      5
+    ]
+  },
+  "checkpoint_config": {
+    "embedding_dim": 48,
+    "num_heads": 2,
+    "num_layers": 1,
+    "feedforward_dim": 192,
+    "context_length": 32
+  },
+  "questions": [
+    {
+      "question_id": "Q1",
+      "question": "when is laundry day.",
+      "expected_facts": [
+        "monday"
+      ],
+      "source_document_ids": [
+        "D1"
+      ],
+      "rag": [
+        {
+          "prompt": "laundry day is monday.\nwhen is laundry day.\n",
+          "response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.07415003899996009,
+          "visible_context": "is monday.\nwhen is laundry day.\n",
+          "prompt_characters": 44,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "monday": true
+          },
+          "top_k": 1,
+          "retrieved_document_ids": [
+            "D1"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423
+          ]
+        },
+        {
+          "prompt": "laundry day is monday.\ntrash day is friday.\nwhen is laundry day.\n",
+          "response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06961695600000439,
+          "visible_context": "is friday.\nwhen is laundry day.\n",
+          "prompt_characters": 65,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "monday": false
+          },
+          "top_k": 2,
+          "retrieved_document_ids": [
+            "D1",
+            "D2"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558
+          ]
+        },
+        {
+          "prompt": "laundry day is monday.\ntrash day is friday.\ndish soap is under the sink.\nwhen is laundry day.\n",
+          "response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06970678700008648,
+          "visible_context": " the sink.\nwhen is laundry day.\n",
+          "prompt_characters": 94,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "monday": false
+          },
+          "top_k": 3,
+          "retrieved_document_ids": [
+            "D1",
+            "D2",
+            "D5"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558,
+            0.0
+          ]
+        },
+        {
+          "prompt": "laundry day is monday.\ntrash day is friday.\ndish soap is under the sink.\nguest towels are in the hall.\nspare bulbs are in the shed.\nwhen is laundry day.\n",
+          "response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.0693219649999719,
+          "visible_context": " the shed.\nwhen is laundry day.\n",
+          "prompt_characters": 153,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "monday": false
+          },
+          "top_k": 5,
+          "retrieved_document_ids": [
+            "D1",
+            "D2",
+            "D5",
+            "D3",
+            "D4"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "baseline": {
+        "prompt": "when is laundry day.\n",
+        "response": "the predicts probabmenters are use models and un learning res artifining paplications.\nstudents crea",
+        "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+        "response_quality": 1,
+        "factual_accuracy": 1,
+        "relevance": 1,
+        "unsupported_information": true,
+        "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+        "generation_seconds": 0.20208856900001138,
+        "visible_context": "when is laundry day.\n",
+        "prompt_characters": 21,
+        "context_truncated": false,
+        "expected_facts_visible": {
+          "monday": false
+        }
+      }
+    },
+    {
+      "question_id": "Q2",
+      "question": "when is trash day.",
+      "expected_facts": [
+        "friday"
+      ],
+      "source_document_ids": [
+        "D2"
+      ],
+      "rag": [
+        {
+          "prompt": "trash day is friday.\nwhen is trash day.\n",
+          "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06766189600000416,
+          "visible_context": "y is friday.\nwhen is trash day.\n",
+          "prompt_characters": 40,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "friday": true
+          },
+          "top_k": 1,
+          "retrieved_document_ids": [
+            "D2"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423
+          ]
+        },
+        {
+          "prompt": "trash day is friday.\nlaundry day is monday.\nwhen is trash day.\n",
+          "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.07649809500003357,
+          "visible_context": "y is monday.\nwhen is trash day.\n",
+          "prompt_characters": 63,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "friday": false
+          },
+          "top_k": 2,
+          "retrieved_document_ids": [
+            "D2",
+            "D1"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558
+          ]
+        },
+        {
+          "prompt": "trash day is friday.\nlaundry day is monday.\ndish soap is under the sink.\nwhen is trash day.\n",
+          "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06957830199996806,
+          "visible_context": "er the sink.\nwhen is trash day.\n",
+          "prompt_characters": 92,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "friday": false
+          },
+          "top_k": 3,
+          "retrieved_document_ids": [
+            "D2",
+            "D1",
+            "D5"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558,
+            0.0
+          ]
+        },
+        {
+          "prompt": "trash day is friday.\nlaundry day is monday.\ndish soap is under the sink.\nguest towels are in the hall.\nspare bulbs are in the shed.\nwhen is trash day.\n",
+          "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.08285197199995764,
+          "visible_context": "in the shed.\nwhen is trash day.\n",
+          "prompt_characters": 151,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "friday": false
+          },
+          "top_k": 5,
+          "retrieved_document_ids": [
+            "D2",
+            "D1",
+            "D5",
+            "D3",
+            "D4"
+          ],
+          "retrieval_scores": [
+            0.6986290264603423,
+            0.12455746922312558,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "baseline": {
+        "prompt": "when is trash day.\n",
+        "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+        "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+        "response_quality": 1,
+        "factual_accuracy": 1,
+        "relevance": 1,
+        "unsupported_information": true,
+        "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+        "generation_seconds": 0.10146023300001161,
+        "visible_context": "when is trash day.\n",
+        "prompt_characters": 19,
+        "context_truncated": false,
+        "expected_facts_visible": {
+          "friday": false
+        }
+      }
+    },
+    {
+      "question_id": "Q3",
+      "question": "where are guest towels.",
+      "expected_facts": [
+        "in the hall"
+      ],
+      "source_document_ids": [
+        "D3"
+      ],
+      "rag": [
+        {
+          "prompt": "guest towels are in the hall.\nwhere are guest towels.\n",
+          "response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.5939473619999944,
+          "visible_context": "e hall.\nwhere are guest towels.\n",
+          "prompt_characters": 54,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the hall": false
+          },
+          "top_k": 1,
+          "retrieved_document_ids": [
+            "D3"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161
+          ]
+        },
+        {
+          "prompt": "guest towels are in the hall.\ndish soap is under the sink.\nwhere are guest towels.\n",
+          "response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.21402004499998384,
+          "visible_context": "e sink.\nwhere are guest towels.\n",
+          "prompt_characters": 83,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the hall": false
+          },
+          "top_k": 2,
+          "retrieved_document_ids": [
+            "D3",
+            "D5"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0
+          ]
+        },
+        {
+          "prompt": "guest towels are in the hall.\ndish soap is under the sink.\nspare bulbs are in the shed.\nwhere are guest towels.\n",
+          "response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06644803599999705,
+          "visible_context": "e shed.\nwhere are guest towels.\n",
+          "prompt_characters": 112,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the hall": false
+          },
+          "top_k": 3,
+          "retrieved_document_ids": [
+            "D3",
+            "D5",
+            "D4"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "prompt": "guest towels are in the hall.\ndish soap is under the sink.\nspare bulbs are in the shed.\ntrash day is friday.\nlaundry day is monday.\nwhere are guest towels.\n",
+          "response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06709243099999185,
+          "visible_context": "monday.\nwhere are guest towels.\n",
+          "prompt_characters": 156,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the hall": false
+          },
+          "top_k": 5,
+          "retrieved_document_ids": [
+            "D3",
+            "D5",
+            "D4",
+            "D2",
+            "D1"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "baseline": {
+        "prompt": "where are guest towels.\n",
+        "response": "artificial inngual networks are pytok\nstentraining hang helps artificial intelligencers artuage mode",
+        "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+        "response_quality": 1,
+        "factual_accuracy": 1,
+        "relevance": 1,
+        "unsupported_information": true,
+        "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+        "generation_seconds": 0.18296056200006205,
+        "visible_context": "where are guest towels.\n",
+        "prompt_characters": 24,
+        "context_truncated": false,
+        "expected_facts_visible": {
+          "in the hall": false
+        }
+      }
+    },
+    {
+      "question_id": "Q4",
+      "question": "where are spare bulbs.",
+      "expected_facts": [
+        "in the shed"
+      ],
+      "source_document_ids": [
+        "D4"
+      ],
+      "rag": [
+        {
+          "prompt": "spare bulbs are in the shed.\nwhere are spare bulbs.\n",
+          "response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial ",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06958312899996599,
+          "visible_context": "he shed.\nwhere are spare bulbs.\n",
+          "prompt_characters": 52,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the shed": false
+          },
+          "top_k": 1,
+          "retrieved_document_ids": [
+            "D4"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161
+          ]
+        },
+        {
+          "prompt": "spare bulbs are in the shed.\ndish soap is under the sink.\nwhere are spare bulbs.\n",
+          "response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial ",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.07023290899996937,
+          "visible_context": "he sink.\nwhere are spare bulbs.\n",
+          "prompt_characters": 81,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the shed": false
+          },
+          "top_k": 2,
+          "retrieved_document_ids": [
+            "D4",
+            "D5"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0
+          ]
+        },
+        {
+          "prompt": "spare bulbs are in the shed.\ndish soap is under the sink.\nguest towels are in the hall.\nwhere are spare bulbs.\n",
+          "response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial ",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.07382506900000863,
+          "visible_context": "he hall.\nwhere are spare bulbs.\n",
+          "prompt_characters": 111,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the shed": false
+          },
+          "top_k": 3,
+          "retrieved_document_ids": [
+            "D4",
+            "D5",
+            "D3"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "prompt": "spare bulbs are in the shed.\ndish soap is under the sink.\nguest towels are in the hall.\ntrash day is friday.\nlaundry day is monday.\nwhere are spare bulbs.\n",
+          "response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial ",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.07192439399989325,
+          "visible_context": " monday.\nwhere are spare bulbs.\n",
+          "prompt_characters": 155,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "in the shed": false
+          },
+          "top_k": 5,
+          "retrieved_document_ids": [
+            "D4",
+            "D5",
+            "D3",
+            "D2",
+            "D1"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "baseline": {
+        "prompt": "where are spare bulbs.\n",
+        "response": "attention rkeach.\ntrach.\ntraning he students useful softworks learne predicts artuage models can re ",
+        "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+        "response_quality": 1,
+        "factual_accuracy": 1,
+        "relevance": 1,
+        "unsupported_information": true,
+        "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+        "generation_seconds": 0.07328271599999425,
+        "visible_context": "where are spare bulbs.\n",
+        "prompt_characters": 23,
+        "context_truncated": false,
+        "expected_facts_visible": {
+          "in the shed": false
+        }
+      }
+    },
+    {
+      "question_id": "Q5",
+      "question": "where is dish soap.",
+      "expected_facts": [
+        "under the sink"
+      ],
+      "source_document_ids": [
+        "D5"
+      ],
+      "rag": [
+        {
+          "prompt": "dish soap is under the sink.\nwhere is dish soap.\n",
+          "response": "the charaning parammechantion rkware python runing rametersing res.\ntrammechation rammechane canis.\n",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06948224899997513,
+          "visible_context": "r the sink.\nwhere is dish soap.\n",
+          "prompt_characters": 49,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "under the sink": false
+          },
+          "top_k": 1,
+          "retrieved_document_ids": [
+            "D5"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161
+          ]
+        },
+        {
+          "prompt": "dish soap is under the sink.\nspare bulbs are in the shed.\nwhere is dish soap.\n",
+          "response": "the charaning parammechantion rkware python runing rametersing res.\ntrammechation rammechane canis.\n",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.08809852499996396,
+          "visible_context": "n the shed.\nwhere is dish soap.\n",
+          "prompt_characters": 78,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "under the sink": false
+          },
+          "top_k": 2,
+          "retrieved_document_ids": [
+            "D5",
+            "D4"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0
+          ]
+        },
+        {
+          "prompt": "dish soap is under the sink.\nspare bulbs are in the shed.\nguest towels are in the hall.\nwhere is dish soap.\n",
+          "response": "students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.\n",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06784324899990679,
+          "visible_context": "n the hall.\nwhere is dish soap.\n",
+          "prompt_characters": 108,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "under the sink": false
+          },
+          "top_k": 3,
+          "retrieved_document_ids": [
+            "D5",
+            "D4",
+            "D3"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "prompt": "dish soap is under the sink.\nspare bulbs are in the shed.\nguest towels are in the hall.\ntrash day is friday.\nlaundry day is monday.\nwhere is dish soap.\n",
+          "response": "students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.\n",
+          "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+          "response_quality": 1,
+          "factual_accuracy": 1,
+          "relevance": 1,
+          "unsupported_information": true,
+          "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+          "generation_seconds": 0.06708158800006458,
+          "visible_context": " is monday.\nwhere is dish soap.\n",
+          "prompt_characters": 152,
+          "context_truncated": true,
+          "expected_facts_visible": {
+            "under the sink": false
+          },
+          "top_k": 5,
+          "retrieved_document_ids": [
+            "D5",
+            "D4",
+            "D3",
+            "D2",
+            "D1"
+          ],
+          "retrieval_scores": [
+            0.8944271909999161,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "baseline": {
+        "prompt": "where is dish soap.\n",
+        "response": "students expe models chartificial intelligencers con prevers artificial intelligencers.\nattion usegr",
+        "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+        "response_quality": 1,
+        "factual_accuracy": 1,
+        "relevance": 1,
+        "unsupported_information": true,
+        "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false.",
+        "generation_seconds": 0.06808798199995181,
+        "visible_context": "where is dish soap.\n",
+        "prompt_characters": 20,
+        "context_truncated": false,
+        "expected_facts_visible": {
+          "under the sink": false
+        }
+      }
+    }
+  ],
+  "review_complete": true,
+  "environment": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.11.0+cpu",
+      "numpy": "2.1.3",
+      "scikit-learn": "1.6.1",
+      "pandas": "2.2.3"
+    }
+  },
+  "source_hashes": {
+    "class_rag_source.ipynb": "b82a58341c3268a05ac27dfc73bd60cc45b53b58e742c5999dd1862f11127030",
+    "class_model.py": "23d9b72b83cee3d07fa594698bde0beb5b8aa998a77a7465b0663dc9a7e27a82",
+    "knowledge_base/documents.json": "fa09014076c6140667458b40e06e9772df2480fa0fdbac4fa7c40d11c70ff567",
+    "knowledge_base/questions.json": "8180c2cf997ed0b1e0264d8db9dbe594001f210f51d8a8a226d9a76819e934ca"
+  }
+}

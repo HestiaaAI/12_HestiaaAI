@@ -137,6 +137,23 @@ def _empty_review_fields() -> dict[str, str]:
     }
 
 
+def load_model(model_id, device, dtype, quantization, auto_model, bits_config):
+    """Keep native loading by default; allow explicit NF4 on Colab CUDA."""
+    options = dict(dtype=dtype, low_cpu_mem_usage=True)
+    if quantization == "nf4":
+        if device != "cuda":
+            raise ValueError("NF4 requires CUDA; use native loading on CPU/MPS")
+        options.update(
+            quantization_config=bits_config(load_in_4bit=True, bnb_4bit_quant_type="nf4",
+                bnb_4bit_use_double_quant=True, bnb_4bit_compute_dtype=dtype),
+            device_map={"": 0}, attn_implementation="eager",
+        )
+    model = auto_model.from_pretrained(model_id, **options)
+    if quantization == "none":
+        model.to(device)
+    return model
+
+
 def run_matrix(
     models: list[dict],
     output_path: Path,
@@ -144,10 +161,11 @@ def run_matrix(
     dtype_request: str = "auto",
     max_new_tokens: int = 220,
     resume: bool = True,
+    quantization: str = "none",
 ) -> list[dict]:
     """Generate and checkpoint one output for every selected model/prompt pair."""
     import torch
-    from transformers import AutoModelForCausalLM, AutoTokenizer
+    from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
     validate_contract()
     rows = _read_rows(output_path) if resume else []
@@ -173,14 +191,14 @@ def run_matrix(
                 dtype = torch.float32
             else:
                 dtype = torch.float16 if device in {"cuda", "mps"} else torch.float32
-            model = AutoModelForCausalLM.from_pretrained(model_id, dtype=dtype, low_cpu_mem_usage=True)
-            model.to(device)
+            model = load_model(model_id, device, dtype, quantization, AutoModelForCausalLM, BitsAndBytesConfig)
             model.eval()
 
             for prompt in remaining:
                 prompt_text = render_prompt(prompt)
                 formatted = _format_input(tokenizer, prompt_text)
                 inputs = tokenizer(formatted, return_tensors="pt").to(device)
+                _synchronize(device, torch)
                 started = time.perf_counter()
                 with torch.inference_mode():
                     output = model.generate(
@@ -264,6 +282,7 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=Path("a7/results/person1_benchmark.csv"))
     parser.add_argument("--device", choices=["auto", "cpu", "cuda", "mps"], default="auto")
     parser.add_argument("--dtype", choices=["auto", "float16", "float32"], default="auto")
+    parser.add_argument("--quantization", choices=["none", "nf4"], default="none")
     parser.add_argument("--max-new-tokens", type=int, default=220)
     parser.add_argument("--restart", action="store_true", help="Replace rather than resume an existing output CSV")
     parser.add_argument("--dry-run", action="store_true")
@@ -280,6 +299,7 @@ def main() -> None:
         dtype_request=args.dtype,
         max_new_tokens=args.max_new_tokens,
         resume=not args.restart,
+        quantization=args.quantization,
     )
     print(f"Saved {len(rows)} rows to {args.output}")
 

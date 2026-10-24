@@ -1,0 +1,154 @@
+question_id,question,prompt,response,state_sha256,response_quality,factual_accuracy,relevance,unsupported_information,review_notes,generation_seconds,visible_context,prompt_characters,context_truncated,expected_facts_visible,top_k,retrieved_document_ids,retrieval_scores
+Q1,when is laundry day.,"laundry day is monday.
+when is laundry day.
+","smalll learning res models preveows.
+ingrametion learaning helps useful models models can learnung o",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07415003899996009,"is monday.
+when is laundry day.
+",44,True,"{""monday"": true}",1,"[""D1""]",[0.6986290264603423]
+Q1,when is laundry day.,"laundry day is monday.
+trash day is friday.
+when is laundry day.
+","smalll learning res models preveows.
+ingrametion learaning helps useful models models can learnung o",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06961695600000439,"is friday.
+when is laundry day.
+",65,True,"{""monday"": false}",2,"[""D1"", ""D2""]","[0.6986290264603423, 0.12455746922312558]"
+Q1,when is laundry day.,"laundry day is monday.
+trash day is friday.
+dish soap is under the sink.
+when is laundry day.
+","smalll learning res models preveows.
+ingrametion learaning helps useful models models can learnung o",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06970678700008648," the sink.
+when is laundry day.
+",94,True,"{""monday"": false}",3,"[""D1"", ""D2"", ""D5""]","[0.6986290264603423, 0.12455746922312558, 0.0]"
+Q1,when is laundry day.,"laundry day is monday.
+trash day is friday.
+dish soap is under the sink.
+guest towels are in the hall.
+spare bulbs are in the shed.
+when is laundry day.
+","smalll learning res models preveows.
+ingrametion learaning helps useful models models can learnung o",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.0693219649999719," the shed.
+when is laundry day.
+",153,True,"{""monday"": false}",5,"[""D1"", ""D2"", ""D5"", ""D3"", ""D4""]","[0.6986290264603423, 0.12455746922312558, 0.0, 0.0, 0.0]"
+Q2,when is trash day.,"trash day is friday.
+when is trash day.
+",the predicts probabilition paransmelld django application artificial intelligencers usefuse models l,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06766189600000416,"y is friday.
+when is trash day.
+",40,True,"{""friday"": true}",1,"[""D2""]",[0.6986290264603423]
+Q2,when is trash day.,"trash day is friday.
+laundry day is monday.
+when is trash day.
+",the predicts probabilition paransmelld django application artificial intelligencers usefuse models l,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07649809500003357,"y is monday.
+when is trash day.
+",63,True,"{""friday"": false}",2,"[""D2"", ""D1""]","[0.6986290264603423, 0.12455746922312558]"
+Q2,when is trash day.,"trash day is friday.
+laundry day is monday.
+dish soap is under the sink.
+when is trash day.
+",the predicts probabilition paransmelld django application artificial intelligencers usefuse models l,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06957830199996806,"er the sink.
+when is trash day.
+",92,True,"{""friday"": false}",3,"[""D2"", ""D1"", ""D5""]","[0.6986290264603423, 0.12455746922312558, 0.0]"
+Q2,when is trash day.,"trash day is friday.
+laundry day is monday.
+dish soap is under the sink.
+guest towels are in the hall.
+spare bulbs are in the shed.
+when is trash day.
+",the predicts probabilition paransmelld django application artificial intelligencers usefuse models l,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.08285197199995764,"in the shed.
+when is trash day.
+",151,True,"{""friday"": false}",5,"[""D2"", ""D1"", ""D5"", ""D3"", ""D4""]","[0.6986290264603423, 0.12455746922312558, 0.0, 0.0, 0.0]"
+Q3,where are guest towels.,"guest towels are in the hall.
+where are guest towels.
+",artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.5939473619999944,"e hall.
+where are guest towels.
+",54,True,"{""in the hall"": false}",1,"[""D3""]",[0.8944271909999161]
+Q3,where are guest towels.,"guest towels are in the hall.
+dish soap is under the sink.
+where are guest towels.
+",artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.21402004499998384,"e sink.
+where are guest towels.
+",83,True,"{""in the hall"": false}",2,"[""D3"", ""D5""]","[0.8944271909999161, 0.0]"
+Q3,where are guest towels.,"guest towels are in the hall.
+dish soap is under the sink.
+spare bulbs are in the shed.
+where are guest towels.
+",artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06644803599999705,"e shed.
+where are guest towels.
+",112,True,"{""in the hall"": false}",3,"[""D3"", ""D5"", ""D4""]","[0.8944271909999161, 0.0, 0.0]"
+Q3,where are guest towels.,"guest towels are in the hall.
+dish soap is under the sink.
+spare bulbs are in the shed.
+trash day is friday.
+laundry day is monday.
+where are guest towels.
+",artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter,a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06709243099999185,"monday.
+where are guest towels.
+",156,True,"{""in the hall"": false}",5,"[""D3"", ""D5"", ""D4"", ""D2"", ""D1""]","[0.8944271909999161, 0.0, 0.0, 0.0, 0.0]"
+Q4,where are spare bulbs.,"spare bulbs are in the shed.
+where are spare bulbs.
+","students unenchartificial intelligencers context tokearmers.
+the uning models previos.
+startificial ",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06958312899996599,"he shed.
+where are spare bulbs.
+",52,True,"{""in the shed"": false}",1,"[""D4""]",[0.8944271909999161]
+Q4,where are spare bulbs.,"spare bulbs are in the shed.
+dish soap is under the sink.
+where are spare bulbs.
+","students unenchartificial intelligencers context tokearmers.
+the uning models previos.
+startificial ",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07023290899996937,"he sink.
+where are spare bulbs.
+",81,True,"{""in the shed"": false}",2,"[""D4"", ""D5""]","[0.8944271909999161, 0.0]"
+Q4,where are spare bulbs.,"spare bulbs are in the shed.
+dish soap is under the sink.
+guest towels are in the hall.
+where are spare bulbs.
+","students unenchartificial intelligencers context tokearmers.
+the uning models previos.
+startificial ",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07382506900000863,"he hall.
+where are spare bulbs.
+",111,True,"{""in the shed"": false}",3,"[""D4"", ""D5"", ""D3""]","[0.8944271909999161, 0.0, 0.0]"
+Q4,where are spare bulbs.,"spare bulbs are in the shed.
+dish soap is under the sink.
+guest towels are in the hall.
+trash day is friday.
+laundry day is monday.
+where are spare bulbs.
+","students unenchartificial intelligencers context tokearmers.
+the uning models previos.
+startificial ",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.07192439399989325," monday.
+where are spare bulbs.
+",155,True,"{""in the shed"": false}",5,"[""D4"", ""D5"", ""D3"", ""D2"", ""D1""]","[0.8944271909999161, 0.0, 0.0, 0.0, 0.0]"
+Q5,where is dish soap.,"dish soap is under the sink.
+where is dish soap.
+","the charaning parammechantion rkware python runing rametersing res.
+trammechation rammechane canis.
+",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06948224899997513,"r the sink.
+where is dish soap.
+",49,True,"{""under the sink"": false}",1,"[""D5""]",[0.8944271909999161]
+Q5,where is dish soap.,"dish soap is under the sink.
+spare bulbs are in the shed.
+where is dish soap.
+","the charaning parammechantion rkware python runing rametersing res.
+trammechation rammechane canis.
+",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.08809852499996396,"n the shed.
+where is dish soap.
+",78,True,"{""under the sink"": false}",2,"[""D5"", ""D4""]","[0.8944271909999161, 0.0]"
+Q5,where is dish soap.,"dish soap is under the sink.
+spare bulbs are in the shed.
+guest towels are in the hall.
+where is dish soap.
+","students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.
+",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06784324899990679,"n the hall.
+where is dish soap.
+",108,True,"{""under the sink"": false}",3,"[""D5"", ""D4"", ""D3""]","[0.8944271909999161, 0.0, 0.0]"
+Q5,where is dish soap.,"dish soap is under the sink.
+spare bulbs are in the shed.
+guest towels are in the hall.
+trash day is friday.
+laundry day is monday.
+where is dish soap.
+","students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.
+",a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700,,,,,Pending response-level review; no quality score is invented.,0.06708158800006458," is monday.
+where is dish soap.
+",152,True,"{""under the sink"": false}",5,"[""D5"", ""D4"", ""D3"", ""D2"", ""D1""]","[0.8944271909999161, 0.0, 0.0, 0.0, 0.0]"

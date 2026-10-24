@@ -1,0 +1,27 @@
+[
+  {
+    "id": "D1",
+    "title": "laundry guide",
+    "text": "laundry day is monday."
+  },
+  {
+    "id": "D2",
+    "title": "trash guide",
+    "text": "trash day is friday."
+  },
+  {
+    "id": "D3",
+    "title": "guest towels",
+    "text": "guest towels are in the hall."
+  },
+  {
+    "id": "D4",
+    "title": "spare bulbs",
+    "text": "spare bulbs are in the shed."
+  },
+  {
+    "id": "D5",
+    "title": "dish soap",
+    "text": "dish soap is under the sink."
+  }
+]
