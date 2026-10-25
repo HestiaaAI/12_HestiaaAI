@@ -66,6 +66,12 @@ def benchmark_evidence(results_dir: Path):
                 df['benchmark_condition'] = df['device'].map({
                     'cpu':'Windows CPU / native FP32 / 4 threads',
                     'cuda':'Tesla T4 / native FP16'})
+            elif owner == 'P3' and (results_dir/'person3_benchmark_environment.json').exists():
+                environment=json.loads((results_dir/'person3_benchmark_environment.json').read_text(encoding='utf-8'))
+                def peer_condition(model_id):
+                    item=environment['models'][model_id]
+                    return f"Person 3 macOS arm64 / {item['device']} / {item['dtype']} / 16 GB unified memory"
+                df['benchmark_condition']=df.model_id.map(peer_condition)
             else:
                 df['benchmark_condition']=df['device']+' / owner environment metadata not yet supplied'
             for col in ('latency_seconds', 'tokens_per_second', 'output_tokens'):
@@ -152,7 +158,8 @@ def compare_costs(local_path: Path, api_path: Path):
     joined['local_minus_api_usd'] = joined.total_daily_cost_usd_local - joined.total_daily_cost_usd_api
     joined['cheaper'] = joined.local_minus_api_usd.map(
         lambda d: 'local' if d < 0 else 'api' if d > 0 else 'tie')
-    return joined.sort_values(['model_id', 'daily_active_users']), 'Validated 90 like-for-like daily cost comparisons.'
+    return joined.sort_values(['model_id', 'daily_active_users']), ('Validated 90 workload-aligned daily cost comparisons. '
+        'API rows reuse one comparable hosted model; this is not measured quality equivalence or 15 exact-model API quotes.')
 
 
 def api_rate_frontier(local_path: Path, gateway_daily_cost_usd=0):
@@ -183,8 +190,56 @@ def api_rate_frontier(local_path: Path, gateway_daily_cost_usd=0):
         (result.total_daily_cost_usd-gateway_daily_cost_usd)*1_000_000/
         (requests*result.output_tokens_per_request))
     result['rate_definition']='output_price_per_million + input/output token ratio * input_price_per_million'
-    result['evidence_type']='conditional threshold; API prices/gateway capacity not yet supplied'
+    result['evidence_type']='sensitivity threshold with assumed zero gateway; compare separately with supplied API estimates'
     return result
+
+
+def cost_findings(costs, status):
+    lines=['# Step 2.5: local/API cost analysis', '', status, '']
+    if costs.empty:
+        return '\n'.join(lines)
+    counts=costs.cheaper.value_counts()
+    lines += [f"API is cheaper in {counts.get('api',0)}/90 cases; local in {counts.get('local',0)}/90; ties {counts.get('tie',0)}.", '',
+        '## Workload, rates and scope', '',
+        'Both tables use one request/user/day, 256 input tokens and 500 output tokens, USD/day, '
+        'and assumptions ID `hestia-a7-256in-500out-r1-inference-only-v1`. '
+        'Person 3 uses one comparable `meta-llama/Llama-3.1-8B-Instruct` through Novita/Hugging Face '
+        'for every local roster model. Reported October 23 catalog rates are $0.02/million input '
+        'and $0.05/million output tokens, or $0.03012 per 1,000 requests. These supplied historical '
+        'rates are scenario inputs, not newly verified live quotes or 15 distinct exact-model offers.', '',
+        'Local hosting includes GPU pod compute, disk and a colocated thin handler. API includes '
+        'token charges and a separate Runpod 2-vCPU gateway with disk ($1.986667/day/replica). '
+        'Gateway capacity of 50 requests/s is assumed, using shared utilization/peak/service factors. '
+        'Both exclude the common Django/frontend/database baseline, egress, tax, labor, monitoring '
+        'and redundancy. Local RTX3090 costs $0.50/hour plus disk under Person 2’s assumptions. '
+        'Four throughput anchors are measured on T4; eleven are parameter-based estimates. '
+        'T4-to-3090 capacity transfer is unvalidated. This is inference-tier planning cost, not production TCO.', '',
+        '| DAU | Local daily cost range across 15 alternatives | API daily cost (one comparable) |',
+        '|---|---|---|']
+    for dau,group in costs.groupby('daily_active_users',sort=True):
+        lines.append(f"| {dau:,} | ${group.total_daily_cost_usd_local.min():,.6f}–${group.total_daily_cost_usd_local.max():,.6f} | ${group.total_daily_cost_usd_api.iloc[0]:,.6f} |")
+    crossings=crossover_intervals(costs)
+    lines += ['', '## Required analysis answers', '',
+        '1. Local is cheaper at none of the six tested traffic levels for any of the 15 alternatives under these supplied assumptions.',
+        '2. API is cheaper at all six levels (1k, 10k, 100k, 1m, 10m, 100m DAU). '
+        'The 15 API alternatives tie because they use the same hosted model and rates.',
+        f'3. There are {len(crossings)} observed cheaper-option changes between adjacent levels. '
+        'No exact DAU crossover is supported. Present costs favor API from launch through the modeled scale; '
+        'switch toward local only after revised rates/capacity show sustained savings and equivalent task quality, '
+        'latency and availability. Keep API overflow for temporary peaks, subject to budget and quotas.', '',
+        'The hosted 8B candidate has not run the shared prompts. Price similarity does not establish quality '
+        'equivalence; a cheap unqualified model cannot replace a qualified route. Huge calculated local fleets '
+        'and API loads do not establish actual inventory or provider quota availability. Do not sum the 15 '
+        'mutually exclusive local alternatives as one fleet.', '',
+        '## Separate price sensitivity', '',
+        '`api_rate_frontier.csv` and its figure retain an explicitly zero-gateway sensitivity case. '
+        'They are not the paired comparison above. For D users, r requests/user, local cost L/day, '
+        'gateway A/day and input/output rates pi/po in USD per million tokens:', '',
+        '`API/day = A + D*r*(256*pi + 500*po)/1,000,000`.', '',
+        '`b = po + (256/500)*pi; b_break_even = (L-A)*1,000,000/(D*r*500)`.', '',
+        'Local is cheaper above this price threshold; API below it, conditional on comparable quality/scope. '
+        'Replica ceilings can cause multiple crossings; use all paired points rather than extrapolating one universal break-even.']
+    return '\n'.join(lines)+'\n'
 
 
 def performance_findings(data, coverage, models, categories):
@@ -306,6 +361,7 @@ def write_analysis(repo_root: Path):
         frontier.to_csv(out/'api_rate_frontier.csv',index=False)
     save_analysis_plots(out,model,frontier)
     costs, status = compare_costs(repo_root/'a7/results/local_costs.csv', repo_root/'a7/results/api_costs.csv')
+    (out/'cost_analysis.md').write_text(cost_findings(costs,status),encoding='utf-8')
     if not costs.empty:
         costs.to_csv(out/'cost_comparison.csv', index=False)
         crossover_intervals(costs).to_csv(out/'crossover_intervals.csv', index=False)

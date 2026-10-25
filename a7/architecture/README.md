@@ -23,7 +23,7 @@ SmolLM outputs and verifies response hashes before applying them. Student signof
 is still pending. It will reject changed responses; inspect those before reusing
 the old scores. Other models initially receive the shared automated first pass.
 
-Local outcome: 25/75 successful float32 evaluations. TinyLlama hit Windows
+Initial local outcome: 25/75 successful float32 evaluations; TinyLlama later completed on Colab (50/75 current). TinyLlama hit Windows
 paging-file error 1455; Llama returned gated repository HTTP 401. The float16 trial
 was stopped at high RAM utilization; it remains a separate partial experiment.
 Use `../architecture_gpu_benchmark.ipynb` for a common GPU/float16 run after Llama access
@@ -119,26 +119,41 @@ uses the evaluation set for selection and must be disclosed. It preserves all
 four K results in the source data and does not imply unseen-question accuracy.
 The five questions and baseline/RAG evidence are now available and auto-loaded
 from Person 2's reviewed export when the complete three-condition input file is
-absent. Missing fine-tuned responses remain explicitly pending; they are not zeros.
+absent. The complete three-condition input is now generated from both peers by `python -m a7.architecture_integrate_peers`. Raw automatic scores are retained separately from continuation-level reviews.
 
 ## Integration checklist
 
 - [ ] Full team: 375 successful rows; all scores reviewed, model/prompt keys unique.
 - [x] Hardware and quantization labeled; no cross-condition fastest-model claim.
 - [x] Person 2: local 90-row itemized costs and assumptions.
-- [ ] Person 3: API 90-row itemized costs and assumptions.
+- [x] Person 3: API 90-row itemized costs and assumptions.
 - [x] Person 2: five questions, facts, baseline and 20 RAG outputs.
-- [ ] Person 3: matching original baseline, five fine-tuned outputs and changed weights.
-- [ ] Refresh comparison Markdown and write empirical conclusions in system_design.md.
-- [ ] Execute final notebooks, check outputs and remove pending placeholders.
-- [ ] Keep checkpoints and model caches out of Git and submission.
+- [x] Person 3: matching original baseline, five fine-tuned outputs and changed-weight evidence.
+- [x] Refresh comparison Markdown and write empirical conclusions in system_design.md.
+- [x] Execute integration notebooks and remove obsolete teammate-input placeholders. The gated-model blocker remains explicit.
+- [x] Keep checkpoints and model caches out of Git and submission.
 
-See `STATUS.md` for current completion and external blockers. Conditional API
-price thresholds are generated from local costs; they do not replace Person 3's
-missing provider/rate/infrastructure evidence. Available benchmark analysis is
+See `STATUS.md` for current completion and external blockers. Paired local/API comparisons now use both 90-row tables. Conditional API price thresholds remain a separate zero-gateway sensitivity analysis. Available benchmark analysis is
 split by measured hardware/precision condition, including the T4/NF4 results.
 
 Known rubric issue: Person 1 retained A6's five size bins (all ≤7.62B), rather than
 the illustrative <1B/1–3B/3–7B/7–30B/30B+ bins. The brief calls those ranges an
 example and requires the same A6 models with three/category. Preserve the shared
 registry and state the actual ranges; do not relabel a 7B model as 30B+.
+
+## Person 3 integration received October 25
+
+Main PR #40 supplies 100 benchmark rows, 90 API estimates and five before/after
+fine-tuning responses. Team completion is now 350/375. Only Llama's 25 rows remain
+blocked by author approval. API is cheaper in all modeled pairs; the single paid
+Llama-3.1-8B comparable has not been quality-qualified.
+
+`architecture_integrate_peers` validates all five pre-training baseline matches,
+question identity, original state and generation settings. It retains source
+phrase-match scores but reviews contradictions on the same 1–10 scale as baseline/RAG.
+The final comparison uses actual source continuations, not substituted retrieval answers.
+
+`architecture_verify_finetune` independently trains the supplied tiny model in
+memory without changing checkpoints or source exports. Local state differs from
+the Mac export and 4/5 continuations match exactly; see the reproduction report.
+Training questions overlap the evaluation questions, so this is in-sample evidence.
