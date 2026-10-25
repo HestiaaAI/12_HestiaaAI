@@ -1,0 +1,757 @@
+{
+  "joined_rows": 90,
+  "by_traffic": {
+    "Prototype": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    },
+    "Early Startup": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    },
+    "Growing Product": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    },
+    "Large Platform": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    },
+    "Mass Consumer App": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    },
+    "Global Platform": {
+      "api": 15,
+      "local": 0,
+      "tie": 0
+    }
+  },
+  "rows": [
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 12.333333,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 49.333333,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 431.666667,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 4255.0,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 42513.0,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "distilbert/distilgpt2",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 425093.0,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 12.333333,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 49.333333,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 431.666667,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 4255.0,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 42513.0,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "facebook/opt-125m",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 425093.0,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 12.333333,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 49.333333,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 456.333333,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 4538.666667,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 45300.333333,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 452978.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 12.333333,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 111.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1023.666667,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 10187.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 101799.333333,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM-360M-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1017931.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 12.333333,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 111.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1023.666667,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 10187.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 101799.333333,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1017931.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 135.666667,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1332.0,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 13221.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 132188.666667,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2-0.5B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1321800.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 135.666667,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1344.333333,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 13418.666667,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 134088.0,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen3-0.6B",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1340880.0,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 148.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1406.0,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 14023.0,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 140217.666667,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "TinyLlama/TinyLlama-1.1B-Chat-v1.0",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1402164.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 148.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1443.0,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 14380.666667,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 143745.0,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1437388.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 148.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1455.333333,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 14479.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 144793.333333,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "HuggingFaceTB/SmolLM2-1.7B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1447908.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 209.666667,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 1985.666667,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 19844.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 198357.0,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-3B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 1983483.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 209.666667,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 2035.0,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 20239.0,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 202377.666667,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 2023690.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 24.666667,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 222.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 2220.0,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 22187.666667,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 221790.333333,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "microsoft/Phi-3.5-mini-instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 2217903.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 37.0,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 320.666667,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 3120.333333,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 31092.333333,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 310824.666667,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "mistralai/Mistral-7B-Instruct-v0.3",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 3108234.333333,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Prototype",
+      "daily_active_users": 1000,
+      "local_usd": 37.0,
+      "api_usd": 2.016787,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Early Startup",
+      "daily_active_users": 10000,
+      "local_usd": 333.0,
+      "api_usd": 2.287867,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Growing Product",
+      "daily_active_users": 100000,
+      "local_usd": 3268.333333,
+      "api_usd": 4.998667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Large Platform",
+      "daily_active_users": 1000000,
+      "local_usd": 32671.0,
+      "api_usd": 32.106667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Mass Consumer App",
+      "daily_active_users": 10000000,
+      "local_usd": 326697.666667,
+      "api_usd": 321.066667,
+      "cheaper": "api"
+    },
+    {
+      "model_id": "Qwen/Qwen2.5-7B-Instruct",
+      "traffic_category": "Global Platform",
+      "daily_active_users": 100000000,
+      "local_usd": 3266865.666667,
+      "api_usd": 3204.706667,
+      "cheaper": "api"
+    }
+  ]
+}

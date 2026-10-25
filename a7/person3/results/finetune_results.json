@@ -1,0 +1,245 @@
+{
+  "source_checkpoint": "/Users/anushkagosavi/Documents/INFO490/hestiaaAI 2/a7/slm/checkpoints/selected_baseline.pt",
+  "original_state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "finetuned_state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+  "weights_updated": true,
+  "architecture": "TinyTransformerLM embedding 48, heads 2, layers 1, feedforward 192, context 32",
+  "knowledge_base": "a7/slm/knowledge_base",
+  "examples": [
+    "laundry day is monday.",
+    "trash day is friday.",
+    "guest towels are in the hall.",
+    "spare bulbs are in the shed.",
+    "dish soap is under the sink.",
+    "when is laundry day.\nlaundry day is monday.",
+    "when is trash day.\ntrash day is friday.",
+    "where are guest towels.\nguest towels are in the hall.",
+    "where are spare bulbs.\nspare bulbs are in the shed.",
+    "where is dish soap.\ndish soap is under the sink."
+  ],
+  "example_count": 10,
+  "documents": [
+    {
+      "id": "D1",
+      "title": "laundry guide",
+      "text": "laundry day is monday."
+    },
+    {
+      "id": "D2",
+      "title": "trash guide",
+      "text": "trash day is friday."
+    },
+    {
+      "id": "D3",
+      "title": "guest towels",
+      "text": "guest towels are in the hall."
+    },
+    {
+      "id": "D4",
+      "title": "spare bulbs",
+      "text": "spare bulbs are in the shed."
+    },
+    {
+      "id": "D5",
+      "title": "dish soap",
+      "text": "dish soap is under the sink."
+    }
+  ],
+  "questions": [
+    {
+      "question_id": "Q1",
+      "question": "when is laundry day.",
+      "expected_facts": [
+        "monday"
+      ],
+      "source_document_ids": [
+        "D1"
+      ]
+    },
+    {
+      "question_id": "Q2",
+      "question": "when is trash day.",
+      "expected_facts": [
+        "friday"
+      ],
+      "source_document_ids": [
+        "D2"
+      ]
+    },
+    {
+      "question_id": "Q3",
+      "question": "where are guest towels.",
+      "expected_facts": [
+        "in the hall"
+      ],
+      "source_document_ids": [
+        "D3"
+      ]
+    },
+    {
+      "question_id": "Q4",
+      "question": "where are spare bulbs.",
+      "expected_facts": [
+        "in the shed"
+      ],
+      "source_document_ids": [
+        "D4"
+      ]
+    },
+    {
+      "question_id": "Q5",
+      "question": "where is dish soap.",
+      "expected_facts": [
+        "under the sink"
+      ],
+      "source_document_ids": [
+        "D5"
+      ]
+    }
+  ],
+  "prompt_rule": "question plus one newline, matching Person 2 baseline prompts",
+  "generation": {
+    "seed": 42,
+    "temperature": 0.7,
+    "max_new_tokens": 100,
+    "device": "cpu",
+    "threads": 2
+  },
+  "fine_tune": {
+    "steps": 300,
+    "batch_size": 16,
+    "learning_rate": 0.001,
+    "weight_decay": 0.01,
+    "seed": 42,
+    "device": "cpu",
+    "threads": 2
+  },
+  "initial_loss": 4.691485404968262,
+  "final_loss": 0.22247709333896637,
+  "training_seconds": 0.45,
+  "loss_history_every_50": [
+    4.691485404968262,
+    0.6691920757293701,
+    0.411397248506546,
+    0.31723445653915405,
+    0.24196018278598785,
+    0.2709999680519104,
+    0.22247709333896637
+  ],
+  "baseline_matches_person2": 5,
+  "before": [
+    {
+      "question_id": "Q1",
+      "prompt": "when is laundry day.\n",
+      "response": "the predicts probabmenters are use models and un learning res artifining paplications.\nstudents crea",
+      "person2_baseline_response": "the predicts probabmenters are use models and un learning res artifining paplications.\nstudents crea",
+      "matches_person2_baseline": true,
+      "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q2",
+      "prompt": "when is trash day.\n",
+      "response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+      "person2_baseline_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l",
+      "matches_person2_baseline": true,
+      "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q3",
+      "prompt": "where are guest towels.\n",
+      "response": "artificial inngual networks are pytok\nstentraining hang helps artificial intelligencers artuage mode",
+      "person2_baseline_response": "artificial inngual networks are pytok\nstentraining hang helps artificial intelligencers artuage mode",
+      "matches_person2_baseline": true,
+      "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q4",
+      "prompt": "where are spare bulbs.\n",
+      "response": "attention rkeach.\ntrach.\ntraning he students useful softworks learne predicts artuage models can re ",
+      "person2_baseline_response": "attention rkeach.\ntrach.\ntraning he students useful softworks learne predicts artuage models can re ",
+      "matches_person2_baseline": true,
+      "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q5",
+      "prompt": "where is dish soap.\n",
+      "response": "students expe models chartificial intelligencers con prevers artificial intelligencers.\nattion usegr",
+      "person2_baseline_response": "students expe models chartificial intelligencers con prevers artificial intelligencers.\nattion usegr",
+      "matches_person2_baseline": true,
+      "state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    }
+  ],
+  "after": [
+    {
+      "question_id": "Q1",
+      "prompt": "when is laundry day.\n",
+      "response": "where are in the shed.\nwhere is dish soap.\ndish soap is under the hall.\nspare bulbs are bulbs are gu",
+      "state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q2",
+      "prompt": "when is trash day.\n",
+      "response": "when is laundry day is monday.\nwhen is laundry day.\nlaundry day.\nwhen is laundry day.\nlaundry day.\ng",
+      "state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q3",
+      "prompt": "where are guest towels.\n",
+      "response": "guest towels are in the shed.\nwhen is laundry day.\nguest towels are are in the hall.\nspare guest tow",
+      "state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+      "factual_accuracy": 10,
+      "relevance": 7,
+      "unsupported_information": false,
+      "review_notes": "Fact-phrase check found 1/1 expected facts (in the hall). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q4",
+      "prompt": "where are spare bulbs.\n",
+      "response": "spare in the shed.\ndish soap is under the shed.\nwhen are in the hall.\nspare guest towels.\nguest towe",
+      "state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+      "factual_accuracy": 10,
+      "relevance": 7,
+      "unsupported_information": false,
+      "review_notes": "Fact-phrase check found 1/1 expected facts (in the shed). A hit only means the phrase occurs in the continuation."
+    },
+    {
+      "question_id": "Q5",
+      "prompt": "where is dish soap.\n",
+      "response": "dish soap.\ndish soap is under the shed.\ndish soap is under the shed.\nwhere are bulbs are in the hall",
+      "state_sha256": "be99d1b3affe37cfe7c7bed57cd0f19bcdce91daaf7be85c54e48799483fcecb",
+      "factual_accuracy": 0,
+      "relevance": 2,
+      "unsupported_information": true,
+      "review_notes": "Fact-phrase check found 0/1 expected facts (none). A hit only means the phrase occurs in the continuation."
+    }
+  ],
+  "torch_version": "2.14.1"
+}
