@@ -1,0 +1,51 @@
+model_id,prompt_type,benchmark_condition,evaluations,mean_quality,format_pass_rate,median_latency_s,meets_proposed_gate
+HuggingFaceTB/SmolLM-360M-Instruct,action_planning,Windows CPU / native FP32 / 4 threads,5,2.8,0.0,18.4883,False
+HuggingFaceTB/SmolLM-360M-Instruct,classification,Windows CPU / native FP32 / 4 threads,5,1.0,0.0,19.1003,False
+HuggingFaceTB/SmolLM-360M-Instruct,priority_prediction,Windows CPU / native FP32 / 4 threads,5,1.0,0.0,18.5989,False
+HuggingFaceTB/SmolLM-360M-Instruct,structured_extraction,Windows CPU / native FP32 / 4 threads,5,3.2,0.0,19.5946,False
+HuggingFaceTB/SmolLM-360M-Instruct,summarization,Windows CPU / native FP32 / 4 threads,5,4.4,0.0,19.5611,False
+HuggingFaceTB/SmolLM2-1.7B-Instruct,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,3.6,0.2,0.8802,False
+HuggingFaceTB/SmolLM2-1.7B-Instruct,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,4.8,0.8,0.3709,False
+HuggingFaceTB/SmolLM2-1.7B-Instruct,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.2,1.0,0.3259,False
+HuggingFaceTB/SmolLM2-1.7B-Instruct,structured_extraction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.8,0.4,5.7004,False
+HuggingFaceTB/SmolLM2-1.7B-Instruct,summarization,Tesla T4 / NF4 weights / float32 compute / eager,5,5.4,0.0,1.6777,False
+HuggingFaceTB/SmolLM2-360M-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,5.4,0.0,3.8404,False
+HuggingFaceTB/SmolLM2-360M-Instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.2631,False
+HuggingFaceTB/SmolLM2-360M-Instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.5428,False
+HuggingFaceTB/SmolLM2-360M-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,6.6,0.0,4.1153,False
+HuggingFaceTB/SmolLM2-360M-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,5.2,0.0,0.6045,False
+Qwen/Qwen2-0.5B-Instruct,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,4.4,0.0,3.9073,False
+Qwen/Qwen2-0.5B-Instruct,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,4.6,0.8,0.1549,False
+Qwen/Qwen2-0.5B-Instruct,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.2,1.0,0.231,False
+Qwen/Qwen2-0.5B-Instruct,structured_extraction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.4,0.0,2.8461,False
+Qwen/Qwen2-0.5B-Instruct,summarization,Tesla T4 / NF4 weights / float32 compute / eager,5,6.4,1.0,1.4941,False
+Qwen/Qwen2.5-1.5B-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,2.8636,False
+Qwen/Qwen2.5-1.5B-Instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,6.4,0.6,0.2101,False
+Qwen/Qwen2.5-1.5B-Instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,4.6,0.4,0.2425,False
+Qwen/Qwen2.5-1.5B-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,10.0,1.0,6.9886,True
+Qwen/Qwen2.5-1.5B-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,8.6,1.0,1.5895,True
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,action_planning,Tesla T4 / native FP16,5,4.0,0.0,5.8223,False
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,classification,Tesla T4 / native FP16,5,1.0,0.0,2.5477,False
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,priority_prediction,Tesla T4 / native FP16,5,1.0,0.0,3.5513,False
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,structured_extraction,Tesla T4 / native FP16,5,3.2,0.0,5.9035,False
+TinyLlama/TinyLlama-1.1B-Chat-v1.0,summarization,Tesla T4 / native FP16,5,5.6,0.0,3.9821,False
+distilbert/distilgpt2,action_planning,Apple MPS / native model / exact GPU unrecorded,5,1.8,0.0,0.7815,False
+distilbert/distilgpt2,classification,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7715,False
+distilbert/distilgpt2,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7785,False
+distilbert/distilgpt2,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,4.0,0.0,0.8068,False
+distilbert/distilgpt2,summarization,Apple MPS / native model / exact GPU unrecorded,5,3.6,0.0,0.7723,False
+facebook/opt-125m,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,1.4,0.0,3.1447,False
+facebook/opt-125m,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.2003,False
+facebook/opt-125m,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.125,False
+facebook/opt-125m,structured_extraction,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.2301,False
+facebook/opt-125m,summarization,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.1453,False
+microsoft/Phi-3.5-mini-instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,7.6,0.2,19.5454,False
+microsoft/Phi-3.5-mini-instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,0.695,False
+microsoft/Phi-3.5-mini-instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,3.8,0.0,4.8709,False
+microsoft/Phi-3.5-mini-instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,8.8,0.6,19.0518,False
+microsoft/Phi-3.5-mini-instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,2.8656,False
+mistralai/Mistral-7B-Instruct-v0.3,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,8.2,0.2,14.7271,False
+mistralai/Mistral-7B-Instruct-v0.3,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,10.0,1.0,1.0496,True
+mistralai/Mistral-7B-Instruct-v0.3,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.8,0.6,1.1584,False
+mistralai/Mistral-7B-Instruct-v0.3,structured_extraction,Tesla T4 / NF4 weights / float32 compute / eager,5,7.4,0.4,13.1331,False
+mistralai/Mistral-7B-Instruct-v0.3,summarization,Tesla T4 / NF4 weights / float32 compute / eager,5,9.2,1.0,3.7723,True

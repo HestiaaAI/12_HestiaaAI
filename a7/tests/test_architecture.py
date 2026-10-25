@@ -6,7 +6,7 @@ from pathlib import Path
 import unittest
 
 from a7.benchmark_contract import MODEL_REGISTRY
-from a7.architecture_analysis import TRAFFIC, benchmark_evidence, compare_costs, crossover_intervals, routing_simulation
+from a7.architecture_analysis import TRAFFIC, benchmark_evidence, compare_costs, crossover_intervals, routing_simulation, api_rate_frontier
 from a7.architecture_comparison import comparison_markdown
 
 
@@ -44,6 +44,12 @@ class ArchitectureTests(unittest.TestCase):
             write('api.csv', api)
             with self.assertRaisesRegex(ValueError, 'workload'):
                 compare_costs(root/'local.csv', root/'api.csv')
+            frontier=api_rate_frontier(root/'local.csv')
+            self.assertEqual(len(frontier),90)
+            prototype=frontier[frontier.daily_active_users.eq(1000)]
+            self.assertTrue((prototype.api_blended_rate_break_even_usd_per_million_output_tokens==20).all())
+            with self.assertRaisesRegex(ValueError,'nonnegative'):
+                api_rate_frontier(root/'local.csv',gateway_daily_cost_usd=-1)
 
     def test_routing_load_is_conserved(self):
         rows = routing_simulation()
@@ -78,6 +84,16 @@ class ArchitectureTests(unittest.TestCase):
             path.write_text(json.dumps(evidence))
             with self.assertRaisesRegex(ValueError, 'preserve original weights'):
                 comparison_markdown(path, manifest_path)
+
+    def test_supplied_rag_appears_without_fabricating_fine_tuning(self):
+        root=Path(__file__).resolve().parents[1]
+        text=comparison_markdown(root/'architecture/inputs/slm_comparison.json',
+                                 root/'slm/results/selected_checkpoint.json')
+        self.assertIn('when is laundry day.',text)
+        self.assertIn('RAG Top-K = 1',text)
+        self.assertIn('Pending fine-tuning evidence',text)
+        self.assertIn('No fine-tuned weights or outputs were supplied',text)
+        self.assertNotIn('awaiting shared question',text)
 
 
 if __name__ == '__main__':

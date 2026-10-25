@@ -1,7 +1,9 @@
 # Hestia multi-model system — Architecture lead
 
-Status: routing design and integration are implemented. Final empirical conclusions
-depend on completing the 375 evaluations and receiving Persons 2 and 3's costs.
+Status: routing design, integration of 250 benchmark evaluations, Person 2's 90
+local-hosting estimates, conditional API price thresholds, and the five-question
+baseline/RAG comparison are implemented. Final conclusions still require Llama
+access and Person 3's benchmark, API-cost and fine-tuning evidence.
 The small classroom SLM experiment is separate from the 15 Hugging Face models.
 
 ## Evidence and experiment boundaries
@@ -82,9 +84,10 @@ labels, required fields and task count before accepting structured output. Prese
 user confirmation for actions the application normally requires; generated text
 must not claim an appointment, purchase or repair was completed.
 
-Local candidate roles are SmolLM-360M or TinyLlama for routine requests and the
-quality-qualified medium/large roster models for harder requests. These are
-candidate assignments pending observed per-task quality. Person 3 must identify
+Available local candidate roles are Qwen2.5-1.5B for extraction/summarization and
+Mistral-7B/NF4 for classification/summarization, based on the current task gates.
+SmolLM-360M and TinyLlama do not qualify for automatic acceptance in this run.
+Person 3 must identify
 the actual paid Hugging Face provider/model, availability and rate: the diagram's
 API target is a configurable role, not a claim that a particular model is served.
 
@@ -92,14 +95,14 @@ API target is a configurable role, not a claim that a particular model is served
 
 All numeric thresholds below are initial design assumptions, not measured optima.
 Define local utilization as busy worker slots / configured worker slots. Initial
-quality gate: mean manually reviewed score at least 8/10 in that task type, with
+quality gate: mean assisted-review score at least 8/10 in that task type, with
 all required schema checks passing. The small sample needs production validation.
 
 | Scenario | Trigger and routing rule | Local/API choice | Latency effect | Cost effect | Quality control |
 |---|---|---|---|---|---|
-| Normal household coordination | Classify an errand, summarize a chore, or extract independent tasks. Check household-scoped cache, then route to the cheapest qualified local model. | SmolLM-360M or TinyLlama if qualified; paid API for one failed validation. | Avoids API network time on local/cache hits; local queueing still matters. | Cache avoids generation; local handling avoids API token charges when spare capacity exists. | Validate labels/JSON, retain every user concern, prohibit invented dates. Escalate only once. |
+| Normal household coordination | Classify an errand, summarize a chore, or extract independent tasks. Check household-scoped cache, then route by task-specific qualification. | Qwen2.5-1.5B candidate for extraction/summaries; Mistral-7B/NF4 candidate for classification/summaries. API escalation requires separate qualification. | Avoids network time on local/cache hits; queueing and target-hardware validation still matter. | Cache avoids generation; actual cheapest qualified route awaits API costing. | Validate labels/JSON, retain every user concern, prohibit invented dates. Escalate once or request clarification. |
 | Evening household peak | Local utilization exceeds 70% or queue wait exceeds an assumed 2 s. Keep short validated routine requests local and send complex requests to API while its quota/budget permits. | Small local pool; approved API for overflow/complexity. | Reduces local queue growth, but API network and throttling can add delay. | Uses existing local capacity while paying for overflow instead of provisioning for every spike. Savings require measured utilization. | Same validation gates on both paths; expose an honest retry when both are saturated. |
-| Complex household plan | Multi-step moving plan, several dependencies, or context exceeding the small model's supported budget. Route directly to the best qualified complex-task model. | Qualified Llama-3.2-3B or larger team model if capacity allows; approved API otherwise. | Direct routing avoids the delay of an unnecessary small-model attempt; larger inference may still be slower. | Higher per-request expense is reserved for complex requests. | Check dependency order, budget constraints, completeness and unsupported claims. A larger parameter count is not a quality guarantee. |
+| Complex household plan | Multi-step moving plan or several dependencies. Only enable an automatic route after it passes planning quality and format gates. | No currently observed model passes this gate; clarify or queue for review. A qualified API/larger model is a future route after evidence arrives. | Avoids a known-unqualified attempt; review/clarification adds visible wait. | Caps wasted retries; future API expense is reserved for tasks it actually handles well. | Check dependency order, budget constraints, completeness and unsupported claims. A larger parameter count is not a quality guarantee. |
 | Budget pressure | Daily API spend reaches 80% of configured budget. Prefer valid versioned cache and qualified local model; reserve remaining API spend for complex/high-urgency cases. | Small local pool first; API only within reserve. | Local processing/cache can be fast; reduced API use can increase local wait. | Enforces a forecast-based spend cap; calculate remaining requests from actual input/output rates. | Never silently lower the minimum quality threshold. Clarify, queue or decline when no qualified route is affordable. |
 | Local overload or outage | Local utilization exceeds 90%, repeated local failures, or no healthy worker. Open a circuit breaker and route eligible requests to API. | Healthy local workers for a limited probe; approved API for eligible traffic. | Stops repeated calls to failed workers; bounds retry time. API outage requires queue/retry response. | Temporary API expense is traded against lost requests; cap retries and queue size to limit cost. | Apply identical validators; enforce deadline, provider quota and user-data rules. Recover local traffic gradually after successful health probes. |
 
@@ -132,7 +135,9 @@ It predicts load only; no simulated speed, quality or savings is presented as fa
 
 ## Local versus API cost comparison (Step 2.5)
 
-Pending Persons 2 and 3's 90-row cost tables. No observed crossover is available yet.
+Person 2's 90-row local table is integrated; Person 3's API table is absent. No
+observed local/API crossover is available yet. The completed conditional analysis
+is in `results/architecture/cost_analysis.md` and `api_rate_frontier.csv`.
 Use the normalized input contract in `architecture/README.md`; preserve their original
 tables and record each conversion. Both tables must use the same workload,
 input/output token lengths, currency, day length and traffic counts.
@@ -169,7 +174,23 @@ no defensible universal claim that local is cheaper above a particular DAU yet.
 
 ## Performance analysis (Step 1.6)
 
-Current supplied evidence: Person 1's 100-row CSV reports mean scores of 7.56 for
+The updated ten-model/250-response findings are in
+`results/architecture/performance_findings.md`. Mistral-7B has the highest available
+mean score (8.12/10) in the T4/NF4 condition. The observed Large-bin mean is 7.72,
+but only two of three Large models are available; Compact is the only fully covered
+bin (75/75 rows, mean 3.84). These observations do not establish a complete
+five-category ranking or isolate size from quantization and training differences.
+
+The available task-level quality/format gates qualify Qwen2.5-1.5B for extraction
+and summarization, and Mistral-7B/NF4 for classification and summarization. No
+available model passes the current gate for priority prediction or action planning.
+Therefore the router must clarify, queue for review, or use an independently
+qualified API model for those tasks; it must not silently choose an unqualified
+small model merely because it is cheaper. The API target remains unpriced and
+unqualified until Person 3's provider/model evidence arrives. These candidates
+must be retested on the planned serving hardware before deployment.
+
+Within the supplied Person 1 subset, the 100-row CSV reports mean scores of 7.56 for
 Qwen2.5-1.5B, 7.32 for Phi-3.5-mini, 3.84 for SmolLM2-360M and 2.28 for distilgpt2.
 According to those supplied rubric scores, larger models did not always win:
 Qwen2.5-1.5B scored 10 versus Phi-3.5-mini's 7 on `extraction-02`, and 10 versus 1
@@ -189,9 +210,20 @@ rubric assessment; heuristic keyword scores alone are insufficient evidence.
 For speed/quality balance, first require the task quality threshold, then compare
 latency and throughput among qualifying models tested on the same hardware/settings.
 Report the Pareto frontier rather than declaring a winner from incomparable devices.
-With only Person 1 evidence, conclusions are preliminary, not a 15-model result.
+The 250 available rows support provisional findings, not a complete 15-model result.
 
 ## Assignment 2: baseline, RAG and fine-tuning
+
+Person 2's actual five-question baseline and 20 RAG outputs are now integrated into
+`slm/architecture_comparison.ipynb`, the submitted SLM notebook's Markdown section,
+and `results/architecture/slm_comparison.md`. All baseline/RAG factual accuracy
+scores are 1/10; no retrieved household fact was answered correctly. Top-K=1 is
+selected by the documented lower-K tie rule. Four of five selected RAG continuations
+differ from baseline, but response change does not establish factual improvement.
+At Top-K=1 only the laundry and trash facts survive in full in the initial visible
+context; at K=2,3,5 none of the five complete expected facts survives. Fine-tuning
+responses, a matched pre-training baseline and changed-weight evidence remain
+absent, so the three-condition accuracy winner cannot be named.
 
 See `slm/architecture_comparison.ipynb`, whose Markdown comparison table belongs in the
 submitted SLM notebook. Use Person 2's five exact questions and facts, not new

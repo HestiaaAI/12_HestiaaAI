@@ -84,3 +84,12 @@ missing costs or responses. `system_design.md` contains five Hestia routing
 scenarios and the local/API comparison methodology. `slm/architecture_comparison.ipynb`
 verifies the original checkpoint and prepares the three-condition comparison;
 the comparison Markdown is also included in the submitted SLM notebook.
+
+The October 25 integration includes Person 2's 100 assessed benchmarks, 90 local
+cost estimates, five shared questions and baseline/RAG exports. Available team
+coverage is 250/375 successful evaluations. See `architecture/STATUS.md` for the
+remaining external inputs, `results/architecture/performance_findings.md` for the
+condition-separated findings, and `results/architecture/cost_analysis.md` for
+conditional API price thresholds. All 25 exported SLM baseline/RAG continuations
+were independently reproduced exactly without changing weights. Fine-tuning
+responses and actual API crossover conclusions remain pending Person 3's handoff.
