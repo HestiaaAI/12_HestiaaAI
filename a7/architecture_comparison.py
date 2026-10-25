@@ -74,6 +74,27 @@ def comparison_markdown(path: Path, manifest_path: Path):
              f'RAG Top-K = {chosen}, selected by highest mean factual accuracy with ties resolved by lower K. '
              'Selection uses these same five evaluation questions; this is descriptive, not held-out evaluation.', '',
              '| Question | Baseline SLM | SLM + RAG | Fine-tuned SLM |', '|---|---|---|---|']
+    if evidence.get('integration'):
+        integration=evidence['integration']
+        training=integration['training']
+        table[2:2]=[integration['scoring_method'], '',
+            f"All {integration['baseline_matches']}/5 pre-training baselines match Person 2 exactly. "
+            f"Person 3 reports {training['example_count']} examples and 300 training steps, loss "
+            f"{training['initial_loss']:.4f} → {training['final_loss']:.4f}; recorded training time "
+            f"{training['training_seconds']:.2f} seconds on their machine. Original state "
+            f"`{training['original_state_sha256']}`; fine-tuned state `{training['finetuned_state_sha256']}`. "
+            'Baseline/RAG retain the original state; fine-tuning changes it. Timing is the supplied training-loop measurement, not end-to-end runtime.', '',
+            integration['limitations'], '',
+            'The original phrase-matching checker gives 10/10 to Q3 and Q4, although both continuations mix correct phrases with wrong facts. '
+            'The final table uses the disclosed continuation-level review and flags unsupported information in all five tuned answers. '
+            'Fine-tuning learns household wording but produces no wholly correct, contradiction-free answer in this set.', '']
+        if integration.get('independent_reproduction'):
+            check=integration['independent_reproduction']
+            table[2:2]=[f"Independent Windows retraining reproduces {check['matching_responses']}/{check['total_responses']} "
+                'fine-tuned continuations exactly; Q4 differs. The final state hash also differs from the Mac export. '
+                f"Weights change locally and loss ends at {check['local_final_loss']:.4f}. "
+                'This verifies the training recipe with a cross-platform numerical limit, not byte-identical checkpoint reproduction. '
+                'The table retains Person 3’s source continuations.', '']
     totals = {c: {'accuracy': 0, 'relevance': 0, 'unsupported': 0} for c in ('Baseline', 'RAG', 'Fine-tuned')}
     notes = []
     for q in questions:
@@ -117,4 +138,4 @@ def comparison_markdown(path: Path, manifest_path: Path):
               '3. RAG is easier to maintain as facts change because knowledge documents can be updated without retraining model weights.',
               '4. For a startup with frequently changing policies, retrieval is the maintenance-oriented choice, provided the model can use the retrieved context. Interpret this classroom SLM’s actual quality scores in light of its 32-character window.',
               '5. RAG and fine-tuning can be combined: tune the model’s behavior and retrieve current facts at inference time. That combined condition was not tested here.']
-    return '\n'.join(table)
+    return '\n'.join(line.rstrip() for line in table)

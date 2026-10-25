@@ -1,9 +1,13 @@
 model_id,model_category,device,benchmark_condition,max_new_tokens,evaluations,scored,mean_quality,median_latency_s,p95_latency_s,median_tokens_s
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),cpu,Windows CPU / native FP32 / 4 threads,220,25,25,2.48,19.0588,19.95602,11.4717
 HuggingFaceTB/SmolLM2-1.7B-Instruct,Medium (1.6B–<3.5B),cuda,Tesla T4 / NF4 weights / float32 compute / eager,220,25,25,4.96,0.8802,6.786399999999996,20.5394
+HuggingFaceTB/SmolLM2-135M-Instruct,Ultra-light (<0.2B),mps,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,220,25,25,2.56,1.6161,5.45758,37.1266
 HuggingFaceTB/SmolLM2-360M-Instruct,Compact (0.2B–<0.6B),mps,Apple MPS / native model / exact GPU unrecorded,220,25,25,3.84,0.5633,4.1776599999999995,50.8544
 Qwen/Qwen2-0.5B-Instruct,Compact (0.2B–<0.6B),cuda,Tesla T4 / NF4 weights / float32 compute / eager,220,25,25,5.2,1.4941,4.74612,22.4989
 Qwen/Qwen2.5-1.5B-Instruct,Small (0.6B–<1.6B),mps,Apple MPS / native model / exact GPU unrecorded,220,25,25,7.56,1.5895,7.660199999999998,22.0191
+Qwen/Qwen2.5-3B-Instruct,Medium (1.6B–<3.5B),mps,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,220,25,25,7.76,5.7808,22.81772,6.3267
+Qwen/Qwen2.5-7B-Instruct,Large (≥3.5B),mlx-4bit,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,220,25,25,7.32,1.6516,8.974799999999991,15.2112
+Qwen/Qwen3-0.6B,Small (0.6B–<1.6B),mps,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,220,25,25,6.56,1.2654,4.3684,23.9105
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),cuda,Tesla T4 / native FP16,220,25,25,2.96,5.2453,5.91038,37.7479
 distilbert/distilgpt2,Ultra-light (<0.2B),mps,Apple MPS / native model / exact GPU unrecorded,220,25,25,2.28,0.7815,1.1078599999999998,281.508
 facebook/opt-125m,Ultra-light (<0.2B),cuda,Tesla T4 / NF4 weights / float32 compute / eager,220,25,25,1.08,3.1447,3.2891799999999995,69.959

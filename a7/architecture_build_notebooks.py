@@ -74,7 +74,8 @@ display(tasks[tasks.meets_proposed_gate])
 '''),
         md('## Architecture lead — Steps 2.5 and 3.1–3.3\n\n'
            'The full five-scenario design and cost methodology are in `system_design.md`. '
-           'Real cost comparison waits for two normalized 90-row team tables. '
+           'Both normalized 90-row team tables are integrated. The API comparison uses one '
+           'comparable Llama-3.1-8B/Novita rate for all 15 local alternatives, without measured quality equivalence. '
            'Routing load simulations below use explicit planning assumptions, not measured '
            'traffic or inferred savings.'),
         code('''from a7.architecture_analysis import crossover_intervals, routing_simulation
@@ -88,12 +89,12 @@ display(simulation)
 '''),
         md('### Step 2.5: conditional API price thresholds\n\n'
            'Person 2 supplied 90 local-hosting estimates using one request/user/day, '
-           '256 input and 500 output tokens. Person 3’s API prices and gateway costs '
-           'are absent. The next table computes the API price that would tie each '
+           '256 input and 500 output tokens. The paired API costs above include Person 3’s gateway estimates. '
+           'As a separate sensitivity analysis, the next table computes the API price that would tie each '
            'local estimate assuming a zero-cost API gateway, an optimistic API bound. '
            'These are conditional thresholds, not paid API rates or observed DAU crossovers. '
            'For nonzero gateway cost A/day, subtract A from local daily cost before dividing '
-           'by daily output tokens. Use actual compatible API inputs to finalize the comparison.'),
+           'by daily output tokens. The paired results show API cheaper in all 90 modeled cases; no crossover is observed.'),
         code('''frontier = pd.read_csv(ROOT/'a7/results/architecture/api_rate_frontier.csv')
 display(frontier)
 display(Image(filename=str(ROOT/'a7/results/architecture/api_rate_frontier.png')))
@@ -110,8 +111,9 @@ fig.tight_layout()
 plt.show()
 '''),
         md('### Submission status\n\n'
-           'Architecture lead benchmark: see coverage above. Cost crossover and full-team '
-           'performance conclusions remain pending missing inputs. Assignment 2 Part 4 '
+           'Architecture lead benchmark: 50/75; team: 350/375. The remaining 25 Llama-3.2 rows '
+           'are blocked by model-author access approval. Cost analysis and three-condition comparison are integrated. '
+           'Assignment 2 Part 4 '
            'is in `slm/architecture_comparison.ipynb` and a Markdown section of the submitted '
            '`slm/slm_experiments.ipynb`. Checkpoints are excluded from submission.')]
     nbf.write(notebook, path)
@@ -141,15 +143,16 @@ if reproduction.exists():
     print('Independent exported-prompt matches:',check['matching_responses'],'/',check['total_responses'])
 '''),
         md(text),
-        md('## Comparison method and pending analysis\n\n'
+        md('## Comparison method and completed analysis\n\n'
            'Use the same five shared questions and generation settings: CPU, two threads, '
            'seed 42 per question, temperature 0.7, 100 new characters. Preserve exact prompts '
            'and show continuation-only responses. Score accuracy against document facts and '
            'relevance on a disclosed assistant-assessed 1–10 scale; record unsupported claims and '
            'consistency observations. Baseline/RAG weights must match the original hash; '
            'fine-tuned weights must differ. RAG context is the final 32 prompt characters.\n\n'
-           'Baseline and RAG results are supplied by Person 2; final three-condition '
-           'accuracy conclusions await fine-tuning evidence from Person 3. Fine-tuning '
+           'Baseline and RAG results are supplied by Person 2; fine-tuning results are supplied by Person 3. '
+           'All five original baselines match exactly. Raw phrase-match scores are retained separately '
+           'from continuation-level reviews because contradictory answers are not fully correct. Fine-tuning '
            'changes weights; RAG updates external knowledge. Retrieval supports changing '
            'policies without retraining, provided the model can use the retrieved context. '
            'RAG and fine-tuning can be combined, although that condition is not tested here. '

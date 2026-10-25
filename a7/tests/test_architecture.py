@@ -85,15 +85,40 @@ class ArchitectureTests(unittest.TestCase):
             with self.assertRaisesRegex(ValueError, 'preserve original weights'):
                 comparison_markdown(path, manifest_path)
 
-    def test_supplied_rag_appears_without_fabricating_fine_tuning(self):
+    def test_supplied_peer_comparison_preserves_and_reviews_fine_tuning(self):
         root=Path(__file__).resolve().parents[1]
         text=comparison_markdown(root/'architecture/inputs/slm_comparison.json',
                                  root/'slm/results/selected_checkpoint.json')
         self.assertIn('when is laundry day.',text)
         self.assertIn('RAG Top-K = 1',text)
-        self.assertIn('Pending fine-tuning evidence',text)
-        self.assertIn('No fine-tuned weights or outputs were supplied',text)
+        self.assertIn('All three conditions are supplied.',text)
+        self.assertIn('2.40',text)
+        self.assertIn('contradictory',text)
+        self.assertNotIn('Pending fine-tuning evidence',text)
         self.assertNotIn('awaiting shared question',text)
+
+    def test_peer_integration_rejects_mismatched_baseline_and_retains_raw_scores(self):
+        import shutil
+        from a7.architecture_integrate_peers import integrate
+        source=Path(__file__).resolve().parents[2]
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            for name in ('a7/slm/results/person2_rag_colab/person2_rag_reviewed.json',
+                         'a7/person3/results/finetune_results.json'):
+                target=root/name
+                target.parent.mkdir(parents=True,exist_ok=True)
+                shutil.copyfile(source/name,target)
+            evidence=integrate(root)
+            row=evidence['questions'][2]['fine_tuned']
+            self.assertEqual(row['source_automatic_scores']['factual_accuracy'],10)
+            self.assertLess(row['factual_accuracy'],10)
+            self.assertTrue(row['unsupported_information'])
+            path=root/'a7/person3/results/finetune_results.json'
+            payload=json.loads(path.read_text())
+            payload['before'][0]['response']='changed baseline'
+            path.write_text(json.dumps(payload))
+            with self.assertRaisesRegex(ValueError,'baseline mismatch'):
+                integrate(root)
 
 
 if __name__ == '__main__':
