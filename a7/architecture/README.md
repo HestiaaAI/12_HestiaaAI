@@ -7,6 +7,7 @@ python -m a7.architecture_run
 python -m a7.review_results a7/results/architecture_benchmark.csv
 python -m a7.architecture_review
 python -m a7.architecture_analysis
+python -m a7.architecture_verify_handoff
 python -m a7.architecture_execute
 python -m unittest discover -s a7/tests -v
 ```
@@ -116,19 +117,26 @@ time/configuration and changed-weight evidence in Person 3's notebook.
 Part 4 uses highest mean factual accuracy to select K; lower K breaks ties. This
 uses the evaluation set for selection and must be disclosed. It preserves all
 four K results in the source data and does not imply unseen-question accuracy.
-No completed comparison can be produced before the five shared questions arrive.
+The five questions and baseline/RAG evidence are now available and auto-loaded
+from Person 2's reviewed export when the complete three-condition input file is
+absent. Missing fine-tuned responses remain explicitly pending; they are not zeros.
 
 ## Integration checklist
 
 - [ ] Full team: 375 successful rows; all scores reviewed, model/prompt keys unique.
-- [ ] Hardware labeled; no fastest-model conclusion across different machines.
-- [ ] Person 2: local 90-row itemized costs and assumptions.
+- [x] Hardware and quantization labeled; no cross-condition fastest-model claim.
+- [x] Person 2: local 90-row itemized costs and assumptions.
 - [ ] Person 3: API 90-row itemized costs and assumptions.
-- [ ] Person 2: five questions, facts, baseline and 20 RAG outputs.
+- [x] Person 2: five questions, facts, baseline and 20 RAG outputs.
 - [ ] Person 3: matching original baseline, five fine-tuned outputs and changed weights.
 - [ ] Refresh comparison Markdown and write empirical conclusions in system_design.md.
 - [ ] Execute final notebooks, check outputs and remove pending placeholders.
 - [ ] Keep checkpoints and model caches out of Git and submission.
+
+See `STATUS.md` for current completion and external blockers. Conditional API
+price thresholds are generated from local costs; they do not replace Person 3's
+missing provider/rate/infrastructure evidence. Available benchmark analysis is
+split by measured hardware/precision condition, including the T4/NF4 results.
 
 Known rubric issue: Person 1 retained A6's five size bins (all ≤7.62B), rather than
 the illustrative <1B/1–3B/3–7B/7–30B/30B+ bins. The brief calls those ranges an

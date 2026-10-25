@@ -1,5 +1,6 @@
 model_category,models,evaluations,scored,mean_quality,expected_evaluations
-Compact (0.2B–<0.6B),2,50,50,3.16,75
-Large (≥3.5B),1,25,25,7.32,75
+Compact (0.2B–<0.6B),3,75,75,3.84,75
+Large (≥3.5B),2,50,50,7.72,75
+Medium (1.6B–<3.5B),1,25,25,4.96,75
 Small (0.6B–<1.6B),2,50,50,5.26,75
-Ultra-light (<0.2B),1,25,25,2.28,75
+Ultra-light (<0.2B),2,50,50,1.68,75

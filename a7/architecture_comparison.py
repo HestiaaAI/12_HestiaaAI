@@ -9,14 +9,23 @@ def escape_cell(value):
 
 def comparison_markdown(path: Path, manifest_path: Path):
     if not path.exists():
-        return ('## Part 4: comparison pending teammate evidence\n\n'
+        peer_path=manifest_path.parent/'person2_rag_colab/person2_rag_reviewed.json'
+        if peer_path.exists():
+            evidence=json.loads(peer_path.read_text(encoding='utf-8'))
+            for question in evidence['questions']:
+                question['fine_tuned']=None
+            if not evidence.get('weights_unchanged') or evidence.get('final_state_sha256') != evidence['original_state_sha256']:
+                raise ValueError('RAG handoff does not establish unchanged checkpoint weights')
+        else:
+            return ('## Part 4: comparison pending teammate evidence\n\n'
                 'Person 2 must supply the five questions, baseline and all 20 RAG responses. '
                 'Person 3 must supply the five fine-tuned responses and weight-change evidence. '
                 'No accuracy winner can be reported yet.\n\n'
                 '| Question | Baseline SLM | SLM + RAG | Fine-tuned SLM |\n'
                 '|---|---|---|---|\n' +
                 '\n'.join(f'| Q{i} — awaiting shared question | Pending | Pending | Pending |' for i in range(1, 6)))
-    evidence = json.loads(path.read_text(encoding='utf-8'))
+    else:
+        evidence = json.loads(path.read_text(encoding='utf-8'))
     manifest = json.loads(manifest_path.read_text(encoding='utf-8'))
     original = manifest['state_sha256']
     if evidence['original_state_sha256'] != original:
@@ -27,12 +36,16 @@ def comparison_markdown(path: Path, manifest_path: Path):
     if len(questions) != 5 or len({q['question_id'] for q in questions}) != 5:
         raise ValueError('Exactly five distinct shared questions required')
     means = {k: 0 for k in (1, 2, 3, 5)}
+    fine_complete=all(q.get('fine_tuned') is not None for q in questions)
     for q in questions:
         if not q['question'] or not q['expected_facts'] or not q['source_document_ids']:
             raise ValueError('Each question needs expected facts and supporting document IDs')
         if sorted(r['top_k'] for r in q['rag']) != [1, 2, 3, 5]:
             raise ValueError('Each question requires exactly four Top-K results')
-        for condition, row in [('baseline', q['baseline']), ('fine_tuned', q['fine_tuned'])] + [('rag', r) for r in q['rag']]:
+        conditions=[('baseline',q['baseline'])]+[('rag',r) for r in q['rag']]
+        if q.get('fine_tuned') is not None:
+            conditions.append(('fine_tuned',q['fine_tuned']))
+        for condition, row in conditions:
             if not isinstance(row['response'], str) or not isinstance(row['prompt'], str):
                 raise ValueError('Preserve actual prompt and continuation-only response strings')
             if not row['prompt'] or set(row['prompt']) - set(manifest['vocab']):
@@ -44,7 +57,7 @@ def comparison_markdown(path: Path, manifest_path: Path):
             for metric in ('factual_accuracy', 'relevance'):
                 score = row[metric]
                 if isinstance(score, bool) or not isinstance(score, (int, float)) or not 1 <= score <= 10:
-                    raise ValueError(f'{metric} must be a human-reviewed 1–10 score')
+                    raise ValueError(f'{metric} must be a reviewed 1–10 score')
             if not isinstance(row['unsupported_information'], bool) or not row['review_notes']:
                 raise ValueError('Document unsupported information and human review notes')
             if condition == 'rag':
@@ -55,6 +68,9 @@ def comparison_markdown(path: Path, manifest_path: Path):
                 means[row['top_k']] += row['factual_accuracy']/5
     chosen = min(means, key=lambda k: (-means[k], k))
     table = ['## Part 4: baseline, RAG and fine-tuning', '',
+             'The table preserves actual exported continuations. Scores are assistant-assessed, '
+             'not independent human grading. '+('All three conditions are supplied.' if fine_complete else
+             'Baseline and RAG evidence are integrated; Person 3’s fine-tuning results are not supplied.'), '',
              f'RAG Top-K = {chosen}, selected by highest mean factual accuracy with ties resolved by lower K. '
              'Selection uses these same five evaluation questions; this is descriptive, not held-out evaluation.', '',
              '| Question | Baseline SLM | SLM + RAG | Fine-tuned SLM |', '|---|---|---|---|']
@@ -62,23 +78,42 @@ def comparison_markdown(path: Path, manifest_path: Path):
     notes = []
     for q in questions:
         rag = next(r for r in q['rag'] if r['top_k'] == chosen)
-        rows = [q['baseline'], rag, q['fine_tuned']]
+        rows = [q['baseline'], rag, q.get('fine_tuned')]
         table.append('| ' + ' | '.join(escape_cell(v) for v in
-                     [q['question_id'] + ': ' + q['question']] + [r['response'] for r in rows]) + ' |')
+                     [q['question_id'] + ': ' + q['question']] + [r['response'] if r else 'Pending fine-tuning evidence' for r in rows]) + ' |')
         for name, row in zip(totals, rows):
+            if row is None:
+                continue
             totals[name]['accuracy'] += row['factual_accuracy']/5
             totals[name]['relevance'] += row['relevance']/5
             totals[name]['unsupported'] += int(row['unsupported_information'])
             notes.append(f"- {escape_cell(q['question_id'])}, {name}: {escape_cell(row['review_notes'])}")
     table += ['', '| Condition | Mean factual accuracy /10 | Mean relevance /10 | Responses with unsupported information /5 |', '|---|---|---|---|']
-    table += [f"| {name} | {v['accuracy']:.2f} | {v['relevance']:.2f} | {v['unsupported']} |" for name, v in totals.items()]
-    best = max(v['accuracy'] for v in totals.values())
-    winners = ', '.join(n for n,v in totals.items() if abs(v['accuracy']-best) < 1e-9)
+    table += [f"| {name} | {v['accuracy']:.2f} | {v['relevance']:.2f} | {v['unsupported']} |" if name!='Fine-tuned' or fine_complete
+              else '| Fine-tuned | Pending | Pending | Pending |' for name, v in totals.items()]
+    available={n:v for n,v in totals.items() if fine_complete or n!='Fine-tuned'}
+    best = max(v['accuracy'] for v in available.values())
+    winners = ', '.join(n for n,v in available.items() if abs(v['accuracy']-best) < 1e-9)
+    table += ['', '### Retrieval and context evidence', '',
+              '| Top-K | Mean factual accuracy /10 | Questions retaining every expected fact in the initial visible context /5 |',
+              '|---|---|---|']
+    for k in means:
+        visible=sum(all(fact in next(r for r in q['rag'] if r['top_k']==k)['prompt'][-32:]
+                        for fact in q['expected_facts']) for q in questions)
+        table.append(f'| {k} | {means[k]:.2f} | {visible} |')
+    changed=sum(q['baseline']['response'] != next(r for r in q['rag'] if r['top_k']==chosen)['response'] for q in questions)
+    table += ['', f'{changed}/5 selected RAG continuations differ from baseline. A changed continuation '
+              'does not establish factual improvement. Original checkpoint-state hashes match; '
+              'only the final 32 prompt characters reach the model at its first prediction. '
+              'Retain the exported prompts/order rather than rebuilding tied retrieval rankings '
+              'with different NumPy/scikit-learn versions.']
     table += ['', '### Quality and consistency evidence', '', *notes,
               '', 'Consistency here means the observed pattern across five questions. Single-seed runs do not measure stability across random seeds.',
               '', '### Step 4.2 final analysis', '',
-              f'1. {winners} achieved the highest mean factual accuracy ({best:.2f}/10) on these five questions; this small set does not establish general performance.',
-              '2. Fine-tuning updated weights; baseline and RAG retained the original selected checkpoint state.',
+              f'1. {winners} achieved the highest available mean factual accuracy ({best:.2f}/10) on these five questions. '+
+              ('This small set does not establish general performance.' if fine_complete else 'A three-condition accuracy winner cannot be named until fine-tuning outputs arrive.'),
+              '2. Fine-tuning is the approach that updates weights; baseline and RAG retained the original selected checkpoint state. '+
+              ('' if fine_complete else 'No fine-tuned weights or outputs were supplied to verify that condition.'),
               '3. RAG is easier to maintain as facts change because knowledge documents can be updated without retraining model weights.',
               '4. For a startup with frequently changing policies, retrieval is the maintenance-oriented choice, provided the model can use the retrieved context. Interpret this classroom SLM’s actual quality scores in light of its 32-character window.',
               '5. RAG and fine-tuning can be combined: tune the model’s behavior and retrieve current facts at inference time. That combined condition was not tested here.']

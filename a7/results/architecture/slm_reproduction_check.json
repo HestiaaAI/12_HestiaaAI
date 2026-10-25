@@ -1,0 +1,259 @@
+{
+  "checked_handoff_files_sha256": {
+    "person2_baseline.csv": {
+      "expected_sha256": "d037869054055d9798b0a7694612903758de8e700749b5a832219262ce5d660b",
+      "checkout_sha256": "5d006706cb622ec119979f4a4f800016fe375ef634fb9e8bab4e5aeb4ca603f2",
+      "normalized_lf_sha256": "d037869054055d9798b0a7694612903758de8e700749b5a832219262ce5d660b",
+      "match_basis": "canonical LF; Git Windows checkout changed line endings only"
+    },
+    "person2_rag.csv": {
+      "expected_sha256": "24698c441ada344fefa40f57bec7bf800874a9faa30752899c908df2f097d9ae",
+      "checkout_sha256": "619eff86c6f2cb9689964b97dc80f6a7a8f87bcac47f05e70e2b2ca460b9022b",
+      "normalized_lf_sha256": "24698c441ada344fefa40f57bec7bf800874a9faa30752899c908df2f097d9ae",
+      "match_basis": "canonical LF; Git Windows checkout changed line endings only"
+    },
+    "person2_rag.json": {
+      "expected_sha256": "851d9b148786b8cc0b7f3dde3486c415713d0adf47b3bc92be3348f52e9c463b",
+      "checkout_sha256": "4f769859eb8c93342eabebe96a2af9348bf43691022744ef55893581059e5a2a",
+      "normalized_lf_sha256": "851d9b148786b8cc0b7f3dde3486c415713d0adf47b3bc92be3348f52e9c463b",
+      "match_basis": "canonical LF; Git Windows checkout changed line endings only"
+    },
+    "person2_rag_reviewed.json": {
+      "expected_sha256": "3f9bb755e6935c33f9d2d933774d9a2b77f2085df68ab4bec7589989a7c7eb95",
+      "checkout_sha256": "2e55db66ca0dd815eefebe9fe7cb0a77fa1668a96baa8da56e213e2b48bfd6d7",
+      "normalized_lf_sha256": "3f9bb755e6935c33f9d2d933774d9a2b77f2085df68ab4bec7589989a7c7eb95",
+      "match_basis": "canonical LF; Git Windows checkout changed line endings only"
+    }
+  },
+  "original_state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "final_state_sha256": "a8b4dcabc94e13e50afc0123b4198b8394a572bc425e8898858e35cbe571e700",
+  "weights_unchanged": true,
+  "generation": {
+    "seed": 42,
+    "temperature": 0.7,
+    "max_new_tokens": 100,
+    "device": "cpu",
+    "threads": 2
+  },
+  "local_environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.3",
+    "torch": "2.14.1"
+  },
+  "exported_environment": {
+    "python": "3.13.16",
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "packages": {
+      "torch": "2.11.0+cpu",
+      "numpy": "2.1.3",
+      "scikit-learn": "1.6.1",
+      "pandas": "2.2.3"
+    }
+  },
+  "matching_responses": 25,
+  "total_responses": 25,
+  "method": "Original checkpoint, exact exported prompts; no retrieval reranking or training.",
+  "limitation": "A mismatch across environments must not silently replace the shared exported baseline.",
+  "responses": [
+    {
+      "question_id": "Q1",
+      "condition": "baseline",
+      "exact_match": true,
+      "exported_response_sha256": "d67796d96c5b05e07894bbbd0274058665a0e5cf5d9e067f15d0e154d2ee3979",
+      "local_response_sha256": "d67796d96c5b05e07894bbbd0274058665a0e5cf5d9e067f15d0e154d2ee3979",
+      "local_response": "the predicts probabmenters are use models and un learning res artifining paplications.\nstudents crea"
+    },
+    {
+      "question_id": "Q1",
+      "condition": "rag_top_1",
+      "exact_match": true,
+      "exported_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o"
+    },
+    {
+      "question_id": "Q1",
+      "condition": "rag_top_2",
+      "exact_match": true,
+      "exported_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o"
+    },
+    {
+      "question_id": "Q1",
+      "condition": "rag_top_3",
+      "exact_match": true,
+      "exported_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o"
+    },
+    {
+      "question_id": "Q1",
+      "condition": "rag_top_5",
+      "exact_match": true,
+      "exported_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response_sha256": "bcd7eda6e97dbc693f3be18234f89d81d5467210147e1203483f353313d29572",
+      "local_response": "smalll learning res models preveows.\ningrametion learaning helps useful models models can learnung o"
+    },
+    {
+      "question_id": "Q2",
+      "condition": "baseline",
+      "exact_match": true,
+      "exported_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l"
+    },
+    {
+      "question_id": "Q2",
+      "condition": "rag_top_1",
+      "exact_match": true,
+      "exported_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l"
+    },
+    {
+      "question_id": "Q2",
+      "condition": "rag_top_2",
+      "exact_match": true,
+      "exported_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l"
+    },
+    {
+      "question_id": "Q2",
+      "condition": "rag_top_3",
+      "exact_match": true,
+      "exported_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l"
+    },
+    {
+      "question_id": "Q2",
+      "condition": "rag_top_5",
+      "exact_match": true,
+      "exported_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response_sha256": "911be7b71828fcb1785e23e98047596449705c7aa353f069f57b3a5e5a03b83d",
+      "local_response": "the predicts probabilition paransmelld django application artificial intelligencers usefuse models l"
+    },
+    {
+      "question_id": "Q3",
+      "condition": "baseline",
+      "exact_match": true,
+      "exported_response_sha256": "1ca016fea161c9f91beecf788ab90701a4d27da7d0bdd8f0da62704870fbf883",
+      "local_response_sha256": "1ca016fea161c9f91beecf788ab90701a4d27da7d0bdd8f0da62704870fbf883",
+      "local_response": "artificial inngual networks are pytok\nstentraining hang helps artificial intelligencers artuage mode"
+    },
+    {
+      "question_id": "Q3",
+      "condition": "rag_top_1",
+      "exact_match": true,
+      "exported_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter"
+    },
+    {
+      "question_id": "Q3",
+      "condition": "rag_top_2",
+      "exact_match": true,
+      "exported_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter"
+    },
+    {
+      "question_id": "Q3",
+      "condition": "rag_top_3",
+      "exact_match": true,
+      "exported_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter"
+    },
+    {
+      "question_id": "Q3",
+      "condition": "rag_top_5",
+      "exact_match": true,
+      "exported_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response_sha256": "91b2d73bf78c2b47499856e7dc477b3252209a902778c62a1ce85ce4e35d75d6",
+      "local_response": "artition use preversitity lon learnedicts artual ingaal networks learnedicts artificial inngerameter"
+    },
+    {
+      "question_id": "Q4",
+      "condition": "baseline",
+      "exact_match": true,
+      "exported_response_sha256": "73e1a188304f522990f03fb606250b61849534f8230ab8665439e5aacc3f0473",
+      "local_response_sha256": "73e1a188304f522990f03fb606250b61849534f8230ab8665439e5aacc3f0473",
+      "local_response": "attention rkeach.\ntrach.\ntraning he students useful softworks learne predicts artuage models can re "
+    },
+    {
+      "question_id": "Q4",
+      "condition": "rag_top_1",
+      "exact_match": true,
+      "exported_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial "
+    },
+    {
+      "question_id": "Q4",
+      "condition": "rag_top_2",
+      "exact_match": true,
+      "exported_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial "
+    },
+    {
+      "question_id": "Q4",
+      "condition": "rag_top_3",
+      "exact_match": true,
+      "exported_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial "
+    },
+    {
+      "question_id": "Q4",
+      "condition": "rag_top_5",
+      "exact_match": true,
+      "exported_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response_sha256": "6d843529a33d79d8ee4dc6659846c713effdf9de780db099b9d5a7f5752d1cbe",
+      "local_response": "students unenchartificial intelligencers context tokearmers.\nthe uning models previos.\nstartificial "
+    },
+    {
+      "question_id": "Q5",
+      "condition": "baseline",
+      "exact_match": true,
+      "exported_response_sha256": "a4b8f3e9cde79b291f22589453c01283bec068cb88d3e0bd7da31ec63ffa33b7",
+      "local_response_sha256": "a4b8f3e9cde79b291f22589453c01283bec068cb88d3e0bd7da31ec63ffa33b7",
+      "local_response": "students expe models chartificial intelligencers con prevers artificial intelligencers.\nattion usegr"
+    },
+    {
+      "question_id": "Q5",
+      "condition": "rag_top_1",
+      "exact_match": true,
+      "exported_response_sha256": "562ff5a2b6a343c58770874f3135c92a8cc40cfaafb77df55699a16e41bf2335",
+      "local_response_sha256": "562ff5a2b6a343c58770874f3135c92a8cc40cfaafb77df55699a16e41bf2335",
+      "local_response": "the charaning parammechantion rkware python runing rametersing res.\ntrammechation rammechane canis.\n"
+    },
+    {
+      "question_id": "Q5",
+      "condition": "rag_top_2",
+      "exact_match": true,
+      "exported_response_sha256": "562ff5a2b6a343c58770874f3135c92a8cc40cfaafb77df55699a16e41bf2335",
+      "local_response_sha256": "562ff5a2b6a343c58770874f3135c92a8cc40cfaafb77df55699a16e41bf2335",
+      "local_response": "the charaning parammechantion rkware python runing rametersing res.\ntrammechation rammechane canis.\n"
+    },
+    {
+      "question_id": "Q5",
+      "condition": "rag_top_3",
+      "exact_match": true,
+      "exported_response_sha256": "2650e20d1592c4cc6d6b223cb2d4fd1af382a64d76935846b2ed12d459fca5a2",
+      "local_response_sha256": "2650e20d1592c4cc6d6b223cb2d4fd1af382a64d76935846b2ed12d459fca5a2",
+      "local_response": "students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.\n"
+    },
+    {
+      "question_id": "Q5",
+      "condition": "rag_top_5",
+      "exact_match": true,
+      "exported_response_sha256": "2650e20d1592c4cc6d6b223cb2d4fd1af382a64d76935846b2ed12d459fca5a2",
+      "local_response_sha256": "2650e20d1592c4cc6d6b223cb2d4fd1af382a64d76935846b2ed12d459fca5a2",
+      "local_response": "students unents learnes un preversearchartificial ne previewsielorks learning usearse preversifies.\n"
+    }
+  ]
+}

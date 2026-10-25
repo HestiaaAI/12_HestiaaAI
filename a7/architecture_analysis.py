@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import json
 from pathlib import Path
 import pandas as pd
 
@@ -51,6 +52,22 @@ def benchmark_evidence(results_dir: Path):
                 raise ValueError(f'{path}: successful score outside the shared 1–10 rubric')
             scored = int((valid & scores.between(1, 10)).sum())
             df['self_evaluation_score_1_to_10'] = scores
+            if owner == 'P2':
+                environment_path=results_dir/'person2_nf4_colab/person2_benchmark.environment.json'
+                if environment_path.exists():
+                    condition=json.loads(environment_path.read_text(encoding='utf-8'))['condition']
+                    df['benchmark_condition']=(f"{condition['gpu']} / {condition['quantization'].upper()} weights / "
+                                               f"{condition['compute_dtype']} compute / {condition['attention']}")
+                else:
+                    df['benchmark_condition']='CUDA / precision unrecorded; environment sidecar absent'
+            elif owner == 'P1':
+                df['benchmark_condition'] = 'Apple MPS / native model / exact GPU unrecorded'
+            elif owner == 'architecture':
+                df['benchmark_condition'] = df['device'].map({
+                    'cpu':'Windows CPU / native FP32 / 4 threads',
+                    'cuda':'Tesla T4 / native FP16'})
+            else:
+                df['benchmark_condition']=df['device']+' / owner environment metadata not yet supplied'
             for col in ('latency_seconds', 'tokens_per_second', 'output_tokens'):
                 df[col] = pd.to_numeric(df[col], errors='coerce')
             if (df.loc[valid, 'latency_seconds'].isna().any()
@@ -69,7 +86,9 @@ def benchmark_summaries(data):
     valid = data[data.status.eq('ok')].copy()
     if valid.empty:
         return pd.DataFrame(), pd.DataFrame()
-    model = valid.groupby(['model_id', 'model_category', 'device', 'max_new_tokens']).agg(
+    if 'benchmark_condition' not in valid:
+        valid['benchmark_condition'] = valid['device'] + ' / condition unrecorded'
+    model = valid.groupby(['model_id', 'model_category', 'device', 'benchmark_condition', 'max_new_tokens']).agg(
         evaluations=('prompt_id', 'size'), scored=('self_evaluation_score_1_to_10', 'count'),
         mean_quality=('self_evaluation_score_1_to_10', 'mean'),
         median_latency_s=('latency_seconds', 'median'),
@@ -84,10 +103,22 @@ def benchmark_summaries(data):
     return model, category
 
 
+def task_summary(data):
+    valid = data[data.status.eq('ok')].copy()
+    valid['format_ok'] = pd.to_numeric(valid.instruction_adherence_0_to_2,errors='coerce').eq(2)
+    frame = valid.groupby(['model_id','prompt_type','benchmark_condition']).agg(
+        evaluations=('prompt_id','size'), mean_quality=('self_evaluation_score_1_to_10','mean'),
+        format_pass_rate=('format_ok','mean'), median_latency_s=('latency_seconds','median')).reset_index()
+    frame['meets_proposed_gate'] = (frame.evaluations.eq(5) & frame.mean_quality.ge(8)
+                                    & frame.format_pass_rate.eq(1))
+    return frame
+
+
 def compare_costs(local_path: Path, api_path: Path):
     """Join normalized daily USD totals. Missing inputs stay missing, never become zero."""
-    if not local_path.exists() or not api_path.exists():
-        return pd.DataFrame(), 'Pending Person 2 local_costs.csv and Person 3 api_costs.csv.'
+    missing = [p.name for p in (local_path,api_path) if not p.exists()]
+    if missing:
+        return pd.DataFrame(), 'Pending '+', '.join(missing)+'. No observed local/API crossover can be claimed.'
     tables = []
     required = {'model_id', 'traffic_category', 'daily_active_users', 'requests_per_user',
                 'input_tokens_per_request', 'output_tokens_per_request', 'total_daily_cost_usd',
@@ -122,6 +153,104 @@ def compare_costs(local_path: Path, api_path: Path):
     joined['cheaper'] = joined.local_minus_api_usd.map(
         lambda d: 'local' if d < 0 else 'api' if d > 0 else 'tie')
     return joined.sort_values(['model_id', 'daily_active_users']), 'Validated 90 like-for-like daily cost comparisons.'
+
+
+def api_rate_frontier(local_path: Path, gateway_daily_cost_usd=0):
+    """Conditional price thresholds, not invented API prices or observed DAU crossings."""
+    if not local_path.exists():
+        return pd.DataFrame()
+    if not math.isfinite(gateway_daily_cost_usd) or gateway_daily_cost_usd < 0:
+        raise ValueError('Gateway cost assumption must be finite and nonnegative')
+    local = pd.read_csv(local_path,keep_default_na=False)
+    expected = {(m['model_id'],t) for m in MODEL_REGISTRY for t in TRAFFIC}
+    if (local.duplicated(['model_id','traffic_category']).any()
+            or set(zip(local.model_id,local.traffic_category)) != expected):
+        raise ValueError('Frontier requires all 90 unique local cost rows')
+    numeric = ['daily_active_users','requests_per_user','input_tokens_per_request',
+               'output_tokens_per_request','total_daily_cost_usd']
+    for col in numeric:
+        local[col] = pd.to_numeric(local[col],errors='raise')
+        if not local[col].map(math.isfinite).all() or (local[col] < 0).any():
+            raise ValueError(f'Invalid local frontier input: {col}')
+    if (local.requests_per_user.le(0).any() or local.output_tokens_per_request.le(0).any()
+            or not local.daily_active_users.eq(local.traffic_category.map(TRAFFIC)).all()):
+        raise ValueError('Invalid local frontier workload')
+    cols=['model_id','traffic_category',*numeric,'assumptions_id']
+    result=local[cols].copy()
+    result['assumed_api_gateway_daily_cost_usd']=gateway_daily_cost_usd
+    requests=result.daily_active_users*result.requests_per_user
+    result['api_blended_rate_break_even_usd_per_million_output_tokens']=(
+        (result.total_daily_cost_usd-gateway_daily_cost_usd)*1_000_000/
+        (requests*result.output_tokens_per_request))
+    result['rate_definition']='output_price_per_million + input/output token ratio * input_price_per_million'
+    result['evidence_type']='conditional threshold; API prices/gateway capacity not yet supplied'
+    return result
+
+
+def performance_findings(data, coverage, models, categories):
+    successful=int(coverage.successful.sum())
+    text=['# Available benchmark findings', '',
+          f'{successful}/375 successful, scored evaluations are available across {len(models)}/15 models. '
+          'Scores are assistant-assessed; student signoff remains pending. '
+          'Hardware/precision conditions are separate; this is not a controlled size-only experiment.', '',
+          '| Model | Condition | Mean quality /10 | Median latency (s) |', '|---|---|---|---|']
+    for row in models.sort_values('mean_quality',ascending=False).to_dict('records'):
+        text.append(f"| {row['model_id']} | {row['benchmark_condition']} | {row['mean_quality']:.2f} | {row['median_latency_s']:.4f} |")
+    text += ['', '## Step 1.6 answers', '',
+             '1. Best output category: the observed category means below describe the available rows. '
+             'A final five-category winner requires all three models per category; quantization/hardware '
+             'differences also prevent attributing quality changes solely to parameter count.', '',
+             '| Category | Models available /3 | Rows available /75 | Mean quality /10 |', '|---|---|---|---|']
+    for row in categories.to_dict('records'):
+        text.append(f"| {row['model_category']} | {row['models']} | {row['evaluations']} | {row['mean_quality']:.2f} |")
+    text += ['', '2. Larger models did not always score higher. On Person 1’s shared MPS run, '
+             'Qwen2.5-1.5B scored 10 on extraction-02 versus 7 for Phi-3.5-mini; this is a '
+             'matched-prompt counterexample in the supplied rubric evidence, not a claim that smaller models always win.', '',
+             '3. Speed/quality balance: Qwen2.5-1.5B is a strong available candidate within Person 1’s '
+             'MPS subset (7.56/10; median 1.5895 s), versus Phi’s 7.32/10 and 5.3627 s. '
+             'Within Person 2’s common T4/NF4 condition, inspect the per-task gates before choosing '
+             'a model; cross-condition median times do not identify a global fastest model.', '',
+             'Routing candidates are in task_summary.csv. A proposed qualification requires five '
+             'observations, mean score at least 8/10 and all five instruction-format scores equal to 2. '
+             'Passing this small offline gate is a candidate-selection result, not production validation.']
+    return '\n'.join(text)+'\n'
+
+
+def save_analysis_plots(out, models, frontier):
+    import matplotlib.pyplot as plt
+    if not models.empty:
+        groups=list(models.groupby('benchmark_condition'))
+        row_count=math.ceil(len(groups)/2)
+        fig,axes=plt.subplots(row_count,2,figsize=(13,4*row_count),squeeze=False)
+        for ax,(condition,group) in zip(axes.flat,groups):
+            ax.scatter(group.median_latency_s,group.mean_quality)
+            for row in group.to_dict('records'):
+                label=row['model_id'].split('/')[-1].replace('-Instruct','').replace('-instruct','')
+                right=row['median_latency_s'] >= group.median_latency_s.max()*.9
+                offset_y=-14 if 'SmolLM2-1.7B' in label else 6
+                ax.annotate(label,(row['median_latency_s'],row['mean_quality']),
+                            xytext=(-5 if right else 5,offset_y),ha='right' if right else 'left',
+                            textcoords='offset points',fontsize=7)
+            ax.axhline(8,color='grey',linestyle=':',linewidth=1)
+            ax.set(title=condition,ylim=(0,11),xlabel='Median generation latency (s)',ylabel='Mean rubric score /10')
+            ax.margins(x=.3)
+            ax.set_xlim(left=0)
+        for ax in list(axes.flat)[len(groups):]: ax.set_visible(False)
+        fig.suptitle('Observed speed / quality — compare within each measured condition')
+        fig.tight_layout(); fig.savefig(out/'speed_quality_by_condition.png',dpi=150); plt.close(fig)
+    if not frontier.empty:
+        chosen=['HuggingFaceTB/SmolLM-360M-Instruct','TinyLlama/TinyLlama-1.1B-Chat-v1.0',
+                'Qwen/Qwen2.5-1.5B-Instruct','mistralai/Mistral-7B-Instruct-v0.3']
+        fig,ax=plt.subplots(figsize=(10,5))
+        for model in chosen:
+            group=frontier[frontier.model_id.eq(model)].sort_values('daily_active_users')
+            ax.plot(group.daily_active_users,group.api_blended_rate_break_even_usd_per_million_output_tokens,
+                    marker='o',label=model.split('/')[-1])
+        ax.set(xscale='log',yscale='log',xlabel='Daily active users',
+               ylabel='Break-even blended API price ($/million output tokens)',
+               title='Conditional price thresholds — assumed API gateway $0/day; not API quotes')
+        ax.legend(fontsize=8); fig.tight_layout()
+        fig.savefig(out/'api_rate_frontier.png',dpi=150); plt.close(fig)
 
 
 def crossover_intervals(costs):
@@ -170,6 +299,12 @@ def write_analysis(repo_root: Path):
     for name, frame in [('coverage', coverage), ('model_summary', model), ('category_summary', category),
                         ('routing_simulation', routing_simulation())]:
         frame.to_csv(out / f'{name}.csv', index=False)
+    task_summary(data).to_csv(out/'task_summary.csv',index=False)
+    (out/'performance_findings.md').write_text(performance_findings(data,coverage,model,category),encoding='utf-8')
+    frontier=api_rate_frontier(repo_root/'a7/results/local_costs.csv')
+    if not frontier.empty:
+        frontier.to_csv(out/'api_rate_frontier.csv',index=False)
+    save_analysis_plots(out,model,frontier)
     costs, status = compare_costs(repo_root/'a7/results/local_costs.csv', repo_root/'a7/results/api_costs.csv')
     if not costs.empty:
         costs.to_csv(out/'cost_comparison.csv', index=False)
