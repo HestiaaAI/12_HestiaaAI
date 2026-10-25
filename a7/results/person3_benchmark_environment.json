@@ -1,0 +1,28 @@
+{
+  "machine": "macOS arm64, 16 GB unified memory",
+  "timing_comparability": "Compare tokens/sec only within the same device label. The 7B rows are 4-bit MLX, not MPS float16.",
+  "models": {
+    "HuggingFaceTB/SmolLM2-135M-Instruct": {
+      "device": "mps",
+      "dtype": "float16",
+      "runner": "a7.benchmark_runner"
+    },
+    "Qwen/Qwen3-0.6B": {
+      "device": "mps",
+      "dtype": "float16",
+      "runner": "a7.benchmark_runner"
+    },
+    "Qwen/Qwen2.5-3B-Instruct": {
+      "device": "mps",
+      "dtype": "float16",
+      "runner": "a7.benchmark_runner"
+    },
+    "Qwen/Qwen2.5-7B-Instruct": {
+      "device": "mlx-4bit",
+      "dtype": "4-bit",
+      "weights": "mlx-community/Qwen2.5-7B-Instruct-4bit",
+      "runner": "a7.person3.run_7b_mlx",
+      "reason": "Float16 Qwen2.5-7B-Instruct does not fit in 16 GB. A disk-offload attempt was about 12 seconds per token and was not used for these rows. Decoding is greedy with max_new_tokens 220, matching the shared runner."
+    }
+  }
+}
