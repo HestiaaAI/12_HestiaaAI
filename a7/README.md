@@ -46,6 +46,12 @@ beside every score:
 python -m a7.review_results a7/results/person1_benchmark.csv
 ```
 
+**Person 1 correction notice:** `results/person1_benchmark.csv` now contains authorized
+AI-assisted semantic corrections. Original scores and all 100 assessments are
+preserved in `person1/review/`. Do not run the first-pass reviewer above over this
+corrected CSV: it would overwrite the inspected scores. Personal student signoff
+and consistent scoring conventions across owners remain separate checks.
+
 The reviewer checks exact labels, required JSON shape, task-specific concept
 coverage, clarity, and unsupported details. Its notes explain each score; Person
 1 must still review those notes before treating the CSV as final. Keep failed

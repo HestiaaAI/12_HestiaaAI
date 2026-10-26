@@ -11,6 +11,22 @@ from a7.architecture_comparison import comparison_markdown
 
 
 class ArchitectureTests(unittest.TestCase):
+    def test_findings_use_updated_scores_instead_of_historical_constants(self):
+        from a7.architecture_analysis import benchmark_summaries, performance_findings
+        root = Path(__file__).resolve().parents[1]
+        data, coverage = benchmark_evidence(root / 'results')
+        # Deliberately change the evidence: prose must follow these values too.
+        qwen = data.model_id.eq('Qwen/Qwen2.5-1.5B-Instruct')
+        phi = data.model_id.eq('microsoft/Phi-3.5-mini-instruct')
+        data.loc[qwen, 'self_evaluation_score_1_to_10'] = 4
+        data.loc[phi, 'self_evaluation_score_1_to_10'] = 9
+        models, categories = benchmark_summaries(data)
+        text = performance_findings(data, coverage, models, categories)
+        self.assertIn('Qwen2.5-1.5B scored 4', text)
+        self.assertIn('Phi-3.5-mini scored 9', text)
+        self.assertNotIn('scored 10 on extraction-02 versus 7', text)
+        self.assertNotIn('7.56/10', text)
+
     def test_missing_evidence_is_not_zero_cost_or_completed_benchmark(self):
         with tempfile.TemporaryDirectory() as folder:
             root = Path(folder)

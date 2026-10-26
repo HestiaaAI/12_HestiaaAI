@@ -260,16 +260,30 @@ def performance_findings(data, coverage, models, categories):
              '| Category | Models available /3 | Rows available /75 | Mean quality /10 |', '|---|---|---|---|']
     for row in categories.to_dict('records'):
         text.append(f"| {row['model_category']} | {row['models']} | {row['evaluations']} | {row['mean_quality']:.2f} |")
-    text += ['', '2. Larger models did not always score higher. On Person 1’s shared MPS run, '
-             'Qwen2.5-1.5B scored 10 on extraction-02 versus 7 for Phi-3.5-mini; this is a '
-             'matched-prompt counterexample in the supplied rubric evidence, not a claim that smaller models always win.', '',
-             '3. Speed/quality balance: Qwen2.5-1.5B is a strong available candidate within Person 1’s '
-             'MPS subset (7.56/10; median 1.5895 s), versus Phi’s 7.32/10 and 5.3627 s. '
-             'Within Person 2’s common T4/NF4 condition, inspect the per-task gates before choosing '
-             'a model; cross-condition median times do not identify a global fastest model.', '',
-             'Routing candidates are in task_summary.csv. A proposed qualification requires five '
+    qwen_id = 'Qwen/Qwen2.5-1.5B-Instruct'
+    phi_id = 'microsoft/Phi-3.5-mini-instruct'
+    pair = data[data.status.eq('ok') & data.model_id.isin([qwen_id, phi_id])].pivot(
+        index='prompt_id', columns='model_id', values='self_evaluation_score_1_to_10')
+    summary = models.set_index('model_id')
+    if qwen_id in pair and phi_id in pair and 'extraction-02' in pair.index:
+        q, p = pair.loc['extraction-02', [qwen_id, phi_id]]
+        wins = int((pair[qwen_id] > pair[phi_id]).sum())
+        text += ['', f'2. On extraction-02, Qwen2.5-1.5B scored {q:g}; Phi-3.5-mini scored {p:g}. '
+                 f'The smaller Qwen model scores higher on {wins} matched prompts in this pair. '
+                 + ('These are counterexamples to larger models always scoring higher.' if wins else
+                    'This pair supplies no smaller-model win; inspect other matched models before generalizing.'), '',
+                 f"3. Speed/quality balance: within Person 1’s MPS subset, Qwen2.5-1.5B averages "
+                 f"{summary.loc[qwen_id, 'mean_quality']:.2f}/10 with median latency "
+                 f"{summary.loc[qwen_id, 'median_latency_s']:.4f} s; Phi-3.5-mini averages "
+                 f"{summary.loc[phi_id, 'mean_quality']:.2f}/10 with median latency "
+                 f"{summary.loc[phi_id, 'median_latency_s']:.4f} s. Choose by task-specific quality and format "
+                 'requirements rather than declaring an overall winner from speed alone. '
+                 'Cross-condition times do not identify a global fastest model.']
+    text += ['', 'Routing candidates are in task_summary.csv. A proposed qualification requires five '
              'observations, mean score at least 8/10 and all five instruction-format scores equal to 2. '
-             'Passing this small offline gate is a candidate-selection result, not production validation.']
+             'Passing this small offline gate is a candidate-selection result, not production validation. '
+             'Person 1 corrections were authorized for application; this is not personal student signoff. '
+             'Cross-owner format/scoring conventions still need reconciliation.']
     return '\n'.join(text)+'\n'
 
 
