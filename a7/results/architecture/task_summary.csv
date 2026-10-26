@@ -14,26 +14,26 @@ HuggingFaceTB/SmolLM2-135M-Instruct,classification,Person 3 macOS arm64 / mps / 
 HuggingFaceTB/SmolLM2-135M-Instruct,priority_prediction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,1.0,0.0,0.4883,False
 HuggingFaceTB/SmolLM2-135M-Instruct,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,1.0,0.0,2.4112,False
 HuggingFaceTB/SmolLM2-135M-Instruct,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,5.8,0.0,2.1676,False
-HuggingFaceTB/SmolLM2-360M-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,5.4,0.0,3.8404,False
+HuggingFaceTB/SmolLM2-360M-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,5.0,0.0,3.8404,False
 HuggingFaceTB/SmolLM2-360M-Instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.2631,False
-HuggingFaceTB/SmolLM2-360M-Instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.5428,False
-HuggingFaceTB/SmolLM2-360M-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,6.6,0.0,4.1153,False
-HuggingFaceTB/SmolLM2-360M-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,5.2,0.0,0.6045,False
+HuggingFaceTB/SmolLM2-360M-Instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,2.4,0.0,0.5428,False
+HuggingFaceTB/SmolLM2-360M-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,3.4,0.0,4.1153,False
+HuggingFaceTB/SmolLM2-360M-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,4.8,0.0,0.6045,False
 Qwen/Qwen2-0.5B-Instruct,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,4.4,0.0,3.9073,False
 Qwen/Qwen2-0.5B-Instruct,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,4.6,0.8,0.1549,False
 Qwen/Qwen2-0.5B-Instruct,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.2,1.0,0.231,False
 Qwen/Qwen2-0.5B-Instruct,structured_extraction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.4,0.0,2.8461,False
 Qwen/Qwen2-0.5B-Instruct,summarization,Tesla T4 / NF4 weights / float32 compute / eager,5,6.4,1.0,1.4941,False
-Qwen/Qwen2.5-1.5B-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,2.8636,False
+Qwen/Qwen2.5-1.5B-Instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,6.4,0.0,2.8636,False
 Qwen/Qwen2.5-1.5B-Instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,6.4,0.6,0.2101,False
 Qwen/Qwen2.5-1.5B-Instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,4.6,0.4,0.2425,False
-Qwen/Qwen2.5-1.5B-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,10.0,1.0,6.9886,True
-Qwen/Qwen2.5-1.5B-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,8.6,1.0,1.5895,True
+Qwen/Qwen2.5-1.5B-Instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,7.8,0.0,6.9886,False
+Qwen/Qwen2.5-1.5B-Instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,7.8,0.8,1.5895,False
 Qwen/Qwen2.5-3B-Instruct,action_planning,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,8.6,0.8,17.478,False
 Qwen/Qwen2.5-3B-Instruct,classification,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,10.0,1.0,1.0841,True
 Qwen/Qwen2.5-3B-Instruct,priority_prediction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,2.8,0.2,0.7768,False
 Qwen/Qwen2.5-3B-Instruct,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,8.2,0.4,20.4139,False
-Qwen/Qwen2.5-3B-Instruct,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.2,1.0,5.7808,True
+Qwen/Qwen2.5-3B-Instruct,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.0,1.0,5.7808,True
 Qwen/Qwen2.5-7B-Instruct,action_planning,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,8.4,1.0,2.386,True
 Qwen/Qwen2.5-7B-Instruct,classification,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,8.2,0.8,0.6649,False
 Qwen/Qwen2.5-7B-Instruct,priority_prediction,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,2.8,0.2,0.5753,False
@@ -42,18 +42,18 @@ Qwen/Qwen2.5-7B-Instruct,summarization,Person 3 macOS arm64 / mlx-4bit / 4-bit /
 Qwen/Qwen3-0.6B,action_planning,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,6.4,0.4,1.5152,False
 Qwen/Qwen3-0.6B,classification,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,2.8,0.2,0.1402,False
 Qwen/Qwen3-0.6B,priority_prediction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,4.6,0.4,0.097,False
-Qwen/Qwen3-0.6B,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.4,0.8,4.364,False
-Qwen/Qwen3-0.6B,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.6,1.0,1.2654,True
+Qwen/Qwen3-0.6B,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,8.6,0.6,4.364,False
+Qwen/Qwen3-0.6B,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.4,1.0,1.2654,True
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,action_planning,Tesla T4 / native FP16,5,4.0,0.0,5.8223,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,classification,Tesla T4 / native FP16,5,1.0,0.0,2.5477,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,priority_prediction,Tesla T4 / native FP16,5,1.0,0.0,3.5513,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,structured_extraction,Tesla T4 / native FP16,5,3.2,0.0,5.9035,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,summarization,Tesla T4 / native FP16,5,5.6,0.0,3.9821,False
-distilbert/distilgpt2,action_planning,Apple MPS / native model / exact GPU unrecorded,5,1.8,0.0,0.7815,False
+distilbert/distilgpt2,action_planning,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7815,False
 distilbert/distilgpt2,classification,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7715,False
 distilbert/distilgpt2,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7785,False
-distilbert/distilgpt2,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,4.0,0.0,0.8068,False
-distilbert/distilgpt2,summarization,Apple MPS / native model / exact GPU unrecorded,5,3.6,0.0,0.7723,False
+distilbert/distilgpt2,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.8068,False
+distilbert/distilgpt2,summarization,Apple MPS / native model / exact GPU unrecorded,5,1.0,0.0,0.7723,False
 facebook/opt-125m,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,1.4,0.0,3.1447,False
 facebook/opt-125m,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.2003,False
 facebook/opt-125m,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,1.0,0.0,3.125,False
@@ -64,11 +64,11 @@ meta-llama/Llama-3.2-3B-Instruct,classification,Tesla T4 / native FP16,5,8.2,0.8
 meta-llama/Llama-3.2-3B-Instruct,priority_prediction,Tesla T4 / native FP16,5,4.6,0.4,0.123,False
 meta-llama/Llama-3.2-3B-Instruct,structured_extraction,Tesla T4 / native FP16,5,5.6,0.0,3.9225,False
 meta-llama/Llama-3.2-3B-Instruct,summarization,Tesla T4 / native FP16,5,9.2,1.0,1.0295,True
-microsoft/Phi-3.5-mini-instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,7.6,0.2,19.5454,False
+microsoft/Phi-3.5-mini-instruct,action_planning,Apple MPS / native model / exact GPU unrecorded,5,7.2,0.2,19.5454,False
 microsoft/Phi-3.5-mini-instruct,classification,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,0.695,False
-microsoft/Phi-3.5-mini-instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,3.8,0.0,4.8709,False
-microsoft/Phi-3.5-mini-instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,8.8,0.6,19.0518,False
-microsoft/Phi-3.5-mini-instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,8.2,0.8,2.8656,False
+microsoft/Phi-3.5-mini-instruct,priority_prediction,Apple MPS / native model / exact GPU unrecorded,5,3.6,0.0,4.8709,False
+microsoft/Phi-3.5-mini-instruct,structured_extraction,Apple MPS / native model / exact GPU unrecorded,5,7.2,0.0,19.0518,False
+microsoft/Phi-3.5-mini-instruct,summarization,Apple MPS / native model / exact GPU unrecorded,5,8.8,0.8,2.8656,False
 mistralai/Mistral-7B-Instruct-v0.3,action_planning,Tesla T4 / NF4 weights / float32 compute / eager,5,8.2,0.2,14.7271,False
 mistralai/Mistral-7B-Instruct-v0.3,classification,Tesla T4 / NF4 weights / float32 compute / eager,5,10.0,1.0,1.0496,True
 mistralai/Mistral-7B-Instruct-v0.3,priority_prediction,Tesla T4 / NF4 weights / float32 compute / eager,5,5.8,0.6,1.1584,False

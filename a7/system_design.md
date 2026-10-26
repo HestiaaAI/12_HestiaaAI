@@ -91,8 +91,10 @@ labels, required fields and task count before accepting structured output. Prese
 user confirmation for actions the application normally requires; generated text
 must not claim an appointment, purchase or repair was completed.
 
-Available local candidate roles are Qwen2.5-1.5B for extraction/summarization and
-Mistral-7B/NF4 for classification/summarization, based on the current task gates.
+Available local candidate roles include Mistral-7B/NF4 for classification/summarization.
+After Person 1 score corrections, Qwen2.5-1.5B no longer passes all five format
+checks in extraction or summarization; neither extraction nor priority prediction
+has a qualified route under the current gate. Require review or clarification.
 Person 3 adds Qwen3-0.6B for summarization, Qwen2.5-3B for classification and
 summarization, and Qwen2.5-7B/MLX-4bit for action planning and summarization.
 SmolLM-360M and TinyLlama do not qualify for automatic acceptance in this run.
@@ -109,7 +111,7 @@ all required schema checks passing. The small sample needs production validation
 
 | Scenario | Trigger and routing rule | Local/API choice | Latency effect | Cost effect | Quality control |
 |---|---|---|---|---|---|
-| Normal household coordination | Classify an errand, summarize a chore, or extract independent tasks. Check household-scoped cache, then route by task-specific qualification. | Qwen2.5-1.5B extraction; Qwen3-0.6B summaries; Qwen2.5-3B or Mistral classification. API escalation requires separate qualification. | Avoids network time on local/cache hits; queueing and target-hardware validation still matter. | Cache avoids generation; API is cheapest under supplied costs, but its candidate needs task qualification. | Validate labels/JSON, retain every user concern, prohibit invented dates. Escalate once or request clarification. |
+| Normal household coordination | Classify an errand, summarize a chore, or extract independent tasks. Check household-scoped cache, then route by task-specific qualification. | Review/clarification for extraction; Qwen3-0.6B summaries; Qwen2.5-3B or Mistral classification. API escalation requires separate qualification. | Avoids network time on local/cache hits; queueing and target-hardware validation still matter. | Cache avoids generation; API is cheapest under supplied costs, but its candidate needs task qualification. | Validate labels/JSON, retain every user concern, prohibit invented dates. Escalate once or request clarification. |
 | Evening household peak | Local utilization exceeds 70% or queue wait exceeds an assumed 2 s. Keep short validated routine requests local and send complex requests to API while its quota/budget permits. | Small local pool; approved API for overflow/complexity. | Reduces local queue growth, but API network and throttling can add delay. | Uses existing local capacity while paying for overflow instead of provisioning for every spike. Savings require measured utilization. | Same validation gates on both paths; expose an honest retry when both are saturated. |
 | Complex household plan | Multi-step moving plan or several dependencies. Require planning quality and format gates. | Qwen2.5-7B/MLX-4bit passes the observed planning gate (8.4/10). Qualify the paid API separately; retain review for uncertain priorities. | Single qualified planning pass avoids an extra weak attempt; its observed median is 2.386s on the Mac, not a serving SLA. | API is cheapest in supplied costs, conditional on qualification; local planning is a quality-qualified alternative awaiting deployment-capacity checks. | Check dependency order, constraints, completeness and unsupported claims. A larger parameter count is not a quality guarantee. |
 | Budget pressure | Daily API spend reaches 80% of configured budget. Prefer valid versioned cache and qualified local model; reserve remaining API spend for complex/high-urgency cases. | Small local pool first; API only within reserve. | Local processing/cache can be fast; reduced API use can increase local wait. | Enforces a forecast-based spend cap; calculate remaining requests from actual input/output rates. | Never silently lower the minimum quality threshold. Clarify, queue or decline when no qualified route is affordable. |
@@ -204,33 +206,34 @@ no defensible universal claim that local becomes cheaper above a particular DAU.
 The completed fifteen-model/375-response findings are in
 `results/architecture/performance_findings.md`. Mistral-7B has the highest available
 mean score (8.12/10) in the T4/NF4 condition. Large is the highest fully observed
-bin (75/75, mean 7.5867); Small is 5.6933, Compact 3.84, Ultra-light 1.9733.
-Medium now has 75/75 rows and mean 6.5333, including Llama. All five categories
+bin (75/75, mean 7.48); Small is 5.3067, Compact 3.6667, Ultra-light 1.5467.
+Medium now has 75/75 rows and mean 6.52, including Llama. All five categories
 have 75 evaluated rows; the observed ranking does not isolate size from
 quantization, training and scoring differences.
 
-The available task-level quality/format gates qualify Qwen2.5-1.5B for extraction
-and summarization, and Mistral-7B/NF4 for classification and summarization.
+The available task-level quality/format gates qualify Mistral-7B/NF4 for classification
+and summarization. Person 1 models no longer pass a complete task group after the corrections.
 Llama-3.2-3B/T4-FP16 qualifies for summaries (9.2/10).
-Qwen3-0.6B qualifies for summaries (9.6/10); Qwen2.5-3B qualifies for classification
-(10) and summaries (9.2); Qwen2.5-7B/MLX-4bit qualifies for action planning (8.4)
-and summaries (9.0). No available model passes the current gate for priority prediction.
+Qwen3-0.6B qualifies for summaries (9.4/10); Qwen2.5-3B qualifies for classification
+(10) and summaries (9.0); Qwen2.5-7B/MLX-4bit qualifies for action planning (8.4)
+and summaries (9.0). No available model passes the current gate for extraction or priority prediction.
 Therefore the router must clarify, queue for review, or use an independently
 qualified API model for those tasks; it must not silently choose an unqualified
 small model merely because it is cheaper. The API target is priced but remains
 unqualified on the shared 25 prompts. These candidates
 must be retested on the planned serving hardware before deployment.
 
-Within the supplied Person 1 subset, the 100-row CSV reports mean scores of 7.56 for
-Qwen2.5-1.5B, 7.32 for Phi-3.5-mini, 3.84 for SmolLM2-360M and 2.28 for distilgpt2.
-According to those supplied rubric scores, larger models did not always win:
-Qwen2.5-1.5B scored 10 versus Phi-3.5-mini's 7 on `extraction-02`, and 10 versus 1
-on `priority-05`. These are matched-prompt counterexamples within the complete matrix, not proof
-that smaller models always win. Audit the raw responses and scoring notes before submission.
-Qwen2.5-1.5B also has a lower median latency than Phi on Person 1's common MPS
-environment (1.5895 s versus 5.3627 s), so it is the stronger balance candidate
-within that four-model subset. Large has the highest observed category mean (7.5867/10); a global speed winner
-still requires comparable hardware/precision and workload-length conditions.
+Within Person 1's subset, the corrected CSV reports means of 6.60 for
+Qwen2.5-1.5B, 7.00 for Phi-3.5-mini, 3.32 for SmolLM2-360M and 1.00 for distilgpt2.
+The assistant inspected all 100 responses and the student authorized application
+of 42 total-score changes; this is not a claim of personal student inspection.
+Original scores, response hashes and reasoning are preserved in `person1/review/`.
+Qwen scores 8 versus Phi's 5 on `extraction-02`, and 10 versus 1 on `priority-05`:
+matched-prompt counterexamples to larger models always winning. Phi has higher mean
+quality, while Qwen has lower median latency (1.5895 s versus 5.3627 s). Neither is
+an unconditional overall winner. Large has the highest observed category mean
+(7.48/10). Cross-owner format/scoring conventions still need reconciliation, and
+a global speed winner requires comparable hardware and workload conditions.
 
 Use all reviewed outputs to answer which category gives the best mean quality;
 report per-model and per-task scores, score counts, and category completeness.
@@ -243,8 +246,8 @@ latency and throughput among qualifying models tested on the same hardware/setti
 Report the Pareto frontier rather than declaring a winner from incomparable devices.
 All 375 benchmark responses are now present; quality conclusions remain subject
 to student inspection and the stated mixed-condition limitations.
-Within Person 3's same MPS/float16 condition, Qwen3-0.6B summaries score 9.6
-at median 1.2654s, versus Qwen2.5-3B's 9.2 at 5.7808s, supporting the smaller
+Within Person 3's same MPS/float16 condition, Qwen3-0.6B summaries score 9.4
+at median 1.2654s, versus Qwen2.5-3B's 9.0 at 5.7808s, supporting the smaller
 summary candidate. Do not compare those latencies with Person 1's different Mac
 or the 7B MLX/4bit run. Use Qwen2.5-7B as the new action-planning candidate in
 the complex-plan scenario; retain review/clarification for unqualified priority outputs.
