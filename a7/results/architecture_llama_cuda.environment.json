@@ -1,0 +1,34 @@
+{
+  "recorded_at_utc": "2026-10-26T01:03:53.082502+00:00",
+  "condition": {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "owner": "architecture",
+    "device": "cuda",
+    "dtype": "float16",
+    "quantization": "none",
+    "gpu": "Tesla T4",
+    "vram_bytes": 15637086208,
+    "platform": "Linux-6.6.122+-x86_64-with-glibc2.39",
+    "python": "3.13.16",
+    "max_new_tokens": 220,
+    "do_sample": false,
+    "batch_size": 1,
+    "packages": {
+      "torch": "2.11.0+cu130",
+      "transformers": "4.57.6",
+      "huggingface-hub": "0.36.2",
+      "accelerate": "1.15.0"
+    },
+    "contract_source_sha256": {
+      "__init__.py": "beb14e51bd4722c5a569637b9bf2930e1c67fe4ffeaa32c9ba5613cdc8ca5599",
+      "benchmark_contract.py": "87d109d66ecc713e7692e98f1da5dda1e354e18324ead006304aa6159ab1df4d",
+      "benchmark_runner.py": "c5d9b8d4158585ad150c20e5cfc263a2531f6537c49bc7e120557bd8224c5be7",
+      "review_results.py": "d7f20a79b6927631e865e9e1907d3603acd5be25670215e4ac5380bcd40aa1d0"
+    },
+    "model_revision_observed_before_run": "0cb88a4f764b7a12671c53f0838cd831a0843b95",
+    "revision_note": "Observed Hub revision; the unchanged shared runner loads its default revision, not a pinned SHA.",
+    "timing_scope": "Shared runner: synchronized generate() prefill plus decode; no loading/tokenization, warmup or repeated trial."
+  },
+  "result_csv_sha256": "cd57d90c8da434e4744bb9cdfb7e9c43a25fc0f5c7b192af0cdc0f5657d7b405",
+  "finished_at_utc": "2026-10-26T01:06:10.418518+00:00"
+}

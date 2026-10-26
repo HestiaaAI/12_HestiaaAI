@@ -1,13 +1,13 @@
 # Architecture and final comparison — October 25, 2026
 
-Branch: `devcrn-P4`, updated through main `ba1c032` (Person 3's PR #40).
+Merged integration through main PR #41, followed by the approved-account Llama evidence import.
 
 ## Completed
 
 - Integrated all Person 2 and Person 3 benchmark, cost and SLM exports.
-- Team benchmark: 350/375 successful scored rows across 14/15 models. Each of
-  Persons 1–3 contributes 100; the architecture allocation contributes 50/75.
-- SmolLM: 25 CPU/FP32; TinyLlama: 25 Colab T4/FP16. Raw responses, environment
+- Team benchmark: 375/375 successful scored rows across 15/15 models. Each of
+  Persons 1–3 contributes 100; the architecture allocation contributes 75/75.
+- SmolLM: 25 CPU/FP32; TinyLlama and Llama: 25 each on Colab T4/FP16. Raw responses, environment
   records and assistant score reviews are preserved.
 - Step 1.6 findings, category completeness, condition-separated plots and task
   gates refreshed, including Person 3's MPS/FP16 and MLX/4bit conditions.
@@ -29,23 +29,22 @@ Branch: `devcrn-P4`, updated through main `ba1c032` (Person 3's PR #40).
   continuations match. Final state and Q4 differ across Windows/Mac; exact
   fine-tuned checkpoint reproduction is not claimed. No source exports overwritten.
 - Shared analysis notebooks regenerated and executed; all three integration notebooks
-  are schema-valid with no saved errors. All 34 assignment tests pass. The 90 API
+  are schema-valid with no saved errors. All 37 A7 tests pass; see `LLAMA_COMPLETION.md` for import checks and remaining submission checks. The 90 API
   inference and gateway totals were independently recomputed. Checkpoints and caches stay excluded.
 
-## Remaining external blocker
+## Final Llama import and remaining submission checks
 
-The last 25 prompts for `meta-llama/Llama-3.2-3B-Instruct` cannot run with this
-account: the October 25 check returned HTTP 403, explicitly awaiting model-author
-review. Authentication is present. A GPU runtime is preferable after approval.
+The approved-account teammate run supplied all 25 new A7 prompts successfully.
+The previous 75-row matrix, including access errors, is preserved separately;
+non-Llama responses/scores were retained. No A6 result substituted for an A7 run.
+All five categories now have three successful models and 75 evaluated prompts.
+Llama mean assisted quality is 6.88/10; malformed JSON and wrong priority labels
+are retained honestly. The Large bin has the highest observed mean (7.5867/10).
 
-Completion requires approved access and a 25-prompt run, or an authorized teammate
-running the shared contract on an approved account. Do not reuse A6's eight
-different evaluations or silently replace a required roster model. The GPU
-notebook is prepared. Import actual results, review scores, then refresh analysis.
-
-The full 375-row result and final Medium-bin ranking remain incomplete until that
-run. All other integration work supported by merged evidence is complete.
-Student signoff on assistant-assisted rubric reviews remains a submission check.
+There is no remaining gated-model experiment blocker in the merged evidence.
+Student signoff on assisted ratings, the recorded optional-notebook presentation
+items from the audit, and final submission packaging are separate checks; do not
+interpret 375/375 as a guarantee of full marks or production readiness.
 
 ## Rebuild
 

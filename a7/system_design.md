@@ -1,9 +1,9 @@
 # Hestia multi-model system — Architecture lead
 
-Status: routing design, 350 benchmark evaluations, both 90-row cost tables,
-and the five-question baseline/RAG/fine-tuning comparison are integrated.
-Person 3's PR #40 is included. The remaining 25 Llama-3.2 evaluations require
-model-author access approval (HTTP 403, checked October 25, 2026).
+Status: all 375 benchmark evaluations across the 15 A6 models, both 90-row cost
+tables, and the five-question baseline/RAG/fine-tuning comparison are integrated.
+The final 25 Llama-3.2 evaluations completed on an approved-account Colab T4.
+All responses have assisted-review scores; student signoff remains pending.
 The small classroom SLM experiment is separate from the 15 Hugging Face models.
 
 ## Evidence and experiment boundaries
@@ -31,16 +31,23 @@ JSON/single-label requirements, so this run does not qualify it for the proposed
 response-hash review audit are retained. These timings do not establish that
 TinyLlama is faster than CPU SmolLM because the hardware and precision differ.
 
-Llama returned gated
-repository HTTP 401 initially; after local authentication, the configuration check
-returned HTTP 403 stating the account was not in the authorized list. A separate
-three-row partial float16 SmolLM trial is exploratory and
-was stopped when observed available RAM dropped below 1 GB (about 95% used).
-These failures are retained in the evidence and do not count as successful
-benchmarks. `architecture_gpu_benchmark.ipynb` prepares a common CUDA/float16 rerun of
-all three models without changing the shared prompts or runner. The latest Llama
-check explicitly says the author's access review is pending. Architecture lead now has
-50/75 successful evaluations; the remaining 25 require Llama approval.
+Llama's earlier HTTP 401/403 access failures are preserved in
+`results/architecture_before_llama_colab.csv`. An approved teammate account then
+completed all 25 new A7 prompts on Colab Tesla T4/native FP16, using the unchanged
+shared source/inputs, greedy decoding and 220-token cap. The raw CSV/environment,
+executed `architecture_llama_colab.ipynb`, response-hash review audit and import
+verification are retained. Mean assisted score is 6.88/10, median full-generation
+latency 1.0295 s and median output rate 26.2267 tokens/sec. Four of five task
+categories are correct, but only two priority references match; duplicate JSON keys,
+invalid enums and missing object closures prevent accepting most structured
+outputs. Summary mean is 9.2/10 with valid JSON in all five cases, a candidate
+for that task under the proposed small-sample gate. Architecture coverage is now
+75/75, and all three original non-Llama owners remain unchanged.
+
+Native T4/FP16 Llama has higher quality and shorter median complete-generation
+latency than the supplied TinyLlama run, but lower median tokens/sec; response
+lengths differ. This is not evidence of a universal model-size speed effect.
+No model weights, account token or token cache are included in the submission.
 
 The runner measures one complete generation, including input prefill and decoding,
 excluding model download/loading. Tokens/sec means output tokens divided by that
@@ -194,15 +201,17 @@ no defensible universal claim that local becomes cheaper above a particular DAU.
 
 ## Performance analysis (Step 1.6)
 
-The updated fourteen-model/350-response findings are in
+The completed fifteen-model/375-response findings are in
 `results/architecture/performance_findings.md`. Mistral-7B has the highest available
 mean score (8.12/10) in the T4/NF4 condition. Large is the highest fully observed
 bin (75/75, mean 7.5867); Small is 5.6933, Compact 3.84, Ultra-light 1.9733.
-Medium has 50/75 rows and mean 6.36; Llama is missing. These observations do not establish a complete
-five-category ranking or isolate size from quantization and training differences.
+Medium now has 75/75 rows and mean 6.5333, including Llama. All five categories
+have 75 evaluated rows; the observed ranking does not isolate size from
+quantization, training and scoring differences.
 
 The available task-level quality/format gates qualify Qwen2.5-1.5B for extraction
 and summarization, and Mistral-7B/NF4 for classification and summarization.
+Llama-3.2-3B/T4-FP16 qualifies for summaries (9.2/10).
 Qwen3-0.6B qualifies for summaries (9.6/10); Qwen2.5-3B qualifies for classification
 (10) and summaries (9.2); Qwen2.5-7B/MLX-4bit qualifies for action planning (8.4)
 and summaries (9.0). No available model passes the current gate for priority prediction.
@@ -216,12 +225,12 @@ Within the supplied Person 1 subset, the 100-row CSV reports mean scores of 7.56
 Qwen2.5-1.5B, 7.32 for Phi-3.5-mini, 3.84 for SmolLM2-360M and 2.28 for distilgpt2.
 According to those supplied rubric scores, larger models did not always win:
 Qwen2.5-1.5B scored 10 versus Phi-3.5-mini's 7 on `extraction-02`, and 10 versus 1
-on `priority-05`. These are examples from the available evidence, not a final
-15-model ranking. Audit the raw responses and scoring notes before submission.
+on `priority-05`. These are matched-prompt counterexamples within the complete matrix, not proof
+that smaller models always win. Audit the raw responses and scoring notes before submission.
 Qwen2.5-1.5B also has a lower median latency than Phi on Person 1's common MPS
 environment (1.5895 s versus 5.3627 s), so it is the stronger balance candidate
-within that four-model subset. A global speed winner and best complete size
-category remain pending the remaining team evidence and comparable hardware runs.
+within that four-model subset. Large has the highest observed category mean (7.5867/10); a global speed winner
+still requires comparable hardware/precision and workload-length conditions.
 
 Use all reviewed outputs to answer which category gives the best mean quality;
 report per-model and per-task scores, score counts, and category completeness.
@@ -232,7 +241,8 @@ rubric assessment; heuristic keyword scores alone are insufficient evidence.
 For speed/quality balance, first require the task quality threshold, then compare
 latency and throughput among qualifying models tested on the same hardware/settings.
 Report the Pareto frontier rather than declaring a winner from incomparable devices.
-The 350 available rows support provisional findings, not a complete 15-model result.
+All 375 benchmark responses are now present; quality conclusions remain subject
+to student inspection and the stated mixed-condition limitations.
 Within Person 3's same MPS/float16 condition, Qwen3-0.6B summaries score 9.6
 at median 1.2654s, versus Qwen2.5-3B's 9.2 at 5.7808s, supporting the smaller
 summary candidate. Do not compare those latencies with Person 1's different Mac

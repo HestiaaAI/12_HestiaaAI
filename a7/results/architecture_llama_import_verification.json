@@ -1,0 +1,13 @@
+{
+  "raw_csv_sha256": "cd57d90c8da434e4744bb9cdfb7e9c43a25fc0f5c7b192af0cdc0f5657d7b405",
+  "notebook_sha256": "444d5f1cb6ff8208ef353dfc37713bce8da491df8518cd30e8bb5718029b6d39",
+  "successful_rows": 25,
+  "source_hashes_match": true,
+  "notebook_response_previews_match": true,
+  "notebook_timings_match": true,
+  "preview_limitation": "Long notebook outputs are truncated previews; full responses preserved/reviewed in raw CSV.",
+  "prior_non_llama_rows_preserved": 50,
+  "raw_outputs_unchanged": true,
+  "reviews": "AI-assisted; student signoff pending",
+  "old_matrix_archive": "a7/results/architecture_before_llama_colab.csv"
+}

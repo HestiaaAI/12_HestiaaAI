@@ -23,7 +23,7 @@ SmolLM outputs and verifies response hashes before applying them. Student signof
 is still pending. It will reject changed responses; inspect those before reusing
 the old scores. Other models initially receive the shared automated first pass.
 
-Initial local outcome: 25/75 successful float32 evaluations; TinyLlama later completed on Colab (50/75 current). TinyLlama hit Windows
+Initial local outcome: 25/75 successful float32 evaluations; TinyLlama later completed on Colab (later 75/75 after the approved-account Llama run). TinyLlama hit Windows
 paging-file error 1455; Llama returned gated repository HTTP 401. The float16 trial
 was stopped at high RAM utilization; it remains a separate partial experiment.
 Use `../architecture_gpu_benchmark.ipynb` for a common GPU/float16 run after Llama access
@@ -48,18 +48,18 @@ archives the older CPU table, and replaces only TinyLlama rows in the canonical
 Architecture lead matrix. CPU and GPU environment evidence stays separate. Automated
 scores require response-level inspection before treating them as final.
 TinyLlama completed 25/25 evaluations on Colab Tesla T4/float16; the canonical
-Architecture lead table now has 50/75 successful rows. The original CPU attempt table,
+Architecture lead table had 50/75 successful rows before the Llama import. The original CPU attempt table,
 raw GPU CSV, environment, executed Colab notebook and score-review hashes are
 preserved. CUDA and CPU timings are not directly comparable. Mean inspected
 TinyLlama score is 2.96/10, so successful inference does not establish usable
-structured-output quality. The latest local Llama check reports the author's
-access review is still pending.
+structured-output quality. The approved-account Llama continuation below completes
+the remaining 25 prompts; earlier local access errors remain historical evidence.
 
 A separate `architecture_float16_benchmark.csv` run tests lower memory usage after the
 float32 TinyLlama load failed with Windows paging-file error 1455. Keep these
 precision conditions separate; do not silently mix their timings. The default
 analysis currently uses `architecture_benchmark.csv`, which combines labeled CPU
-SmolLM and CUDA TinyLlama evidence. Promote a different run
+SmolLM and CUDA TinyLlama/Llama evidence. Promote a different run
 only after labeling its environment, preserving the earlier evidence, and reviewing
 the new responses.
 
@@ -123,14 +123,14 @@ absent. The complete three-condition input is now generated from both peers by `
 
 ## Integration checklist
 
-- [ ] Full team: 375 successful rows; all scores reviewed, model/prompt keys unique.
+- [x] Full team: 375 successful rows with assisted-review scores and unique model/prompt keys. Student signoff pending.
 - [x] Hardware and quantization labeled; no cross-condition fastest-model claim.
 - [x] Person 2: local 90-row itemized costs and assumptions.
 - [x] Person 3: API 90-row itemized costs and assumptions.
 - [x] Person 2: five questions, facts, baseline and 20 RAG outputs.
 - [x] Person 3: matching original baseline, five fine-tuned outputs and changed-weight evidence.
 - [x] Refresh comparison Markdown and write empirical conclusions in system_design.md.
-- [x] Execute integration notebooks and remove obsolete teammate-input placeholders. The gated-model blocker remains explicit.
+- [x] Execute integration notebooks and remove obsolete teammate-input placeholders. The approved-account Llama result replaces the old gated-model blocker.
 - [x] Keep checkpoints and model caches out of Git and submission.
 
 See `STATUS.md` for current completion and external blockers. Paired local/API comparisons now use both 90-row tables. Conditional API price thresholds remain a separate zero-gateway sensitivity analysis. Available benchmark analysis is
@@ -144,8 +144,8 @@ registry and state the actual ranges; do not relabel a 7B model as 30B+.
 ## Person 3 integration received October 25
 
 Main PR #40 supplies 100 benchmark rows, 90 API estimates and five before/after
-fine-tuning responses. Team completion is now 350/375. Only Llama's 25 rows remain
-blocked by author approval. API is cheaper in all modeled pairs; the single paid
+fine-tuning responses. The later approved-account Llama import brings team
+completion to 375/375. API is cheaper in all modeled pairs; the single paid
 Llama-3.1-8B comparable has not been quality-qualified.
 
 `architecture_integrate_peers` validates all five pre-training baseline matches,
@@ -157,3 +157,23 @@ The final comparison uses actual source continuations, not substituted retrieval
 memory without changing checkpoints or source exports. Local state differs from
 the Mac export and 4/5 continuations match exactly; see the reproduction report.
 Training questions overlap the evaluation questions, so this is in-sample evidence.
+
+## Approved-account Llama continuation
+
+`../architecture_llama_colab.ipynb` preserves the teammate-executed native-FP16
+Colab run. The raw 25 rows and environment are in `../results/architecture_llama_cuda*`.
+The inspection audit is `llama_review_audit.json`; the earlier matrix is
+`../results/architecture_before_llama_colab.csv`. No account token or weights are included.
+
+Import and review validation (does not run model inference):
+
+```sh
+python -m a7.architecture_import_llama architecture_llama_cuda_results.zip architecture_llama_colab.ipynb
+```
+
+The importer validates the exact 25 keys/prompts, source hashes, FP16/CUDA
+condition, raw CSV checksum, notebook timing/response previews and hash-bound
+assessment entries. It replaces only Llama rows and preserves the other 50.
+Full continuations remain in the raw CSV because notebook dataframe previews
+truncate long strings. The standard review rebuild preserves the inspected
+Llama scores instead of silently substituting heuristic scores.

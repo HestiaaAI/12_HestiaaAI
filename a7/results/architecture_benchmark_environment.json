@@ -12,9 +12,11 @@
       "environment_file": "architecture_tinyllama_cuda.environment.json"
     },
     "meta-llama/Llama-3.2-3B-Instruct": {
-      "device": "cpu",
-      "dtype": "float32",
-      "status": "not successfully evaluated; gated access pending"
+      "device": "cuda",
+      "dtype": "float16",
+      "gpu": "Tesla T4",
+      "environment_file": "architecture_llama_cuda.environment.json",
+      "status": "25 successful approved-account Colab evaluations; review audit retained"
     }
   }
 }
