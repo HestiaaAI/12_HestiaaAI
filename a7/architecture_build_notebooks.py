@@ -111,8 +111,9 @@ fig.tight_layout()
 plt.show()
 '''),
         md('### Submission status\n\n'
-           'Architecture lead benchmark: 50/75; team: 350/375. The remaining 25 Llama-3.2 rows '
-           'are blocked by model-author access approval. Cost analysis and three-condition comparison are integrated. '
+           'Architecture lead benchmark: 75/75; team: 375/375. Llama-3.2 completed on an approved-account '
+           'Colab T4/FP16 run; raw evidence and assistant reviews are preserved. Student signoff on scores remains pending. '
+           'Cost analysis and three-condition comparison are integrated. '
            'Assignment 2 Part 4 '
            'is in `slm/architecture_comparison.ipynb` and a Markdown section of the submitted '
            '`slm/slm_experiments.ipynb`. Checkpoints are excluded from submission.')]

@@ -11,5 +11,6 @@ Qwen/Qwen3-0.6B,Small (0.6B–<1.6B),mps,Person 3 macOS arm64 / mps / float16 / 
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),cuda,Tesla T4 / native FP16,220,25,25,2.96,5.2453,5.91038,37.7479
 distilbert/distilgpt2,Ultra-light (<0.2B),mps,Apple MPS / native model / exact GPU unrecorded,220,25,25,2.28,0.7815,1.1078599999999998,281.508
 facebook/opt-125m,Ultra-light (<0.2B),cuda,Tesla T4 / NF4 weights / float32 compute / eager,220,25,25,1.08,3.1447,3.2891799999999995,69.959
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),cuda,Tesla T4 / native FP16,220,25,25,6.88,1.0295,4.9834599999999964,26.2267
 microsoft/Phi-3.5-mini-instruct,Large (≥3.5B),mps,Apple MPS / native model / exact GPU unrecorded,220,25,25,7.32,5.3627,20.49218,10.881
 mistralai/Mistral-7B-Instruct-v0.3,Large (≥3.5B),cuda,Tesla T4 / NF4 weights / float32 compute / eager,220,25,25,8.12,4.1807,18.093839999999993,9.5678

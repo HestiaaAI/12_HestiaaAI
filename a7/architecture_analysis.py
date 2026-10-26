@@ -252,9 +252,11 @@ def performance_findings(data, coverage, models, categories):
     for row in models.sort_values('mean_quality',ascending=False).to_dict('records'):
         text.append(f"| {row['model_id']} | {row['benchmark_condition']} | {row['mean_quality']:.2f} | {row['median_latency_s']:.4f} |")
     text += ['', '## Step 1.6 answers', '',
-             '1. Best output category: the observed category means below describe the available rows. '
-             'A final five-category winner requires all three models per category; quantization/hardware '
-             'differences also prevent attributing quality changes solely to parameter count.', '',
+             ('1. Best output category: '+categories.loc[categories.mean_quality.idxmax(),'model_category']+
+              f" has the highest observed mean ({categories.mean_quality.max():.2f}/10) across the completed 75-row/category matrix. "
+              'Quantization, instruction tuning and hardware differ, so this is descriptive rather than a size-only causal result.'
+              if len(categories)==5 and categories.evaluations.eq(75).all() else
+              '1. Category means describe incomplete evidence; all three models per category are required before a final category ranking.'), '',
              '| Category | Models available /3 | Rows available /75 | Mean quality /10 |', '|---|---|---|---|']
     for row in categories.to_dict('records'):
         text.append(f"| {row['model_category']} | {row['models']} | {row['evaluations']} | {row['mean_quality']:.2f} |")

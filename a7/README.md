@@ -71,7 +71,7 @@ excluded by Git; the PR contains no training checkpoints.
 - Each member runs only the models assigned to their `owner` value.
 - Do not edit another member's raw evidence.
 - Return one CSV with all 25 rows per model and no duplicate model/prompt keys.
-- Person 2 and Person 3 must still calculate their respective 90-row cost tables
+- Person 2 and Person 3 supply their respective 90-row cost tables
   across all 15 models, regardless of their four-model benchmark allocations.
 - Architecture lead integrates the four reviewed CSV files into the final notebook.
 - Architecture lead owns the five routing strategies and `system_design.md`.
@@ -85,11 +85,13 @@ scenarios and the local/API comparison methodology. `slm/architecture_comparison
 verifies the original checkpoint and prepares the three-condition comparison;
 the comparison Markdown is also included in the submitted SLM notebook.
 
-The October 25 integration includes Person 2's 100 assessed benchmarks, 90 local
-cost estimates, five shared questions and baseline/RAG exports. Available team
-coverage is 250/375 successful evaluations. See `architecture/STATUS.md` for the
-remaining external inputs, `results/architecture/performance_findings.md` for the
-condition-separated findings, and `results/architecture/cost_analysis.md` for
-conditional API price thresholds. All 25 exported SLM baseline/RAG continuations
-were independently reproduced exactly without changing weights. Fine-tuning
-responses and actual API crossover conclusions remain pending Person 3's handoff.
+The completed integration includes 375 successful, scored evaluations across all
+15 original A6 models. The last 25 Llama-3.2 prompts completed on an approved-account
+Colab T4/FP16 run; its raw evidence, executed notebook and import checks are retained.
+Both 90-row cost tables and all five baseline/RAG/fine-tuned comparisons are
+integrated. See `architecture/STATUS.md` for remaining student assessment checks,
+`results/architecture/performance_findings.md` for condition-separated findings,
+and `results/architecture/cost_analysis.md` for paired API/local scenarios.
+The original 25 SLM baseline/RAG continuations were independently reproduced
+exactly without changing weights. Fine-tuning reproduction and its platform
+limitations are documented separately; model weights remain excluded.

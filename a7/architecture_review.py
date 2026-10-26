@@ -66,6 +66,24 @@ def main():
                               output_sha256=hashlib.sha256(row['generated_output'].encode()).hexdigest(),
                               criterion_points=points, notes=notes,
                               review_stage='assistant inspected; student signoff pending'))
+    # Preserve the approved-account Llama assessments on future rebuilds instead
+    # of replacing their response-level judgments with the automated first pass.
+    llama_path = ROOT/'a7/architecture/llama_review_audit.json'
+    if llama_path.exists():
+        llama = json.loads(llama_path.read_text(encoding='utf-8'))
+        entries = {entry['prompt_id']: entry for entry in llama['entries']}
+        for row in rows:
+            if row['model_id'] == llama['model_id'] and row['status'] == 'ok':
+                entry = entries[row['prompt_id']]
+                digest = hashlib.sha256(row['generated_output'].encode()).hexdigest()
+                if digest != entry['response_sha256']:
+                    raise ValueError('Llama output changed; inspect before reusing its scores')
+                row.update(dict(zip(criterion_fields, entry['components'])))
+                row['self_evaluation_score_1_to_10'] = max(1, sum(entry['components']))
+                row['review_notes'] = 'Assistant response-level review; student signoff pending. ' + entry['notes']
+                audit.append(dict(model_id=row['model_id'], prompt_id=row['prompt_id'],
+                    output_sha256=digest, criterion_points=entry['components'], notes=entry['notes'],
+                    review_stage='assistant inspected; student signoff pending'))
     temporary = path.with_suffix('.csv.tmp')
     with temporary.open('w', encoding='utf-8', newline='') as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)

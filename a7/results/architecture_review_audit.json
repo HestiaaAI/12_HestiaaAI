@@ -698,5 +698,355 @@
     ],
     "notes": "Asks the user to supply the plan and household data instead of proposing any electricity-saving actions; no required JSON steps.",
     "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "extraction-01",
+    "output_sha256": "98c1335f2bc5fce6e706e3659e23453039091a0b67e90b90570fd0fee5205e0d",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Repeats the tasks key three times, so ordinary JSON decoding discards two tasks. Task types concatenate invalid enum values; all concerns occur in text but the structure is unusable.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "extraction-02",
+    "output_sha256": "c2629d141a8612deba3973aa210972467b9c1ed9ce5986bd32a2250ee9145cb6",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Four concerns occur in text, but JSON lacks its final object closure, task types combine enum choices, and low smoke-detector priority weakens safety prioritization.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "extraction-03",
+    "output_sha256": "aa94dbec996eb6d04ba34e869f70f0a4402a50626c13fdd0067c67040b0fddaa",
+    "criterion_points": [
+      1,
+      0,
+      1,
+      1,
+      1
+    ],
+    "notes": "Only two task records: cake pickup is placed in the vacuum description; rail description is empty, types invalid and JSON lacks its final object closure.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "extraction-04",
+    "output_sha256": "b82c78aa36d93f4d253243e35f9f7b3a307f1120a62fdf44cb20c4083e845603",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      2,
+      1
+    ],
+    "notes": "All three concerns represented clearly, but task types contain pipe-separated alternatives, bill tonight is LOW, and the JSON object is not closed.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "extraction-05",
+    "output_sha256": "3731dd924e2cd882dab8c13197143909932c525f13ce4293b6085eb5561430eb",
+    "criterion_points": [
+      2,
+      0,
+      2,
+      2,
+      1
+    ],
+    "notes": "All concerns represented, but closet type is space-prefixed lowercase errand and mailing uses combined invalid labels; JSON object is not closed.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "classification-01",
+    "output_sha256": "3982869c11ce1ac2ce9f4068dd1e4c1526a9c883f2ebb56bb24be45214ee30e7",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct SHOPPING label.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "classification-02",
+    "output_sha256": "612ec44fe7a5481351ddb713d2df1314fc40a3bd30a5f541c8949d85792d09c3",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "ERRAND differs from the locked MAINTENANCE reference. Uses the architecture lead shared label-task policy: wrong labels receive the minimum score.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "classification-03",
+    "output_sha256": "98f4a7d62f228e2e565ed9159ea8e94e993cabaf7357e8597c49c89ea432265f",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct APPOINTMENT label.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "classification-04",
+    "output_sha256": "98cebc123a6f6bea8f35e2ebb5ab9de939af5d542c233ab0c0e98ff37343934e",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct DEADLINE label.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "classification-05",
+    "output_sha256": "72a3d3f08fd146fc0c1078ec5b92b197352032c8253af6db9af67b25950453cb",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct CHORE label.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "priority-01",
+    "output_sha256": "5fbdda1b8c72e849493a8534652682ed35b5bde51896cd1f457278883b0c5cf4",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "LOW differs from HIGH reference for low smoke-detector battery; minimum shared label-task score.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "priority-02",
+    "output_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "MEDIUM differs from LOW reference for discretionary drawer sorting; minimum shared label-task score.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "priority-03",
+    "output_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+    "criterion_points": [
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "notes": "MEDIUM differs from HIGH reference for tomorrow library deadline; minimum shared label-task score.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "priority-04",
+    "output_sha256": "ee603f0d79655e1c9c94a8c5923a8528214b779dbc88c09b3a6bff9e1ba318cb",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct URGENT label for rapid water leakage.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "priority-05",
+    "output_sha256": "7c48dd672a68098c3a9dac57805004a146db39c8d60c81d091537ee9c4a76054",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Correct MEDIUM label for coffee needed within two days.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "summary-01",
+    "output_sha256": "236316532330d336aa31513c3d55c7afb5e19fb744efc19ee16dec1f739135b5",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Valid concise JSON preserves discarding old food, wiping shelves and grouping remaining items.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "summary-02",
+    "output_sha256": "2a6b6c712cab6cfd30543c35080aebe2d111035c8967369a9846d78a04bd3129",
+    "criterion_points": [
+      2,
+      2,
+      1,
+      2,
+      1
+    ],
+    "notes": "Valid JSON preserves clinic, after-3-PM and next-week constraints, but omits the family-calendar update.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "summary-03",
+    "output_sha256": "52ea9fd9c8772d3ac01d0d895c88b2e95333f2b5a2da0f5e06da710d774a427f",
+    "criterion_points": [
+      2,
+      2,
+      1,
+      2,
+      1
+    ],
+    "notes": "Valid JSON preserves three-month comparison but omits contacting the provider if the increase continues.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "summary-04",
+    "output_sha256": "a68009552b6cab28b2d0dd9c0e5c137bbb204f8b332f56b60494b929e957ca50",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Valid concise JSON preserves gathering bedroom books, checking dates and weekend return.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "summary-05",
+    "output_sha256": "93bdc6855c895ef51b736876da297da83b692b44d286c2b040e8891522f19506",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Valid concise JSON preserves sheets, towels, bin and lamp.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "planning-01",
+    "output_sha256": "7eed1841e6f795ed2a1e47b652c9d7bc5c70360da872abd593acbff41cb0ad6b",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      2,
+      1
+    ],
+    "notes": "Five mostly useful guest-preparation actions, but no sleeping/bed-linen preparation; object closure missing, so not valid JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "planning-02",
+    "output_sha256": "d7239c836f1a9b4296e4e80d4de489119a66929f99e58201742bea1725040b48",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      1,
+      0
+    ],
+    "notes": "Malformed JSON has unescaped newlines and no closing string/object; introduces an unsupported $30 sub-budget and never explicitly enforces the requested $90 budget.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "planning-03",
+    "output_sha256": "04bcdea602b5ed4e206439d422b9ed9bde524f93bef7629a306c1691b905d6c8",
+    "criterion_points": [
+      3,
+      2,
+      2,
+      2,
+      1
+    ],
+    "notes": "Five concrete ordered cleaning steps with oven/stove shutdown and decluttering; valid JSON.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "planning-04",
+    "output_sha256": "e95d2d99f940bf611e2a68071f323437b4751bf0706ac06547a694eaec8c4fed",
+    "criterion_points": [
+      2,
+      0,
+      1,
+      2,
+      1
+    ],
+    "notes": "Four relevant moving actions, but omits actual packing/transport arrangements and lacks closing JSON object.",
+    "review_stage": "assistant inspected; student signoff pending"
+  },
+  {
+    "model_id": "meta-llama/Llama-3.2-3B-Instruct",
+    "prompt_id": "planning-05",
+    "output_sha256": "d853916e011f569352103eb3169112472d68ffc9b20b80a1700f00432e4651e5",
+    "criterion_points": [
+      3,
+      0,
+      2,
+      2,
+      1
+    ],
+    "notes": "Four useful energy-saving actions, but missing object closure makes the raw JSON invalid.",
+    "review_stage": "assistant inspected; student signoff pending"
   }
 ]
