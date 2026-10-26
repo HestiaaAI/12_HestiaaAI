@@ -44,7 +44,13 @@ of inspected Llama scores through the standard review rebuild. The final
 and no saved errors. No model generation occurred in the refreshed analysis run.
 Existing SLM/fine-tuning notebook outputs were preserved without rerunning inference.
 
-This resolves the gated-model experiment blocker. It does not replace student
-inspection of assisted scores or the notebook presentation items identified by the
-submission audit (visible KB/scored RAG table and executed Person 3 notebooks).
-No new commit, push or PR is performed by the evidence-import step.
+This resolves the gated-model experiment blocker. The five knowledge documents and
+combined 25-row scored table are now visible in `a7/slm/person2_rag_colab.ipynb`.
+Person 3's notebook presentation remains a separate team submission item.
+
+## Student review confirmation
+
+Darshan Dhene confirmed on October 25, 2026 that he reviewed the 25 Llama raw
+responses against the AI-assisted rubric scores and notes. He requested no score
+corrections. The assessments remain labeled AI-assisted so the source of the
+initial scoring is clear; this confirmation records his inspection of them.
