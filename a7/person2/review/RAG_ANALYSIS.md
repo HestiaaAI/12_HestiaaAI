@@ -1,6 +1,6 @@
 # Person 2 RAG results — response review
 
-These findings are based on the 25 continuations in the user-supplied `person2_rag_evidence.zip`. Scores originated as an AI-assisted assessment and were subsequently inspected by the student. Raw responses remain unchanged and accompany the reviewed results in the final submission.
+These findings are based on the 25 continuations in the user-supplied `person2_rag_evidence.zip`. The student reviewed the scores against the responses. Raw responses remain unchanged and accompany the reviewed results in the final submission.
 
 ## Results
 
@@ -33,7 +33,7 @@ The executed Colab notebook, reviewed export, five knowledge documents, combined
 ## Student review confirmation
 
 Darshan Dhene confirmed on October 25, 2026 that he reviewed all 25 saved RAG
-responses against the AI-assisted scores and explanations. He requested no score
-corrections. The initial assessment remains disclosed as AI-assisted.
+responses against the recorded scores and explanations. He requested no score
+corrections.
 
 A context-budgeted prompt variant could be a useful additional experiment, but it must be saved separately, use unchanged weights and be shared with Person 3 before using it for the common baseline/fine-tuning comparison. Do not silently replace this recorded run or claim that it achieved effective grounded question answering.

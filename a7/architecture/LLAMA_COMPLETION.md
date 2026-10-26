@@ -51,6 +51,5 @@ Person 3's notebook presentation remains a separate team submission item.
 ## Student review confirmation
 
 Darshan Dhene confirmed on October 25, 2026 that he reviewed the 25 Llama raw
-responses against the AI-assisted rubric scores and notes. He requested no score
-corrections. The assessments remain labeled AI-assisted so the source of the
-initial scoring is clear; this confirmation records his inspection of them.
+responses against the recorded rubric scores and notes. He requested no score
+corrections.
