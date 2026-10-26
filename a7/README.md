@@ -1,4 +1,11 @@
-# Assignment 7 shared benchmark and Person 1 handoff
+# Assignment 7 — experiments and submissions
+
+Start with [SUBMISSION.md](SUBMISSION.md) for the five required deliverables,
+requirement map, findings, limitations and upload instructions. The complete
+matrix contains 375 successful scored results. Both 90-row cost tables and the
+class SLM/RAG/fine-tuning comparison are included. [REVIEW_STATUS.md](REVIEW_STATUS.md)
+records the owner-specific assessment evidence. Build the upload ZIP with
+`python -m a7.package_submission` from the repository root.
 
 This folder is independent of the Django application. It contains the locked
 experiment contract for both Assignment 7 submissions.
@@ -84,7 +91,7 @@ excluded by Git; the PR contains no training checkpoints.
 
 ## Architecture lead integration
 
-See `architecture/README.md` for run commands and the pending teammate input contracts.
+See `architecture/README.md` for run commands and the fulfilled teammate input contracts.
 `architecture_analysis.py` validates and summarizes available evidence without filling
 missing costs or responses. `system_design.md` contains five Hestia routing
 scenarios and the local/API comparison methodology. `slm/architecture_comparison.ipynb`

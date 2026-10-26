@@ -44,6 +44,20 @@ def main():
         for i in range(1,6):
             tiny_notes[f'{family}-{i:02}'] = ([0,0,0,0,0],
                 'Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1.')
+    # Check original continuations before a first-pass reviewer can overwrite scores.
+    with path.open(encoding='utf-8', newline='') as handle:
+        original_rows=list(csv.DictReader(handle))
+    llama_path = ROOT/'a7/architecture/llama_review_audit.json'
+    llama = json.loads(llama_path.read_text(encoding='utf-8')) if llama_path.exists() else None
+    llama_entries={entry['prompt_id']:entry for entry in llama['entries']} if llama else {}
+    for row in original_rows:
+        if row['status']=='ok' and row['model_id'] in (SMOL,'TinyLlama/TinyLlama-1.1B-Chat-v1.0'):
+            refs=references if row['model_id']==SMOL else tiny_refs
+            if not matches_review_hash(row['generated_output'],refs.get(row['prompt_id'])):
+                raise ValueError('Output changed since inspection; review new evidence before reapplying scores')
+        if row['status']=='ok' and llama and row['model_id']==llama['model_id']:
+            if not matches_review_hash(row['generated_output'],llama_entries[row['prompt_id']]['response_sha256']):
+                raise ValueError('Llama output changed; inspect before reusing its scores')
     review_csv(path)
     with path.open(encoding='utf-8', newline='') as handle:
         reader = csv.DictReader(handle)
@@ -55,7 +69,7 @@ def main():
         if row['model_id'] in (SMOL, 'TinyLlama/TinyLlama-1.1B-Chat-v1.0') and row['status'] == 'ok':
             digest = hashlib.sha256(row['generated_output'].encode()).hexdigest()
             refs = references if row['model_id'] == SMOL else tiny_refs
-            if digest != refs.get(row['prompt_id']):
+            if not matches_review_hash(row['generated_output'],refs.get(row['prompt_id'])):
                 raise ValueError('Output changed since inspection; review new evidence before reapplying scores')
             reviews = SMOL_REVIEW if row['model_id'] == SMOL else tiny_notes
             points, notes = reviews[row['prompt_id']]
@@ -76,7 +90,7 @@ def main():
             if row['model_id'] == llama['model_id'] and row['status'] == 'ok':
                 entry = entries[row['prompt_id']]
                 digest = hashlib.sha256(row['generated_output'].encode()).hexdigest()
-                if digest != entry['response_sha256']:
+                if not matches_review_hash(row['generated_output'],entry['response_sha256']):
                     raise ValueError('Llama output changed; inspect before reusing its scores')
                 row.update(dict(zip(criterion_fields, entry['components'])))
                 row['self_evaluation_score_1_to_10'] = max(1, sum(entry['components']))
@@ -91,6 +105,12 @@ def main():
     temporary.replace(path)
     (path.parent/'architecture_review_audit.json').write_text(json.dumps(audit, indent=2), encoding='utf-8')
     print(f'Scored {len(rows)} attempts; {len(audit)} response-inspected rubric reviews.')
+
+
+def matches_review_hash(response, expected):
+    """Accept Git CRLF conversion only; retain the original response unchanged."""
+    return any(hashlib.sha256(text.encode('utf-8')).hexdigest()==expected
+               for text in (response,response.replace('\r\n','\n')))
 
 
 if __name__ == '__main__':

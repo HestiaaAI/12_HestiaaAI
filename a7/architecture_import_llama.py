@@ -55,7 +55,7 @@ def verified_rows(bundle, notebook, root=ROOT):
     if set(condition['contract_source_sha256'])!=source_files:
         raise ValueError('Unexpected shared source set')
     for name,digest in condition['contract_source_sha256'].items():
-        if hashlib.sha256((root/'a7'/name).read_text().encode()).hexdigest()!=digest:
+        if hashlib.sha256((root/'a7'/name).read_text(encoding='utf-8').encode()).hexdigest()!=digest:
             raise ValueError(f'Shared benchmark source differs: {name}')
     rows=list(csv.DictReader(io.StringIO(payloads[CSV].decode())))
     validate_result_rows(rows,select_models(model_ids=[MODEL]),PROMPTS)
@@ -79,7 +79,7 @@ def verified_rows(bundle, notebook, root=ROOT):
     cells=[c for c in nb.cells if c.cell_type=='code']
     if any(c.execution_count is None or any(o.output_type=='error' for o in c.outputs) for c in cells):
         raise ValueError('Notebook must preserve completed cells without saved errors')
-    text=Path(notebook).read_text()
+    text=Path(notebook).read_text(encoding='utf-8')
     for pattern in (r'hf_[A-Za-z0-9]{20,}',r'gsk_[A-Za-z0-9]{20,}'):
         if re.search(pattern,text):
             raise ValueError('Credential pattern in notebook; remove credentials before import')
@@ -99,7 +99,7 @@ def verified_rows(bundle, notebook, root=ROOT):
         if timings.get(row['prompt_id'])!=[row[k] for k in
                 ('status','latency_seconds','output_tokens','tokens_per_second')]:
             raise ValueError('Notebook timing/status table differs from CSV')
-    audit=json.loads((root/'a7/architecture/llama_review_audit.json').read_text())
+    audit=json.loads((root/'a7/architecture/llama_review_audit.json').read_text(encoding='utf-8'))
     entries={e['prompt_id']:e for e in audit['entries']}
     if len(entries)!=25 or len(audit['entries'])!=25:
         raise ValueError('One inspected review per prompt is required')
@@ -130,11 +130,11 @@ def import_results(bundle,notebook,root=ROOT):
     for name,payload in payloads.items():(folder/name).write_bytes(payload)
     (root/'a7/architecture_llama_colab.ipynb').write_bytes(Path(notebook).read_bytes())
     temporary=canonical.with_suffix('.csv.tmp')
-    with temporary.open('w',newline='') as handle:
+    with temporary.open('w',newline='',encoding='utf-8') as handle:
         writer=csv.DictWriter(handle,fieldnames=RESULT_COLUMNS,lineterminator='\n')
         writer.writeheader();writer.writerows(merged)
     temporary.replace(canonical)
-    path=folder/'architecture_benchmark_environment.json';metadata=json.loads(path.read_text())
+    path=folder/'architecture_benchmark_environment.json';metadata=json.loads(path.read_text(encoding='utf-8'))
     metadata['models'][MODEL]={'device':'cuda','dtype':'float16','gpu':condition['gpu'],
         'environment_file':ENV,'status':'25 successful approved-account Colab evaluations; review audit retained'}
     path.write_text(json.dumps(metadata,indent=2)+'\n')
