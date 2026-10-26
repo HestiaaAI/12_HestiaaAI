@@ -29,7 +29,7 @@ Merged integration through main PR #41, followed by the approved-account Llama e
   continuations match. Final state and Q4 differ across Windows/Mac; exact
   fine-tuned checkpoint reproduction is not claimed. No source exports overwritten.
 - Shared analysis notebooks regenerated and executed; all three integration notebooks
-  are schema-valid with no saved errors. All 37 A7 tests pass; see `LLAMA_COMPLETION.md` for import checks and remaining submission checks. The 90 API
+  are schema-valid with no saved errors. The current test result is recorded in `../SUBMISSION.md`; see `LLAMA_COMPLETION.md` for import checks and remaining submission checks. The 90 API
   inference and gateway totals were independently recomputed. Checkpoints and caches stay excluded.
 
 ## Final Llama import and remaining submission checks
@@ -42,8 +42,8 @@ Llama mean assisted quality is 6.88/10; malformed JSON and wrong priority labels
 are retained honestly. The Large bin has the highest observed mean (7.48/10).
 
 There is no remaining gated-model experiment blocker in the merged evidence.
-Student signoff on assisted ratings, the recorded optional-notebook presentation
-items from the audit, and final submission packaging are separate checks; do not
+Student signoff on assisted ratings, the disclosed scoring limitations
+and final submission packaging are separate checks; do not
 interpret 375/375 as a guarantee of full marks or production readiness.
 
 ## Rebuild

@@ -206,7 +206,9 @@ def cost_findings(costs, status):
         'Person 3 uses one comparable `meta-llama/Llama-3.1-8B-Instruct` through Novita/Hugging Face '
         'for every local roster model. Reported October 23 catalog rates are $0.02/million input '
         'and $0.05/million output tokens, or $0.03012 per 1,000 requests. These supplied historical '
-        'rates are scenario inputs, not newly verified live quotes or 15 distinct exact-model offers.', '',
+        'rates are scenario inputs, not newly verified live quotes or 15 distinct exact-model offers. '
+        'Holding the external instruction service fixed lets each local alternative be compared '
+        'against the same API rate. This does not establish size-matched or measured quality equivalence.', '',
         'Local hosting includes GPU pod compute, disk and a colocated thin handler. API includes '
         'token charges and a separate Runpod 2-vCPU gateway with disk ($1.986667/day/replica). '
         'Gateway capacity of 50 requests/s is assumed, using shared utilization/peak/service factors. '

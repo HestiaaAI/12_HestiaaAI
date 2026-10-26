@@ -62,8 +62,16 @@ class LlamaImportTests(unittest.TestCase):
             import_results(bundle,ROOT/'a7/architecture_llama_colab.ipynb',root)
             for name in ['response_review_reference.json','tinyllama_review_notes.json','tinyllama_review_reference.json']:
                 shutil.copyfile(ROOT/'a7/architecture'/name,root/'a7/architecture'/name)
-            with canonical.open() as source:
+            with canonical.open(encoding='utf-8') as source:
                 expected=list(csv.DictReader(source))
             with patch.object(review,'ROOT',root):review.main()
-            with canonical.open() as source:
+            with canonical.open(encoding='utf-8') as source:
                 self.assertEqual(list(csv.DictReader(source)),expected)
+
+    def test_review_hash_accepts_only_line_ending_conversion(self):
+        from a7.architecture_review import matches_review_hash
+        response='a household fact.\nnext line.'
+        digest=hashlib.sha256(response.encode()).hexdigest()
+        self.assertTrue(matches_review_hash(response.replace('\n','\r\n'),digest))
+        self.assertFalse(matches_review_hash(response+' ',digest))
+        self.assertFalse(matches_review_hash(response.replace('fact','fiction'),digest))

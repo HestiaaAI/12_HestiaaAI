@@ -1,6 +1,6 @@
 # Person 2 RAG results — response review
 
-These findings are based on the 25 continuations in the user-supplied `person2_rag_evidence.zip`. Scores are an AI-assisted assessment, not independent human grading. Raw responses must remain unchanged and accompany the reviewed results in the final submission.
+These findings are based on the 25 continuations in the user-supplied `person2_rag_evidence.zip`. The student reviewed the scores against the responses. Raw responses remain unchanged and accompany the reviewed results in the final submission.
 
 ## Results
 
@@ -28,6 +28,12 @@ The export reports identical original/final tensor-state hashes (`a8b4dcabc94e13
 
 ## Submission status
 
-The raw experiment has the required response counts and honest negative findings. Finish the Colab review-export cell using the supplied scores, paste these analysis answers into a Markdown cell, then download the executed notebook and reviewed evidence. The full Person 2 workload is still incomplete until the 100 HF benchmarks and 90 local-cost cases are completed and integrated with the team.
+The executed Colab notebook, reviewed export, five knowledge documents, combined 25-row scored table, 100 Hugging Face benchmarks, and 90 local-cost cases are present in the repository. The negative RAG findings remain unchanged.
+
+## Student review confirmation
+
+Darshan Dhene confirmed on October 25, 2026 that he reviewed all 25 saved RAG
+responses against the recorded scores and explanations. He requested no score
+corrections.
 
 A context-budgeted prompt variant could be a useful additional experiment, but it must be saved separately, use unchanged weights and be shared with Person 3 before using it for the common baseline/fine-tuning comparison. Do not silently replace this recorded run or claim that it achieved effective grounded question answering.

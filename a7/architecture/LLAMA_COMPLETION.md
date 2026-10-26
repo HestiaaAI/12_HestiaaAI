@@ -32,12 +32,12 @@ were preserved field-for-field, including their scores and review notes.
 - Duplicate keys, illegal enum combinations and missing closing JSON objects remain
   failures in the recorded extraction/planning outputs; they were not repaired before scoring.
 - The Large category has the highest observed mean across the completed matrix,
-  **7.5867/10**. Hardware/precision/training conditions differ, so this is not a
+  **7.48/10** after the merged score corrections. Hardware/precision/training conditions differ, so this is not a
   controlled causal effect of parameter count.
 
 ## Verification
 
-All **37 A7 tests passed**. New checks cover valid import with preservation of the
+At the original import, **37 A7 tests passed**. Current submission verification is recorded in `../SUBMISSION.md`. New checks cover valid import with preservation of the
 existing 50 responses, rejection of altered prompts before mutation, and persistence
 of inspected Llama scores through the standard review rebuild. The final
 `a7/multi_model_system.ipynb` is executed with 375/375 saved success/score counts
@@ -45,6 +45,5 @@ and no saved errors. No model generation occurred in the refreshed analysis run.
 Existing SLM/fine-tuning notebook outputs were preserved without rerunning inference.
 
 This resolves the gated-model experiment blocker. It does not replace student
-inspection of assisted scores or the notebook presentation items identified by the
-submission audit (visible KB/scored RAG table and executed Person 3 notebooks).
+inspection of assisted scores or the recorded scoring limitations. The visible KB/scored RAG table and executed Person 3 notebooks are now included.
 No new commit, push or PR is performed by the evidence-import step.
