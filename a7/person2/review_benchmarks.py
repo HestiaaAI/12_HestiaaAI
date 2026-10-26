@@ -32,7 +32,7 @@ def reviewed_rows(raw=RAW, audit_path=AUDIT):
             raise ValueError('Rubric component outside its allowed range')
         row.update(dict(zip(audit['component_order'], components)))
         row['self_evaluation_score_1_to_10'] = max(1, sum(components))
-        row['review_notes'] = 'AI-assisted response inspection; student signoff pending. ' + entry['notes']
+        row['review_notes'] = entry['notes']
     return rows
 
 

@@ -33,7 +33,7 @@ Qwen/Qwen2.5-3B-Instruct,action_planning,Person 3 macOS arm64 / mps / float16 / 
 Qwen/Qwen2.5-3B-Instruct,classification,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,10.0,1.0,1.0841,True
 Qwen/Qwen2.5-3B-Instruct,priority_prediction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,2.8,0.2,0.7768,False
 Qwen/Qwen2.5-3B-Instruct,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,8.2,0.4,20.4139,False
-Qwen/Qwen2.5-3B-Instruct,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.2,1.0,5.7808,True
+Qwen/Qwen2.5-3B-Instruct,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.0,1.0,5.7808,True
 Qwen/Qwen2.5-7B-Instruct,action_planning,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,8.4,1.0,2.386,True
 Qwen/Qwen2.5-7B-Instruct,classification,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,8.2,0.8,0.6649,False
 Qwen/Qwen2.5-7B-Instruct,priority_prediction,Person 3 macOS arm64 / mlx-4bit / 4-bit / 16 GB unified memory,5,2.8,0.2,0.5753,False
@@ -42,8 +42,8 @@ Qwen/Qwen2.5-7B-Instruct,summarization,Person 3 macOS arm64 / mlx-4bit / 4-bit /
 Qwen/Qwen3-0.6B,action_planning,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,6.4,0.4,1.5152,False
 Qwen/Qwen3-0.6B,classification,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,2.8,0.2,0.1402,False
 Qwen/Qwen3-0.6B,priority_prediction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,4.6,0.4,0.097,False
-Qwen/Qwen3-0.6B,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.4,0.8,4.364,False
-Qwen/Qwen3-0.6B,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.6,1.0,1.2654,True
+Qwen/Qwen3-0.6B,structured_extraction,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,8.6,0.6,4.364,False
+Qwen/Qwen3-0.6B,summarization,Person 3 macOS arm64 / mps / float16 / 16 GB unified memory,5,9.4,1.0,1.2654,True
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,action_planning,Tesla T4 / native FP16,5,4.0,0.0,5.8223,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,classification,Tesla T4 / native FP16,5,1.0,0.0,2.5477,False
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,priority_prediction,Tesla T4 / native FP16,5,1.0,0.0,3.5513,False

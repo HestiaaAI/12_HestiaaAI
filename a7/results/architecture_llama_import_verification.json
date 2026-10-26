@@ -8,6 +8,6 @@
   "preview_limitation": "Long notebook outputs are truncated previews; full responses preserved/reviewed in raw CSV.",
   "prior_non_llama_rows_preserved": 50,
   "raw_outputs_unchanged": true,
-  "reviews": "AI-assisted; student signoff pending",
+  "reviews": "AI-assisted; student signoff recorded October 25, 2026",
   "old_matrix_archive": "a7/results/architecture_before_llama_colab.csv"
 }

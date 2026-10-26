@@ -6,7 +6,7 @@
 - `a7/person2_benchmark_colab.ipynb`: original user-executed GPU notebook.
 - `a7/results/person2_nf4_colab/`: untouched raw 100-row CSV, environment and import verification.
 - `a7/results/person2_benchmark.csv`: canonical 100-row assessed matrix for the architecture lead's existing importer. Mean assisted scores: OPT 1.08, Qwen 5.20, SmolLM2 4.96, Mistral 8.12. These are this owner's four-model slice, not a 15-model ranking.
-- `a7/person2/review/benchmark_review_audit.json`: per-response hashes, individual component scores, policy and concrete observations. Scoring is AI-assisted; student signoff pending. This is not a human-reviewed certification.
+- `a7/person2/review/benchmark_review_audit.json`: per-response hashes, individual component scores, policy and concrete observations. Student signoff for the current scores is recorded in `a7/review_signoff.json`; the audit retains the original scoring method.
 - `a7/results/local_costs.csv`: 90 itemized inference-tier estimates, existing normalized columns plus CPU/RAM/GPU, capacity provenance, machine rounding and compute/storage components.
 - `a7/results/person2_capacity_assumptions.csv`: four measured T4 anchor rates and eleven assumed size-based rate proxies. All RTX 3090 rates are unvalidated transfers, not measurements.
 - `a7/results/person2_local_cost_sensitivity.csv`: 270 assumed half/base/double-throughput cases.

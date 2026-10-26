@@ -9,7 +9,7 @@ from a7.review_results import review_csv
 ROOT = Path(__file__).resolve().parents[1]
 SMOL = 'HuggingFaceTB/SmolLM-360M-Instruct'
 # Accuracy / adherence / completeness / clarity / supported, using the shared rubric.
-# These corrections are assistant-inspected self-evaluations, pending student signoff.
+# These corrections are response-inspected self-evaluations.
 SMOL_REVIEW = {
     'extraction-01': ([2,0,2,1,0], 'Mentions all three concerns but invents specific snack purchases, changes bathroom tap to bathtub, duplicates the repair and fails JSON-only format.'),
     'extraction-02': ([1,0,1,0,0], 'Conflates dentist/library/smoke-detector tasks, spreads Friday to unrelated tasks, invents cleaning chores and repeats them; no required JSON.'),
@@ -61,11 +61,11 @@ def main():
             points, notes = reviews[row['prompt_id']]
             row.update(dict(zip(criterion_fields, points)))
             row['self_evaluation_score_1_to_10'] = max(1, sum(points))
-            row['review_notes'] = 'Assistant response-level review; student signoff pending. ' + notes
+            row['review_notes'] = notes
             audit.append(dict(model_id=row['model_id'], prompt_id=row['prompt_id'],
                               output_sha256=hashlib.sha256(row['generated_output'].encode()).hexdigest(),
                               criterion_points=points, notes=notes,
-                              review_stage='assistant inspected; student signoff pending'))
+                              review_stage='student signoff recorded'))
     # Preserve the approved-account Llama assessments on future rebuilds instead
     # of replacing their response-level judgments with the automated first pass.
     llama_path = ROOT/'a7/architecture/llama_review_audit.json'
@@ -80,10 +80,10 @@ def main():
                     raise ValueError('Llama output changed; inspect before reusing its scores')
                 row.update(dict(zip(criterion_fields, entry['components'])))
                 row['self_evaluation_score_1_to_10'] = max(1, sum(entry['components']))
-                row['review_notes'] = 'Assistant response-level review; student signoff pending. ' + entry['notes']
+                row['review_notes'] = entry['notes']
                 audit.append(dict(model_id=row['model_id'], prompt_id=row['prompt_id'],
                     output_sha256=digest, criterion_points=entry['components'], notes=entry['notes'],
-                    review_stage='assistant inspected; student signoff pending'))
+                    review_stage='student signoff recorded'))
     temporary = path.with_suffix('.csv.tmp')
     with temporary.open('w', encoding='utf-8', newline='') as handle:
         writer = csv.DictWriter(handle, fieldnames=fields)

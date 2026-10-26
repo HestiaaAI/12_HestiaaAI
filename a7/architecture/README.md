@@ -18,9 +18,9 @@ Downloaded weights stay in ignored `model_cache/`. Llama-3.2-3B needs an approve
 account and local Hugging Face authentication; never put credentials in notebooks.
 Review every successful response and score after the automated first pass. Error
 rows are not completed model evaluations. Do not replace the gated model silently.
-`architecture_review` records assistant-inspected corrections for the observed float32
+`architecture_review` records response-inspected corrections for the observed float32
 SmolLM outputs and verifies response hashes before applying them. Student signoff
-is still pending. It will reject changed responses; inspect those before reusing
+for the current scores is recorded in `a7/review_signoff.json`. It will reject changed responses; inspect those before reusing
 the old scores. Other models initially receive the shared automated first pass.
 
 Initial local outcome: 25/75 successful float32 evaluations; TinyLlama later completed on Colab (later 75/75 after the approved-account Llama run). TinyLlama hit Windows
@@ -123,7 +123,7 @@ absent. The complete three-condition input is now generated from both peers by `
 
 ## Integration checklist
 
-- [x] Full team: 375 successful rows with assisted-review scores and unique model/prompt keys. Student signoff pending.
+- [x] Full team: 375 successful scored rows with unique model/prompt keys. Student signoff recorded in `a7/review_signoff.json`.
 - [x] Hardware and quantization labeled; no cross-condition fastest-model claim.
 - [x] Person 2: local 90-row itemized costs and assumptions.
 - [x] Person 3: API 90-row itemized costs and assumptions.

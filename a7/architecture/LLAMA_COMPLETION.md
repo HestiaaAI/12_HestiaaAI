@@ -10,7 +10,7 @@ The run timestamps are October 26 UTC / October 25 America/Chicago.
 - `a7/architecture_llama_colab.ipynb`: original executed user-supplied notebook, preserved byte-for-byte.
 - `a7/results/architecture_llama_cuda.csv`: exact raw 25-row export, with no output repairs or invented responses.
 - `a7/results/architecture_llama_cuda.environment.json`: GPU, versions, shared-source hashes, observed Hub revision and raw CSV checksum.
-- `a7/architecture/llama_review_audit.json`: 25 response-hash-bound assisted rubric assessments. Student signoff pending.
+- `a7/architecture/llama_review_audit.json`: 25 response-hash-bound rubric assessments. Student signoff recorded in `a7/review_signoff.json`.
 - `a7/results/architecture_llama_import_verification.json`: checks and preview limitations.
 - `a7/results/architecture_before_llama_colab.csv`: preserved previous matrix, including the original access-error rows.
 

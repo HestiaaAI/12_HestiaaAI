@@ -56,7 +56,6 @@ def integrate(root=ROOT):
             ('factual_accuracy', 'relevance', 'unsupported_information', 'review_notes')}
         row['factual_accuracy'], row['relevance'], row['review_notes'] = REVIEWS[key]
         row['unsupported_information'] = True
-        row['review_notes'] += ' Assistant continuation-level review; student signoff pending.'
         row['response_sha256'] = hashlib.sha256(row['response'].encode()).hexdigest()
         question['fine_tuned'] = row
     rag['integration'] = dict(

@@ -42,8 +42,9 @@ Llama mean assisted quality is 6.88/10; malformed JSON and wrong priority labels
 are retained honestly. The Large bin has the highest observed mean (7.5867/10).
 
 There is no remaining gated-model experiment blocker in the merged evidence.
-Student signoff on assisted ratings, the recorded optional-notebook presentation
-items from the audit, and final submission packaging are separate checks; do not
+Student signoff on the current ratings is recorded in `a7/review_signoff.json`.
+The recorded optional-notebook presentation items from the audit and final
+submission packaging are separate checks; do not
 interpret 375/375 as a guarantee of full marks or production readiness.
 
 ## Rebuild

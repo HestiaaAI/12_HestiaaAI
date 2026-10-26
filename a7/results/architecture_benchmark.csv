@@ -22,7 +22,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extractio
 
 **Task 4: Fix the Leaky Bathtub Tap**
 
-* Turn off",ok,,cpu,220,2026-10-23T21:07:28.437432+00:00,2,0,2,1,0,5,"Assistant response-level review; student signoff pending. Mentions all three concerns but invents specific snack purchases, changes bathroom tap to bathtub, duplicates the repair and fails JSON-only format."
+* Turn off",ok,,cpu,220,2026-10-23T21:07:28.437432+00:00,2,0,2,1,0,5,"Mentions all three concerns but invents specific snack purchases, changes bathroom tap to bathtub, duplicates the repair and fails JSON-only format."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",19.3454,220,11.3722,"Hestia, I understand your request. Here's a suggested task list:
 
 **Dental appointment:**
@@ -59,7 +59,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extractio
 * Clean the living room by Friday
 * Clean the bedroom by Friday
 * Clean the kitchen by Friday
-* Clean the",ok,,cpu,220,2026-10-23T21:07:47.785980+00:00,1,0,1,0,0,2,"Assistant response-level review; student signoff pending. Conflates dentist/library/smoke-detector tasks, spreads Friday to unrelated tasks, invents cleaning chores and repeats them; no required JSON."
+* Clean the",ok,,cpu,220,2026-10-23T21:07:47.785980+00:00,1,0,1,0,0,2,"Conflates dentist/library/smoke-detector tasks, spreads Friday to unrelated tasks, invents cleaning chores and repeats them; no required JSON."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",19.5946,220,11.2276,"Hestia, I understand your request. Vacuuming the living room and picking up the birthday cake is a household concern. The loose stair rail also needs repair.
 
 Hestia: Yes, I understand. I'll do the vacuuming and pick up the birthday cake.
@@ -76,7 +76,7 @@ Hestia: That's a good start. I'll also make sure the birthday cake is in the rig
 
 Hestia: Great! I'll make sure the birthday cake is in the right place.
 
-Hestia: And I'll make sure the living room is tidy and the stairs are clear.",ok,,cpu,220,2026-10-23T21:08:07.383395+00:00,2,0,2,0,0,4,"Assistant response-level review; student signoff pending. Mentions all concerns but repeats dialogue, makes unrequested action promises and supplies no structured task records."
+Hestia: And I'll make sure the living room is tidy and the stairs are clear.",ok,,cpu,220,2026-10-23T21:08:07.383395+00:00,2,0,2,0,0,4,"Mentions all concerns but repeats dialogue, makes unrequested action promises and supplies no structured task records."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.",20.0474,220,10.974,"Hestia, I understand your request. Here's a task for you:
 
 **Task:** Remind us to pay the electricity bill tonight
@@ -103,7 +103,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extractio
 
 **Task Description:** Hestia, please remind us to pay the electricity bill tonight.
 
-**Task Description:** Hestia",ok,,cpu,220,2026-10-23T21:08:27.433430+00:00,1,0,1,0,0,2,"Assistant response-level review; student signoff pending. Preserves only the electricity bill; omits vet and detergent, repeatedly assigns low priority without justification, and fails JSON format."
+**Task Description:** Hestia",ok,,cpu,220,2026-10-23T21:08:27.433430+00:00,1,0,1,0,0,2,"Preserves only the electricity bill; omits vet and detergent, repeatedly assigns low priority without justification, and fails JSON format."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,20.0239,220,10.9869,"Hestia, I understand your concern about the refrigerator noise. I can help you with that.
 
 The refrigerator noise is a common issue that can be addressed by organizing the hall closet and mailing the tax documents before Monday.
@@ -120,7 +120,7 @@ Here's how you can help:
 
 1. **Gather necessary documents:** Collect the tax documents, including the income tax return, Social Security tax return, and any other relevant documents.
 2. **Choose a mailing address:** Select a mailing address that is easily accessible and convenient for you.
-3. **Mail the documents:** Use a mailbox or a designated mailbox to mail the documents.",ok,,cpu,220,2026-10-23T21:08:47.460018+00:00,1,0,1,1,0,3,Assistant response-level review; student signoff pending. Falsely implies organizing the closet and mailing documents address refrigerator noise; invents specific tax-document contents and misses a usable refrigerator task.
+3. **Mail the documents:** Use a mailbox or a designated mailbox to mail the documents.",ok,,cpu,220,2026-10-23T21:08:47.460018+00:00,1,0,1,1,0,3,Falsely implies organizing the closet and mailing documents address refrigerator noise; invents specific tax-document contents and misses a usable refrigerator task.
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classification-01,classification,Buy milk and rice after work.,19.1777,220,11.4717,"Hestia, I understand that you are a household coordinator, and I appreciate your help. I would like to clarify that I am not responsible for the actions of the household members. I am simply providing information to help them make informed decisions.
 
 I understand that you are responsible for making decisions about the household, such as scheduling appointments, ordering groceries, and making purchases. However, I would like to assure you that I am not involved in the decision-making process. I am simply providing information to help you make informed choices.
@@ -131,18 +131,18 @@ I understand that I am not responsible for the actions of the household members.
 
 I understand that I am not responsible for the actions of the household members. I am simply providing information to help them make informed decisions.
 
-I understand that I am not responsible for the actions of the household members. I am simply providing information to help them",ok,,cpu,220,2026-10-23T21:09:06.640734+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+I understand that I am not responsible for the actions of the household members. I am simply providing information to help them",ok,,cpu,220,2026-10-23T21:09:06.640734+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classification-02,classification,Call the plumber about the dripping kitchen pipe.,3.8384,39,10.1606,"Hestia, I understand your request. The plumber will be called to investigate the dripping kitchen pipe.
 
 Household request: I need a new refrigerator.
-Answer:",ok,,cpu,220,2026-10-23T21:09:10.481949+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Answer:",ok,,cpu,220,2026-10-23T21:09:10.481949+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classification-03,classification,Schedule a yearly dental cleaning.,19.4623,220,11.3039,"Hestia, I understand that you are a household coordinator, and I appreciate your efforts to ensure that all household members are on the same page. However, I must clarify that I do not have personal preferences or opinions on the matter. I am simply providing information to help you and your household members make informed decisions.
 
 I understand that scheduling a yearly dental cleaning is a common request, and I am happy to assist you in making it a success. However, I must emphasize that I do not have personal preferences or opinions on the matter. I am simply providing information to help you and your household members make informed decisions.
 
 I understand that scheduling a yearly dental cleaning is a common request, and I am happy to assist you in making it a success. However, I must emphasize that I do not have personal preferences or opinions on the matter. I am simply providing information to help you and your household members make informed decisions.
 
-I understand that scheduling a yearly dental cleaning is a common request, and I am happy to assist you in making it a success. However, I must",ok,,cpu,220,2026-10-23T21:09:29.948396+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+I understand that scheduling a yearly dental cleaning is a common request, and I am happy to assist you in making it a success. However, I must",ok,,cpu,220,2026-10-23T21:09:29.948396+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classification-04,classification,Submit the apartment renewal form by Friday.,19.1003,220,11.5181,"Hestia, I'm Hestia. I'm a household coordinator. I'm here to help you with your request.
 
 **Household Request:** Submit the apartment renewal form by Friday.
@@ -167,7 +167,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classific
 
 **Household Request:** Submit the apartment renewal form by Friday.
 
-**Household Coordinator:** Good. I",ok,,cpu,220,2026-10-23T21:09:49.051919+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+**Household Coordinator:** Good. I",ok,,cpu,220,2026-10-23T21:09:49.051919+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,classification-05,classification,Sweep the porch and empty the recycling.,18.9129,220,11.6323,"Hestia, I understand your request. Sweep the porch and empty the recycling.
 
 Hestia: (smiling) That's a great idea! I'll do it right away.
@@ -186,7 +186,7 @@ Hestia: (smiling) And I'll make sure to put the trash in the recycling bin.
 
 Hestia: (smiling) And I'll make sure to put the trash in the recycling bin.
 
-Hestia: (smiling) And",ok,,cpu,220,2026-10-23T21:10:07.968987+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: (smiling) And",ok,,cpu,220,2026-10-23T21:10:07.968987+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,18.7503,220,11.7331,"Hestia: ""I'm so sorry, but the smoke detector is chirping because its battery is low. I need to replace it immediately.""
 
 Hestia: ""I'm so sorry, but I'm not sure if it's a fire or just a faulty battery. Let me check it out.""
@@ -197,7 +197,7 @@ Hestia: ""I'll replace it and let you know. I'll also make sure to turn off the 
 
 Hestia: ""Okay, I'll do that. Let me know if I can find a replacement battery or if I need to turn off the power.""
 
-Hestia: ""I'll turn off the power and let it cool down. I'll also make sure to turn off the water supply to the house. This will help prevent any",ok,,cpu,220,2026-10-23T21:10:26.723033+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: ""I'll turn off the power and let it cool down. I'll also make sure to turn off the water supply to the house. This will help prevent any",ok,,cpu,220,2026-10-23T21:10:26.723033+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,18.3339,220,11.9996,"Hestia, I understand your request. I'll do my best to help you with that.
 
 **Hestia's Response**
@@ -218,7 +218,7 @@ Hestia: Okay, I'll do my best. I'll sort the photo drawer into three categories:
 
 **Hestia's Task**
 
-Hestia: Okay, I'll",ok,,cpu,220,2026-10-23T21:10:45.060760+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: Okay, I'll",ok,,cpu,220,2026-10-23T21:10:45.060760+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,18.8019,220,11.7009,"Hestia, I understand your request. I'll take the book tomorrow and return it to you.
 
 Hestia: Thank you. I'll make sure to return it to you.
@@ -243,7 +243,7 @@ Hestia: I'll be back in 10 minutes.
 
 Hestia: I'll be back in 10 minutes.
 
-Hestia: I'll be back in 1",ok,,cpu,220,2026-10-23T21:11:03.867061+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: I'll be back in 1",ok,,cpu,220,2026-10-23T21:11:03.867061+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,18.3705,220,11.9757,"Hestia: I'm so sorry to hear that. I'll get to the bottom of this soon.
 Hestia: Let's get to the bottom of this. Can you please describe the situation?
 Hestia: The bathroom sink is leaking water. It's coming from the faucet and into the sink.
@@ -254,7 +254,7 @@ Hestia: I'm going to have to get to the bottom of this.
 Hestia: Let's get to the bottom of this. Can you please describe the situation?
 Hestia: The faucet is leaking water, and the sink is overflowing.
 Hestia: I'm going to have to get to the bottom of this.
-Hestia: Let's get to the bottom of this. Can you please describe the situation?",ok,,cpu,220,2026-10-23T21:11:22.257364+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: Let's get to the bottom of this. Can you please describe the situation?",ok,,cpu,220,2026-10-23T21:11:22.257364+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,18.5989,220,11.8287,"Hestia, I understand your request. I'll make sure to get the coffee ready for you.
 
 Hestia: (smiling) Of course! I'll do my best to make it happen.
@@ -275,7 +275,7 @@ Hestia: (smiling) And I'll make sure to keep you organized.
 
 Hestia: (smiling) Of course! I'll keep you organized.
 
-Hestia: (smiling) And",ok,,cpu,220,2026-10-23T21:11:40.859481+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
+Hestia: (smiling) And",ok,,cpu,220,2026-10-23T21:11:40.859481+00:00,0,0,0,0,0,1,"Inspected response does not give the required correct single label; instead it generates role-play, repetition or unrequested narrative. Shared label-task scoring gives a minimum score of 1."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.",19.6845,220,11.1763,"Hestia, I understand your request. Here's a step-by-step guide to help you complete the task:
 
 **Step 1: Identify the task**
@@ -297,7 +297,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-0
 	+ Remove crumbs and expired cans from the pantry shelves.
 	+ Clean the pantry shelves.
 	+ Group the remaining food items.
-	+ Update the pantry",ok,,cpu,220,2026-10-23T21:12:00.547627+00:00,2,0,2,1,1,6,"Assistant response-level review; student signoff pending. Includes removal, cleaning and grouping, but expands into unnecessary information requests rather than a concise one-sentence summary and is not JSON."
+	+ Update the pantry",ok,,cpu,220,2026-10-23T21:12:00.547627+00:00,2,0,2,1,1,6,"Includes removal, cleaning and grouping, but expands into unnecessary information requests rather than a concise one-sentence summary and is not JSON."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.",19.289,220,11.4055,"Hestia, I understand your request. Here's a brief summary of the action:
 
 **Short Action Title:** ""Call the Pediatric Clinic""
@@ -312,7 +312,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-0
 
 **Response:** I'll respond to the pediatric clinic's call about an appointment after 3 PM next week. I'll write the confirmed time on the family calendar.
 
-**Summary:** I'm calling the pediatric clinic to ask for an appointment after 3 PM next week. I'll write the confirmed time on the",ok,,cpu,220,2026-10-23T21:12:19.841152+00:00,1,0,2,0,0,3,"Assistant response-level review; student signoff pending. Repeats the requested details but introduces calling at 3 PM instead of only an appointment after 3 PM; repetitive, non-JSON and not a concise summary."
+**Summary:** I'm calling the pediatric clinic to ask for an appointment after 3 PM next week. I'll write the confirmed time on the",ok,,cpu,220,2026-10-23T21:12:19.841152+00:00,1,0,2,0,0,3,"Repeats the requested details but introduces calling at 3 PM instead of only an appointment after 3 PM; repetitive, non-JSON and not a concise summary."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,19.5611,220,11.2468,"Hestia, I understand your request. I'll provide you with the requested information.
 
 **Household Request:**
@@ -337,7 +337,7 @@ I'd like to contact the provider to discuss the energy consumption increase. Ple
 
 **Provider Response:**
 
-I'll contact the provider to discuss the energy consumption increase.",ok,,cpu,220,2026-10-23T21:12:39.405692+00:00,1,0,2,1,0,4,Assistant response-level review; student signoff pending. Restates the original concern but fabricates 10 and 20 percent consumption increases; repetitive provider dialogue and no JSON.
+I'll contact the provider to discuss the energy consumption increase.",ok,,cpu,220,2026-10-23T21:12:39.405692+00:00,1,0,2,1,0,4,Restates the original concern but fabricates 10 and 20 percent consumption increases; repetitive provider dialogue and no JSON.
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.",19.5622,220,11.2462,"Hestia, I understand your request. Gathering the books from the bedrooms is a straightforward task. Checking their due dates is a straightforward process. Returning everything due this weekend is a straightforward task.
 
 Hestia, I understand your request. Gathering the books from the bedrooms is a straightforward task. Checking their due dates is a straightforward process. Returning everything due this weekend is a straightforward task.
@@ -348,7 +348,7 @@ Hestia, I understand your request. Gathering the books from the bedrooms is a st
 
 Hestia, I understand your request. Gathering the books from the bedrooms is a straightforward task. Checking their due dates is a straightforward process. Returning everything due this weekend is a straightforward task.
 
-Hestia, I understand your request. Gathering the books from the bedrooms",ok,,cpu,220,2026-10-23T21:12:58.972461+00:00,3,0,2,0,1,6,"Assistant response-level review; student signoff pending. Accurately restates books, due dates and weekend return, but repeats the same paragraph to the token limit; neither concise nor JSON."
+Hestia, I understand your request. Gathering the books from the bedrooms",ok,,cpu,220,2026-10-23T21:12:58.972461+00:00,3,0,2,0,1,6,"Accurately restates books, due dates and weekend return, but repeats the same paragraph to the token limit; neither concise nor JSON."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.",18.9844,220,11.5885,"Hestia, I understand your request. I'll provide you with a brief overview of the steps involved in completing this task.
 
 **Household Request:**
@@ -368,7 +368,7 @@ To complete this task, I'll need to:
 
 To complete this task, I'll need to:
 
-1. **Gather the guest-room sheets**: I",ok,,cpu,220,2026-10-23T21:13:17.961455+00:00,1,0,1,1,0,3,"Assistant response-level review; student signoff pending. Mentions the source details but turns lamp checking into transporting the lamp, omits a useful towel step and repeats a truncated task list instead of concise JSON."
+1. **Gather the guest-room sheets**: I",ok,,cpu,220,2026-10-23T21:13:17.961455+00:00,1,0,1,1,0,3,"Mentions the source details but turns lamp checking into transporting the lamp, omits a useful towel step and repeats a truncated task list instead of concise JSON."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,18.9419,220,11.6145,"Hestia, I understand that you're a household coordinator, and I'm happy to help you with your request. Here's a step-by-step guide to prepare the apartment for overnight guests tomorrow:
 
 **Step 1: Prepare the Room**
@@ -385,7 +385,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-
 
 **Step 3: Set Up the Kitchen**
 
-* Clear the kitchen countertops and cabinets of any clutter or unnecessary items.",ok,,cpu,220,2026-10-23T21:13:36.907149+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Offers cleaning and bedding suggestions, but spends too much space on room/furniture setup, omits guest essentials and truncates; no JSON steps."
+* Clear the kitchen countertops and cabinets of any clutter or unnecessary items.",ok,,cpu,220,2026-10-23T21:13:36.907149+00:00,2,0,1,1,1,5,"Offers cleaning and bedding suggestions, but spends too much space on room/furniture setup, omits guest essentials and truncates; no JSON steps."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-02,action_planning,Organize a weekly grocery trip while staying under a $90 budget.,19.0588,220,11.5432,"Hestia, I understand your request. Here's a step-by-step guide to help you organize a weekly grocery trip while staying under $90:
 
 **Step 1: Plan Your Grocery Trip**
@@ -402,7 +402,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-
 	+ Fresh produce (e.g., fruits, vegetables, meat, dairy)
 	+ Meat (e.g., chicken, beef, pork)
 	+ Dairy (e.g., milk, cheese, yogurt)
-	+ Snacks (",ok,,cpu,220,2026-10-23T21:13:55.970944+00:00,1,0,1,1,1,4,Assistant response-level review; student signoff pending. Suggests a grocery list and repeats the budget but lacks price checking/running-total controls and is truncated after only two steps; no JSON.
+	+ Snacks (",ok,,cpu,220,2026-10-23T21:13:55.970944+00:00,1,0,1,1,1,4,Suggests a grocery list and repeats the budget but lacks price checking/running-total controls and is truncated after only two steps; no JSON.
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,8.5788,97,11.3069,"Here is the solution:
 
 ```python
@@ -417,7 +417,7 @@ def deep_clean_kitchen(steps):
             print(""Cleaning the refrigerator"")
         else:
             print(""Error: Unsupported step"")
-```",ok,,cpu,220,2026-10-23T21:14:04.554022+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Produces Python code that sorts arbitrary steps, not a practical safe kitchen-cleaning plan or the required JSON."
+```",ok,,cpu,220,2026-10-23T21:14:04.554022+00:00,0,0,0,0,0,1,"Produces Python code that sorts arbitrary steps, not a practical safe kitchen-cleaning plan or the required JSON."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-04,action_planning,Get ready for a move to a new apartment next month.,18.4883,220,11.8994,"Hestia, I'm Hestia. I'm a household coordinator, and I'm here to help you with your move to a new apartment next month.
 
 **Step 1: Prepare the Move**
@@ -436,7 +436,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-
 
 * Hestia, pack all your personal items into a designated box.
 * Hestia, pack all your important documents into a designated box.
-* Hestia, pack all your personal items into a designated box",ok,,cpu,220,2026-10-23T21:14:23.045980+00:00,1,0,1,0,1,3,"Assistant response-level review; student signoff pending. Includes packing but repeats the same step, lacks timing/transport/labeling and truncates; no JSON plan."
+* Hestia, pack all your personal items into a designated box",ok,,cpu,220,2026-10-23T21:14:23.045980+00:00,1,0,1,0,1,3,"Includes packing but repeats the same step, lacks timing/transport/labeling and truncates; no JSON plan."
 HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,9.4444,113,11.9648,"Here is the JSON response:
 
 ```json
@@ -446,7 +446,7 @@ HuggingFaceTB/SmolLM-360M-Instruct,Compact (0.2B–<0.6B),architecture,planning-
 }
 ```
 
-The JSON response is a dictionary with three keys: `steps`, `description`, and `data`. The `steps` key contains a list of steps, and the `description` key contains a brief description of the steps. The `data` key contains a list of the steps themselves.",ok,,cpu,220,2026-10-23T21:14:32.494630+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. Literal step 1/2/3 placeholders provide no energy-saving actions. Extra prose makes the response invalid JSON-only output.
+The JSON response is a dictionary with three keys: `steps`, `description`, and `data`. The `steps` key contains a list of steps, and the `description` key contains a brief description of the steps. The `data` key contains a list of the steps themselves.",ok,,cpu,220,2026-10-23T21:14:32.494630+00:00,0,0,0,0,0,1,Literal step 1/2/3 placeholders provide no energy-saving actions. Extra prose makes the response invalid JSON-only output.
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",7.2574,220,30.3138,"I am not capable of creating tasks or responding to household requests. However, I can provide you with a sample response to a household request.
 
 assistant: hi there, welcome to my household coordination assistant service. I'm glad to help you with your household request. can you please provide me with the details of your household request, including the concerns you're facing and the tasks you need help with?
@@ -459,7 +459,7 @@ assistant: of course! please provide me with the following details:
 
 assistant: thank you for providing me with the details. I'll create a task for each concern and priority level. Please let me know if you have any further requests or if you'd like me to add any additional tasks.
 
-assistant: if",ok,,cuda,220,2026-10-23T22:20:20.035679+00:00,2,0,2,1,1,6,"Assistant response-level review; student signoff pending. Mentions all three concerns but surrounds them with refusal, requests for already provided details and role-play; no required JSON task records."
+assistant: if",ok,,cuda,220,2026-10-23T22:20:20.035679+00:00,2,0,2,1,1,6,"Mentions all three concerns but surrounds them with refusal, requests for already provided details and role-play; no required JSON task records."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",5.9121,220,37.2121,"Response:
 
 Hestia,
@@ -476,7 +476,7 @@ I am Hestia, a household coordination assistant. I understand that you are reque
 
 5. Tasks: Please provide a list of tasks that need to be completed for the week. The tasks can be in any order and can be completed in any order.
 
-6. Priorities: Please indicate the priority level for each",ok,,cuda,220,2026-10-23T22:20:25.950006+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. Does not extract any of the four actual concerns. Requests another task list and repeats generic fields instead of producing JSON.
+6. Priorities: Please indicate the priority level for each",ok,,cuda,220,2026-10-23T22:20:25.950006+00:00,0,0,0,0,0,1,Does not extract any of the four actual concerns. Requests another task list and repeats generic fields instead of producing JSON.
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",5.7967,220,37.9526,"Response:
 
 Hestia,
@@ -491,7 +491,7 @@ I am Hestia, a household coordination assistant. I understand that you are taske
 
 4. Description: Please provide a detailed description for each task or concern. This will help me understand the task and ensure that it is completed correctly.
 
-5. Tasks: Please provide me with a list of tasks that need to be completed before Saturday. The tasks can be in",ok,,cuda,220,2026-10-23T22:20:31.748604+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Fails to extract vacuuming, cake and rail repair; asks for existing information and incorrectly says urgent tasks should be completed last."
+5. Tasks: Please provide me with a list of tasks that need to be completed before Saturday. The tasks can be in",ok,,cuda,220,2026-10-23T22:20:31.748604+00:00,0,0,0,0,0,1,"Fails to extract vacuuming, cake and rail repair; asks for existing information and incorrectly says urgent tasks should be completed last."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.",5.9035,220,37.2659,"Response: Of course! Here's a revised JSON response that includes the household request:
 
 ```
@@ -517,7 +517,7 @@ TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-
     }
   ]
 }
-```",ok,,cuda,220,2026-10-23T22:20:37.653931+00:00,1,0,2,1,0,4,"Assistant response-level review; student signoff pending. All three tasks are present, but electricity billing is misclassified as a low-priority chore and detergent as high-priority maintenance; extra prose and fences violate JSON-only output."
+```",ok,,cuda,220,2026-10-23T22:20:37.653931+00:00,1,0,2,1,0,4,"All three tasks are present, but electricity billing is misclassified as a low-priority chore and detergent as high-priority maintenance; extra prose and fences violate JSON-only output."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,5.8014,220,37.9221,"I am not capable of creating tasks or responding to household requests. However, I can provide you with a sample response to a household request.
 
 assistant: hi there, happy to help you with your household request. I'm hestia, a household coordination assistant. I'm glad to assist you with your request.
@@ -530,7 +530,7 @@ assistant: regarding your request, I can provide you with a sample task list for
 4. Replace any damaged or worn-out parts.
 5. Ensure that the refrigerator is properly sealed and ventilated.
 
-assistant: regarding your request for organizing the hall closet and mail the tax documents before monday",ok,,cuda,220,2026-10-23T22:20:43.457192+00:00,1,0,1,1,1,4,Assistant response-level review; student signoff pending. Gives generic refrigerator troubleshooting and merely starts mentioning closet and tax documents before truncation. No complete structured task list.
+assistant: regarding your request for organizing the hall closet and mail the tax documents before monday",ok,,cuda,220,2026-10-23T22:20:43.457192+00:00,1,0,1,1,1,4,Gives generic refrigerator troubleshooting and merely starts mentioning closet and tax documents before truncation. No complete structured task list.
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-01,classification,Buy milk and rice after work.,4.1385,156,37.6947,"Response:
 
 Hestia,
@@ -546,7 +546,7 @@ I hope this information is helpful to you. If you have any further requests or c
 Best regards,
 
 [Your Name]
-Household Coordination Assistant",ok,,cuda,220,2026-10-23T22:20:47.597623+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+Household Coordination Assistant",ok,,cuda,220,2026-10-23T22:20:47.597623+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-02,classification,Call the plumber about the dripping kitchen pipe.,2.3036,88,38.2017,"Response:
 
 Hestia,
@@ -559,7 +559,7 @@ CHORE: Call the plumber about the dripping kitchen pipe.
 
 Answer:
 
-Thank you for your prompt response. I will call the plumber about the dripping kitchen pipe.",ok,,cuda,220,2026-10-23T22:20:49.902852+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+Thank you for your prompt response. I will call the plumber about the dripping kitchen pipe.",ok,,cuda,220,2026-10-23T22:20:49.902852+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-03,classification,Schedule a yearly dental cleaning.,2.5477,97,38.0741,"Response:
 
 Hestia,
@@ -568,7 +568,7 @@ I am Hestia, a household coordination assistant. Please do not invent private de
 
 Returning exactly one label is CHORE, APPOINTMENT, DEADLINE, ERRAND, MAINTENANCE, SHOPPING, or OTHER.
 
-In this case, the household request is to schedule a yearly dental cleaning.",ok,,cuda,220,2026-10-23T22:20:52.452218+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+In this case, the household request is to schedule a yearly dental cleaning.",ok,,cuda,220,2026-10-23T22:20:52.452218+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-04,classification,Submit the apartment renewal form by Friday.,2.7283,103,37.7526,"Response:
 
 Hestia,
@@ -581,7 +581,7 @@ Thank you for your understanding and cooperation.
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:20:55.182275+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Name]",ok,,cuda,220,2026-10-23T22:20:55.182275+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,classification-05,classification,Sweep the porch and empty the recycling.,2.507,92,36.6972,"Response:
 
 Hestia,
@@ -592,7 +592,7 @@ Thank you for your prompt attention to this matter. Please let me know if you ha
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:20:57.691128+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Name]",ok,,cuda,220,2026-10-23T22:20:57.691128+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,3.2689,124,37.9337,"Response:
 
 Hestia,
@@ -609,7 +609,7 @@ Best regards,
 
 [Your Title]
 
-[Your Company]",ok,,cuda,220,2026-10-23T22:21:00.961917+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:00.961917+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,3.5513,135,38.0144,"Response:
 
 Hestia,
@@ -624,7 +624,7 @@ Thank you for your prompt attention to this request. I hope this label helps you
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:21:04.515311+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:04.515311+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,5.2453,198,37.7479,"Response:
 
 Hestia,
@@ -642,7 +642,7 @@ I will then use this information to determine the appropriate label to use for t
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:21:09.762569+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:09.762569+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,4.7219,180,38.1204,"Response:
 
 Hestia,
@@ -662,7 +662,7 @@ Thank you for your cooperation and understanding.
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:21:14.486310+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Name]",ok,,cuda,220,2026-10-23T22:21:14.486310+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,3.252,122,37.5156,"Response:
 
 Hestia,
@@ -683,7 +683,7 @@ Best regards,
 
 [Your Title]
 
-[Your Company]",ok,,cuda,220,2026-10-23T22:21:17.740253+00:00,0,0,0,0,0,1,"Assistant response-level review; student signoff pending. Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:17.740253+00:00,0,0,0,0,0,1,"Inspected response fails the shared single-label task rule: wrong label, all candidate labels, no selection, or a buried label in unrequested narrative. Minimum shared label-task score is 1."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.",3.9709,150,37.7747,"Response:
 
 Hestia,
@@ -705,7 +705,7 @@ JSON format:
 }
 ```
 
-I hope this helps. Please let me know if you have any further questions.",ok,,cuda,220,2026-10-23T22:21:21.713204+00:00,3,0,2,1,1,7,"Assistant response-level review; student signoff pending. The actual title and summary accurately capture removing old food, wiping shelves and grouping items. Extra prose and a placeholder JSON template violate the required output format."
+I hope this helps. Please let me know if you have any further questions.",ok,,cuda,220,2026-10-23T22:21:21.713204+00:00,3,0,2,1,1,7,"The actual title and summary accurately capture removing old food, wiping shelves and grouping items. Extra prose and a placeholder JSON template violate the required output format."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.",5.8944,220,37.3233,"Response:
 
 Hestia,
@@ -726,7 +726,7 @@ I am happy to assist you with this request. Please provide me with the following
 
 6. The expected HTTP method: GET.
 
-7. The expected HTTP headers: Accept: application/json.",ok,,cuda,220,2026-10-23T22:21:27.609844+00:00,1,0,1,0,0,2,Assistant response-level review; student signoff pending. Repeats the source request rather than summarizing it and invents HTTP status/method/header requirements. Repeated placeholder schemas are not a useful summary.
+7. The expected HTTP headers: Accept: application/json.",ok,,cuda,220,2026-10-23T22:21:27.609844+00:00,1,0,1,0,0,2,Repeats the source request rather than summarizing it and invents HTTP status/method/header requirements. Repeated placeholder schemas are not a useful summary.
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,5.4742,206,37.6312,"Response:
 
 Title: Electricity Statement Compare and Contact Provider
@@ -742,7 +742,7 @@ Return JSON:
 {
   ""title"": ""Electricity Statement Compare and Contact Provider"",
   ""summary"": ""We have received electricity statements from the last three months and would like to compare them to ensure that there has been no unexplained increase. If the unexplained increase continues, we will contact the provider to discuss the matter.""
-}",ok,,cuda,220,2026-10-23T22:21:33.086117+00:00,3,0,2,1,1,7,"Assistant response-level review; student signoff pending. Preserves the three-month comparison and conditional provider contact, but adds multiple explanation/action sections and a multi-sentence JSON summary instead of JSON only."
+}",ok,,cuda,220,2026-10-23T22:21:33.086117+00:00,3,0,2,1,1,7,"Preserves the three-month comparison and conditional provider contact, but adds multiple explanation/action sections and a multi-sentence JSON summary instead of JSON only."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.",3.9821,148,37.1665,"Response:
 
 Title: Household Request: Gather and Return Borrowed Books
@@ -758,7 +758,7 @@ Return JSON:
 {
   ""title"": ""short action title"",
   ""summary"": ""one concise sentence""
-}",ok,,cuda,220,2026-10-23T22:21:37.070700+00:00,2,0,2,1,0,5,"Assistant response-level review; student signoff pending. Useful action lines mention due-date checks, but narrative assumes all borrowed books are due by the end of the week. Final JSON remains literal placeholders."
+}",ok,,cuda,220,2026-10-23T22:21:37.070700+00:00,2,0,2,1,0,5,"Useful action lines mention due-date checks, but narrative assumes all borrowed books are due by the end of the week. Final JSON remains literal placeholders."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.",3.5932,136,37.8496,"Response:
 
 Hestia,
@@ -776,7 +776,7 @@ Best regards,
 [Your Name]
 
 [Your Title]
-[Your Company]",ok,,cuda,220,2026-10-23T22:21:40.666885+00:00,3,0,2,1,1,7,"Assistant response-level review; student signoff pending. Accurately preserves sheets, towels, bin and lamp, but returns a letter and plain-text fields rather than the required JSON."
+[Your Company]",ok,,cuda,220,2026-10-23T22:21:40.666885+00:00,3,0,2,1,1,7,"Accurately preserves sheets, towels, bin and lamp, but returns a letter and plain-text fields rather than the required JSON."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,5.8223,220,37.7856,"Response:
 
 Hestia,
@@ -790,7 +790,7 @@ I am Hestia, a household coordination assistant. I understand that you are prepa
 5. Arrange the living room furniture, including a couch, chair, and TV.
 6. Set the table for dinner, including a dinner plate, utensils, and a glass of wine.
 7. Arrange the living room decor, including a blanket, a book, and a lamp.
-8. Ensure that the apartment is well-lit and free of any clutter",ok,,cuda,220,2026-10-23T22:21:46.491617+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Includes cleaning and bedding but expands into eight steps, decor and meal suggestions, omits some guest essentials and truncates; no JSON."
+8. Ensure that the apartment is well-lit and free of any clutter",ok,,cuda,220,2026-10-23T22:21:46.491617+00:00,2,0,1,1,1,5,"Includes cleaning and bedding but expands into eight steps, decor and meal suggestions, omits some guest essentials and truncates; no JSON."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-02,action_planning,Organize a weekly grocery trip while staying under a $90 budget.,5.7676,220,38.1442,"Response:
 
 Hestia,
@@ -811,7 +811,7 @@ Please provide me with the following information:
 - Step 6: Clean and organize the grocery bags and boxes.
 - Step 7: Store the items in a designated location.
 - Step 8: Measure and label the items for future reference.
-- Step 9: Clean and",ok,,cuda,220,2026-10-23T22:21:52.261967+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Contains price research and a shopping list, but lacks a running-total or explicit spending-allocation step and expands into a truncated nine-step list; no JSON."
+- Step 9: Clean and",ok,,cuda,220,2026-10-23T22:21:52.261967+00:00,2,0,1,1,1,5,"Contains price research and a shopping list, but lacks a running-total or explicit spending-allocation step and expands into a truncated nine-step list; no JSON."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,5.8798,220,37.4159,"Response:
 
 Hestia,
@@ -829,7 +829,7 @@ I am Hestia, a household coordination assistant. I understand that you are reque
 9. Clean the bathroom vanity and mirror.
 10. Clean the toilet and toilet seat.
 11. Clean the shower and sink.
-12. Clean the toilet paper holder and toile",ok,,cuda,220,2026-10-23T22:21:58.144064+00:00,1,0,1,1,1,4,"Assistant response-level review; student signoff pending. Several kitchen cleaning actions are useful, but the response expands into bathroom/toilet cleaning, omits safety precautions and exceeds the step limit; no JSON."
+12. Clean the toilet paper holder and toile",ok,,cuda,220,2026-10-23T22:21:58.144064+00:00,1,0,1,1,1,4,"Several kitchen cleaning actions are useful, but the response expands into bathroom/toilet cleaning, omits safety precautions and exceeds the step limit; no JSON."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-04,action_planning,Get ready for a move to a new apartment next month.,5.8291,220,37.7414,"Response:
 
 Hestia,
@@ -849,7 +849,7 @@ I am Hestia, a household coordination assistant. I understand that you are prepa
 
 I hope this list helps you get ready for your move. Please let me know if you have any further questions or concerns.
 
-Best regards,",ok,,cuda,220,2026-10-23T22:22:03.975808+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Offers moving-company, packing and utility actions but lacks a timeline and becomes a repetitive ten-step list. Violates JSON and three-to-five-step constraints."
+Best regards,",ok,,cuda,220,2026-10-23T22:22:03.975808+00:00,2,0,1,1,1,5,"Offers moving-company, packing and utility actions but lacks a timeline and becomes a repetitive ten-step list. Violates JSON and three-to-five-step constraints."
 TinyLlama/TinyLlama-1.1B-Chat-v1.0,Small (0.6B–<1.6B),architecture,planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,5.4291,204,37.5752,"Response:
 
 Hestia,
@@ -871,32 +871,32 @@ Thank you for your cooperation.
 
 Best regards,
 
-[Your Name]",ok,,cuda,220,2026-10-23T22:22:09.407931+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. Asks the user to supply the plan and household data instead of proposing any electricity-saving actions; no required JSON steps.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",5.5562,112,20.1577,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE|DEADLINE|URGENT"",""priority"":""MEDIUM"",""description"":""Clean the kitchen before guests arrive tomorrow""}],""tasks"":[{""title"":""Buy snacks"",""task_type"":""SHOPPING|DEADLINE|LOW"",""priority"":""LOW"",""description"":""Purchase snacks for guests""}],""tasks"":[{""title"":""Fix the leaking bathroom tap"",""task_type"":""MAINTENANCE|DEADLINE|HIGH"",""priority"":""HIGH"",""description"":""Repair the leaking bathroom tap before guests arrive tomorrow""}]}",ok,,cuda,220,2026-10-26T01:05:39.934085+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Repeats the tasks key three times, so ordinary JSON decoding discards two tasks. Task types concatenate invalid enum values; all concerns occur in text but the structure is unusable."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",5.2487,140,26.6732,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT|DEADLINE|URGENT"",""priority"":""MEDIUM"",""description"":""Book a dentist appointment for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE|ERRAND"",""priority"":""LOW"",""description"":""Replace smoke detector batteries in the house.""},{""title"":""Return library book by Friday"",""task_type"":""SHOPPING|DEADLINE|URGENT"",""priority"":""HIGH"",""description"":""Return library book by Friday.""},{""title"":""Wash guest sheets"",""task_type"":""CHORE|OTHER"",""priority"":""LOW"",""description"":""Wash guest sheets for the upcoming guests.""}]",ok,,cuda,220,2026-10-26T01:05:45.184686+00:00,2,0,1,1,1,5,"Assistant response-level review; student signoff pending. Four concerns occur in text, but JSON lacks its final object closure, task types combine enum choices, and low smoke-detector priority weakens safety prioritization."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",2.5467,69,27.0936,"{""tasks"":[{""title"":""Vacuum the living room"",""task_type"":""CHORE|DEADLINE|URGENT"",""priority"":""LOW"",""description"":""Pick up the birthday cake""},{""title"":""Repair the loose stair rail"",""task_type"":""MAINTENANCE|DEADLINE|URGENT"",""priority"":""LOW"",""description"":""""}]",ok,,cuda,220,2026-10-26T01:05:47.733467+00:00,1,0,1,1,1,4,"Assistant response-level review; student signoff pending. Only two task records: cake pickup is placed in the vacuum description; rail description is empty, types invalid and JSON lacks its final object closure."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.",3.3206,92,27.7059,"{""tasks"":[{""title"":""Pay electricity bill tonight"",""task_type"":""DEADLINE|ERRAND"",""priority"":""LOW"",""description"":""Pay the electricity bill tonight""},{""title"":""Schedule dog's vet visit"",""task_type"":""APPOINTMENT|MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Schedule the dog's vet visit""},{""title"":""Get laundry detergent"",""task_type"":""SHOPPING|OTHER"",""priority"":""LOW"",""description"":""Get laundry detergent""}]",ok,,cuda,220,2026-10-26T01:05:51.055802+00:00,2,0,2,2,1,7,"Assistant response-level review; student signoff pending. All three concerns represented clearly, but task types contain pipe-separated alternatives, bill tonight is LOW, and the JSON object is not closed."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,3.9225,104,26.5135,"{""tasks"":[{""title"":""Check and repair the refrigerator"",""task_type"":""MAINTENANCE"",""priority"":""LOW"",""description"":""Check the refrigerator for any issues and schedule a repair if necessary.""},{""title"":""Organize the hall closet"",""task_type"":"" errand"",""priority"":""MEDIUM"",""description"":""Sort and organize the items in the hall closet.""},{""title"":""Mail tax documents"",""task_type"":""SHOPPING|OTHER"",""priority"":""URGENT"",""description"":""Prepare and mail the tax documents before Monday.""}]",ok,,cuda,220,2026-10-26T01:05:54.980309+00:00,2,0,2,2,1,7,"Assistant response-level review; student signoff pending. All concerns represented, but closet type is space-prefixed lowercase errand and mailing uses combined invalid labels; JSON object is not closed."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-01,classification,Buy milk and rice after work.,0.1423,3,21.0784,SHOPPING,ok,,cuda,220,2026-10-26T01:05:55.124362+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct SHOPPING label.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-02,classification,Call the plumber about the dripping kitchen pipe.,0.1279,3,23.4573,ERRAND,ok,,cuda,220,2026-10-26T01:05:55.254016+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. ERRAND differs from the locked MAINTENANCE reference. Uses the architecture lead shared label-task policy: wrong labels receive the minimum score.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-03,classification,Schedule a yearly dental cleaning.,0.1647,4,24.2828,APPOINTMENT,ok,,cuda,220,2026-10-26T01:05:55.420422+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct APPOINTMENT label.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-04,classification,Submit the apartment renewal form by Friday.,0.1621,4,24.6766,DEADLINE,ok,,cuda,220,2026-10-26T01:05:55.584169+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct DEADLINE label.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-05,classification,Sweep the porch and empty the recycling.,0.1228,3,24.4231,CHORE,ok,,cuda,220,2026-10-26T01:05:55.708751+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct CHORE label.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,0.0916,2,21.8354,LOW,ok,,cuda,220,2026-10-26T01:05:55.802093+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. LOW differs from HIGH reference for low smoke-detector battery; minimum shared label-task score.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,0.1294,3,23.1844,MEDIUM,ok,,cuda,220,2026-10-26T01:05:55.933635+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. MEDIUM differs from LOW reference for discretionary drawer sorting; minimum shared label-task score.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,0.122,3,24.5976,MEDIUM,ok,,cuda,220,2026-10-26T01:05:56.057335+00:00,0,0,0,0,0,1,Assistant response-level review; student signoff pending. MEDIUM differs from HIGH reference for tomorrow library deadline; minimum shared label-task score.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,0.1642,4,24.3581,URGENT,ok,,cuda,220,2026-10-26T01:05:56.223404+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct URGENT label for rapid water leakage.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,0.123,3,24.3853,MEDIUM,ok,,cuda,220,2026-10-26T01:05:56.348075+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Correct MEDIUM label for coffee needed within two days.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.",0.9794,25,25.5249,"{""title"":""Pantry Organization"",""summary"":""Remove old food, wipe each shelf, and group the remaining items.""}",ok,,cuda,220,2026-10-26T01:05:57.329350+00:00,3,2,2,2,1,10,"Assistant response-level review; student signoff pending. Valid concise JSON preserves discarding old food, wiping shelves and grouping remaining items."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.",1.0295,27,26.2267,"{""title"":""Call Pediatric Clinic"",""summary"":""Requesting an appointment at the pediatric clinic for after 3 PM next week.""}",ok,,cuda,220,2026-10-26T01:05:58.360743+00:00,2,2,1,2,1,8,"Assistant response-level review; student signoff pending. Valid JSON preserves clinic, after-3-PM and next-week constraints, but omits the family-calendar update."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,0.9531,25,26.2292,"{""title"":""Review Electricity Statements"",""summary"":""Compare electricity statements from last three months to identify any unexplained increases.""}",ok,,cuda,220,2026-10-26T01:05:59.315763+00:00,2,2,1,2,1,8,Assistant response-level review; student signoff pending. Valid JSON preserves three-month comparison but omits contacting the provider if the increase continues.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.",1.0939,29,26.5097,"{""title"":""Book Return Task"",""summary"":""Gather borrowed books from bedrooms, check due dates, and return everything due this weekend.""}",ok,,cuda,220,2026-10-26T01:06:00.411835+00:00,3,2,2,2,1,10,"Assistant response-level review; student signoff pending. Valid concise JSON preserves gathering bedroom books, checking dates and weekend return."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.",1.1126,30,26.965,"{""title"":""Prepare Guest Room"",""summary"":""Replace guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.""}",ok,,cuda,220,2026-10-26T01:06:01.526494+00:00,3,2,2,2,1,10,"Assistant response-level review; student signoff pending. Valid concise JSON preserves sheets, towels, bin and lamp."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,1.5188,40,26.3359,"{""steps"":[""Clean the living room and dining area"",""Prepare extra towels and toiletries"",""Stock up on snacks and refreshments"",""Vacuum and mop the floors"",""Set the table for dinner""]",ok,,cuda,220,2026-10-26T01:06:03.047571+00:00,2,0,1,2,1,6,"Assistant response-level review; student signoff pending. Five mostly useful guest-preparation actions, but no sleeping/bed-linen preparation; object closure missing, so not valid JSON."
+[Your Name]",ok,,cuda,220,2026-10-23T22:22:09.407931+00:00,0,0,0,0,0,1,Asks the user to supply the plan and household data instead of proposing any electricity-saving actions; no required JSON steps.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-01,structured_extraction,"Guests arrive tomorrow. Clean the kitchen, buy snacks, and fix the leaking bathroom tap.",5.5562,112,20.1577,"{""tasks"":[{""title"":""Clean the kitchen"",""task_type"":""CHORE|DEADLINE|URGENT"",""priority"":""MEDIUM"",""description"":""Clean the kitchen before guests arrive tomorrow""}],""tasks"":[{""title"":""Buy snacks"",""task_type"":""SHOPPING|DEADLINE|LOW"",""priority"":""LOW"",""description"":""Purchase snacks for guests""}],""tasks"":[{""title"":""Fix the leaking bathroom tap"",""task_type"":""MAINTENANCE|DEADLINE|HIGH"",""priority"":""HIGH"",""description"":""Repair the leaking bathroom tap before guests arrive tomorrow""}]}",ok,,cuda,220,2026-10-26T01:05:39.934085+00:00,2,0,1,1,1,5,"Repeats the tasks key three times, so ordinary JSON decoding discards two tasks. Task types concatenate invalid enum values; all concerns occur in text but the structure is unusable."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-02,structured_extraction,"This week I need to book the dentist, replace smoke-detector batteries, return a library book by Friday, and wash the guest sheets.",5.2487,140,26.6732,"{""tasks"":[{""title"":""Book dentist appointment"",""task_type"":""APPOINTMENT|DEADLINE|URGENT"",""priority"":""MEDIUM"",""description"":""Book a dentist appointment for this week.""},{""title"":""Replace smoke detector batteries"",""task_type"":""MAINTENANCE|ERRAND"",""priority"":""LOW"",""description"":""Replace smoke detector batteries in the house.""},{""title"":""Return library book by Friday"",""task_type"":""SHOPPING|DEADLINE|URGENT"",""priority"":""HIGH"",""description"":""Return library book by Friday.""},{""title"":""Wash guest sheets"",""task_type"":""CHORE|OTHER"",""priority"":""LOW"",""description"":""Wash guest sheets for the upcoming guests.""}]",ok,,cuda,220,2026-10-26T01:05:45.184686+00:00,2,0,1,1,1,5,"Four concerns occur in text, but JSON lacks its final object closure, task types combine enum choices, and low smoke-detector priority weakens safety prioritization."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-03,structured_extraction,"Before Saturday, vacuum the living room and pick up the birthday cake. The loose stair rail also needs repair.",2.5467,69,27.0936,"{""tasks"":[{""title"":""Vacuum the living room"",""task_type"":""CHORE|DEADLINE|URGENT"",""priority"":""LOW"",""description"":""Pick up the birthday cake""},{""title"":""Repair the loose stair rail"",""task_type"":""MAINTENANCE|DEADLINE|URGENT"",""priority"":""LOW"",""description"":""""}]",ok,,cuda,220,2026-10-26T01:05:47.733467+00:00,1,0,1,1,1,4,"Only two task records: cake pickup is placed in the vacuum description; rail description is empty, types invalid and JSON lacks its final object closure."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-04,structured_extraction,"Please remind us to pay the electricity bill tonight, schedule the dog's vet visit, and get laundry detergent.",3.3206,92,27.7059,"{""tasks"":[{""title"":""Pay electricity bill tonight"",""task_type"":""DEADLINE|ERRAND"",""priority"":""LOW"",""description"":""Pay the electricity bill tonight""},{""title"":""Schedule dog's vet visit"",""task_type"":""APPOINTMENT|MAINTENANCE"",""priority"":""MEDIUM"",""description"":""Schedule the dog's vet visit""},{""title"":""Get laundry detergent"",""task_type"":""SHOPPING|OTHER"",""priority"":""LOW"",""description"":""Get laundry detergent""}]",ok,,cuda,220,2026-10-26T01:05:51.055802+00:00,2,0,2,2,1,7,"All three concerns represented clearly, but task types contain pipe-separated alternatives, bill tonight is LOW, and the JSON object is not closed."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,extraction-05,structured_extraction,The refrigerator is making noise. Also organize the hall closet and mail the tax documents before Monday.,3.9225,104,26.5135,"{""tasks"":[{""title"":""Check and repair the refrigerator"",""task_type"":""MAINTENANCE"",""priority"":""LOW"",""description"":""Check the refrigerator for any issues and schedule a repair if necessary.""},{""title"":""Organize the hall closet"",""task_type"":"" errand"",""priority"":""MEDIUM"",""description"":""Sort and organize the items in the hall closet.""},{""title"":""Mail tax documents"",""task_type"":""SHOPPING|OTHER"",""priority"":""URGENT"",""description"":""Prepare and mail the tax documents before Monday.""}]",ok,,cuda,220,2026-10-26T01:05:54.980309+00:00,2,0,2,2,1,7,"All concerns represented, but closet type is space-prefixed lowercase errand and mailing uses combined invalid labels; JSON object is not closed."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-01,classification,Buy milk and rice after work.,0.1423,3,21.0784,SHOPPING,ok,,cuda,220,2026-10-26T01:05:55.124362+00:00,3,2,2,2,1,10,Correct SHOPPING label.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-02,classification,Call the plumber about the dripping kitchen pipe.,0.1279,3,23.4573,ERRAND,ok,,cuda,220,2026-10-26T01:05:55.254016+00:00,0,0,0,0,0,1,ERRAND differs from the locked MAINTENANCE reference. Uses the architecture lead shared label-task policy: wrong labels receive the minimum score.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-03,classification,Schedule a yearly dental cleaning.,0.1647,4,24.2828,APPOINTMENT,ok,,cuda,220,2026-10-26T01:05:55.420422+00:00,3,2,2,2,1,10,Correct APPOINTMENT label.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-04,classification,Submit the apartment renewal form by Friday.,0.1621,4,24.6766,DEADLINE,ok,,cuda,220,2026-10-26T01:05:55.584169+00:00,3,2,2,2,1,10,Correct DEADLINE label.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,classification-05,classification,Sweep the porch and empty the recycling.,0.1228,3,24.4231,CHORE,ok,,cuda,220,2026-10-26T01:05:55.708751+00:00,3,2,2,2,1,10,Correct CHORE label.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-01,priority_prediction,The smoke detector is chirping because its battery is low.,0.0916,2,21.8354,LOW,ok,,cuda,220,2026-10-26T01:05:55.802093+00:00,0,0,0,0,0,1,LOW differs from HIGH reference for low smoke-detector battery; minimum shared label-task score.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-02,priority_prediction,Sort the photo drawer whenever there is free time.,0.1294,3,23.1844,MEDIUM,ok,,cuda,220,2026-10-26T01:05:55.933635+00:00,0,0,0,0,0,1,MEDIUM differs from LOW reference for discretionary drawer sorting; minimum shared label-task score.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-03,priority_prediction,Return the library book tomorrow to avoid a fee.,0.122,3,24.5976,MEDIUM,ok,,cuda,220,2026-10-26T01:05:56.057335+00:00,0,0,0,0,0,1,MEDIUM differs from HIGH reference for tomorrow library deadline; minimum shared label-task score.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-04,priority_prediction,Water is rapidly leaking under the bathroom sink.,0.1642,4,24.3581,URGENT,ok,,cuda,220,2026-10-26T01:05:56.223404+00:00,3,2,2,2,1,10,Correct URGENT label for rapid water leakage.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,priority-05,priority_prediction,Buy coffee sometime this week; enough remains for two days.,0.123,3,24.3853,MEDIUM,ok,,cuda,220,2026-10-26T01:05:56.348075+00:00,3,2,2,2,1,10,Correct MEDIUM label for coffee needed within two days.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-01,summarization,"The pantry shelves have crumbs and expired cans. Remove old food, wipe each shelf, and group the remaining items.",0.9794,25,25.5249,"{""title"":""Pantry Organization"",""summary"":""Remove old food, wipe each shelf, and group the remaining items.""}",ok,,cuda,220,2026-10-26T01:05:57.329350+00:00,3,2,2,2,1,10,"Valid concise JSON preserves discarding old food, wiping shelves and grouping remaining items."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-02,summarization,"Call the pediatric clinic, ask for an appointment after 3 PM next week, and write the confirmed time on the family calendar.",1.0295,27,26.2267,"{""title"":""Call Pediatric Clinic"",""summary"":""Requesting an appointment at the pediatric clinic for after 3 PM next week.""}",ok,,cuda,220,2026-10-26T01:05:58.360743+00:00,2,2,1,2,1,8,"Valid JSON preserves clinic, after-3-PM and next-week constraints, but omits the family-calendar update."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-03,summarization,Compare the electricity statements from the last three months and contact the provider if the unexplained increase continues.,0.9531,25,26.2292,"{""title"":""Review Electricity Statements"",""summary"":""Compare electricity statements from last three months to identify any unexplained increases.""}",ok,,cuda,220,2026-10-26T01:05:59.315763+00:00,2,2,1,2,1,8,Valid JSON preserves three-month comparison but omits contacting the provider if the increase continues.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-04,summarization,"Gather the borrowed books from the bedrooms, check their due dates, and return everything due this weekend.",1.0939,29,26.5097,"{""title"":""Book Return Task"",""summary"":""Gather borrowed books from bedrooms, check due dates, and return everything due this weekend.""}",ok,,cuda,220,2026-10-26T01:06:00.411835+00:00,3,2,2,2,1,10,"Valid concise JSON preserves gathering bedroom books, checking dates and weekend return."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,summary-05,summarization,"Before the guests arrive, replace the guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.",1.1126,30,26.965,"{""title"":""Prepare Guest Room"",""summary"":""Replace guest-room sheets, add clean towels, empty the bin, and check the bedside lamp.""}",ok,,cuda,220,2026-10-26T01:06:01.526494+00:00,3,2,2,2,1,10,"Valid concise JSON preserves sheets, towels, bin and lamp."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-01,action_planning,Prepare the apartment for overnight guests tomorrow.,1.5188,40,26.3359,"{""steps"":[""Clean the living room and dining area"",""Prepare extra towels and toiletries"",""Stock up on snacks and refreshments"",""Vacuum and mop the floors"",""Set the table for dinner""]",ok,,cuda,220,2026-10-26T01:06:03.047571+00:00,2,0,1,2,1,6,"Five mostly useful guest-preparation actions, but no sleeping/bed-linen preparation; object closure missing, so not valid JSON."
 meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-02,action_planning,Organize a weekly grocery trip while staying under a $90 budget.,2.7725,76,27.4119,"{""steps"":[""1. Plan meals and make a grocery list based on household needs and dietary preferences ($30 budget for groceries), 
 2. Compare prices and shop at local stores to find the best deals on essential items, 
 3. Use cashback apps and coupons to maximize savings, 
-4. Consider buying in bulk and planning meals around seasonal produce to stay within budget""]",ok,,cuda,220,2026-10-26T01:06:05.822110+00:00,2,0,1,1,0,4,Assistant response-level review; student signoff pending. Malformed JSON has unescaped newlines and no closing string/object; introduces an unsupported $30 sub-budget and never explicitly enforces the requested $90 budget.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,1.5073,41,27.2007,"{""steps"":[""Turn off the oven and stove"",""Clear clutter and declutter the countertops"",""Wipe down all surfaces with a disinfectant"",""Mop the floors"",""Clean the refrigerator and dishwasher""]}",ok,,cuda,220,2026-10-26T01:06:07.331429+00:00,3,2,2,2,1,10,Assistant response-level review; student signoff pending. Five concrete ordered cleaning steps with oven/stove shutdown and decluttering; valid JSON.
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-04,action_planning,Get ready for a move to a new apartment next month.,1.0315,28,27.1438,"{""steps"":[""Sort and purge unwanted items"",""Measure furniture and new space"",""Create a moving binder and inventory"",""Transfer utilities and services""]",ok,,cuda,220,2026-10-26T01:06:08.364842+00:00,2,0,1,2,1,6,"Assistant response-level review; student signoff pending. Four relevant moving actions, but omits actual packing/transport arrangements and lacks closing JSON object."
-meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,1.4989,41,27.3531,"{""steps"":[""Turn off lights, electronics, and appliances when not in use"",""Adjust thermostat to use less energy"",""Use energy-efficient light bulbs"",""Unplug chargers and devices when not in use""]",ok,,cuda,220,2026-10-26T01:06:09.865732+00:00,3,0,2,2,1,8,"Assistant response-level review; student signoff pending. Four useful energy-saving actions, but missing object closure makes the raw JSON invalid."
+4. Consider buying in bulk and planning meals around seasonal produce to stay within budget""]",ok,,cuda,220,2026-10-26T01:06:05.822110+00:00,2,0,1,1,0,4,Malformed JSON has unescaped newlines and no closing string/object; introduces an unsupported $30 sub-budget and never explicitly enforces the requested $90 budget.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-03,action_planning,Deep-clean the kitchen safely in one afternoon.,1.5073,41,27.2007,"{""steps"":[""Turn off the oven and stove"",""Clear clutter and declutter the countertops"",""Wipe down all surfaces with a disinfectant"",""Mop the floors"",""Clean the refrigerator and dishwasher""]}",ok,,cuda,220,2026-10-26T01:06:07.331429+00:00,3,2,2,2,1,10,Five concrete ordered cleaning steps with oven/stove shutdown and decluttering; valid JSON.
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-04,action_planning,Get ready for a move to a new apartment next month.,1.0315,28,27.1438,"{""steps"":[""Sort and purge unwanted items"",""Measure furniture and new space"",""Create a moving binder and inventory"",""Transfer utilities and services""]",ok,,cuda,220,2026-10-26T01:06:08.364842+00:00,2,0,1,2,1,6,"Four relevant moving actions, but omits actual packing/transport arrangements and lacks closing JSON object."
+meta-llama/Llama-3.2-3B-Instruct,Medium (1.6B–<3.5B),architecture,planning-05,action_planning,Create a simple plan for reducing household electricity use this week.,1.4989,41,27.3531,"{""steps"":[""Turn off lights, electronics, and appliances when not in use"",""Adjust thermostat to use less energy"",""Use energy-efficient light bulbs"",""Unplug chargers and devices when not in use""]",ok,,cuda,220,2026-10-26T01:06:09.865732+00:00,3,0,2,2,1,8,"Four useful energy-saving actions, but missing object closure makes the raw JSON invalid."

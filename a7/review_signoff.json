@@ -1,0 +1,37 @@
+{
+  "signed_off_by": "Darshan Dhene",
+  "date": "2026-10-25 (America/Chicago)",
+  "basis": "Student requested signoff for the current recorded scores across all team benchmark and class SLM review sets. This records the student\u2019s approval of the saved scores; original scoring methods remain in the audit files.",
+  "scope": [
+    {
+      "dataset": "a7/results/person1_benchmark.csv",
+      "response_count": 100,
+      "response_and_scores_sha256": "8a49d5df0ece88c814319b6635dd5edbd452c0518343d38869cbaa69f675815d"
+    },
+    {
+      "dataset": "a7/results/person2_benchmark.csv",
+      "response_count": 100,
+      "response_and_scores_sha256": "e8cf169aa87621fdda1969e1e79a20326c45217f7046a89ccbd2fe9d4d8fba4b"
+    },
+    {
+      "dataset": "a7/results/person3_benchmark.csv",
+      "response_count": 100,
+      "response_and_scores_sha256": "2baf533f41381d14af5f9a48537219c2b74c2d995a8a80e7b6d5cdff9ef9ee96"
+    },
+    {
+      "dataset": "a7/results/architecture_benchmark.csv",
+      "response_count": 75,
+      "response_and_scores_sha256": "40ae5ea80595f838f429ae12a16713476b00a6ef4ff1665d1defe670a21d07c9"
+    },
+    {
+      "dataset": "a7/slm/results/person2_rag_colab/person2_rag_reviewed.json",
+      "response_count": 25,
+      "response_and_scores_sha256": "c03f3c28b64e706db4586f0e8eacb8496c16ccf3ec333d6a1e98b5d8cf275a12"
+    },
+    {
+      "dataset": "a7/architecture/inputs/slm_comparison.json",
+      "response_count": 5,
+      "response_and_scores_sha256": "cefc84870157f6ae3347af37b8c35b61e7a7f4b9d962f788103c094231bfd8e9"
+    }
+  ]
+}

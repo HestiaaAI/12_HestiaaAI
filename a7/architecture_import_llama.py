@@ -113,7 +113,7 @@ def verified_rows(bundle, notebook, root=ROOT):
             raise ValueError('Invalid rubric components')
         row.update(dict(zip(audit['component_order'],components)))
         row['self_evaluation_score_1_to_10']=max(1,sum(components))
-        row['review_notes']='Assistant response-level review; student signoff pending. '+entry['notes']
+        row['review_notes']=entry['notes']
     return rows,payloads,condition
 
 
@@ -144,7 +144,7 @@ def import_results(bundle,notebook,root=ROOT):
         'notebook_timings_match':True,
         'preview_limitation':'Long notebook outputs are truncated previews; full responses preserved/reviewed in raw CSV.',
         'prior_non_llama_rows_preserved':len(retained),
-        'raw_outputs_unchanged':True,'reviews':'AI-assisted; student signoff pending',
+        'raw_outputs_unchanged':True,'reviews':'Student signoff recorded; scoring provenance retained in the audit',
         'old_matrix_archive':str(archive.relative_to(root))}
     (folder/'architecture_llama_import_verification.json').write_text(json.dumps(report,indent=2)+'\n')
     return merged

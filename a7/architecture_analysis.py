@@ -246,7 +246,7 @@ def performance_findings(data, coverage, models, categories):
     successful=int(coverage.successful.sum())
     text=['# Available benchmark findings', '',
           f'{successful}/375 successful, scored evaluations are available across {len(models)}/15 models. '
-          'Scores are assistant-assessed; student signoff remains pending. '
+          'Student signoff for the current response/score sets is recorded in a7/review_signoff.json. '
           'Hardware/precision conditions are separate; this is not a controlled size-only experiment.', '',
           '| Model | Condition | Mean quality /10 | Median latency (s) |', '|---|---|---|---|']
     for row in models.sort_values('mean_quality',ascending=False).to_dict('records'):

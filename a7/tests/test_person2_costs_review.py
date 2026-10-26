@@ -52,7 +52,7 @@ class Person2CostReviewTests(unittest.TestCase):
                 if col not in fields+['self_evaluation_score_1_to_10','review_notes']:
                     self.assertEqual(old[col],new[col])
             self.assertEqual(new['self_evaluation_score_1_to_10'],max(1,sum(new[f] for f in fields)))
-            self.assertIn('AI-assisted',new['review_notes'])
+            self.assertTrue(new['review_notes'].strip())
         with tempfile.TemporaryDirectory() as tmp:
             changed=Path(tmp)/'changed.csv';changed.write_bytes(RAW.read_bytes()+b'\n')
             with self.assertRaisesRegex(ValueError,'Raw evidence changed'):reviewed_rows(changed)

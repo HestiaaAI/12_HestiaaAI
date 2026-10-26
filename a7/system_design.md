@@ -3,7 +3,8 @@
 Status: all 375 benchmark evaluations across the 15 A6 models, both 90-row cost
 tables, and the five-question baseline/RAG/fine-tuning comparison are integrated.
 The final 25 Llama-3.2 evaluations completed on an approved-account Colab T4.
-All responses have assisted-review scores; student signoff remains pending.
+All responses have scores; student signoff for the current score sets is recorded
+in `a7/review_signoff.json`.
 The small classroom SLM experiment is separate from the 15 Hugging Face models.
 
 ## Evidence and experiment boundaries
@@ -204,15 +205,15 @@ no defensible universal claim that local becomes cheaper above a particular DAU.
 The completed fifteen-model/375-response findings are in
 `results/architecture/performance_findings.md`. Mistral-7B has the highest available
 mean score (8.12/10) in the T4/NF4 condition. Large is the highest fully observed
-bin (75/75, mean 7.5867); Small is 5.6933, Compact 3.84, Ultra-light 1.9733.
-Medium now has 75/75 rows and mean 6.5333, including Llama. All five categories
+bin (75/75, mean 7.5867); Small is 5.6267, Compact 3.84, Ultra-light 1.9733.
+Medium now has 75/75 rows and mean 6.52, including Llama. All five categories
 have 75 evaluated rows; the observed ranking does not isolate size from
 quantization, training and scoring differences.
 
 The available task-level quality/format gates qualify Qwen2.5-1.5B for extraction
 and summarization, and Mistral-7B/NF4 for classification and summarization.
 Llama-3.2-3B/T4-FP16 qualifies for summaries (9.2/10).
-Qwen3-0.6B qualifies for summaries (9.6/10); Qwen2.5-3B qualifies for classification
+Qwen3-0.6B qualifies for summaries (9.4/10); Qwen2.5-3B qualifies for classification
 (10) and summaries (9.2); Qwen2.5-7B/MLX-4bit qualifies for action planning (8.4)
 and summaries (9.0). No available model passes the current gate for priority prediction.
 Therefore the router must clarify, queue for review, or use an independently
@@ -243,7 +244,7 @@ latency and throughput among qualifying models tested on the same hardware/setti
 Report the Pareto frontier rather than declaring a winner from incomparable devices.
 All 375 benchmark responses are now present; quality conclusions remain subject
 to student inspection and the stated mixed-condition limitations.
-Within Person 3's same MPS/float16 condition, Qwen3-0.6B summaries score 9.6
+Within Person 3's same MPS/float16 condition, Qwen3-0.6B summaries score 9.4
 at median 1.2654s, versus Qwen2.5-3B's 9.2 at 5.7808s, supporting the smaller
 summary candidate. Do not compare those latencies with Person 1's different Mac
 or the 7B MLX/4bit run. Use Qwen2.5-7B as the new action-planning candidate in

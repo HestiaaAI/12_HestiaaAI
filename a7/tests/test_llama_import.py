@@ -66,4 +66,9 @@ class LlamaImportTests(unittest.TestCase):
                 expected=list(csv.DictReader(source))
             with patch.object(review,'ROOT',root):review.main()
             with canonical.open() as source:
-                self.assertEqual(list(csv.DictReader(source)),expected)
+                actual=list(csv.DictReader(source))
+            for row in expected:
+                if row['model_id'] != MODEL:
+                    row['review_notes']=row['review_notes'].removeprefix(
+                        'Assistant response-level review; student signoff pending. ')
+            self.assertEqual(actual,expected)

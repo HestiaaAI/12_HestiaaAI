@@ -10,7 +10,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q1",
@@ -19,7 +19,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q1",
@@ -28,7 +28,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q1",
@@ -37,7 +37,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q1",
@@ -46,7 +46,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about learning and models; no laundry-day answer. Expected fact: monday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q2",
@@ -55,7 +55,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q2",
@@ -64,7 +64,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q2",
@@ -73,7 +73,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q2",
@@ -82,7 +82,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q2",
@@ -91,7 +91,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about probability, Django and models; no trash-day answer. Expected fact: friday. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q3",
@@ -100,7 +100,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q3",
@@ -109,7 +109,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q3",
@@ -118,7 +118,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q3",
@@ -127,7 +127,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q3",
@@ -136,7 +136,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about neural networks and training; no towel location. Expected fact: in the hall. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q4",
@@ -145,7 +145,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q4",
@@ -154,7 +154,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q4",
@@ -163,7 +163,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q4",
@@ -172,7 +172,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q4",
@@ -181,7 +181,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about attention, students and models; no bulb location. Expected fact: in the shed. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q5",
@@ -190,7 +190,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q5",
@@ -199,7 +199,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q5",
@@ -208,7 +208,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q5",
@@ -217,7 +217,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     },
     {
       "question_id": "Q5",
@@ -226,7 +226,7 @@
       "factual_accuracy": 1,
       "relevance": 1,
       "unsupported_information": true,
-      "review_notes": "Assistant assessment of the supplied raw continuation: Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
+      "review_notes": "Unrelated fragments about students, software or learning; no soap location. Expected fact: under the sink. Off-topic assertions/fragments are unsupported by this household knowledge base; this flag does not assert that every fragment is factually false."
     }
   ]
 }

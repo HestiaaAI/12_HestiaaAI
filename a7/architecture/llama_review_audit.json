@@ -1,7 +1,7 @@
 {
   "model_id": "meta-llama/Llama-3.2-3B-Instruct",
   "owner": "architecture",
-  "method": "AI-assisted response-level inspection; student signoff pending; not independent human grading.",
+  "method": "AI-assisted response-level inspection; student signoff recorded October 25, 2026; not independent human grading.",
   "policy": "Same five-component team rubric. Total max(1,sum). Follow existing architecture label-task policy: wrong reference labels receive minimum 1. Strict raw JSON and allowed enums are required for full adherence. Do not repair outputs before assessing.",
   "component_order": [
     "task_accuracy_0_to_3",
