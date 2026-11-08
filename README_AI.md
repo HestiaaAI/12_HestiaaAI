@@ -1,5 +1,10 @@
 # Hestia AI Household Brain Dump — A6
 
+## Assignment 9 Ask Hestia backend
+
+The [Ask Hestia backend handoff](docs/a9-ask-hestia-backend.md) covers local setup,
+the Django service interface, A6/A7 model selection and A8 handbook retrieval.
+
 ## Run the integrated app
 
 Use Python 3.12 or newer for the current complete requirements (verified separately

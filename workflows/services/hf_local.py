@@ -61,6 +61,13 @@ def get_model():
     if _MODEL is not None and _MODEL_KEY == key:
         return _TOKENIZER, _MODEL
 
+    tokenizer, model = load_causal_model(cfg["model_id"], cfg["device"], token=cfg["token"])
+    _TOKENIZER, _MODEL, _MODEL_KEY = tokenizer, model, key
+    return tokenizer, model
+
+
+def load_causal_model(model_id: str, device: str, *, token=None, dtype=None):
+    """Load a causal model without changing settings or the Brain Dump cache."""
     try:
         import torch
         from transformers import AutoModelForCausalLM, AutoTokenizer
@@ -69,16 +76,16 @@ def get_model():
             "torch/transformers are not installed. Run: python -m pip install -r requirements.txt"
         ) from exc
 
-    model_id = cfg["model_id"]
-    device = _torch_device(cfg["device"])
-    dtype = torch.float16 if device in {"cuda", "mps"} else torch.float32
-    logger.info("Loading Brain Dump model %s on %s", model_id, device)
+    device = _torch_device(device)
+    if dtype is None:
+        dtype = torch.float16 if device in {"cuda", "mps"} else torch.float32
+    logger.info("Loading model %s on %s", model_id, device)
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_id, token=cfg["token"])
+        tokenizer = AutoTokenizer.from_pretrained(model_id, token=token)
         model = AutoModelForCausalLM.from_pretrained(
             model_id,
             dtype=dtype,
-            token=cfg["token"],
+            token=token,
         )
         model.to(device)
         model.eval()
@@ -86,7 +93,6 @@ def get_model():
         raise BrainDumpError(f"Failed to load model {model_id}: {exc}") from exc
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
-    _TOKENIZER, _MODEL, _MODEL_KEY = tokenizer, model, key
     return tokenizer, model
 
 
