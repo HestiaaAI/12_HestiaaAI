@@ -1,0 +1,14 @@
+{
+  "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+  "dimension": 384,
+  "license": "Apache-2.0",
+  "max_seq_length": 256,
+  "query_prefix": "",
+  "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "device": "cpu",
+  "normalization": "l2",
+  "dtype": "float32",
+  "chunk_count": 20,
+  "chunks_sha256": "a7196c8ba51c7fe1f46584387acb493f4093cd5a4e999ad84aacce84034f166b",
+  "vectors_sha256": "288eb6899f4d03e1e316f184ac398e90a4a264483420de1ab22ece7a1405ee22"
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "id": "hybrid-chores-01",
+    "document": "chores",
+    "section": "Kitchen closing routine",
+    "paragraph_ids": [
+      "chores-01",
+      "chores-02"
+    ],
+    "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete."
+  },
+  {
+    "id": "hybrid-chores-02",
+    "document": "chores",
+    "section": "Kitchen closing routine",
+    "paragraph_ids": [
+      "chores-03"
+    ],
+    "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved."
+  },
+  {
+    "id": "hybrid-guests-01",
+    "document": "guests",
+    "section": "Preparing the guest room",
+    "paragraph_ids": [
+      "guests-01",
+      "guests-02"
+    ],
+    "text": "The host adds an arrival date and approximate time to the household calendar once the visit is agreed. The entry identifies the resident responsible for preparing the sleeping space and lists any arrangements the guest has requested. This lets other residents plan shared room use and avoid storing personal items on the guest bed. Preparation can begin before the arrival time is exact, as long as the household agrees on which room will be used. Residents place unrelated belongings back in their own storage before the host checks the room. A simple calendar entry keeps these arrangements visible.\n\nBefore an overnight guest arrives, put one clean sheet set, two clean towels, and a filled water carafe in the guest room. Set the towels on the bench at the foot of the bed and the carafe on the bedside table. Check that the bedside lamp turns on. Record completion on the Guest Room Ready card after these items are in place and the lamp has been checked. If something is missing, leave the card open and write the missing item in the note. The host uses that note to finish preparation before welcoming the guest."
+  },
+  {
+    "id": "hybrid-guests-02",
+    "document": "guests",
+    "section": "Preparing the guest room",
+    "paragraph_ids": [
+      "guests-03"
+    ],
+    "text": "Guest supplies are counted after the room is prepared so the host can identify which reserve items remain available. The linen inventory shows where additional sets normally live. If an item was borrowed from another room, record it on the Guest Room Ready card so the host can return it after the visit. Keep the surface beside the bed clear enough for the guest to place personal items. Extra decorations and reading materials may be added when space permits. These additions are optional and do not replace the items on the room readiness card."
+  },
+  {
+    "id": "hybrid-inventory-01",
+    "document": "inventory",
+    "section": "Borrowing and returning tools",
+    "paragraph_ids": [
+      "inventory-01",
+      "inventory-02"
+    ],
+    "text": "The shared tool inventory identifies equipment that belongs to the household and its normal storage location. Small hand tools are arranged in labeled bins so a resident can tell whether a missing item is being used or was put away elsewhere. The inventory card includes the tool name, its home bin, and any accessories that travel with it. Before starting a project, check the card and confirm that the necessary pieces are present. Residents leave personal equipment in their own storage unless they have agreed to share it. This keeps household availability records meaningful for everyone.\n\nBefore borrowing the shared cordless drill, add your name, the tool name, and your expected return time to the Tool Checkout card. The drill normally lives in the blue tool bin in the hallway cupboard. Keep the drill bits with the drill while it is checked out. On return, put both the drill and the bits back in that bin and close your checkout entry. If a piece is missing, add a note to the entry before closing it so the next user can check availability. The checkout card records who has the tool while it is away from its normal location."
+  },
+  {
+    "id": "hybrid-inventory-02",
+    "document": "inventory",
+    "section": "Borrowing and returning tools",
+    "paragraph_ids": [
+      "inventory-03"
+    ],
+    "text": "The household checks shared tools during the monthly cupboard review. The reviewer compares open checkout entries with the tools that are physically present and asks borrowers about entries that have passed their expected return time. Items with damaged cases or missing accessories receive an inventory note so residents can avoid relying on an incomplete kit. The review can also identify tools that are rarely used and would benefit from a clearer label. The normal locations printed on inventory cards should be updated when a bin is moved. This makes later checkout and return instructions easier to follow."
+  },
+  {
+    "id": "hybrid-maintenance-01",
+    "document": "maintenance",
+    "section": "Bathroom tap maintenance requests",
+    "paragraph_ids": [
+      "maintenance-01",
+      "maintenance-02"
+    ],
+    "text": "Residents use the maintenance board to report problems with household fixtures. A useful report describes the fixture, the room, the symptom, and when it was noticed. A clear description makes it easier for the coordinator to recognize whether several residents are reporting the same problem. Photos can be useful if the issue is visible and the resident can take them without handling the fixture. If a photo cannot be taken easily, a written description is sufficient to start a report. The household coordinator checks the board to decide what follow-up is needed and records who will handle it.\n\nFor a slow drip from the bathroom tap, open a Plumbing card on the Maintenance board. Write the room, the time you first noticed the drip, and whether it continues with the handle fully closed. Attach a photo if you can take one safely. Check for an existing card for that fixture before opening a new one, and add your observation to the existing card if it is already listed. Notify the household maintenance coordinator through that card. This is the household reporting workflow for a slow tap drip and leaves repair decisions with the coordinator."
+  },
+  {
+    "id": "hybrid-maintenance-02",
+    "document": "maintenance",
+    "section": "Bathroom tap maintenance requests",
+    "paragraph_ids": [
+      "maintenance-03"
+    ],
+    "text": "The coordinator reviews tap reports together with earlier maintenance notes for the same fixture. If a visit is planned, the coordinator records the appointment status and any access arrangements on the card. Residents add new observations to that card when the symptom changes, which keeps the account of the problem in one place. A card remains open while an inspection or repair is still pending. After the work is done, record the completion date and a short description of the result. This record helps the household distinguish a recurring issue from a new observation during future checks."
+  },
+  {
+    "id": "hybrid-shopping-01",
+    "document": "shopping",
+    "section": "Grocery list and store trip",
+    "paragraph_ids": [
+      "shopping-01",
+      "shopping-02"
+    ],
+    "text": "The shared grocery list is the record of household purchases for the next planned trip. Entries distinguish shared supplies from requests that a resident plans to buy separately. Each shared item has a quantity and any essential details, such as an unscented product or a package that fits the available shelf. Residents check the shelf and the open packages before adding another entry. This helps the shopper understand whether a low count means the item is needed immediately or merely worth watching. Items reserved for a specific recipe also include the date they will be used.\n\nIf the store is out of a shared grocery item, use the substitute only when the list entry names an approved alternative. If there is no approved alternative, leave the original item unchecked and add the note Out of stock. Do not mark the item purchased when no acceptable product was obtained. The next shopper can retry the original entry without reconstructing the request from chat. If the approved substitute is purchased, record its actual name in the list entry before closing it. This allows residents to find the substitute when they check the pantry later."
+  },
+  {
+    "id": "hybrid-shopping-02",
+    "document": "shopping",
+    "section": "Grocery list and store trip",
+    "paragraph_ids": [
+      "shopping-03"
+    ],
+    "text": "After returning from a grocery trip, the shopper matches the contents of each bag to the shared list before updating the purchase status. Purchased supplies are marked complete on their original entries, and items that were skipped remain visible for the next trip. The list includes a short field for the actual quantity when a store sells a different package size. A shopper who bought less than requested records the amount still needed. The household reviews these outstanding items before planning another trip. Keeping the list current reduces duplicate purchases and makes it easier to share errands."
+  }
+]
