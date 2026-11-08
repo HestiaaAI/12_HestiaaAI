@@ -1,0 +1,802 @@
+[
+  {
+    "repeat": 0,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 12.664542009588331,
+    "query_embedding_ms": 12.618083041161299,
+    "similarity_search_ms": 0.01816696021705866
+  },
+  {
+    "repeat": 0,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 18.007167032919824,
+    "query_embedding_ms": 17.697457980830222,
+    "similarity_search_ms": 0.024667009711265564
+  },
+  {
+    "repeat": 0,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 9.659375005867332,
+    "query_embedding_ms": 9.59587498800829,
+    "similarity_search_ms": 0.014833000022917986
+  },
+  {
+    "repeat": 0,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 12.722957995720208,
+    "query_embedding_ms": 12.453332950826734,
+    "similarity_search_ms": 0.2422920078970492
+  },
+  {
+    "repeat": 0,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 6.537833018228412,
+    "query_embedding_ms": 6.481791962869465,
+    "similarity_search_ms": 0.013165990822017193
+  },
+  {
+    "repeat": 0,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 12.121999985538423,
+    "query_embedding_ms": 12.03708298271522,
+    "similarity_search_ms": 0.0177919864654541
+  },
+  {
+    "repeat": 0,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 6.159208016470075,
+    "query_embedding_ms": 6.100667000282556,
+    "similarity_search_ms": 0.015207973774522543
+  },
+  {
+    "repeat": 0,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 6.23058300698176,
+    "query_embedding_ms": 6.195541995111853,
+    "similarity_search_ms": 0.014582998119294643
+  },
+  {
+    "repeat": 0,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.803334013558924,
+    "query_embedding_ms": 4.770874977111816,
+    "similarity_search_ms": 0.012125005014240742
+  },
+  {
+    "repeat": 0,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 5.551457987166941,
+    "query_embedding_ms": 5.5166250094771385,
+    "similarity_search_ms": 0.014166987966746092
+  },
+  {
+    "repeat": 1,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 6.418042001314461,
+    "query_embedding_ms": 6.364541011862457,
+    "similarity_search_ms": 0.013666984159499407
+  },
+  {
+    "repeat": 1,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 5.461332970298827,
+    "query_embedding_ms": 5.426541960332543,
+    "similarity_search_ms": 0.012125005014240742
+  },
+  {
+    "repeat": 1,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.549667006358504,
+    "query_embedding_ms": 4.517249995842576,
+    "similarity_search_ms": 0.0118750031106174
+  },
+  {
+    "repeat": 1,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 5.073374952189624,
+    "query_embedding_ms": 5.04125002771616,
+    "similarity_search_ms": 0.013042008504271507
+  },
+  {
+    "repeat": 1,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 5.29262499185279,
+    "query_embedding_ms": 5.255165975540876,
+    "similarity_search_ms": 0.010334013495594263
+  },
+  {
+    "repeat": 1,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.928042006213218,
+    "query_embedding_ms": 4.898665996734053,
+    "similarity_search_ms": 0.010917021427303553
+  },
+  {
+    "repeat": 1,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 4.4256660039536655,
+    "query_embedding_ms": 4.394415998831391,
+    "similarity_search_ms": 0.011584023013710976
+  },
+  {
+    "repeat": 1,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 4.418500000610948,
+    "query_embedding_ms": 4.385292006190866,
+    "similarity_search_ms": 0.012040953151881695
+  },
+  {
+    "repeat": 1,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 5.060958967078477,
+    "query_embedding_ms": 5.030832951888442,
+    "similarity_search_ms": 0.011167023330926895
+  },
+  {
+    "repeat": 1,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.34770795982331,
+    "query_embedding_ms": 4.3163750087842345,
+    "similarity_search_ms": 0.012792006600648165
+  },
+  {
+    "repeat": 2,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 5.339625000488013,
+    "query_embedding_ms": 5.309832980856299,
+    "similarity_search_ms": 0.010167015716433525
+  },
+  {
+    "repeat": 2,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 4.807999997865409,
+    "query_embedding_ms": 4.775375011377037,
+    "similarity_search_ms": 0.013124954421073198
+  },
+  {
+    "repeat": 2,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 4.01262502418831,
+    "query_embedding_ms": 3.9853749913163483,
+    "similarity_search_ms": 0.009874987881630659
+  },
+  {
+    "repeat": 2,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 5.263916973490268,
+    "query_embedding_ms": 5.22758299484849,
+    "similarity_search_ms": 0.016624981071799994
+  },
+  {
+    "repeat": 2,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 5.502416985109448,
+    "query_embedding_ms": 5.470875010360032,
+    "similarity_search_ms": 0.01170899486169219
+  },
+  {
+    "repeat": 2,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 5.7710830005817115,
+    "query_embedding_ms": 5.73791703209281,
+    "similarity_search_ms": 0.01291598891839385
+  },
+  {
+    "repeat": 2,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 14.553709013853222,
+    "query_embedding_ms": 14.50908399419859,
+    "similarity_search_ms": 0.014332996215671301
+  },
+  {
+    "repeat": 2,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 10.10299997869879,
+    "query_embedding_ms": 10.063958005048335,
+    "similarity_search_ms": 0.01708301715552807
+  },
+  {
+    "repeat": 2,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 6.663915992248803,
+    "query_embedding_ms": 6.627624970860779,
+    "similarity_search_ms": 0.014792021829634905
+  },
+  {
+    "repeat": 2,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 7.546708977315575,
+    "query_embedding_ms": 7.504499983042479,
+    "similarity_search_ms": 0.017209036741405725
+  },
+  {
+    "repeat": 3,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 8.635375008452684,
+    "query_embedding_ms": 8.59887502156198,
+    "similarity_search_ms": 0.014499993994832039
+  },
+  {
+    "repeat": 3,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 7.618334027938545,
+    "query_embedding_ms": 7.583583006635308,
+    "similarity_search_ms": 0.014042016118764877
+  },
+  {
+    "repeat": 3,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 5.8268330176360905,
+    "query_embedding_ms": 5.786708032246679,
+    "similarity_search_ms": 0.017291982658207417
+  },
+  {
+    "repeat": 3,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 6.791500025428832,
+    "query_embedding_ms": 6.756666989531368,
+    "similarity_search_ms": 0.01337495632469654
+  },
+  {
+    "repeat": 3,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 6.187999970279634,
+    "query_embedding_ms": 6.148750020656735,
+    "similarity_search_ms": 0.016833015251904726
+  },
+  {
+    "repeat": 3,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 5.896083021070808,
+    "query_embedding_ms": 5.8633750304579735,
+    "similarity_search_ms": 0.01170899486169219
+  },
+  {
+    "repeat": 3,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 4.027792019769549,
+    "query_embedding_ms": 3.9959580171853304,
+    "similarity_search_ms": 0.012499978765845299
+  },
+  {
+    "repeat": 3,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 5.024874990340322,
+    "query_embedding_ms": 4.990250046830624,
+    "similarity_search_ms": 0.013249984476715326
+  },
+  {
+    "repeat": 3,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 4.871541983447969,
+    "query_embedding_ms": 4.831416008528322,
+    "similarity_search_ms": 0.017167010810226202
+  },
+  {
+    "repeat": 3,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.398541001137346,
+    "query_embedding_ms": 4.3677500216290355,
+    "similarity_search_ms": 0.01029198756441474
+  },
+  {
+    "repeat": 4,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 5.507207999471575,
+    "query_embedding_ms": 5.47525001456961,
+    "similarity_search_ms": 0.011541997082531452
+  },
+  {
+    "repeat": 4,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 5.308040999807417,
+    "query_embedding_ms": 5.276917014271021,
+    "similarity_search_ms": 0.01191697083413601
+  },
+  {
+    "repeat": 4,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 5.136457970365882,
+    "query_embedding_ms": 5.10633405065164,
+    "similarity_search_ms": 0.011499971151351929
+  },
+  {
+    "repeat": 4,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.00662497850135,
+    "query_embedding_ms": 3.977290994953364,
+    "similarity_search_ms": 0.010374991688877344
+  },
+  {
+    "repeat": 4,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 5.96495799254626,
+    "query_embedding_ms": 5.935374996624887,
+    "similarity_search_ms": 0.011708005331456661
+  },
+  {
+    "repeat": 4,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 5.794040975160897,
+    "query_embedding_ms": 5.759999970905483,
+    "similarity_search_ms": 0.013541022781282663
+  },
+  {
+    "repeat": 4,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 3.924791992176324,
+    "query_embedding_ms": 3.893667017109692,
+    "similarity_search_ms": 0.010624993592500687
+  },
+  {
+    "repeat": 4,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 4.46324999211356,
+    "query_embedding_ms": 4.428624990396202,
+    "similarity_search_ms": 0.01395796425640583
+  },
+  {
+    "repeat": 4,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.395707976073027,
+    "query_embedding_ms": 4.361041996162385,
+    "similarity_search_ms": 0.012750038877129555
+  },
+  {
+    "repeat": 4,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 4.430291999597102,
+    "query_embedding_ms": 4.3999169720336795,
+    "similarity_search_ms": 0.010457995813339949
+  },
+  {
+    "repeat": 5,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 4.53166599618271,
+    "query_embedding_ms": 4.498124995734543,
+    "similarity_search_ms": 0.013749988283962011
+  },
+  {
+    "repeat": 5,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 5.197957972995937,
+    "query_embedding_ms": 5.163541994988918,
+    "similarity_search_ms": 0.012832984793931246
+  },
+  {
+    "repeat": 5,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.2406669817864895,
+    "query_embedding_ms": 4.209291015285999,
+    "similarity_search_ms": 0.011458992958068848
+  },
+  {
+    "repeat": 5,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 3.8213750231079757,
+    "query_embedding_ms": 3.79370799055323,
+    "similarity_search_ms": 0.009083014447242022
+  },
+  {
+    "repeat": 5,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 4.5053340145386755,
+    "query_embedding_ms": 4.47445799363777,
+    "similarity_search_ms": 0.012166972737759352
+  },
+  {
+    "repeat": 5,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.871458979323506,
+    "query_embedding_ms": 4.841707996092737,
+    "similarity_search_ms": 0.010083953384310007
+  },
+  {
+    "repeat": 5,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 4.095292009878904,
+    "query_embedding_ms": 4.06679097795859,
+    "similarity_search_ms": 0.010041985660791397
+  },
+  {
+    "repeat": 5,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 3.7575409514829516,
+    "query_embedding_ms": 3.7304579745978117,
+    "similarity_search_ms": 0.009167008101940155
+  },
+  {
+    "repeat": 5,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 4.005958035122603,
+    "query_embedding_ms": 3.9712080033496022,
+    "similarity_search_ms": 0.0112500274553895
+  },
+  {
+    "repeat": 5,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.298374988138676,
+    "query_embedding_ms": 4.26716695073992,
+    "similarity_search_ms": 0.013042008504271507
+  },
+  {
+    "repeat": 6,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 4.721541015896946,
+    "query_embedding_ms": 4.685749998316169,
+    "similarity_search_ms": 0.010917021427303553
+  },
+  {
+    "repeat": 6,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 4.473583016078919,
+    "query_embedding_ms": 4.445458005648106,
+    "similarity_search_ms": 0.009209034033119678
+  },
+  {
+    "repeat": 6,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 4.238292051013559,
+    "query_embedding_ms": 4.208958009257913,
+    "similarity_search_ms": 0.010624993592500687
+  },
+  {
+    "repeat": 6,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.0507090161554515,
+    "query_embedding_ms": 4.021083004772663,
+    "similarity_search_ms": 0.011541997082531452
+  },
+  {
+    "repeat": 6,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.321625048760325,
+    "query_embedding_ms": 4.295833990909159,
+    "similarity_search_ms": 0.008333008736371994
+  },
+  {
+    "repeat": 6,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 4.414542054291815,
+    "query_embedding_ms": 4.384665982797742,
+    "similarity_search_ms": 0.011834024917334318
+  },
+  {
+    "repeat": 6,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 4.140208009630442,
+    "query_embedding_ms": 4.1078339563682675,
+    "similarity_search_ms": 0.011791009455919266
+  },
+  {
+    "repeat": 6,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 4.265124967787415,
+    "query_embedding_ms": 4.235124972183257,
+    "similarity_search_ms": 0.011125055607408285
+  },
+  {
+    "repeat": 6,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 3.876291972119361,
+    "query_embedding_ms": 3.8469170103780925,
+    "similarity_search_ms": 0.011249969247728586
+  },
+  {
+    "repeat": 6,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 3.535832976922393,
+    "query_embedding_ms": 3.5095830098725855,
+    "similarity_search_ms": 0.008874980267137289
+  },
+  {
+    "repeat": 7,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 5.171291995793581,
+    "query_embedding_ms": 5.140999972354621,
+    "similarity_search_ms": 0.012208998668938875
+  },
+  {
+    "repeat": 7,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 4.651333030778915,
+    "query_embedding_ms": 4.6229580184444785,
+    "similarity_search_ms": 0.009832961950451136
+  },
+  {
+    "repeat": 7,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 3.927667043171823,
+    "query_embedding_ms": 3.899417002685368,
+    "similarity_search_ms": 0.010166026186197996
+  },
+  {
+    "repeat": 7,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 3.636083973105997,
+    "query_embedding_ms": 3.610457992181182,
+    "similarity_search_ms": 0.008542032446712255
+  },
+  {
+    "repeat": 7,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 4.62529098149389,
+    "query_embedding_ms": 4.596874990966171,
+    "similarity_search_ms": 0.01033296575769782
+  },
+  {
+    "repeat": 7,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.679875040892512,
+    "query_embedding_ms": 4.649790993425995,
+    "similarity_search_ms": 0.010458985343575478
+  },
+  {
+    "repeat": 7,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 3.854583017528057,
+    "query_embedding_ms": 3.8266669725999236,
+    "similarity_search_ms": 0.009583018254488707
+  },
+  {
+    "repeat": 7,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 3.8862500223331153,
+    "query_embedding_ms": 3.861250006593764,
+    "similarity_search_ms": 0.008124974556267262
+  },
+  {
+    "repeat": 7,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 3.9259999757632613,
+    "query_embedding_ms": 3.896749985869974,
+    "similarity_search_ms": 0.010457995813339949
+  },
+  {
+    "repeat": 7,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.069416027050465,
+    "query_embedding_ms": 4.040916974190623,
+    "similarity_search_ms": 0.010457995813339949
+  },
+  {
+    "repeat": 8,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 4.634332959540188,
+    "query_embedding_ms": 4.608707968145609,
+    "similarity_search_ms": 0.008333998266607523
+  },
+  {
+    "repeat": 8,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 4.1441250359639525,
+    "query_embedding_ms": 4.119292018003762,
+    "similarity_search_ms": 0.008540984708815813
+  },
+  {
+    "repeat": 8,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 4.161500022746623,
+    "query_embedding_ms": 4.132165980990976,
+    "similarity_search_ms": 0.011000025551766157
+  },
+  {
+    "repeat": 8,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.46158298291266,
+    "query_embedding_ms": 4.429000022355467,
+    "similarity_search_ms": 0.012416974641382694
+  },
+  {
+    "repeat": 8,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.944832995533943,
+    "query_embedding_ms": 4.917167010717094,
+    "similarity_search_ms": 0.00929197994992137
+  },
+  {
+    "repeat": 8,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 5.04866597475484,
+    "query_embedding_ms": 5.017458985093981,
+    "similarity_search_ms": 0.012208009138703346
+  },
+  {
+    "repeat": 8,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 6.020959001034498,
+    "query_embedding_ms": 5.978333007078618,
+    "similarity_search_ms": 0.01937500201165676
+  },
+  {
+    "repeat": 8,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 7.491083990316838,
+    "query_embedding_ms": 7.449625001754612,
+    "similarity_search_ms": 0.015625031664967537
+  },
+  {
+    "repeat": 8,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 6.442291021812707,
+    "query_embedding_ms": 6.3921670080162585,
+    "similarity_search_ms": 0.02483295975252986
+  },
+  {
+    "repeat": 8,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 7.180582964792848,
+    "query_embedding_ms": 7.139375025872141,
+    "similarity_search_ms": 0.017207989003509283
+  },
+  {
+    "repeat": 9,
+    "dataset": "full",
+    "query_id": "Q1",
+    "retrieval_ms": 5.929459002800286,
+    "query_embedding_ms": 5.889750027563423,
+    "similarity_search_ms": 0.016207981389015913
+  },
+  {
+    "repeat": 9,
+    "dataset": "small",
+    "query_id": "Q1",
+    "retrieval_ms": 6.296082981862128,
+    "query_embedding_ms": 6.261750007979572,
+    "similarity_search_ms": 0.012582982890307903
+  },
+  {
+    "repeat": 9,
+    "dataset": "full",
+    "query_id": "Q2",
+    "retrieval_ms": 4.191791987977922,
+    "query_embedding_ms": 4.158625029958785,
+    "similarity_search_ms": 0.013082986697554588
+  },
+  {
+    "repeat": 9,
+    "dataset": "small",
+    "query_id": "Q2",
+    "retrieval_ms": 4.090458038263023,
+    "query_embedding_ms": 4.060667008161545,
+    "similarity_search_ms": 0.009957992006093264
+  },
+  {
+    "repeat": 9,
+    "dataset": "full",
+    "query_id": "Q3",
+    "retrieval_ms": 4.668791953008622,
+    "query_embedding_ms": 4.638582991901785,
+    "similarity_search_ms": 0.010750023648142815
+  },
+  {
+    "repeat": 9,
+    "dataset": "small",
+    "query_id": "Q3",
+    "retrieval_ms": 4.947459034156054,
+    "query_embedding_ms": 4.917542042676359,
+    "similarity_search_ms": 0.011624942999333143
+  },
+  {
+    "repeat": 9,
+    "dataset": "full",
+    "query_id": "Q4",
+    "retrieval_ms": 5.468957999255508,
+    "query_embedding_ms": 5.436624982394278,
+    "similarity_search_ms": 0.01333298860117793
+  },
+  {
+    "repeat": 9,
+    "dataset": "small",
+    "query_id": "Q4",
+    "retrieval_ms": 5.071500025223941,
+    "query_embedding_ms": 5.034792004153132,
+    "similarity_search_ms": 0.015790981706231833
+  },
+  {
+    "repeat": 9,
+    "dataset": "full",
+    "query_id": "Q5",
+    "retrieval_ms": 5.160541972145438,
+    "query_embedding_ms": 5.116707994602621,
+    "similarity_search_ms": 0.013499986380338669
+  },
+  {
+    "repeat": 9,
+    "dataset": "small",
+    "query_id": "Q5",
+    "retrieval_ms": 4.391167021822184,
+    "query_embedding_ms": 4.362208012025803,
+    "similarity_search_ms": 0.010207993909716606
+  }
+]

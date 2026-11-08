@@ -1,0 +1,173 @@
+[
+  {
+    "size": "small",
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "license": "Apache-2.0",
+    "max_seq_length": 256,
+    "query_prefix": "",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "normalization": "l2",
+    "dtype": "float32",
+    "chunk_count": 20,
+    "shape": [
+      20,
+      384
+    ],
+    "max_chunk_tokens": 233,
+    "query_id": "Q1",
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "hybrid-chores-01",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-01",
+          "chores-02"
+        ],
+        "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete.",
+        "score": 0.6673648953437805
+      },
+      {
+        "rank": 2,
+        "chunk_id": "hybrid-chores-02",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-03"
+        ],
+        "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved.",
+        "score": 0.5140756368637085
+      },
+      {
+        "rank": 3,
+        "chunk_id": "hybrid-maintenance-03",
+        "document": "maintenance",
+        "section": "Scheduled appliance upkeep",
+        "paragraph_ids": [
+          "maintenance-04",
+          "maintenance-05"
+        ],
+        "text": "The appliance upkeep list contains routine checks for shared equipment such as the vacuum and the laundry machines. Each appliance has its own card so residents can see which equipment has been checked and what still needs attention. When adding a planned task, the coordinator records the appliance name, the item to inspect, and the target week. Residents consult the manufacturer's instructions for equipment-specific steps. The household task board is a scheduling and recordkeeping tool. It can track where the instructions are stored and identify who agreed to perform the next check.\n\nSpare appliance consumables are stored near the shared cleaning shelf and labeled with the equipment they fit. Residents check the part description before taking a replacement because different models can use similar-looking parts. The scheduled upkeep card can list an item that needs replenishing, while the shopping list is used to request the purchase. When a consumable is installed, the resident records the change date on the appliance card. Any unused pieces return to their labeled location. This gives the next reviewer a clear account of what was replaced and what remains in reserve.",
+        "score": 0.3694338798522949
+      }
+    ],
+    "status": "passed"
+  },
+  {
+    "size": "medium",
+    "model_id": "sentence-transformers/all-mpnet-base-v2",
+    "dimension": 768,
+    "license": "Apache-2.0",
+    "max_seq_length": 384,
+    "query_prefix": "",
+    "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "device": "cpu",
+    "normalization": "l2",
+    "dtype": "float32",
+    "chunk_count": 20,
+    "shape": [
+      20,
+      768
+    ],
+    "max_chunk_tokens": 233,
+    "query_id": "Q1",
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "hybrid-chores-01",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-01",
+          "chores-02"
+        ],
+        "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete.",
+        "score": 0.6094305515289307
+      },
+      {
+        "rank": 2,
+        "chunk_id": "hybrid-chores-02",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-03"
+        ],
+        "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved.",
+        "score": 0.5467703342437744
+      },
+      {
+        "rank": 3,
+        "chunk_id": "hybrid-maintenance-03",
+        "document": "maintenance",
+        "section": "Scheduled appliance upkeep",
+        "paragraph_ids": [
+          "maintenance-04",
+          "maintenance-05"
+        ],
+        "text": "The appliance upkeep list contains routine checks for shared equipment such as the vacuum and the laundry machines. Each appliance has its own card so residents can see which equipment has been checked and what still needs attention. When adding a planned task, the coordinator records the appliance name, the item to inspect, and the target week. Residents consult the manufacturer's instructions for equipment-specific steps. The household task board is a scheduling and recordkeeping tool. It can track where the instructions are stored and identify who agreed to perform the next check.\n\nSpare appliance consumables are stored near the shared cleaning shelf and labeled with the equipment they fit. Residents check the part description before taking a replacement because different models can use similar-looking parts. The scheduled upkeep card can list an item that needs replenishing, while the shopping list is used to request the purchase. When a consumable is installed, the resident records the change date on the appliance card. Any unused pieces return to their labeled location. This gives the next reviewer a clear account of what was replaced and what remains in reserve.",
+        "score": 0.39055895805358887
+      }
+    ],
+    "status": "passed"
+  },
+  {
+    "size": "large",
+    "model_id": "BAAI/bge-large-en-v1.5",
+    "dimension": 1024,
+    "license": "MIT",
+    "max_seq_length": 512,
+    "query_prefix": "Represent this sentence for searching relevant passages: ",
+    "revision": "d4aa6901d3a41ba39fb536a557fa166f842b0e09",
+    "device": "cpu",
+    "normalization": "l2",
+    "dtype": "float32",
+    "chunk_count": 20,
+    "shape": [
+      20,
+      1024
+    ],
+    "max_chunk_tokens": 233,
+    "query_id": "Q1",
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "hybrid-chores-01",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-01",
+          "chores-02"
+        ],
+        "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete.",
+        "score": 0.7531383037567139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "hybrid-chores-02",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-03"
+        ],
+        "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved.",
+        "score": 0.7529340386390686
+      },
+      {
+        "rank": 3,
+        "chunk_id": "hybrid-maintenance-03",
+        "document": "maintenance",
+        "section": "Scheduled appliance upkeep",
+        "paragraph_ids": [
+          "maintenance-04",
+          "maintenance-05"
+        ],
+        "text": "The appliance upkeep list contains routine checks for shared equipment such as the vacuum and the laundry machines. Each appliance has its own card so residents can see which equipment has been checked and what still needs attention. When adding a planned task, the coordinator records the appliance name, the item to inspect, and the target week. Residents consult the manufacturer's instructions for equipment-specific steps. The household task board is a scheduling and recordkeeping tool. It can track where the instructions are stored and identify who agreed to perform the next check.\n\nSpare appliance consumables are stored near the shared cleaning shelf and labeled with the equipment they fit. Residents check the part description before taking a replacement because different models can use similar-looking parts. The scheduled upkeep card can list an item that needs replenishing, while the shopping list is used to request the purchase. When a consumable is installed, the resident records the change date on the appliance card. Any unused pieces return to their labeled location. This gives the next reviewer a clear account of what was replaced and what remains in reserve.",
+        "score": 0.6345027089118958
+      }
+    ],
+    "status": "passed"
+  }
+]

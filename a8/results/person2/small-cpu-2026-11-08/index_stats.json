@@ -1,0 +1,38 @@
+{
+  "full/fixed": {
+    "build_ms": 2087.7527500269935,
+    "chunk_count": 30,
+    "vector_bytes": 46080,
+    "max_chunk_tokens": 167,
+    "embedding_context_limit": 256,
+    "paragraph_count": 30,
+    "word_count": 2901
+  },
+  "full/overlap": {
+    "build_ms": 384.6237079706043,
+    "chunk_count": 20,
+    "vector_bytes": 30720,
+    "max_chunk_tokens": 233,
+    "embedding_context_limit": 256,
+    "paragraph_count": 30,
+    "word_count": 2901
+  },
+  "full/hybrid": {
+    "build_ms": 424.6592079871334,
+    "chunk_count": 20,
+    "vector_bytes": 30720,
+    "max_chunk_tokens": 233,
+    "embedding_context_limit": 256,
+    "paragraph_count": 30,
+    "word_count": 2901
+  },
+  "small/hybrid": {
+    "build_ms": 223.27375004533678,
+    "chunk_count": 10,
+    "vector_bytes": 15360,
+    "max_chunk_tokens": 229,
+    "embedding_context_limit": 256,
+    "paragraph_count": 15,
+    "word_count": 1461
+  }
+}

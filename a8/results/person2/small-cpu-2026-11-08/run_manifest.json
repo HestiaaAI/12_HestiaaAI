@@ -1,0 +1,47 @@
+{
+  "created_utc": "2026-11-08T17:49:42.202595+00:00",
+  "config_sha256": "b70f92b57be9e2c0a2086d72397d0aeb3b81de396cd2357e7c4e7d258f4ac6d4",
+  "model": {
+    "model_id": "sentence-transformers/all-MiniLM-L6-v2",
+    "dimension": 384,
+    "license": "Apache-2.0",
+    "max_seq_length": 256,
+    "query_prefix": "",
+    "revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+    "device": "cpu",
+    "normalization": "l2",
+    "dtype": "float32"
+  },
+  "top_k": 3,
+  "scaling_strategy": "hybrid",
+  "repetitions": 10,
+  "queries_sha256": "727a72ce3a725034c8b87b72dcf794a717f4869586f0f22cee39b62fb8cda67d",
+  "chunks_sha256": {
+    "small/fixed": "f3bd733af6df04b72c0aefc492ff3c525fa0589e2bc3026c8a70f56a7038684c",
+    "small/overlap": "d5d24e3a4591d42306193cf36e791978652808d8ad23ab4764703c1980ecf112",
+    "small/hybrid": "b77690c3e3d75dea4aa3157215c7cfd77a1b7d7269db61c26c9a8376a5efbf62",
+    "full/fixed": "c4058811ca23e23edaf808c80185b37ababe5795e15f28e1a0511ab3523d010e",
+    "full/overlap": "a56af52dfdaadc2d76a4ea583fc10720bb56d2badb05b73ffcb5688a9973f559",
+    "full/hybrid": "a7196c8ba51c7fe1f46584387acb493f4093cd5a4e999ad84aacce84034f166b"
+  },
+  "environment": {
+    "torch_threads": 4,
+    "python": "3.13.7",
+    "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.3",
+      "torch": "2.14.1",
+      "sentence-transformers": "5.1.2",
+      "transformers": "4.57.6",
+      "huggingface-hub": "0.36.2"
+    },
+    "git_commit": "e21f792a82ef99a2b833f018e7e05b3bce15bc60"
+  },
+  "source_sha256": {
+    "corpus.py": "5f475051384611397127e0104d55fe8ec9cbb0aaf3ae25c40ad6fb63d6248ce3",
+    "retrieval.py": "3ed5e129521c315a706e9dd4a8e5e461f9bd5430ab4be92c6d672be96aa593cd",
+    "person2_experiments.py": "231bcce810633ea68aed4c35637bba84af074ee9aeb38c6c20c1c2855afdf7b1"
+  },
+  "warmup": "one query per index before measured requests"
+}
