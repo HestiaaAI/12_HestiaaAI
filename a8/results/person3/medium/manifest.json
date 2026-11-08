@@ -1,0 +1,37 @@
+{
+  "encoder": {
+    "model_id": "sentence-transformers/all-mpnet-base-v2",
+    "dimension": 768,
+    "license": "Apache-2.0",
+    "max_seq_length": 384,
+    "query_prefix": "",
+    "revision": "e8c3b32edf5434bc2275fc9bab85f82640a19130",
+    "device": "cpu",
+    "normalization": "l2",
+    "dtype": "float32"
+  },
+  "generator": "Qwen/Qwen2-0.5B-Instruct",
+  "revision": "c540970f9e29518b1d8f06ab8b24cba66ad77b6d",
+  "system": "You answer questions about the Hestia household handbook. Use only the cited passages. Answer all parts of the question directly, preserving the names, quantities and conditions in the handbook. If a detail is missing, say that the handbook does not specify it.",
+  "decoding": "greedy, 1 beam, float32 CPU",
+  "max_new_tokens": 128,
+  "top_k": 3,
+  "mode": "matrix",
+  "query_digest": "727a72ce3a725034c8b87b72dcf794a717f4869586f0f22cee39b62fb8cda67d",
+  "corpus_digest": "229247d5b962929f42c2c793f5cb3db6b5ae41969ad1544f45cfc1b7a1ee3098",
+  "generator_code": "3157264e94d833c3ccc1b26747fa9629cb58276ad1c635df4c23282a601fd068",
+  "environment": {
+    "torch_threads": 4,
+    "python": "3.14.6",
+    "platform": "macOS-15.6-arm64-arm-64bit-Mach-O",
+    "machine": "arm64",
+    "packages": {
+      "numpy": "2.5.3",
+      "torch": "2.14.1",
+      "sentence-transformers": "5.1.2",
+      "transformers": "4.57.6",
+      "huggingface-hub": "0.36.2"
+    },
+    "git_commit": "e9b00b8b364907a3af9e754100b80d637b281dd9"
+  }
+}
