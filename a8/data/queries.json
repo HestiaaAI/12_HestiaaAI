@@ -1,0 +1,42 @@
+[
+  {
+    "id": "Q1",
+    "query": "I finished closing the kitchen, but the dishwasher is still running. What should I mark on the board and what should I do with the dishwasher?",
+    "expected_answer": "Mark the existing Kitchen Close card complete. Clip the Running tag to the dishwasher handle and leave unloading until the next morning. Do not create another closing card.",
+    "required_facts": ["Complete the existing Kitchen Close card", "Clip the Running tag to the handle", "Leave unloading for the next morning"],
+    "supporting_paragraph_ids": ["chores-02"],
+    "supporting_quotes": ["mark the existing Kitchen Close card complete on the household task board", "clip the Running tag to its handle and leave unloading for the next morning"]
+  },
+  {
+    "id": "Q2",
+    "query": "The store ran out of an item on our shared grocery list and nobody approved a replacement. What should I record?",
+    "expected_answer": "Leave the original item unchecked and add the note Out of stock. Keep it available for the next shopper to retry.",
+    "required_facts": ["Leave the original item unchecked", "Add the note Out of stock"],
+    "supporting_paragraph_ids": ["shopping-02"],
+    "supporting_quotes": ["leave the original item unchecked and add the note Out of stock"]
+  },
+  {
+    "id": "Q3",
+    "query": "I need the shared cordless drill this afternoon. Where do I find it, what do I log, and where does the kit go when I finish?",
+    "expected_answer": "Find it in the blue tool bin in the hallway cupboard. Put your name, tool name and expected return time on the Tool Checkout card. Return the drill and bits to that bin and close your checkout entry.",
+    "required_facts": ["Blue tool bin in the hallway cupboard", "Tool Checkout card with name, tool and expected return time", "Return the drill and bits to the bin", "Close the checkout entry"],
+    "supporting_paragraph_ids": ["inventory-02"],
+    "supporting_quotes": ["add your name, the tool name, and your expected return time to the Tool Checkout card", "blue tool bin in the hallway cupboard", "put both the drill and the bits back in that bin and close your checkout entry"]
+  },
+  {
+    "id": "Q4",
+    "query": "The bathroom tap has a slow drip even with the handle shut. How do I report it to our household?",
+    "expected_answer": "Check for an existing card for that fixture. Add the observation there or open a Plumbing card on the Maintenance board. Record the room, when you noticed the drip, and whether it continues with the handle closed. Notify the maintenance coordinator through the card. A photo is optional if safe to take.",
+    "required_facts": ["Use a Plumbing card on the Maintenance board", "Reuse an existing fixture card if present", "Record room, time first noticed and whether it drips with handle closed", "Notify the maintenance coordinator through the card"],
+    "supporting_paragraph_ids": ["maintenance-02"],
+    "supporting_quotes": ["open a Plumbing card on the Maintenance board", "Write the room, the time you first noticed the drip, and whether it continues with the handle fully closed", "Check for an existing card for that fixture before opening a new one", "Notify the household maintenance coordinator through that card"]
+  },
+  {
+    "id": "Q5",
+    "query": "A friend is staying overnight. What needs to be in place before I mark their room ready?",
+    "expected_answer": "Set out one clean sheet set, two clean towels on the bench at the foot of the bed, and a filled water carafe on the bedside table. Check that the bedside lamp works. Complete the Guest Room Ready card after the checks, or leave it open and note what is missing.",
+    "required_facts": ["One clean sheet set", "Two clean towels on the bench at the foot of the bed", "Filled water carafe on the bedside table", "Check the bedside lamp", "Complete Guest Room Ready only after the items and check are done"],
+    "supporting_paragraph_ids": ["guests-02"],
+    "supporting_quotes": ["one clean sheet set, two clean towels, and a filled water carafe", "Set the towels on the bench at the foot of the bed and the carafe on the bedside table", "Check that the bedside lamp turns on", "Record completion on the Guest Room Ready card after these items are in place and the lamp has been checked"]
+  }
+]

@@ -1,0 +1,17 @@
+# Overnight guest preparation
+
+## Preparing the guest room
+
+The host adds an arrival date and approximate time to the household calendar once the visit is agreed. The entry identifies the resident responsible for preparing the sleeping space and lists any arrangements the guest has requested. This lets other residents plan shared room use and avoid storing personal items on the guest bed. Preparation can begin before the arrival time is exact, as long as the household agrees on which room will be used. Residents place unrelated belongings back in their own storage before the host checks the room. A simple calendar entry keeps these arrangements visible.
+
+Before an overnight guest arrives, put one clean sheet set, two clean towels, and a filled water carafe in the guest room. Set the towels on the bench at the foot of the bed and the carafe on the bedside table. Check that the bedside lamp turns on. Record completion on the Guest Room Ready card after these items are in place and the lamp has been checked. If something is missing, leave the card open and write the missing item in the note. The host uses that note to finish preparation before welcoming the guest.
+
+Guest supplies are counted after the room is prepared so the host can identify which reserve items remain available. The linen inventory shows where additional sets normally live. If an item was borrowed from another room, record it on the Guest Room Ready card so the host can return it after the visit. Keep the surface beside the bed clear enough for the guest to place personal items. Extra decorations and reading materials may be added when space permits. These additions are optional and do not replace the items on the room readiness card.
+
+## Arrival and departure coordination
+
+The host sends the agreed arrival details to the guest after confirming who will be home. The household calendar records the expected time range so residents can coordinate around other activities. If arrival moves later, the host updates the entry and lets the resident who will greet the guest know about the change. Details about private access arrangements are shared only with the people involved in the visit. The general household calendar can record that access has been arranged without storing private codes. This keeps residents informed while limiting unnecessary disclosure of access details.
+
+For the departure handoff, the host checks the room for items the guest may have left behind. Place any found items in a labeled bag and contact the guest to arrange their return. Used linens go to the laundry area, and any household items borrowed for the visit return to their usual storage. The departure card records whether the room is available for ordinary household use again. The host can add notes on supplies that ran low during the stay. Those notes inform later restocking and do not change the arrival preparation checklist.
+
+The visit review is a short household conversation about what made the stay easy and what could be improved next time. Residents can note whether the calendar information was clear, whether supplies were easy to locate, and whether room arrangements supported the guest's needs. Suggestions that become recurring practices should be written into the handbook so future hosts can find them. Temporary preferences for a particular visitor belong in that visit's notes. The review happens after the guest departs and gives the household a way to improve future visits without confusing those suggestions with required preparation tasks.
