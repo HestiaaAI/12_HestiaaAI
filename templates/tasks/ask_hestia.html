@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Ask Hestia | Hestia{% endblock %}
+{% block content %}
+<header class="page-header">
+    <span class="eyebrow">Household handbook</span>
+    <h1>Ask Hestia</h1>
+    <p>Ask about chores, shopping, inventory, maintenance, or preparing for guests.</p>
+</header>
+
+<section class="task-card">
+    <form method="post" action="{% url 'ask-hestia' %}">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-field">
+            {{ form.question.label_tag }}
+            {{ form.question }}
+            {{ form.question.errors }}
+        </div>
+        <p class="field-help">Up to 500 characters. Answers come from the example household handbook.</p>
+        <button type="submit">Ask Hestia</button>
+    </form>
+    <p class="field-help">The first question may take several minutes while local models download and load. Please keep this page open.</p>
+</section>
+
+{% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+
+{% if result %}
+<section class="task-card" aria-labelledby="ask-answer-heading">
+    <h2 id="ask-answer-heading">Answer</h2>
+    <p>{{ result.answer }}</p>
+    {% if result.status == "no_context" or result.status == "insufficient_context" %}
+    <p class="field-help">The household handbook could not find enough support for this question.</p>
+    {% endif %}
+    <p class="field-help">Answered in {{ result.latency_seconds }} seconds.</p>
+</section>
+{% if result.sources %}
+<section aria-labelledby="ask-sources-heading">
+    <h2 id="ask-sources-heading">Handbook sources</h2>
+    {% for source in result.sources %}
+    <article class="task-card">
+        <h3>{{ source.section|default:source.document }}</h3>
+        <p class="field-help">{{ source.document }} · {{ source.id }}</p>
+        <p>{{ source.text|linebreaksbr }}</p>
+    </article>
+    {% endfor %}
+</section>
+{% endif %}
+{% endif %}
+{% endblock %}
