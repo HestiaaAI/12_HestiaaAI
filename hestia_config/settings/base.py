@@ -21,6 +21,7 @@ HF_BRAIN_DUMP_MODEL = env(
 HF_BRAIN_DUMP_DEVICE = env("HF_BRAIN_DUMP_DEVICE", default="cpu")
 HF_BRAIN_DUMP_MAX_NEW_TOKENS = env.int("HF_BRAIN_DUMP_MAX_NEW_TOKENS", default=220)
 HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
+HF_ASK_HESTIA_DEVICE = env("HF_ASK_HESTIA_DEVICE", default="cpu")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
