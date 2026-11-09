@@ -90,3 +90,30 @@ The local Hugging Face brain-dump setup and model requirements are documented in
 
 Earlier test counts and deployment checklists are historical records, not current
 verification claims. No new cloud deployment is implied by the A7 submissions.
+
+## Assignment 9 · Ask Hestia (current Django AI feature)
+
+Signed-in handbook Q&A at `/tasks/ask/`. Local MiniLM retrieval over the A8
+overlap handbook chunks, then `Qwen/Qwen2-0.5B-Instruct` (A6/A7-tested). No paid
+API is required for the primary feature.
+
+| Doc | Path |
+|---|---|
+| AI workflow, model rationale, evaluation | [README_AI.md](README_AI.md) |
+| Architecture | [a9/person4/ARCHITECTURE.md](a9/person4/ARCHITECTURE.md) |
+| Evaluation evidence | [a9/EVALUATION.md](a9/EVALUATION.md) |
+| Demo rehearsal (2 successes + 1 limitation) | [a9/person4/DEMO.md](a9/person4/DEMO.md) |
+| Canvas submission PDF | [docs/a9-canvas-submission.pdf](docs/a9-canvas-submission.pdf) |
+
+```sh
+python manage.py test workflows.test_ask_hestia workflows.test_ask_hestia_views
+python manage.py ask_hestia "Where does the shared cordless drill normally live?" "What is the capital of Australia?"
+```
+
+First Ask Hestia request downloads MiniLM and Qwen into `HF_HOME` (see
+`.env.example`). Keep `.env` and model caches out of Git.
+
+## Assignment 8 · RAG notebook package
+
+See [a8/README.md](a8/README.md). Canvas ZIP on branch `dev-ag-a8-canvas-zip`:
+`a8/hestia-a8-canvas.zip`.

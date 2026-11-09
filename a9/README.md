@@ -35,3 +35,10 @@ The script uses an in-memory database and requires migrations, so use a fresh Py
 The evaluated intervention changes fixed sentence-packed chunks to two-paragraph overlapping chunks. Top-k remains two, similarity threshold 0.30, the generator and prompt remain the same, and the output cap remains 128 tokens. A regression test verifies the index uses the overlapping chunks and retains the shopping rule.
 
 Use EVALUATION.md and evaluation.csv for steps 3.1–3.4 and integrate their findings into README_AI.md. One of five full handbook answers passed after the intervention; three guardrail cases passed in both phases. The complex drill answer still hallucinates a location. Before choosing two successful content examples for the live demo, verify the selected questions in the current app.
+
+## Person 4 notes (appended)
+
+Person 4 integration is under [person4/](person4/): architecture diagram, README_AI
+append, demo rehearsal (Q4 + G3 successes, Q3 limitation) and Canvas PDF.
+Re-verify those three prompts in a signed-in browser before the live slot; cold
+CPU loads remain slow.

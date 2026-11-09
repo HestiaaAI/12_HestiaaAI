@@ -106,3 +106,9 @@ Answer quality and CPU latency remain limitations to evaluate in the app.
 ## A9 integrated evaluation
 
 The [Person 3 evaluation](../a9/EVALUATION.md) records actual before/after page requests. The measured chunking intervention changes fixed chunks to overlapping paragraphs, improving the complete plumbing answer while preserving a documented drill-location hallucination. The [runner instructions](../a9/README.md) explain the saved evidence and replay.
+
+## Person 4 note (appended)
+
+The live Ask Hestia index now uses overlapping-paragraph chunks from Person 3’s
+measured A9 intervention (see [a9/EVALUATION.md](../a9/EVALUATION.md)). The A8
+bullet above records the original fixed-chunk service handoff.

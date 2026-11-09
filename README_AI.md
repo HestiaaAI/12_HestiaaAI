@@ -5,6 +5,91 @@
 The [Ask Hestia backend handoff](docs/a9-ask-hestia-backend.md) covers local setup,
 the Django service interface, A6/A7 model selection and A8 handbook retrieval.
 
+## Assignment 9 · Ask Hestia (Person 4 documentation)
+
+Person 4 appends the grader-facing design, evaluation summary, and demo notes below.
+The backend handoff above remains the service contract.
+
+### AI workflow (Part 2.1)
+
+1. **Input:** Household member submits a question (required, ≤500 characters).
+2. **Preprocess:** Django form validation; CSRF; login + membership required by the page.
+3. **Retrieve:** Embed with MiniLM; search A8 **overlap** handbook chunks; keep top-2 with cosine ≥0.30.
+4. **Generate or abstain:** If no hit, return the handbook-unknown string without calling Qwen. Otherwise prompt Qwen2-0.5B with system instruction + passages + question (greedy, 128 tokens).
+5. **Output:** Template shows answer, source passages (text + scores) and latency. Model/retrieval failures become a generic unavailable message.
+
+### Architecture (Part 2.2)
+
+![Ask Hestia A9 Django RAG architecture](a9/person4/ask_hestia_architecture.png)
+
+Django path: browser → `ask_hestia_page` → `AskHestiaForm` →
+`workflows.services.ask_hestia.answer_question` → template.
+Write-up: [a9/person4/ARCHITECTURE.md](a9/person4/ARCHITECTURE.md).
+
+### Model selection rationale (Part 2.3 · from A6/A7/A8)
+
+| Component | Choice | Alternatives considered | Why this app |
+|---|---|---|---|
+| Generator | `Qwen/Qwen2-0.5B-Instruct` | SmolLM2-360M (A7 MPS mean 3.32/10); Mistral-7B/NF4 (A7 mean 8.12/10, 4.18 s median, heavier) | A6 already produced household-task text with this Qwen id. A7 T4/NF4: **5.20/10**, **1.49 s** median—better measured quality than SmolLM2 and lower latency/memory than Mistral for a laptop CPU/MPS worker. |
+| Embedder | MiniLM-L6-v2 (384-d) | A8 MPNet 768-d / BGE-large 1024-d | A8 showed all three encoders already hit 100% quote coverage on the five handbook queries; MiniLM is fastest to encode and loads through existing Transformers helpers. |
+| Chunking | Overlapping paragraphs | Fixed sentence packs; hybrid topic packs | A9 integrated evaluation: mean required-fact completeness **14.00% → 45.67%** after switching fixed → overlap; Q4 became fully correct. |
+
+A6/A7 scores used different prompts than Ask Hestia. They justify the local stack;
+they do not equal Ask Hestia quality.
+
+### Evaluation summary (Part 3)
+
+Full evidence: [a9/EVALUATION.md](a9/EVALUATION.md), [a9/evaluation.csv](a9/evaluation.csv).
+Eight realistic inputs (Q1–Q5 handbook + G1 empty + G2 501 chars + G3 out-of-scope)
+were posted through the **authenticated Django page** with real models.
+
+| Input | Expected (brief) | After overlap (brief) | Completeness | Latency (s) |
+|---|---|---|---:|---:|
+| Q1 Kitchen + running dishwasher | Card complete, clip Running tag, leave unload | Card complete; ambiguous Running-tag wording | 33.33% | 9.77 |
+| Q2 Grocery outage, no substitute | Leave unchecked + Out of stock | “Out of stock” only | 50% | 8.14 |
+| Q3 Cordless drill checkout/return | Blue bin, full log, return kit | Blue bin + invented green kitchen return bin | 25% | 9.72 |
+| Q4 Bathroom drip report | Plumbing card workflow | Complete reporting procedure | **100%** | 12.01 |
+| Q5 Guest room ready | Supplies, placements, lamp, card rule | Supplies list only | 20% | 8.90 |
+| G1 / G2 / G3 | Form error or abstain | Pass in both phases | Pass | under 0.02 |
+
+### Failure analysis (Part 3.3)
+
+1. **Q2 baseline** told the shopper to record a substitute and close the entry when
+   none was approved—generation picked the neighboring “if substitute purchased”
+   rule though retrieval had Out of stock (chunking/generation, not empty retrieval).
+2. **Q5** lists supplies but omits placements, lamp check and readiness-card rule—
+   evidence present; small model compresses multi-part instructions.
+
+### Improvement (Part 3.4)
+
+**Before:** fixed sentence chunks. **After:** overlapping paragraph chunks.
+Same generator, embedder, top-k=2, threshold 0.30, prompts and eight inputs.
+Fully correct content answers: 0/5 → 1/5 (Q4). Mean completeness 14% → 45.67%.
+Cost: higher median latency; Q3 usefulness regressed with a hallucinated return bin.
+
+### Demo readiness (Part 4)
+
+Script: [a9/person4/DEMO.md](a9/person4/DEMO.md) — Success Q4, Success G3,
+Limitation Q3. Canvas: [docs/a9-canvas-submission.pdf](docs/a9-canvas-submission.pdf).
+
+### Run Ask Hestia locally
+
+```sh
+python -m pip install -r requirements.txt
+# .env from .env.example; set SECRET_KEY; HF_ASK_HESTIA_DEVICE=cpu by default
+python manage.py migrate
+python manage.py runserver --settings=hestia_config.settings.development
+```
+
+Open `/tasks/ask/` after sign-in with an active household membership. First
+request downloads MiniLM and Qwen into `HF_HOME` (see `.env.example`). Smoke:
+
+```sh
+python manage.py ask_hestia "Where does the shared cordless drill normally live?" "What is the capital of Australia?"
+python manage.py test workflows.test_ask_hestia workflows.test_ask_hestia_views
+```
+
+
 ## Run the integrated app
 
 Use Python 3.12 or newer for the current complete requirements (verified separately

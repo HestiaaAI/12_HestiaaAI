@@ -28,6 +28,7 @@ sqlparse==0.6.0
 urllib3==2.8.0
 
 # A6 local Hugging Face (Person 2)
+# A9 Ask Hestia also uses these packages for MiniLM + Qwen2-0.5B (Transformers; no sentence-transformers package required).
 accelerate==1.15.0
 huggingface-hub==0.36.2
 protobuf==6.33.6
