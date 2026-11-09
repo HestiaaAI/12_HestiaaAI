@@ -109,6 +109,9 @@ The [Person 3 evaluation](../a9/EVALUATION.md) records actual before/after page 
 
 ## Person 4 note (appended)
 
-The live Ask Hestia index now uses overlapping-paragraph chunks from Person 3’s
-measured A9 intervention (see [a9/EVALUATION.md](../a9/EVALUATION.md)). The A8
-bullet above records the original fixed-chunk service handoff.
+The live Ask Hestia index uses overlapping-paragraph chunks and MiniLM with
+top-k=2 (see [a9/EVALUATION.md](../a9/EVALUATION.md) and
+[README_AI.md](../README_AI.md) Part 2.3). That choice is backed by completed A8
+evidence: Person 3’s cross-encoder matrix and Person 2’s Colab MiniLM
+matrix/scaling under `a8/results/person2/completed-2026-11-09/`. The A8 bullet
+above still records the original fixed-chunk service handoff text from Person 1.
