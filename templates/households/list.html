@@ -1,0 +1,2 @@
+{% extends 'base.html' %}
+{% block content %}<h1>Choose a household</h1>{% for membership in memberships %}<form method="post" action="{% url 'households:switch' %}">{% csrf_token %}<button name="workspace_id" value="{{ membership.workspace_id }}">{{ membership.workspace.name }}</button></form>{% empty %}<p>No active household memberships.</p><a href="{% url 'households:onboarding' %}">Getting started</a>{% endfor %}{% endblock %}

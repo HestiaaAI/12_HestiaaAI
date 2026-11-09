@@ -46,6 +46,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "households.access.HouseholdContextMiddleware",
     "api.middleware.ApiAccessMiddleware",
     "allauth.account.middleware.AccountMiddleware",
     "households.access.AssignmentAccessMiddleware",
@@ -63,6 +64,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "households.context_processors.household_context",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],

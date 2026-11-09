@@ -14,3 +14,9 @@ class AssignmentAccessMiddleware(MiddlewareMixin):
         if match.app_name in {"workflows", "task_forms", "task_search", "reports", "analytics"} or match.view_name == "product-lookup":
             return redirect_to_login(request.get_full_path(), settings.LOGIN_URL)
         return None
+
+
+class HouseholdContextMiddleware(MiddlewareMixin):
+    def process_request(self, request):
+        from .context import resolve_active_membership
+        resolve_active_membership(request)

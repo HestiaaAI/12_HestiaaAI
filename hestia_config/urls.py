@@ -22,6 +22,7 @@ from hestia_config.views import HomePageView
 from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
+    path("households/", include("households.urls")),
     path("vega-lite/", include("analytics.vega_urls")),
     path("reports/", include("reports.urls")),
     path("analytics/", include("analytics.urls")),
