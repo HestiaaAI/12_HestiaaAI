@@ -1,5 +1,7 @@
 # Phase 1 delegation prompt
 
+> **Superseded compatibility policy (2026-11-09):** The user has removed all assignment-preservation requirements. Read `2026-11-09-product-first-cleanup.md` before executing remaining work. Legacy aliases, public fictional charts, research integrations and historical templates are not required product features. Existing security protections and useful user behavior remain required.
+
 You are the senior Django engineer implementing Phase 1 of Hestia's demo preparation. Your assignment is to complete household isolation, consolidation of scattered assignment implementations, and a shared active-household context across the existing application. Deliver working code, regression tests and a teammate integration contract. Do not stop at a proposal or a resolver helper.
 
 ## Read first

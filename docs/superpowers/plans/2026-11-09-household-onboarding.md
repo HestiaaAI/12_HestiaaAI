@@ -1,5 +1,7 @@
 # Household Onboarding Implementation Plan
 
+> **Superseded compatibility policy (2026-11-09):** The user has removed all assignment-preservation requirements. Read `2026-11-09-product-first-cleanup.md` before executing remaining work. Legacy aliases, public fictional charts, research integrations and historical templates are not required product features. Existing security protections and useful user behavior remain required.
+
 > **For agentic workers:** Use superpowers:executing-plans to implement this plan task by task. This is a reviewable proposal, not approval to implement product changes.
 
 **Goal:** Let real roommates sign up, create a household, invite and join, manage membership, and share only their household's data.

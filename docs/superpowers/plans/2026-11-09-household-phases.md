@@ -1,5 +1,7 @@
 # Connected Household Experience Implementation Plan
 
+> **Superseded compatibility policy (2026-11-09):** The user has removed all assignment-preservation requirements. Read `2026-11-09-product-first-cleanup.md` before executing remaining work. Legacy aliases, public fictional charts, research integrations and historical templates are not required product features. Existing security protections and useful user behavior remain required.
+
 > **For agentic workers:** Use superpowers:executing-plans to implement one approved phase at a time. Steps use checkbox syntax. Do not spawn agents or add repository collaborators. This document is planning, not a claim of implementation.
 
 **Goal:** Establish one household context connecting onboarding, roommate membership, tasks, groceries and future expenses, with consistent permissions and useful next actions.
