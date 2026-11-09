@@ -41,3 +41,9 @@ Documented for graders in `README_AI.md` and `docs/a9-ask-hestia-backend.md`:
 - **Generator:** Qwen2-0.5B from A6 household runs and A7 T4/NF4 scores (5.20/10, 1.49 s median) vs SmolLM2-360M (3.32/10) and Mistral-7B (8.12/10 but 4.18 s / larger memory). Chosen for local fit + prior evidence, not as the absolute quality winner.
 - **Embedder:** MiniLM from A8 small encoder; Transformers mean pooling reuses Hestia’s HF loading path without requiring the `sentence-transformers` package in Django.
 - **Chunking:** Overlap selected after Person 3’s integrated before/after evaluation (mean completeness 14% → 45.67%; Q4 fully correct).
+
+## Person 2 A8 completion (appended)
+
+Person 2’s finished MiniLM Colab evaluations keep 100% top-3 quote coverage on
+the handbook queries and remain the small-encoder evidence cited above. Full
+tables: `a8/person2/FINDINGS.md`.

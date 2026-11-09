@@ -112,3 +112,11 @@ The [Person 3 evaluation](../a9/EVALUATION.md) records actual before/after page 
 The live Ask Hestia index now uses overlapping-paragraph chunks from Person 3’s
 measured A9 intervention (see [a9/EVALUATION.md](../a9/EVALUATION.md)). The A8
 bullet above records the original fixed-chunk service handoff.
+
+## Person 4 note · A8 Person 2 completion (appended)
+
+Person 2’s Colab completion (`a8/results/person2/completed-2026-11-09/`,
+`a8/person2/FINDINGS.md`) finishes the MiniLM end-to-end matrix/scaling slice.
+That evidence reinforces MiniLM for Ask Hestia; overlap chunking remains the
+live index choice from the A9 Person 3 page evaluation. Do not mix Colab and Mac
+latency numbers.

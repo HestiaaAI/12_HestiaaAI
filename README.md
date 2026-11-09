@@ -116,4 +116,5 @@ First Ask Hestia request downloads MiniLM and Qwen into `HF_HOME` (see
 ## Assignment 8 · RAG notebook package
 
 See [a8/README.md](a8/README.md). Canvas ZIP on branch `dev-ag-a8-canvas-zip`:
-`a8/hestia-a8-canvas.zip`.
+`a8/hestia-a8-canvas.zip` (full `a8/` tree, including Person 2’s completed Colab
+evaluations under `a8/results/person2/completed-2026-11-09/`).

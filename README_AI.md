@@ -37,6 +37,12 @@ Write-up: [a9/person4/ARCHITECTURE.md](a9/person4/ARCHITECTURE.md).
 A6/A7 scores used different prompts than Ask Hestia. They justify the local stack;
 they do not equal Ask Hestia quality.
 
+Person 2’s completed A8 Colab MiniLM matrix/scaling evidence
+(`a8/results/person2/completed-2026-11-09/`) also supports keeping MiniLM for the
+app: all 15 matrix rows still reach 100% quote coverage, while generation quality
+varies by chunking. Ask Hestia follows the A9 overlap intervention rather than
+pooling those Colab timings with Person 3’s Mac matrix.
+
 ### Evaluation summary (Part 3)
 
 Full evidence: [a9/EVALUATION.md](a9/EVALUATION.md), [a9/evaluation.csv](a9/evaluation.csv).
