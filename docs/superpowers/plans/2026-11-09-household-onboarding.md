@@ -41,7 +41,7 @@ Baseline on original checkout: `python manage.py check` passed; `python manage.p
 
 ## Branch and collaboration
 
-Plan branch: `codex/household-onboarding-demo-plan`, based on local HEAD `421b75d`. This is the current development branch's committed snapshot, not a verified release/default-branch baseline. Confirm the team's integration base before implementation. Existing .gitignore, database and output changes in the original checkout are unrelated and remain there.
+Plan branch: `household-onboarding-demo-plan`, based on local HEAD `421b75d`. This is the current development branch's committed snapshot, not a verified release/default-branch baseline. Confirm the team's integration base before implementation. Existing .gitignore, database and output changes in the original checkout are unrelated and remain there.
 
 Workspace: `/Users/darshan/Documents/Projects/12_HestiaaAI-household-demo`.
 
@@ -158,6 +158,10 @@ Shared template context: `active_household`, `active_membership`, `household_mem
 - [ ] Verify migrations on the deployment database engine with a backup/rollback plan. Review production public origin, allowed hosts, HTTPS/session/CSRF settings, signup policy and email verification/delivery. Do not switch verification off merely to pass the demo.
 - [ ] In separate browser sessions: create A, send/copy invite, sign up B, verify email, accept and confirm same roster/task data; create C in household B and prove all A data absent; revoke invite, expire invite and remove B to prove access loss. Verify mobile viewport and actual error/empty states. Record outcomes, not just screenshots.
 - [ ] Commit UI integration and demo instructions separately from backend changes. Prepare a reviewable PR; deployment is a separate final action after required review and checks.
+
+## Superseding phase order
+
+The phased plan in `2026-11-09-household-phases.md` supersedes the execution order below: isolation is Phase 1 and precedes household creation. Retain this document as backend-review evidence and the broader feature contract.
 
 ## Implementation order and stop condition
 
