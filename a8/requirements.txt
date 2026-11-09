@@ -1,0 +1,12 @@
+# Assignment 8 submission dependencies (CPU).
+# Install from the repository root: python -m pip install -r a8/requirements.txt
+numpy==2.5.3
+sentence-transformers==5.1.2
+transformers==4.57.6
+huggingface-hub==0.36.2
+tokenizers==0.22.2
+torch==2.14.1
+pandas==3.0.6
+nbformat==5.11.1
+nbclient==0.11.0
+ipykernel==7.4.0
