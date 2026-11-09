@@ -9,8 +9,6 @@ class AssignmentAccessMiddleware(MiddlewareMixin):
         match = request.resolver_match
         if request.user.is_authenticated or match is None:
             return None
-        if match.view_name in settings.PUBLIC_API_VIEW_NAMES:
-            return None
         if match.app_name in {"workflows", "task_forms", "task_search", "reports", "analytics"} or match.view_name == "product-lookup":
             return redirect_to_login(request.get_full_path(), settings.LOGIN_URL)
         return None
@@ -30,11 +28,10 @@ class HouseholdContextMiddleware(MiddlewareMixin):
             return None
         from .context import resolve_active_membership
         resolve_active_membership(request)
-        public = (name == 'vega:charts' and not request.user.is_authenticated) or name == 'api:chart-priorities' or (match.app_name == 'vega' and view_kwargs.get('chart') == 'chart1')
-        stateless = name in {'ask-hestia', 'api:brain-dump', 'api:response-demo'}
-        household = not public and not stateless and (match.app_name in {'workflows', 'task_forms', 'task_search', 'ai_tasks', 'reports', 'analytics', 'vega', 'api'} or name == 'product-lookup')
+        stateless = name == 'ask-hestia'
+        household = not stateless and (match.app_name in {'workflows', 'task_forms', 'ai_tasks', 'analytics'} or name == 'product-lookup')
         request._household_response = household
-        data = match.app_name == 'api' or name in {'reports:tasks-json', 'reports:tasks-csv', 'analytics:task-priority-chart', 'vega:spec', 'vega:image'}
+        data = name in {'workflows:task-export-csv', 'analytics:task-priority-chart'}
         request._household_data = data
         if household and not request.user.is_authenticated:
             if data:

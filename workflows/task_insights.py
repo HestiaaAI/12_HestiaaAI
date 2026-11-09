@@ -22,19 +22,3 @@ def task_summary(tasks):
 def insights(request):
     return render(request, 'tasks/insights.html', task_summary(Task.objects.filter(workspace=require_household(request).workspace)))
 
-
-def daily_task_counts(tasks):
-    """UTC date buckets with zero days between first and last task."""
-    from datetime import timedelta, timezone
-    from django.db.models.functions import TruncDate
-    grouped = list(tasks.order_by().annotate(date=TruncDate('created_at', tzinfo=timezone.utc))
-                   .values('date').annotate(count=Count('pk')).order_by('date'))
-    if not grouped:
-        return []
-    counts = {row['date']: row['count'] for row in grouped}
-    day, last = grouped[0]['date'], grouped[-1]['date']
-    rows = []
-    while day <= last:
-        rows.append({'date': day.isoformat(), 'count': counts.get(day, 0)})
-        day += timedelta(days=1)
-    return rows

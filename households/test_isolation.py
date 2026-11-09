@@ -20,7 +20,7 @@ class IsolationTests(TestCase):
         s.save()
 
     def test_task_routes_exclude_foreign_household(self):
-        for name in ['task_forms:board','workflows:task-manual','workflows:task-render','workflows:task-cbv-base','workflows:task-cbv-generic','task_search:get','task_search:post']:
+        for name in ['task_forms:board']:
             with self.subTest(name=name):
                 response = self.client.get(reverse(name), follow=True)
                 self.assertContains(response, self.ta.title)
@@ -30,7 +30,7 @@ class IsolationTests(TestCase):
         self.assertEqual(self.client.get(self.tb.get_absolute_url()).status_code,404)
 
     def test_dual_member_sees_only_selected_household(self):
-        self.assertEqual(self.client.get(reverse('api:task-list')).json()['tasks'][0]['title'],self.ta.title)
+        self.assertContains(self.client.get(reverse('task_forms:board')), self.ta.title)
         self.client.post(reverse('households:switch'), {'workspace_id':self.b.pk})
         response=self.client.get(reverse('task_forms:board'))
         self.assertContains(response,self.tb.title)
@@ -53,27 +53,26 @@ class IsolationTests(TestCase):
         self.assertFalse(Task.objects.filter(title='Forbidden').exists())
 
     def test_private_api_and_exports_are_household_scoped(self):
-        for name in ['api:task-list','reports:tasks-json','reports:tasks-csv']:
+        for name in ['workflows:task-export-csv']:
             response=self.client.get(reverse(name))
             self.assertContains(response,self.ta.title)
             self.assertNotContains(response,self.tb.title)
 
     def test_missing_household_returns_409_for_private_data(self):
         s=self.client.session;s.pop('active_workspace_id');s.save()
-        for name,kwargs in [('api:task-list',{}),('reports:tasks-json',{}),('reports:tasks-csv',{}),('api:chart-creations',{}),('analytics:task-priority-chart',{}),('vega:spec',{'chart':'chart2'}),('vega:image',{'chart':'chart2'})]:
+        for name,kwargs in [('workflows:task-export-csv',{}),('analytics:task-priority-chart',{})]:
             response=self.client.get(reverse(name,kwargs=kwargs))
             self.assertEqual(response.status_code,409,name)
             self.assertEqual(response.json(),{'error':'Select a household to continue.','code':'household_required'})
 
     def test_private_responses_are_not_shared_cacheable(self):
-        for name in ['task_forms:board','api:task-list','reports:tasks-csv','analytics:task-priority-chart']:
+        for name in ['task_forms:board','workflows:task-export-csv','analytics:task-priority-chart']:
             response=self.client.get(reverse(name))
             self.assertIn('no-store',response['Cache-Control'])
             self.assertIn('Cookie',response['Vary'])
 
     @patch('workflows.action_plan_views.generate_action_plan')
     def test_foreign_action_plan_never_calls_provider(self,provider):
-        self.assertEqual(self.client.post(reverse('api:task-action-plan',args=[self.tb.pk])).status_code,404)
         self.assertEqual(self.client.post(reverse('workflows:task-action-plan',args=[self.tb.pk])).status_code,404)
         provider.assert_not_called()
 
@@ -122,37 +121,7 @@ class IsolationTests(TestCase):
             self.assertEqual(len(result['internal'][key]),1)
             self.assertEqual(result['internal'][key][0]['workspace'],self.a.name)
 
-    def test_private_charts_exclude_foreign_counts(self):
-        from analytics.views import priority_counts
-        self.assertEqual([r['count'] for r in priority_counts(Task.objects.filter(workspace=self.a))],[1,0,0,0])
-        with patch('analytics.views.render_priority_chart') as render_chart:
-            from django.http import HttpResponse
-            render_chart.return_value=HttpResponse(b'chart',content_type='image/png')
-            self.client.get(reverse('analytics:task-priority-chart'))
-            self.assertEqual([r['count'] for r in render_chart.call_args.args[0]],[1,0,0,0])
-        from datetime import datetime, timezone
-        Task.objects.filter(pk=self.ta.pk).update(created_at=datetime(2026,1,1,tzinfo=timezone.utc))
-        Task.objects.filter(pk=self.tb.pk).update(created_at=datetime(2026,6,1,tzinfo=timezone.utc))
-        self.assertEqual(self.client.get(reverse('api:chart-creations')).json(),[{'date':'2026-01-01','count':1}])
-        with patch('analytics.views.render_priority_chart') as chart:
-            from django.http import HttpResponse
-            chart.return_value=HttpResponse(b'chart')
-            self.client.get(reverse('vega:image',kwargs={'chart':'chart2'}))
-            self.assertEqual(chart.call_args.args[0],[{'label':'2026-01-01','count':1}])
-            self.assertEqual(chart.call_args.kwargs.get('title'),'Tasks created by day')
 
-    def test_public_chart_variants_use_fictional_samples(self):
-        from django.test.utils import CaptureQueriesContext
-        from django.db import connection
-        self.client.logout()
-        for name,kwargs in [('api:chart-priorities',{}),('vega:spec',{'chart':'chart1'}),('vega:image',{'chart':'chart1'}),('vega:charts',{})]:
-            with CaptureQueriesContext(connection) as queries:
-                response=self.client.get(reverse(name,kwargs=kwargs))
-            self.assertEqual(response.status_code,200)
-            self.assertFalse(any('workflows_task' in query['sql'].lower() for query in queries))
-        before=self.client.get(reverse('api:chart-priorities')).json()
-        Task.objects.all().delete()
-        self.assertEqual(self.client.get(reverse('api:chart-priorities')).json(),before)
 
     @patch('workflows.ai_views.get_suggestions')
     def test_no_membership_does_not_call_draft_provider(self,provider):
@@ -162,10 +131,10 @@ class IsolationTests(TestCase):
 
     def test_unselected_legacy_routes_and_anonymous_data_boundary(self):
         session=self.client.session;session.pop('active_workspace_id');session.save()
-        for name in ['workflows:task-manual','workflows:task-render','workflows:task-cbv-base','workflows:task-cbv-generic','task_search:get','task_search:post','ai_tasks:brain-dump']:
+        for name in ['task_forms:board','workflows:task-insights','ai_tasks:brain-dump']:
             self.assertRedirects(self.client.get(reverse(name)),reverse('households:list'),fetch_redirect_response=False)
         self.client.logout()
-        for name in ['api:task-list','reports:tasks-csv','reports:tasks-json','analytics:task-priority-chart']:
+        for name in ['workflows:task-export-csv','analytics:task-priority-chart']:
             self.assertEqual(self.client.get(reverse(name)).status_code,401)
 
     def test_membership_missing_inside_create_transaction_cannot_save(self):
@@ -180,6 +149,14 @@ class IsolationTests(TestCase):
         other=get_user_model().objects.create_user('independent')
         Membership.objects.create(user=other,workspace=self.b,display_name='B only')
         separate=Client();separate.force_login(other)
-        self.assertEqual([t['title'] for t in separate.get(reverse('api:task-list')).json()['tasks']],[self.tb.title])
-        self.assertEqual([t['title'] for t in self.client.get(reverse('api:task-list')).json()['tasks']],[self.ta.title])
+        self.assertContains(separate.get(reverse('task_forms:board')),self.tb.title)
+        self.assertNotContains(separate.get(reverse('task_forms:board')),self.ta.title)
+        self.assertContains(self.client.get(reverse('task_forms:board')),self.ta.title)
+        self.assertNotContains(self.client.get(reverse('task_forms:board')),self.tb.title)
         self.assertEqual(separate.get(self.ta.get_absolute_url()).status_code,404)
+
+    def test_insights_excludes_foreign_counts(self):
+        response=self.client.get(reverse('workflows:task-insights'))
+        self.assertEqual(response.context['total_tasks'],1)
+        self.assertEqual(response.context['priority_summary'],[{'label':'Low','count':1}])
+        self.assertNotContains(response,self.b.name)

@@ -2,8 +2,7 @@
 import csv
 
 from django.db.models import F
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import redirect
+from django.http import HttpResponse
 from django.utils import timezone
 from django.views.decorators.http import require_GET
 
@@ -18,11 +17,6 @@ def task_records(tasks):
     return tasks.order_by("pk").values(
         "title", "task_type", "priority", id=F("pk"), household=F("workspace__name")
     )
-
-
-@require_GET
-def task_report(request):
-    return redirect('workflows:task-insights')
 
 
 def csv_cell(value):
@@ -41,18 +35,4 @@ def tasks_csv(request):
     writer.writerow(EXPORT_FIELDS)
     for task in task_records(Task.objects.filter(workspace=require_household(request).workspace)).iterator():
         writer.writerow(csv_cell(task[field]) for field in EXPORT_FIELDS)
-    return response
-
-
-@require_GET
-def tasks_json(request):
-    generated_at = timezone.now()
-    tasks = [{field: task[field] for field in EXPORT_FIELDS} for task in task_records(Task.objects.filter(workspace=require_household(request).workspace))]
-    response = JsonResponse({
-        "generated_at": generated_at.isoformat(),
-        "record_count": len(tasks),
-        "tasks": tasks,
-    }, json_dumps_params={"indent": 2})
-    stamp = generated_at.strftime("%Y-%m-%d_%H-%M")
-    response["Content-Disposition"] = f'attachment; filename="tasks_{stamp}.json"'
     return response

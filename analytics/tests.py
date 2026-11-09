@@ -25,7 +25,7 @@ class TaskAnalyticsTests(TestCase):
         TaskOccurrence.objects.create(task=task, sequence=2)
 
     def test_summary_counts_tasks_not_occurrences_and_excludes_other_households(self):
-        response = self.client.get(reverse('analytics:task-stats'), follow=True)
+        response = self.client.get(reverse('workflows:task-insights'), follow=True)
         self.assertEqual(response.context['total_tasks'], 2)
         self.assertEqual(response.context['priority_summary'], [{'label': 'High', 'count': 2}])
         self.assertNotContains(response, 'Second demo')
@@ -34,7 +34,7 @@ class TaskAnalyticsTests(TestCase):
 
     def test_empty_database_renders_page_and_chart(self):
         Task.objects.all().delete()
-        response = self.client.get(reverse('analytics:task-stats'), follow=True)
+        response = self.client.get(reverse('workflows:task-insights'), follow=True)
         self.assertEqual(response.context['total_tasks'], 0)
         self.assertContains(response, 'No tasks yet')
         self.assertEqual(response.context['priority_summary'], [])
@@ -63,8 +63,8 @@ class TaskAnalyticsTests(TestCase):
             counts.assert_called_once()
 
     def test_endpoints_reject_post_without_writing(self):
-        for name in ("task-stats", "task-priority-chart"):
-            self.assertEqual(self.client.post(reverse("analytics:" + name)).status_code, 405)
+        for name in ("workflows:task-insights", "analytics:task-priority-chart"):
+            self.assertEqual(self.client.post(reverse(name)).status_code, 405)
         self.assertEqual(Task.objects.count(), 3)
 
     def test_board_reaches_insights_and_selected_details(self):
@@ -82,7 +82,7 @@ class TaskAnalyticsTests(TestCase):
             "priority": "URGENT", "task_type": "CHORE",
         })
         self.assertEqual(response.status_code, 302)
-        page = self.client.get(reverse("analytics:task-stats"), follow=True)
+        page = self.client.get(reverse("workflows:task-insights"), follow=True)
         self.assertContains(self.client.get(reverse("task_forms:board")), "Created through task board")
         self.assertEqual(page.context["total_tasks"], 3)
         self.assertEqual(page.context["priority_summary"][-1]["count"], 1)

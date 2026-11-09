@@ -4,12 +4,7 @@ from django.contrib.auth import get_user_model
 from django.urls import resolve, reverse
 from households.models import Membership, Workspace
 from .models import Task
-from .views import legacy_task_list, TaskDetailView
-
-class AssignmentRoutingTests(SimpleTestCase):
-    def test_legacy_routes_share_one_implementation(self):
-        for name in ['task-manual','task-render','task-cbv-base','task-cbv-generic']:
-            self.assertIs(resolve(reverse('workflows:'+name)).func, legacy_task_list)
+from .views import TaskDetailView
 
 class TaskTemplateTests(TestCase):
     def setUp(self):
@@ -20,8 +15,8 @@ class TaskTemplateTests(TestCase):
         self.client.force_login(self.user)
 
     def test_all_aliases_render_canonical_fields_and_escape_content(self):
-        for name in ['task-manual','task-render','task-cbv-base','task-cbv-generic']:
-            response=self.client.get(reverse('workflows:'+name),follow=True)
+        for name in ['task_forms:board']:
+            response=self.client.get(reverse(name),follow=True)
             self.assertTemplateUsed(response,'tasks/forms/task_board.html')
             self.assertContains(response,self.task.title)
             self.assertContains(response,self.task.get_absolute_url())
@@ -30,8 +25,8 @@ class TaskTemplateTests(TestCase):
             self.assertNotContains(response,'<script>alert(1)</script>')
 
     def test_search_and_empty_states(self):
-        for name in ['task-manual','task-render','task-cbv-base','task-cbv-generic']:
-            response=self.client.get(reverse('workflows:'+name),{'q':'nothing'},follow=True)
+        for name in ['task_forms:board']:
+            response=self.client.get(reverse(name),{'q':'nothing'},follow=True)
             self.assertContains(response,'No tasks found')
             self.assertNotContains(response,self.task.title)
         Task.objects.all().delete()

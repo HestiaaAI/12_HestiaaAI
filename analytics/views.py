@@ -3,7 +3,6 @@ from io import BytesIO
 from threading import Lock
 
 from django.http import HttpResponse
-from django.shortcuts import redirect
 from django.views.decorators.http import require_safe
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
@@ -22,12 +21,6 @@ def priority_counts(tasks):
     grouped = grouped_summary(tasks, 'priority', Task.Priority.choices)
     counts = {row['label']: row['count'] for row in grouped}
     return [{'label': label, 'count': counts.get(label, 0)} for _, label in Task.Priority.choices]
-
-
-@require_safe
-def task_stats(request):
-    """Show all task definitions and their total and priority summary."""
-    return redirect('workflows:task-insights')
 
 
 @require_safe

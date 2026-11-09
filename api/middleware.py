@@ -9,7 +9,7 @@ class ApiAccessMiddleware(MiddlewareMixin):
     def process_view(self, request, view_func, view_args, view_kwargs):
         match = request.resolver_match
         # Match resolved routes, not URL substrings or user-supplied parameters.
-        private_api = "api" in match.namespaces and match.view_name != "api:chart-priorities"
+        private_api = "api" in match.namespaces and True
         private_export = match.view_name in {"reports:tasks-json", "reports:tasks-csv"}
         private_chart = "vega" in match.namespaces and view_kwargs.get("chart") == "chart2"
         private_page = match.view_name in {"reports:task-report", "product-lookup"}

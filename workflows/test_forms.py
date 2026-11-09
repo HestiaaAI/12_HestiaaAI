@@ -6,7 +6,6 @@ from households.models import Membership, Workspace
 from .models import Task
 
 
-@override_settings(ROOT_URLCONF="workflows.forms_preview_urls")
 class TaskBoardTests(TestCase):
     @classmethod
     def setUpTestData(cls):

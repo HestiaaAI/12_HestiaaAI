@@ -1,3 +1,5 @@
+> Phase 1A historical contract. Phase 1B removes compatibility/sample transports; see `household-product-decisions.md`. The final Phase 1B route table replaces this inventory in Task 3.
+
 # Household access and integration contract — Phase 1
 
 Canonical journey: sign in → household picker/onboarding → `/tasks/manage/` (`task_forms:board`) → task detail/action plan or reviewed AI drafting → same board → `/tasks/insights/` (`workflows:task-insights`). Signed-in Home redirects to the board or missing-context state. Anonymous Home remains public.

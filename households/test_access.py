@@ -10,10 +10,7 @@ class AssignmentAuthTests(TestCase):
         cache.clear()
 
     def test_private_pages_redirect_and_navigation_is_hidden(self):
-        for url in ('/tasks/manage/', '/tasks/manual/', '/tasks/render/', '/tasks/cbv-base/',
-                    '/tasks/cbv-generic/', '/tasks/1/', '/tasks/search/', '/tasks/search/post/',
-                    '/reports/tasks/',
-                    '/analytics/tasks/', '/lookup/'):
+        for url in ('/tasks/manage/', '/tasks/1/', '/tasks/insights/', '/lookup/'):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 302)
@@ -23,14 +20,10 @@ class AssignmentAuthTests(TestCase):
         self.assertNotContains(home, 'href="/tasks/manage/"')
         self.assertNotContains(home, 'href="/reports/tasks/"')
 
-    def test_exactly_one_public_json_endpoint(self):
-        response = self.client.get('/api/charts/task-priorities/')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response['Content-Type'], 'application/json')
-        for url in ('/api/tasks/', '/api/response-demo/', '/api/external/products/', '/api/charts/task-creations/', '/reports/tasks/export.csv', '/reports/tasks/export.json'):
-            response = self.client.get(url)
-            self.assertEqual(response.status_code, 401)
-            self.assertEqual(response.json(), {'error': 'Authentication required.'})
+    def test_private_csv_requires_login(self):
+        response=self.client.get('/tasks/export.csv')
+        self.assertEqual(response.status_code,401)
+        self.assertEqual(response.json(),{'error':'Authentication required.'})
 
     @override_settings(EMAIL_BACKEND='django.core.mail.backends.locmem.EmailBackend')
     def test_username_signup_login_and_logout(self):
@@ -44,9 +37,9 @@ class AssignmentAuthTests(TestCase):
         self.assertRedirects(self.client.get('/'), '/households/onboarding/')
         self.client.post('/accounts/logout/')
         self.assertNotIn('_auth_user_id', self.client.session)
-        response = self.client.post('/accounts/login/', {'login': 'newmember', 'password': data['password1'], 'next': '/reports/tasks/'})
-        self.assertRedirects(response, '/reports/tasks/', fetch_redirect_response=False)
-        self.assertEqual(self.client.get('/api/tasks/').status_code, 409)
+        response = self.client.post('/accounts/login/', {'login': 'newmember', 'password': data['password1'], 'next': '/tasks/manage/'})
+        self.assertRedirects(response, '/tasks/manage/', fetch_redirect_response=False)
+        self.assertEqual(self.client.get('/tasks/export.csv').status_code, 409)
 
     def test_invalid_and_duplicate_username_signup(self):
         data = dict(username='member', email='member@example.test', password1='Strong-member-pass-392!', password2='different')
@@ -59,9 +52,8 @@ class AssignmentAuthTests(TestCase):
 
     @override_settings(DEBUG=False)
     def test_access_policy_does_not_depend_on_debug(self):
-        self.assertEqual(self.client.get("/reports/tasks/").status_code, 302)
-        self.assertEqual(self.client.get("/api/tasks/").status_code, 401)
-        self.assertEqual(self.client.get("/api/charts/task-priorities/").status_code, 200)
+        self.assertEqual(self.client.get("/tasks/manage/").status_code, 302)
+        self.assertEqual(self.client.get("/tasks/export.csv").status_code, 401)
 
     def test_signup_requires_csrf_and_accepts_real_token(self):
         client = Client(enforce_csrf_checks=True)

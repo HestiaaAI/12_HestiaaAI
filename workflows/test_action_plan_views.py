@@ -26,7 +26,6 @@ class ActionPlanViewTests(TestCase):
     def setUp(self):
         cache.clear()
         self.page = reverse("workflows:task-action-plan", args=[self.task.pk])
-        self.api = reverse("api:task-action-plan", args=[self.task.pk])
         self.client.force_login(self.user)
         self.patcher = patch("workflows.action_plan_views.generate_action_plan", return_value=valid_plan())
         self.generate = self.patcher.start()
@@ -61,49 +60,36 @@ class ActionPlanViewTests(TestCase):
         self.assertContains(response, "&lt;script&gt;")
         self.assertNotContains(response, "<script>")
 
-    def test_json_api_returns_plan_metadata_and_no_cache(self):
-        before = Task.objects.count()
-        response = self.client.post(self.api, data="{}", content_type="application/json")
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json(), {"task_id": self.task.pk, "plan": valid_plan(),
-                                           "provider": "Groq", "model": "test-model"})
-        self.assertIn("no-store", response.headers["Cache-Control"])
-        self.assertEqual(Task.objects.count(), before)
 
-    def test_json_api_does_not_generate_on_get(self):
-        self.assertEqual(self.client.get(self.api).status_code, 405)
-        self.generate.assert_not_called()
 
     def test_anonymous_html_redirects_and_api_returns_401(self):
         self.client.logout()
         self.assertRedirects(self.client.get(self.page), f"/accounts/login/?next={self.page}")
-        self.assertEqual(self.client.post(self.api).status_code, 401)
+        self.assertEqual(self.client.post(self.page).status_code, 302)
         self.generate.assert_not_called()
 
     def test_other_household_and_inactive_members_cannot_send_task_data(self):
         self.client.force_login(self.outsider)
         self.assertRedirects(self.client.get(self.page), reverse("households:onboarding"))
-        response = self.client.post(self.api)
-        self.assertEqual(response.status_code, 409)
-        self.assertEqual(response.json()["code"], "household_required")
+        response = self.client.post(self.page)
+        self.assertRedirects(response, reverse("households:onboarding"))
         self.client.force_login(self.user)
         self.membership.is_active = False
         self.membership.save(update_fields=["is_active"])
-        self.assertEqual(self.client.post(self.api).status_code, 409)
+        self.assertRedirects(self.client.post(self.page), reverse("households:onboarding"))
         self.generate.assert_not_called()
 
     def test_missing_task_returns_json_404(self):
-        response = self.client.post(reverse("api:task-action-plan", args=[999999]))
+        response = self.client.post(reverse("workflows:task-action-plan", args=[999999]))
         self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json(), {"error": "Task not found."})
 
     def test_csrf_protects_html_and_json(self):
         client = Client(enforce_csrf_checks=True)
         client.force_login(self.user)
         self.assertEqual(client.post(self.page).status_code, 403)
-        self.assertEqual(client.post(self.api, data="{}", content_type="application/json").status_code, 403)
+        self.assertEqual(client.post(self.page, data="{}", content_type="application/json").status_code, 403)
         client.get(self.page)
-        response = client.post(self.api, data="{}", content_type="application/json",
+        response = client.post(self.page, data="{}", content_type="application/json",
                                HTTP_X_CSRFTOKEN=client.cookies["csrftoken"].value)
         self.assertEqual(response.status_code, 200)
 
@@ -111,27 +97,27 @@ class ActionPlanViewTests(TestCase):
         self.generate.side_effect = ActionPlanError("Try again later.", 504, "timeout")
         self.assertContains(self.client.post(self.page), "Try again later.", status_code=504)
         cache.clear()
-        response = self.client.post(self.api)
+        response = self.client.post(self.page)
         self.assertEqual(response.status_code, 504)
-        self.assertEqual(response.json(), {"error": "Try again later.", "code": "timeout"})
+        self.assertContains(response, "Try again later.", status_code=504)
 
     def test_cooldown_prevents_duplicate_provider_calls(self):
-        self.assertEqual(self.client.post(self.api).status_code, 200)
-        response = self.client.post(self.api)
+        self.assertEqual(self.client.post(self.page).status_code, 200)
+        response = self.client.post(self.page)
         self.assertEqual(response.status_code, 429)
-        self.assertEqual(response.json()["code"], "cooldown")
+        self.assertContains(response,"Please wait 15 seconds",status_code=429)
         self.assertEqual(self.generate.call_count, 1)
 
     def test_cooldown_does_not_block_another_member(self):
         Membership.objects.create(user=self.outsider, workspace=self.home, display_name="Other")
-        self.client.post(self.api)
+        self.client.post(self.page)
         self.client.force_login(self.outsider)
-        self.assertEqual(self.client.post(self.api).status_code, 200)
+        self.assertEqual(self.client.post(self.page).status_code, 200)
 
     @override_settings(GROQ_API_KEY="")
     def test_missing_key_remains_503_instead_of_cooldown(self):
         self.generate.side_effect = ActionPlanError("Not configured.", 503, "not_configured")
         for _ in range(2):
-            response = self.client.post(self.api)
+            response = self.client.post(self.page)
             self.assertEqual(response.status_code, 503)
-            self.assertEqual(response.json()["code"], "not_configured")
+            self.assertContains(response,"Not configured.",status_code=503)

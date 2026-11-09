@@ -107,7 +107,6 @@ LOGIN_URL = "accounts:login"
 # Return to home after a direct sign-in; honor an explicit safe local next URL.
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "accounts:login"
-PUBLIC_API_VIEW_NAMES = {"api:chart-priorities"}
 
 # Keep the existing User model and allauth for later Google OAuth integration.
 AUTHENTICATION_BACKENDS = [
