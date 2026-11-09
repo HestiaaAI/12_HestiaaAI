@@ -76,3 +76,33 @@ class IsolationTests(TestCase):
         self.assertEqual(self.client.post(reverse('api:task-action-plan',args=[self.tb.pk])).status_code,404)
         self.assertEqual(self.client.post(reverse('workflows:task-action-plan',args=[self.tb.pk])).status_code,404)
         provider.assert_not_called()
+
+    @patch('workflows.ai_views.get_suggestions')
+    def test_brain_dump_confirmation_rejects_other_selected_household(self, provider):
+        provider.return_value=[{'title':'Draft A','description':'','priority':'LOW','task_type':'CHORE'}]
+        response=self.client.post(reverse('ai_tasks:brain-dump'),{'action':'generate','workspace':self.a.pk,'text':'Work'})
+        token=response.context['draft_token']
+        self.client.post(reverse('households:switch'),{'workspace_id':self.b.pk})
+        data={'action':'save','draft_token':token,'confirm':'on','form-TOTAL_FORMS':1,'form-INITIAL_FORMS':1,'form-0-title':'Draft A','form-0-description':'','form-0-priority':'LOW','form-0-task_type':'CHORE'}
+        self.client.post(reverse('ai_tasks:brain-dump'),data)
+        self.assertFalse(Task.objects.filter(title='Draft A').exists())
+
+    @patch('workflows.ai_views.get_suggestions')
+    def test_membership_revoked_between_preview_and_save(self, provider):
+        provider.return_value=[{'title':'Revoked draft','description':'','priority':'LOW','task_type':'CHORE'}]
+        response=self.client.post(reverse('ai_tasks:brain-dump'),{'action':'generate','workspace':self.a.pk,'text':'Work'})
+        token=response.context['draft_token']
+        Membership.objects.filter(pk=self.ma.pk).update(is_active=False)
+        self.client.post(reverse('ai_tasks:brain-dump'),{'action':'save','draft_token':token,'confirm':'on','form-TOTAL_FORMS':1,'form-INITIAL_FORMS':1,'form-0-title':'Revoked draft','form-0-priority':'LOW','form-0-task_type':'CHORE'})
+        self.assertFalse(Task.objects.filter(title='Revoked draft').exists())
+
+    @patch('workflows.ai_views.get_suggestions')
+    def test_foreign_brain_dump_never_calls_provider(self, provider):
+        self.client.post(reverse('ai_tasks:brain-dump'),{'action':'generate','workspace':self.b.pk,'text':'Secret'})
+        provider.assert_not_called()
+
+    def test_review_form_subclass_preserves_scoped_validation(self):
+        from workflows.ai_forms import ReviewTaskForm
+        from workflows.task_forms import TaskCreateForm
+        self.assertTrue(issubclass(ReviewTaskForm,TaskCreateForm))
+        self.assertTrue(ReviewTaskForm({'title':'Reviewed','description':'','priority':'LOW','task_type':'CHORE'}).is_valid())

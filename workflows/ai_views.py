@@ -11,6 +11,7 @@ from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
 from households.models import Membership
+from households.context import require_household
 from .ai_adapter import get_suggestions
 from .ai_breakdown import suggest_steps
 from .ai_forms import BrainDumpForm, ConfirmationForm, TaskReviewFormSet
@@ -23,7 +24,8 @@ DRAFT_KEY = "brain_dump_draft"
 @never_cache
 @require_http_methods(["GET", "POST"])
 def brain_dump(request):
-    context = {"input_form": BrainDumpForm(user=request.user),
+    selected = require_household(request)
+    context = {"input_form": BrainDumpForm(user=request.user, membership=selected),
                "breakdown_available": bool(getattr(settings, "HESTIA_TASK_BREAKDOWN_CALLABLE", "")),
                "mock_mode": getattr(settings, "HESTIA_BRAIN_DUMP_BACKEND", "local") == "mock"}
     if request.method == "POST":
@@ -31,7 +33,7 @@ def brain_dump(request):
         if "breakdown_index" in request.POST:
             action = "breakdown"
         if action == "generate":
-            form = BrainDumpForm(request.POST, user=request.user)
+            form = BrainDumpForm(request.POST, user=request.user, membership=selected)
             context["input_form"] = form
             if form.is_valid():
                 try:
@@ -54,7 +56,7 @@ def brain_dump(request):
             token = request.POST.get("draft_token", "")
             try:
                 draft = signing.loads(token, salt=SALT, max_age=3600)
-                if draft != request.session.get(DRAFT_KEY) or draft["user"] != request.user.pk:
+                if draft != request.session.get(DRAFT_KEY) or draft["user"] != request.user.pk or draft["workspace"] != selected.workspace_id:
                     raise signing.BadSignature()
                 membership = Membership.objects.select_related("workspace").get(
                     user=request.user, workspace_id=draft["workspace"], is_active=True)
