@@ -1,15 +1,7 @@
-"""Person 4 review adapter; Person 2 owns the local inference service."""
+"""Task-draft generation and form-backed validation."""
 from django.conf import settings
 
 from .ai_forms import MAX_TASKS, ReviewTaskForm
-
-
-class SuggestedTasks(list):
-    """Validated drafts plus transport metadata retained for the JSON adapter."""
-    def __init__(self, tasks, result):
-        super().__init__(tasks)
-        self.warnings = result.get("warnings", [])
-        self.model_id = result.get("model_id", "mock")
 
 
 class SuggestionsUnavailable(Exception):
@@ -33,7 +25,7 @@ def get_suggestions(text):
         result = extract_tasks(text)
     else:
         raise SuggestionsUnavailable()
-    return SuggestedTasks(validate_suggestions(result), result)
+    return validate_suggestions(result)
 
 
 def validate_suggestions(result):

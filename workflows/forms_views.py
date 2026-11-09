@@ -1,8 +1,7 @@
-"""Person 4: one ListView handles read-only GET filters and Task creation POST."""
+"""Task board with read-only filters and explicitly submitted task creation."""
 from django.contrib import messages
 from django.db import IntegrityError, transaction
 from django.shortcuts import redirect
-from django.urls import reverse
 from django.views.generic import ListView
 
 from households.models import Membership
@@ -76,6 +75,6 @@ class TaskBoardView(ListView):
             else:
                 messages.success(request, f'Task “{task.title}” created.')
                 # POST/Redirect/GET prevents accidental repeat submissions.
-                return redirect(reverse("task_forms:board") + f"?workspace={task.workspace_id}")
+                return redirect("task_forms:board")
         self.object_list = self.get_queryset()
         return self.render_to_response(self.get_context_data(create_form=form))

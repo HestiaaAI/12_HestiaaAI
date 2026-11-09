@@ -46,7 +46,7 @@
         </div>
         <section class="task-card ai-confirm">
             <h2>3. Confirm and save</h2>
-            <p>Only tasks you keep will be added to your household's existing task system.</p>
+            <p>Only tasks you keep will be added to your household's task board.</p>
             {{ confirmation.confirm.errors }}
             <div class="ai-checkbox">{{ confirmation.confirm }}{{ confirmation.confirm.label_tag }}</div>
             <button type="submit">Save approved tasks</button>
@@ -61,18 +61,18 @@
     {% if not mock_mode %}
     <aside class="ai-notice" id="ai-first-use-note">
         <strong>First use can take several minutes.</strong>
-        <p>Hestia downloads and loads its local AI model the first time you organize tasks on this server. Later requests reuse the downloaded model, but processing can still take time. Keep this page open while it works.</p>
+        <p>Organizing tasks can take several minutes on first use. Keep this page open while it works; you will review the suggestions before anything is saved.</p>
     </aside>
     {% endif %}
     <form method="post" action="{% url 'ai_tasks:brain-dump' %}" data-ai-generate{% if not mock_mode %} aria-describedby="ai-first-use-note"{% endif %}>
         {% csrf_token %}<input type="hidden" name="action" value="generate">
         {{ input_form.non_field_errors }}
-        {% for field in input_form %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}
+        {% for field in input_form %}{% if field.is_hidden %}{{ field }}{{ field.errors }}{% else %}<div class="form-field">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endif %}{% endfor %}
         <p class="field-help">Up to 4,000 characters. You'll review every suggestion before saving.</p>
         <button type="submit" data-ai-submit data-pending-label="{% if mock_mode %}Preparing sample tasks…{% else %}Organizing your tasks…{% endif %}">Organize My Tasks</button>
         <p class="ai-notice ai-loading" role="status" aria-live="polite" aria-atomic="true" data-ai-loading hidden>
             {% if mock_mode %}Preparing sample tasks. Nothing is saved until you review and confirm.
-            {% else %}Organizing your tasks. First use may take several minutes while the local AI model downloads and loads. Keep this page open; you don't need to submit again. Nothing is saved until you review and confirm.{% endif %}
+            {% else %}Organizing your tasks. First use may take several minutes. Keep this page open; you don't need to submit again. Nothing is saved until you review and confirm.{% endif %}
         </p>
     </form>
 </section>

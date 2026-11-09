@@ -14,7 +14,7 @@ class TaskTemplateTests(TestCase):
         self.task=Task.objects.create(workspace=home,title='Buy groceries',description='<script>alert(1)</script>',priority='HIGH')
         self.client.force_login(self.user)
 
-    def test_all_aliases_render_canonical_fields_and_escape_content(self):
+    def test_board_renders_canonical_fields_and_escapes_content(self):
         for name in ['task_forms:board']:
             response=self.client.get(reverse(name),follow=True)
             self.assertTemplateUsed(response,'tasks/forms/task_board.html')

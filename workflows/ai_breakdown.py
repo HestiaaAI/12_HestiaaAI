@@ -1,4 +1,4 @@
-"""Optional Person 3 integration contract; no external provider implementation."""
+"""Optional configured task-step suggestions for human review."""
 from django.conf import settings
 from django.utils.module_loading import import_string
 

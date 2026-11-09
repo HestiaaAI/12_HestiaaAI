@@ -10,7 +10,7 @@ OPENAI_API_KEY = env("OPENAI_API_KEY", default="")
 GROQ_API_KEY = env("GROQ_API_KEY", default="")
 GROQ_MODEL = env("GROQ_MODEL", default="openai/gpt-oss-20b")
 
-# A6 Person 2 — local Hugging Face Brain Dump (shared contract with ai_prototype.ipynb)
+# Local task drafting provider (loaded only on explicit generation)
 HESTIA_BRAIN_DUMP_BACKEND = env("HESTIA_BRAIN_DUMP_BACKEND", default="local")
 HESTIA_TASK_BREAKDOWN_CALLABLE = env("HESTIA_TASK_BREAKDOWN_CALLABLE", default="")
 HF_TOKEN = env("HF_TOKEN", default="")
@@ -21,7 +21,6 @@ HF_BRAIN_DUMP_MODEL = env(
 HF_BRAIN_DUMP_DEVICE = env("HF_BRAIN_DUMP_DEVICE", default="cpu")
 HF_BRAIN_DUMP_MAX_NEW_TOKENS = env.int("HF_BRAIN_DUMP_MAX_NEW_TOKENS", default=220)
 HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
-HF_ASK_HESTIA_DEVICE = env("HF_ASK_HESTIA_DEVICE", default="cpu")
 
 INSTALLED_APPS = [
     "django.contrib.admin",

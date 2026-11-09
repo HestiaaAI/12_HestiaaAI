@@ -2,33 +2,22 @@ asgiref==3.12.1
 certifi==2026.7.22
 cffi==2.1.1
 charset-normalizer==3.5.2
-contourpy==1.4.0
 cryptography==50.0.2
-cycler==0.12.1
 Django==5.2.17
 django-allauth[socialaccount]==65.19.4
 django-environ==0.12.0
-fonttools==4.66.0
 idna==3.20
-kiwisolver==1.5.1
-matplotlib==3.11.2
 numpy==2.5.3
 oauthlib==3.3.1
 packaging==26.3
-pillow==12.3.0
 pycparser==3.11
 PyJWT==2.15.1
 psycopg==3.3.6
 psycopg-binary==3.3.6
-pyparsing==3.3.3
-python-dateutil==2.9.0.post0
 requests==2.34.2
-six==1.17.0
 sqlparse==0.6.0
 urllib3==2.8.0
 
-# A6 local Hugging Face (Person 2)
-# A9 Ask Hestia also uses these packages for MiniLM + Qwen2-0.5B (Transformers; no sentence-transformers package required).
 accelerate==1.15.0
 huggingface-hub==0.36.2
 protobuf==6.33.6

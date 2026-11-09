@@ -27,3 +27,9 @@ class ProductRouteTests(SimpleTestCase):
     def test_priority_png_no_longer_resolves(self):
         with self.assertRaises(Resolver404):
             resolve('/analytics/tasks/priority.png')
+
+    def test_landing_only_describes_current_product_features(self):
+        response=self.client.get('/')
+        self.assertEqual(response.status_code,200)
+        self.assertNotContains(response,'reports, and charts')
+        self.assertContains(response,'household insights')

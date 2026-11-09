@@ -62,7 +62,7 @@ class ActionPlanViewTests(TestCase):
 
 
 
-    def test_anonymous_html_redirects_and_api_returns_401(self):
+    def test_anonymous_html_redirects_without_provider_calls(self):
         self.client.logout()
         self.assertRedirects(self.client.get(self.page), f"/accounts/login/?next={self.page}")
         self.assertEqual(self.client.post(self.page).status_code, 302)
@@ -79,11 +79,11 @@ class ActionPlanViewTests(TestCase):
         self.assertRedirects(self.client.post(self.page), reverse("households:onboarding"))
         self.generate.assert_not_called()
 
-    def test_missing_task_returns_json_404(self):
+    def test_missing_task_returns_404(self):
         response = self.client.post(reverse("workflows:task-action-plan", args=[999999]))
         self.assertEqual(response.status_code, 404)
 
-    def test_csrf_protects_html_and_json(self):
+    def test_csrf_protects_plan_generation(self):
         client = Client(enforce_csrf_checks=True)
         client.force_login(self.user)
         self.assertEqual(client.post(self.page).status_code, 403)
@@ -93,7 +93,7 @@ class ActionPlanViewTests(TestCase):
                                HTTP_X_CSRFTOKEN=client.cookies["csrftoken"].value)
         self.assertEqual(response.status_code, 200)
 
-    def test_provider_failure_has_safe_html_and_json_errors(self):
+    def test_provider_failure_has_safe_plan_errors(self):
         self.generate.side_effect = ActionPlanError("Try again later.", 504, "timeout")
         self.assertContains(self.client.post(self.page), "Try again later.", status_code=504)
         cache.clear()

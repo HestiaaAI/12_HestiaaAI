@@ -1,81 +1,81 @@
-> Phase 1A historical contract. Phase 1B removes compatibility/sample transports; see `household-product-decisions.md`. The final Phase 1B route table replaces this inventory in Task 3.
+# Household product access/UI contract — Phase 1B
 
-# Household access and integration contract — Phase 1
+This replaces Phase 1A's compatibility and public-sample contract. The product has one task board, one Insights destination, and no assignment-only HTTP transports. Removed paths return 404 rather than redirects.
 
-Canonical journey: sign in → household picker/onboarding → `/tasks/manage/` (`task_forms:board`) → task detail/action plan or reviewed AI drafting → same board → `/tasks/insights/` (`workflows:task-insights`). Signed-in Home redirects to the board or missing-context state. Anonymous Home remains public.
+## Current application routes
 
-## Context and error behavior
-
-`households.context.active_memberships(user)` returns active, non-null-user memberships with workspace loaded. `resolve_active_membership(request)` revalidates current database membership each call and publishes `request.active_membership`, `request.active_household`, and `request.household_memberships`. No memberships: onboarding; one: automatic request context; multiple: explicit picker unless the session contains a valid `active_workspace_id`. Staff has no application bypass. Historical null-user memberships never grant access.
-
-`require_household(request)` returns the current membership or raises `HouseholdRequired`. Middleware classifies resolved routes, never Accept headers or URL substrings, and translates missing context. Anonymous private HTML redirects to login; anonymous private JSON/export/image data returns 401 `{"error":"Authentication required."}`. Signed-in missing-context HTML redirects to onboarding/picker. Private data returns 409 `{"error":"Select a household to continue.","code":"household_required"}`. Foreign task IDs return 404 even for dual members. Future privileged actions within a selected household must return 403. There are no new owner-only write operations in Phase 1.
-
-`POST households:switch` accepts `workspace_id`, requires CSRF and active membership, ignores `next`, redirects to the board. Invalid choice returns 400 without changing the selected session value. GET returns 405. Resolution never stores an automatic selection on GET and never changes household records; invalid stale session references are discarded rather than trusted. This reconciles automatic single membership context with read-only GET: only explicit switch POST stores a household choice.
-
-All authenticated responses and all household-dependent responses have private/no-store caching and `Vary: Cookie`. Do not introduce shared household response caches. Public priority samples are fixed `(Low=2, Medium=4, High=3, Urgent=1)` for anonymous and signed-in callers; no task aggregate queries occur through public JSON, specification, image or embedded sample paths. Chart2 image renders selected-household daily data instead of serving an archived database snapshot. Chart specs preserve the existing URL/schema contract; their private data API enforces the current session independently.
-
-## UI teammate interface
-
-Context processor publishes `active_household`, `active_membership`, `household_memberships`, `can_manage_household` (OWNER only). Primary navigation contains Tasks and Household plus Home. Board contains title search, priority/type filters, Add task, Organize with AI, Insights, secondary product catalogue lookup, and accurately labeled bundled sample handbook help. Do not add grocery/expense links until those screens exist.
-
-`TaskCreateForm(*args, membership=None, **kwargs)` and `TaskFilterForm(*args, membership=None, **kwargs)` default-deny workspace choices. Legacy `workspace` form field accepts only the selected household; creator and workspace are assigned server-side. `ReviewTaskForm` intentionally retains inheritance and its relationship-free constructor. Board context includes `tasks`, `filter_form`, `create_form`, `has_workspaces`, pagination (6 per page, newest created/task ID first), `filter_query`, and `has_filters`. Invalid filters return no rows with field errors; invalid creates preserve input. AI errors preserve submitted input/manual board access. Signed drafts require explicit human confirmation, current selected workspace and membership, and membership revalidation inside the transaction. Successful save returns to board with a message.
-
-## Consolidation decisions and caller audit
-
-Audit: project URLconfs, production Python imports, template references, tests, management commands, `.env.example`, `import_string`, and configured hook names were searched. Research/assignment folders remain historical evidence.
-
-| Candidate | Callers/configuration | Decision and replacement |
-|---|---|---|
-| `task_manual_view`, `task_render_view`, `TaskBaseView`, `TaskListView`, `filter_tasks` | Four named task URL routes; historical tests/docs | Merge/remove implementations; one `legacy_task_list` GET adapter redirects to board. Old names/URLs preserved. |
-| Standalone GET/POST search `_render_search` | `task_search:get`, `task_search:post` | Remove duplicate rendering/query workflow. GET redirects to board. POST explicitly calls board GET handler with body filters in memory; never invokes creation. |
-| `tasks/task_list.html`, `tasks/search.html` | No remaining runtime callers after merge | Retire production templates to `docs/history/retired-templates/`; historical content preserved. |
-| `reports.task_report`, `analytics.task_stats`, authenticated `vega.charts` | Named HTML URLs | Thin 302 adapters to Insights. Anonymous Vega landing remains a public sample embed. |
-| Report `grouped_summary`, analytics grouping | Reports/priority chart | One scoped `workflows.task_insights.grouped_summary`; `task_summary(tasks)` supplies total/priority/type report format. `priority_counts(tasks)` only fills zero categories. `daily_task_counts(tasks)` stays a separate date-grouping operation shared by JSON and image adapters with explicit scoped input. |
-| `reports.task_records(tasks)` | CSV and JSON downloads | Keep shared serialization allowlist and formula-safe CSV escaping; queryset is required and scoped by callers. |
-| `reports/tasks.html`, `analytics/task_stats.html` | No runtime callers | Retire to historical templates; Insights supplies useful summaries/chart/downloads. |
-| `api.brain_dump_extract` direct local extractor | JSON endpoint | Keep transport adapter; call `ai_adapter.get_suggestions(text)` shared with HTML. Preserve tasks/warnings/model_id/saved/message envelope; list subclass carries validated provider metadata. Expected validation/model errors remain 422; unexpected provider exceptions return safe 500 without raw details. |
-| `ai_adapter.validate_suggestions` | Shared draft generator and existing tests | Keep schema validation through actual review form. Configured local/mock backend stays here. |
-| `hf_local`, `services.brain_dump` parsing | Shared extraction, tests/research; handbook reuses model loading | Keep real runtime/parsing responsibilities; no generic AI framework. |
-| `action_plans`, `action_plan_views` | Task detail, private API; GROQ configuration | Keep separate task-plan semantics and cooldown; selected household checked before provider call. |
-| `ai_breakdown.suggest_steps` | HTML review; `HESTIA_TASK_BREAKDOWN_CALLABLE`, `.env.example`, tests | Keep referenced optional configured hook, bounded validation and approval. No provider introduced. |
-| `services.ask_hestia` | Authenticated handbook page, tests; `a8.corpus.load_chunks` | Keep distinct retrieval. Bundled `a8/data` corpus, MiniLM embeddings and Qwen generator; no household database retrieval. |
-| Product lookup | HTML and JSON adapters | Keep secondary catalogue comparison; `compare_products(query, *, workspace)` and `_internal_matches(query, *, workspace)` require scope for Products, ShoppingListEntry and shopping Tasks before external request. |
-| Inventory placeholder | Not mounted by project URLconf | Future grocery implementation, not a production CRUD feature. No invented screens. |
-
-Legacy GET aliases forward only supported `q`, `priority`, `task_type`, `page` filters. A posted/queried legacy workspace is validated against selection; an invalid workspace filter remains an error on the board rather than widening results. Arbitrary redirect targets are discarded. Legacy workspace-name HTML search is retired in favor of the current household context; API title/workspace-name filtering remains scoped. Canonical board ordering/pagination is retained rather than old primary-key search ordering. Historical tests expecting global data, four independent view styles, database-backed public samples, archived private images or fragmented navigation were intentionally updated to assert the new scoped behavior, schemas, escaping, CSRF and aliases.
-
-## Stateless versus data-bearing AI
-
-`api:brain-dump` is authenticated stateless extraction: bounded user text only, no household read/write, no selected membership required. It never saves tasks. `ask-hestia` is authenticated bundled sample retrieval: source is `a8.corpus` loading `a8/data`, not selected household documents. HTML brain-dump generation/review/save and all task-plan routes are household-dependent. Never send household data to a provider until selection and object access have passed; never persist AI output without approval.
-
-## Future groceries and expenses
-
-Reuse Workspace/Membership, this resolver, Django sessions and the same context. Resolve workspace and actor server-side on every request; revalidate on writes, scope root querysets before filters/aggregation/serialization, verify every related product/member/task/entry belongs to that workspace, return foreign-object 404 and selected-household privilege 403. No nullable creator fallback or staff bypass. Cache keys must include household and relevant user permissions, with invalidation on removal; default to no-store. Include A/B, dual-member, inactive/null-user, no-membership, forged related IDs, CSRF, exports and stale draft tests. Household creation, invitations, lifecycle, expiry, expenses, recurrence and deployment remain later phases.
-
-## Verification record
-
-Baseline: system check clean, no migration changes, 189 tests passed. Existing virtual environment used with explicit development settings, nonsecret local SECRET_KEY and offline Hugging Face flags. Tests create an isolated test database; no real environment/database copied. Final commands/counts are recorded in `household-phase1-verification.md`.
-
-Signed-in browser proof used a separate disposable SQLite database in `/tmp`: login → dual-member picker → Alpha board → create → mock AI generation → review/confirm → board success message → scoped Insights → switch Beta (only Beta task visible) → Alpha detail 404 → deactivate Beta membership in fixture database → Beta detail 404 next request. At 390×844, board document width was 390 with no horizontal overflow. Action-plan provider calls, live model inference and external catalogue network requests were not performed; provider boundaries are tested with mocks. Separate-user session isolation is covered by regression tests, not claimed as a multi-browser walkthrough. PostgreSQL/concurrency proof was not performed. No push, PR or deployment.
-
-## Complete resolved-route inventory
-
-Generated from the root resolver below; framework account/admin routes delegate to their existing authorization, verification and CSRF controls and are not blocked by household selection. `H` = household HTML, `D` = household data, `S` = authenticated stateless, `P` = public sample/landing, `A` = existing accounts/admin. H/D rows use the common behavior above. Verification references cover concrete aliases and underlying destinations, not links alone. Static assets remain served by Django's development static handler or deployment static server; middleware imposes no household requirement.
-
-| Resolved pattern | Route name | Policy | Verification |
+| Path | Name | Methods / purpose | Policy / verification |
 |---|---|---|---|
-| `/households/` | `households:list` | Selection HTML; switch POST | test_household_selection |
-| `/households/onboarding/` | `households:onboarding` | Selection HTML; switch POST | test_household_selection |
-| `/households/switch/` | `households:switch` | Selection HTML; switch POST | test_household_selection |
-| `/vega-lite/` | `vega:charts` | P anonymous; H signed-in → Insights | test_vega; test_public_chart_variants_use_fictional_samples; test_missing_household_returns_409_for_private_data |
-| `/vega-lite/<str:chart>.json` | `vega:spec` | P for chart1; D for chart2 | test_vega; test_public_chart_variants_use_fictional_samples; test_missing_household_returns_409_for_private_data |
-| `/vega-lite/<str:chart>.png` | `vega:image` | P for chart1; D for chart2 | test_vega; test_public_chart_variants_use_fictional_samples; test_missing_household_returns_409_for_private_data |
-| `/reports/tasks/` | `reports:task-report` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/reports/tasks/export.csv` | `reports:tasks-csv` | D | test_isolation; api/report/analytics suites |
-| `/reports/tasks/export.json` | `reports:tasks-json` | D | test_isolation; api/report/analytics suites |
-| `/analytics/tasks/` | `analytics:task-stats` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/analytics/tasks/priority.png` | `analytics:task-priority-chart` | D | test_isolation; api/report/analytics suites |
-| `/` | `home` | P / signed-in context redirect | test_home_respects_household_state |
+| `/` | `home` | GET/HEAD; landing or continuation | Public anonymous; signed-in → board or picker/onboarding. `test_home_respects_household_state` |
+| `/households/` | `households:list` | GET; membership picker | Login; only active user memberships. `test_household_selection` |
+| `/households/onboarding/` | `households:onboarding` | GET; useful no-membership explanation | Login; no invented create/invite actions. `test_household_selection` |
+| `/households/switch/` | `households:switch` | POST `workspace_id`, CSRF | Fresh active membership; invalid 400, GET 405, no external `next`; invalid choice preserves even stale session. `test_household_selection` |
+| `/tasks/manage/` | `task_forms:board` | GET filter, POST create | Selected household; `test_forms`, `test_isolation` |
+| `/tasks/<pk>/` | `workflows:task-detail` | GET; details | Selected household query before object lookup; foreign 404 even for dual member. `test_isolation`, `workflows.tests` |
+| `/tasks/<pk>/action-plan/` | `workflows:task-action-plan` | GET disclosure, POST plan preview | Selected task before provider; CSRF; no writes. `test_action_plan_views`, `test_ai_action_plan` |
+| `/tasks/ai/` | `ai_tasks:brain-dump` | GET, POST generate/review/breakdown/save | Selected household; signed drafts, explicit approval, fresh transactional actor on save. `test_ai`, `test_isolation`, `test_unified_flow` |
+| `/tasks/insights/` | `workflows:task-insights` | GET; real numeric totals/priority/type lists | Selected scoped task queryset; no PNG/JS/chart request. `analytics.tests`, `test_isolation` |
+| `/tasks/export.csv` | `workflows:task-export-csv` | GET; CSV download from Insights | Private data boundary; exact scoped rows and formula-safe cells. `reports.tests`, `api.test_access`, `test_isolation` |
+| `/lookup/` | `product-lookup` | GET; secondary catalogue comparison | Selected household before internal lookup/upstream request; public results never persisted. `api.tests`, `api.test_access`, `test_isolation` |
+
+Accounts, password reset, email verification, OAuth/provider callbacks and Django admin retain their existing routes and framework controls. Static assets remain outside household authorization. No household selection is required to log in, verify, recover an account, sign out, or use authorized admin.
+
+## Policy ownership and status behavior
+
+`households.access.HouseholdContextMiddleware` owns application login/household translation and private response caching. The overlapping AssignmentAccessMiddleware, ApiAccessMiddleware and public sample allowlist are removed. Allauth/admin own account/admin authorization; CSRF middleware owns CSRF rejection; scoped detail lookups own object 404. Views keep HTTP method decorators and fresh actor validation at mutations.
+
+- Anonymous private HTML → login redirect with safe local `next`.
+- Anonymous CSV → 401 `{"error":"Authentication required."}`.
+- Signed-in private HTML with no active memberships → onboarding; multiple memberships without a valid selection → picker.
+- Signed-in CSV without context → 409 `{"error":"Select a household to continue.","code":"household_required"}`.
+- Foreign task → 404, including dual-member sessions; no staff bypass outside admin.
+- Invalid switch → 400 without selection mutation; wrong methods → 405 once access requirements pass; CSRF rejection → 403.
+- Future privileged operations on a selected household must use 403 for insufficient role. Phase 1B adds no owner-only writes.
+
+Private and authenticated responses use no-store/private caching and `Vary: Cookie`. Do not introduce shared user/household content caches. The action-plan cooldown is a per-user timestamp, not a content cache. A removed/inactive/null-user membership cannot authorize a subsequent request or a fresh write check. Historical user data is not migrated/deleted.
+
+## Request context and writes
+
+`active_memberships(user) -> QuerySet[Membership]` selects active rows belonging to the authenticated user with workspace loaded; anonymous returns none. `resolve_active_membership(request)` populates one request-local snapshot reused by `require_household(request)` and template context. `request.household_memberships` is a tuple of already-loaded memberships; use truthiness/iteration, not QuerySet methods. The next request always re-queries. Exceptional access failures may explicitly refresh the snapshot.
+
+Session selection remains `active_workspace_id`. One membership auto-resolves without storing a GET choice; multiple memberships require selection; stale references are discarded. Switch POST independently validates its posted ID before changing the session. GET never creates households, memberships or tasks.
+
+Task creation resolves the selected workspace and creator server-side and rechecks the actor under `select_for_update()` inside the write transaction. Approved draft persistence also rechecks active actor/workspace inside its transaction. Request-local caching must never replace those write-time checks. AI drafts bind user, selected workspace, nonce, count, signature and session; changed selection or revoked access prevents persistence. No provider runs for unauthorized task/household requests. Generated plans/drafts remain previews until the explicit existing approval workflow saves them.
+
+`compare_products(query, *, workspace)` and `_internal_matches(query, *, workspace)` require explicit scope. Products, shopping-list rows and shopping tasks are selected before public catalogue comparison. `task_summary(tasks)`/`grouped_summary(tasks, ...)` require scoped querysets; total derives from real priority counts. CSV uses the same server-selected workspace and explicit record allowlist.
+
+## UI teammate contract
+
+Context processor: `active_household`, `active_membership`, `household_memberships`, `can_manage_household` (OWNER). Navigation offers Tasks and Household, with Home continuing to the same context. Board offers filtering, Add task, Organize with AI, Insights and secondary Product catalogue lookup. No handbook, public examples, grocery/expense placeholders or coursework footer.
+
+Stable template blocks: `base.html` retains `content`, `navigation`, `extra_css`, `extra_js`; board adds `task_board_actions`; Insights adds `insight_summary`. Styling remains the UI teammate's responsibility.
+
+Board context: `tasks`, `filter_form`, `create_form`, `has_workspaces`, `has_filters`, paginator/page object and `filter_query`. Six tasks/page, newest created/task ID first. Invalid filters show errors with zero rows, and invalid creates preserve values. `TaskCreateForm`/`TaskFilterForm` still accept `membership=None` and default-deny scope; `workspace` is now a hidden constrained field, not a second household picker. Tampering is rejected. Selected household appears in navigation. BrainDumpForm prepopulates the same hidden selected workspace. ReviewTaskForm remains a relationship-free subclass with compatible constructor.
+
+Creation and confirmed AI save return to the plain canonical board URL with a success message. Provider failure preserves entered draft text and the manual board path. Insights contains accessible numeric text and accurate empty states; no fictional household activity. CSV action is explicit. Catalogue and task detail have direct back links. Mock drafting is allowed only as clearly labeled test/preview configuration; no mock activity is shown in Insights until a human explicitly approves/persists drafts.
+
+## Retired surfaces and dependency decisions
+
+See `household-product-decisions.md` for caller audit and replacements. Four list aliases, standalone search, reports/statistics redirect pages, Vega/sample/spec/image routes, all unused internal JSON transports and response-demo no longer resolve. The old report CSV URL is removed; consumers use the new canonical CSV name. The remaining `api` module contains catalogue helpers/tests, not an exposed HTTP namespace.
+
+The sample handbook page/form/service/command and its tests are removed; there is no household-aware retrieval claim. Its only `a8.corpus` runtime import is gone. Research notebooks/folders/results remain historical source; `.gitattributes` excludes them, their evidence/docs and the tracked SQLite database from product archives. No user database, secret, untracked output or research result was deleted. Historical handbook evaluation depending on old adapters requires the Phase 1A revision.
+
+Local Hugging Face task extraction and Groq task-plan generation remain distinct, useful capabilities. The optional bounded step hook remains because the approved-draft screen/config uses it. There is no generic AI framework. JSON-only metadata wrappers and eager service reexports are removed. Plotting dependencies move to `requirements-research.txt`; NumPy, Torch, Transformers and tokenizer/model support remain because the enabled local drafting provider uses them. Startup tests actively block research/plotting/inference imports and still pass ordinary application startup. A release archive test excludes research/data and retains product providers/migrations.
+
+## Future groceries/expenses and later phases
+
+Reuse Workspace/Membership, the snapshot/context and explicit fresh mutation checks. Derive workspace and actor on the server, scope root queries before filters/serialization, validate every related ID in the selected workspace, return foreign-object 404 and selected-household privilege 403, require CSRF on mutations, preserve private cache isolation. Include A/B, dual-member, removed/inactive/null-user, forged related IDs, exports and write-time revocation tests. Do not show unimplemented screens/actions. Household creation, invitations, member lifecycle, expiry, expenses, recurrence and deployment remain later phases.
+
+## Complete resolved framework/product inventory
+
+The generated appendix includes account/admin-generated patterns as well as the product routes; pattern count is not a feature count. `A` delegates to framework account/admin tests and controls, `H` uses the private household HTML policy above, `D` is canonical private CSV, `Selection` is authenticated selection/onboarding, `P` is the public landing with signed-in continuation. Static serving is outside this resolver inventory and does not load household records.
+
+| Resolved pattern | Name | Policy | Verification |
+|---|---|---|---|
+| `/households/` | `households:list` | Selection | test_household_selection / test_household_context |
+| `/households/onboarding/` | `households:onboarding` | Selection | test_household_selection / test_household_context |
+| `/households/switch/` | `households:switch` | Selection | test_household_selection / test_household_context |
+| `/` | `home` | P | test_unified_flow; household auth tests |
 | `/accounts/signup/` | `accounts:signup` | A | households account/auth suites; Django admin |
 | `/accounts/logout/` | `accounts:logout` | A | households account/auth suites; Django admin |
 | `/accounts/login/` | `accounts:login` | A | households account/auth suites; Django admin |
@@ -199,23 +199,10 @@ Generated from the root resolver below; framework account/admin routes delegate 
 | `/admin/workflows/assignment/<path:object_id>/` | `admin:(unnamed)` | A | households account/auth suites; Django admin |
 | `/admin/^(?P<app_label>auth|account|socialaccount|households|intake|inventory|workflows)/$` | `admin:app_list` | A | households account/auth suites; Django admin |
 | `/admin/(?P<url>.*)$` | `admin:(unnamed)` | A | households account/auth suites; Django admin |
-| `/lookup/` | `product-lookup` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/api/tasks/<int:pk>/action-plan/` | `api:task-action-plan` | D | test_isolation; api/report/analytics suites |
-| `/api/charts/task-priorities/` | `api:chart-priorities` | P | test_public_chart_variants_use_fictional_samples |
-| `/api/charts/task-creations/` | `api:chart-creations` | D | test_isolation; api/report/analytics suites |
-| `/api/external/products/` | `api:product-compare` | D | test_isolation; api/report/analytics suites |
-| `/api/tasks/` | `api:task-list` | D | test_isolation; api/report/analytics suites |
-| `/api/ai/brain-dump/` | `api:brain-dump` | S | test_ask_hestia_views / api.test_brain_dump / test_api |
-| `/api/response-demo/` | `api:response-demo` | S | test_ask_hestia_views / api.test_brain_dump / test_api |
-| `/tasks/search/` | `task_search:get` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/search/post/` | `task_search:post` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/manage/` | `task_forms:board` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/ask/` | `ask-hestia` | S | test_ask_hestia_views / api.test_brain_dump / test_api |
-| `/tasks/ai/` | `ai_tasks:brain-dump` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/insights/` | `workflows:task-insights` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/<int:pk>/action-plan/` | `workflows:task-action-plan` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/manual/` | `workflows:task-manual` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/render/` | `workflows:task-render` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/cbv-base/` | `workflows:task-cbv-base` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/cbv-generic/` | `workflows:task-cbv-generic` | H | test_isolation; test_unified_flow; task form/search/AI suites |
-| `/tasks/<int:pk>/` | `workflows:task-detail` | H | test_isolation; test_unified_flow; task form/search/AI suites |
+| `/lookup/` | `product-lookup` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+| `/tasks/manage/` | `task_forms:board` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+| `/tasks/ai/` | `ai_tasks:brain-dump` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+| `/tasks/export.csv` | `workflows:task-export-csv` | D | reports.tests; api.test_access; test_isolation |
+| `/tasks/insights/` | `workflows:task-insights` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+| `/tasks/<int:pk>/action-plan/` | `workflows:task-action-plan` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+| `/tasks/<int:pk>/` | `workflows:task-detail` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |

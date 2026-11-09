@@ -52,3 +52,37 @@ class UnifiedFlowTests(TestCase):
         self.assertRedirects(response,reverse('task_forms:board'))
         self.assertEqual(self.ta.__class__.objects.filter(workspace=self.a).count(),4)
         self.assertEqual(self.ta.__class__.objects.filter(workspace=self.b).count(),1)
+
+    def test_product_pages_have_no_dead_links_or_coursework(self):
+        from html.parser import HTMLParser
+        from urllib.parse import urlsplit
+        from django.urls import resolve
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__();self.urls=[]
+            def handle_starttag(self,tag,attrs):
+                for key,value in attrs:
+                    if (tag,key) in {('a','href'),('form','action')} and value:
+                        self.urls.append(value)
+        for url in [reverse('task_forms:board'),self.ta.get_absolute_url(),reverse('workflows:task-insights'),reverse('ai_tasks:brain-dump'),reverse('product-lookup'),reverse('households:list')]:
+            response=self.client.get(url)
+            self.assertEqual(response.status_code,200)
+            for text in ['INFO 490','University of Illinois','Bundled sample handbook','primary key','Open the JSON API']:
+                self.assertNotContains(response,text)
+            parser=Links();parser.feed(response.content.decode())
+            for href in parser.urls:
+                target=urlsplit(href)
+                if not target.netloc and target.path and not target.path.startswith('/static/'):
+                    self.assertIsNotNone(resolve(target.path))
+
+    def test_draft_form_uses_selected_household_without_another_picker(self):
+        from django.forms import HiddenInput
+        response=self.client.get(reverse('ai_tasks:brain-dump'))
+        form=response.context['input_form']
+        self.assertIsInstance(form.fields['workspace'].widget,HiddenInput)
+        self.assertEqual(form.initial['workspace'],self.a.pk)
+
+    def test_no_sample_handbook_route(self):
+        from django.urls import resolve, Resolver404
+        with self.assertRaises(Resolver404):
+            resolve('/tasks/ask/')

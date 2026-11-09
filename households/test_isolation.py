@@ -52,7 +52,7 @@ class IsolationTests(TestCase):
         self.client.post(reverse('task_forms:board'), {'workspace':self.a.pk,'title':'Forbidden','priority':'HIGH','task_type':'CHORE'})
         self.assertFalse(Task.objects.filter(title='Forbidden').exists())
 
-    def test_private_api_and_exports_are_household_scoped(self):
+    def test_private_export_is_household_scoped(self):
         for name in ['workflows:task-export-csv']:
             response=self.client.get(reverse(name))
             self.assertContains(response,self.ta.title)
@@ -129,7 +129,7 @@ class IsolationTests(TestCase):
         self.client.post(reverse('ai_tasks:brain-dump'),{'action':'generate','workspace':self.a.pk,'text':'No access'})
         provider.assert_not_called()
 
-    def test_unselected_legacy_routes_and_anonymous_data_boundary(self):
+    def test_missing_context_and_anonymous_data_boundary(self):
         session=self.client.session;session.pop('active_workspace_id');session.save()
         for name in ['task_forms:board','workflows:task-insights','ai_tasks:brain-dump']:
             self.assertRedirects(self.client.get(reverse(name)),reverse('households:list'),fetch_redirect_response=False)

@@ -50,7 +50,7 @@ class TaskBoardTests(TestCase):
     def test_valid_post_creates_model_and_redirects_without_repeat_on_refresh(self):
         before = Task.objects.count()
         response = self.client.post(self.url, self.payload(title="  Water the plants  ", created_by_membership="999"))
-        self.assertRedirects(response, self.url + f"?workspace={self.home.pk}", fetch_redirect_response=False)
+        self.assertRedirects(response, self.url, fetch_redirect_response=False)
         task = Task.objects.get(title="Water the plants")
         self.assertEqual(task.created_by_membership, self.membership)
         self.assertEqual(task.workspace, self.home)

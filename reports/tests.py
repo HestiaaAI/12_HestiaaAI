@@ -51,7 +51,7 @@ class ReportTests(TestCase):
         rows = list(csv.reader(io.StringIO(self.client.get(reverse("workflows:task-export-csv")).content.decode())))
         self.assertEqual(len(rows), 1)
 
-    def test_csv_neutralizes_spreadsheet_formulas_and_json_preserves_text(self):
+    def test_csv_neutralizes_spreadsheet_formulas(self):
         Task.objects.filter(pk=self.first.pk).update(title="=1+1")
         rows = list(csv.DictReader(io.StringIO(self.client.get(reverse("workflows:task-export-csv")).content.decode())))
         self.assertEqual(rows[0]["title"], "'=1+1")

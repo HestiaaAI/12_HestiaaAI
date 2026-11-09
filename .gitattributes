@@ -1,0 +1,14 @@
+# Product release archives exclude research, evidence bundles and local data.
+/a6_results export-ignore
+/a7 export-ignore
+/a8 export-ignore
+/a9 export-ignore
+/llm-test export-ignore
+/docs/a* export-ignore
+/docs/history export-ignore
+/docs/screenshots export-ignore
+/README_AI.md export-ignore
+/requirements-research.txt export-ignore
+/db.sqlite3 export-ignore
+*.ipynb export-ignore
+/group-12-vega-lite-API-demo.txt export-ignore

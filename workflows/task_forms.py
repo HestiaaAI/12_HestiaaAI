@@ -1,4 +1,4 @@
-"""Person 4: validated GET filters and a model-backed Task creation form."""
+"""Scoped task filters and model-backed task creation."""
 from django import forms
 
 from households.models import Workspace

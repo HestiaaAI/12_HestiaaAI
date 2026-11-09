@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %}Household insights | Hestia{% endblock %}
-{% block content %}<h1>Household insights</h1><p>{{ total_tasks }} tasks in {{ active_household.name }}</p>
-<h2>Priority</h2><ul>{% for row in priority_summary %}<li>{{ row.label }}: {{ row.count }}</li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
+{% block content %}<h1>Household insights</h1><p>{{ total_tasks }} task{{ total_tasks|pluralize }} in {{ active_household.name }}</p>
+{% block insight_summary %}<h2>Priority</h2><ul>{% for row in priority_summary %}<li>{{ row.label }}: {{ row.count }}</li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
 <h2>Task type</h2><ul>{% for row in type_summary %}<li>{{ row.label }}: {{ row.count }}</li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
-<p><a href="{% url 'workflows:task-export-csv' %}">Download CSV</a></p>
+{% endblock %}<p><a href="{% url 'workflows:task-export-csv' %}">Download CSV</a></p>
 <a href="{% url 'task_forms:board' %}">Back to Tasks</a>{% endblock %}

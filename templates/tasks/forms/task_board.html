@@ -22,7 +22,7 @@
     <div class="hf-notice" role="status"><strong>No households available.</strong> Choose a household to continue.</div>
     {% endif %}
 
-    <p><a href="{% url 'ai_tasks:brain-dump' %}">Organize with AI</a> · <a href="{% url 'workflows:task-insights' %}">Insights</a> · <a href="{% url 'product-lookup' %}">Product catalogue lookup</a> · <a href="{% url 'ask-hestia' %}">Bundled sample handbook help</a></p>
+    {% block task_board_actions %}<p><a href="{% url 'ai_tasks:brain-dump' %}">Organize with AI</a> · <a href="{% url 'workflows:task-insights' %}">Insights</a> · <a href="{% url 'product-lookup' %}">Product catalogue lookup</a></p>{% endblock %}
     <section class="hf-filter-panel" aria-labelledby="filter-heading">
         <div class="hf-section-heading"><h2 id="filter-heading">Find your next task</h2><span>Filter your household responsibilities</span></div>
         {# GET puts read-only filters into a bookmarkable URL; it never saves data. #}

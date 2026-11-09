@@ -13,11 +13,11 @@ Product path: account sign-in → Household selection → Tasks → detail/actio
 | Reports/statistics redirect pages | Compatibility only | Remove; Insights is canonical |
 | Vega landing/spec/images; public sample JSON; creation JSON | Assignment demos, no product consumer | Remove routes/modules/templates and date-only aggregation |
 | Task-list JSON, task-plan JSON, brain-dump JSON, catalogue JSON, response demo | No retained client; catalogue's technical API link is assignment copy | Remove transport adapters; keep domain logic used by actual HTML pages. CSV remains private 401/409 data boundary |
-| Priority PNG | Insights image | Measure before deciding in Task 2; retained temporarily under existing private image path |
+| Priority PNG | Insights image | Removed in Task 2 after measurement; accessible real numeric summaries replace the sole Insights image consumer |
 | Assignment seed/preview/demo commands | `forms_demo`, preview-only tests, history/docs | Remove runtime scripts and command; use synthetic test fixtures |
-| Bundled handbook | Board secondary help; imports `a8.corpus` | Remove UI/route/service in Task 3; no product retrieval claim or research runtime dependency |
+| Bundled handbook | Board secondary help; imports `a8.corpus` | Removed UI/route/form/service/command in Task 3; no product retrieval claim or research runtime dependency |
 | Optional breakdown hook | Draft review UI/config `.env.example`; no bundled configured implementation | Keep bounded optional hook because current review workflow supports it; no provider added |
-| Research folders/notebooks/assignment docs | Research tooling and tests only after handbook removal | Retain committed research as historical tooling, exclude from product release archive; no data/output deletion |
+| Research folders/notebooks/assignment docs | Research tooling and tests only after handbook removal | Retain committed research as history, exclude from product release archive via .gitattributes; no data/output deletion |
 
 Audit included root/included URLconfs, templates/reverse lookups, imports, settings allowlists, management scripts, `import_string` hooks, `.env.example` and supported tests. No live external client/configuration was found for the removed internal JSON routes. These are intentional 404 removals, not compatibility redirects. `api/external.py` remains a real catalogue domain helper despite its directory name; it is not an exposed API.
 

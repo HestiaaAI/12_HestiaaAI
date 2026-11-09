@@ -1,4 +1,4 @@
-"""Person 1 includes these routes at tasks/manage/ in the shared root URLconf."""
+"""Canonical task board routes."""
 from django.urls import path
 
 from .forms_views import TaskBoardView

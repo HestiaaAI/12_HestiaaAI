@@ -21,7 +21,7 @@ class HouseholdContextMiddleware(MiddlewareMixin):
         name = match.view_name
         data = name == 'workflows:task-export-csv'
         household = match.app_name in {'workflows', 'task_forms', 'ai_tasks'} or name == 'product-lookup'
-        private = household or match.app_name == 'households' or name == 'ask-hestia'
+        private = household or match.app_name == 'households'
         request._household_data = data
         request._private_response = private
         if private and not request.user.is_authenticated:
