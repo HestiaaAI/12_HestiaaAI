@@ -1,0 +1,25 @@
+{
+  "base_commit": "c4d8f6a4d58a497cf90e2430470e33a46d8a8f48",
+  "files": {
+    "a8/__init__.py": "77f9c0af2442f094b515c3a3821a823ea442d694381d700a8257ee5463d27910",
+    "a8/corpus.py": "5f475051384611397127e0104d55fe8ec9cbb0aaf3ae25c40ad6fb63d6248ce3",
+    "a8/retrieval.py": "2dae6e0c39ffbba5132eb277d6e5baa6a14ceb8f9b5f5dfbefef53329d479bf6",
+    "a8/generation.py": "0968ab98b13a1f857ebb973c24624783240bfa05b8fc4cd9e84d3b86c83cac81",
+    "a8/person2_experiments.py": "868672de30c7cd32b2ada6fe112e643958d1c9089711ba9e60a2fffdfae887bc",
+    "a8/person3_experiments.py": "1fc33df664a4666cea5118c810fa5a25733eeaa85fecebdeb1ac5d3b9cfbc7d4",
+    "a8/person3_analysis.py": "b252100f063b453fdef36261fda888a8bd72d744b1de98373dbe527d13de07fa",
+    "a8/person2_analysis.py": "de7e593f5d04b7aef723a3db62cb521186ebad8bf392c4292a1f578fc05f08c6",
+    "a8/data/queries.json": "5689d325f253317c5b3ea859fe7b4aa51fda2bbcb0a32075aa5862ef22b9e27f",
+    "a8/results/person2/model_smoke_tests.json": "4daf77dcf9e3ba844be90ba7b1efb667063e3f3d4eeeac55f110e399cb64a293",
+    "a8/person3/RUBRIC.md": "1e7e070e80abb87da1884ad042e6c3db46bd9ec51c2564655d9086a61c7a9d35",
+    "a8/person2/COLAB.md": "0eb57272df0c505375df4f505e7f39cb5106675a1f76b500e3f17aeec9ca37d8",
+    "a8/data/handbook/chores.md": "b49f3373084fa6524b20b82846a01606f75f5f93b3e88747f1e8844c12adc2a4",
+    "a8/data/handbook/guests.md": "d77b1c187b82cc36b4b5fb4543c1e404b014822c711eeadc146a3a59d0653807",
+    "a8/data/handbook/inventory.md": "18438cec0c2ce10e5a6f6149ad8ad54aff89561dd0ea9043d18d26a49ea49b0a",
+    "a8/data/handbook/maintenance.md": "4bfd0d775e625ee4d3c83d6f60d22a92de4e8f42b29354c1967124e145155f03",
+    "a8/data/handbook/shopping.md": "394016e81b1c505039956fc7ff56368f0f47a14d2dece12fba9b66753e232c43",
+    "a8/tests/test_person2_analysis.py": "e176821d8b9eccdc6f0b19c311a2476ab081903b8840151f7dff573b24722fe0",
+    "a8/tests/test_person2_experiments.py": "0ab7507ea0b5c24782d2dd85893f0f92c2a7ff902aca0467e9372f91663c342e",
+    "a8/tests/test_retrieval.py": "90ca048a7eb86a6f779ec29f403b6187634fcacabf9ba877da4852246864f502"
+  }
+}

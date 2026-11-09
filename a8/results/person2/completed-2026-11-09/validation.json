@@ -1,0 +1,25 @@
+{
+  "validated_on": "2026-11-09",
+  "review_method": "AI-assisted; student signoff not recorded",
+  "matrix_rows": 15,
+  "scaling_rows": 10,
+  "notebook_error_outputs": 0,
+  "executed_code_cells": 6,
+  "archive_snapshots_match": true,
+  "all_20_input_hashes_matched_at_import": true,
+  "original_download_sha256": {
+    "person2_colab.ipynb": "daf1175a6eceae82e7addba83df5e8460888cb81bd36d31fc8bd756f14bb1737",
+    "hestia-a8-person2-colab-evidence.zip": "a3e699b0237a2aace39a77de1dcc9f43d6192de18f07dcea7b44a0b3e93b0cdc",
+    "hestia-a8-person2-colab-matrix.zip": "e010e01706dd09630ae2d4a02592e8085f6ea54441b27b8bd33ce540d932e990",
+    "hestia-a8-person2-colab-scaling.zip": "ab5e967e1c6603d407d5e10fef48e04fd0d6595492e02ef089e888cf81c86964"
+  },
+  "input_bundle_sha256": "1a936d6b4bdfe3e94a7e3e86af805e917cf7151121c3c747916339ecb6f4acf5",
+  "independent_review": "Read-only reviewer found no important grading/provenance issues; scaling query-digest hardening added and regression-tested.",
+  "verification": {
+    "a8_unit_tests": 11,
+    "repository_django_tests": 233,
+    "analysis_notebook": "executed without errors",
+    "shared_rag_notebook": "executed without errors",
+    "clean_extracted_handoff": "analysis and unit tests passed; both notebooks checked"
+  }
+}

@@ -1,59 +1,55 @@
-# Assignment 8 Person 2 handoff
+# Person 2 final handoff — November 9, 2026
 
-Branch: `dev-ddhene2-a8-retrieval-scaling`, based on `origin/main` at `e21f792`.
-Person 1's corpus foundation is merged and reused unchanged. No Person 3 A8 branch
-was visible after the November 8 fetch. No collaborator or co-author was added.
+Person 1's merged corpus/chunkers and Person 3's merged frozen generator/runner
+are reused unchanged. The completed inference was executed by the user in Colab;
+the returned raw evidence has been validated and assessed with the shared rubric.
 
-## Ready
+## Deliverables
 
-- `a8/retrieval.py`: three-model registry, revision resolution, token overflow checks,
-  normalized float32 embeddings, exact cosine search, full-context hit records,
-  portable index persistence and checksum validation.
-- `a8/person2_experiments.py`: 15-row small-model matrix, 10-row controlled scaling
-  experiment, checkpointed evidence, strict resume guards, latency measurements,
-  CSV exports and a callable adapter for Person 3's generator.
-- `a8/results/person2/small-cpu-2026-11-08/`: actual HF small-model CPU results.
-- `a8/person2_retrieval_scaling.ipynb`: saved-evidence analysis with optional explicit
-  retrieval inference mode; default execution requires no model downloads.
-- `a8/person2/FINDINGS.md`: retrieval/scaling findings and limitations.
-- `a8/person2/requirements.txt`: tested dependencies.
+- `a8/retrieval.py`: 384/768/1024-d model registry, immutable revision resolution,
+  token-limit checks, normalized embeddings, cosine top-k search, full hit metadata
+  and persisted indexes/checksums. All three actual models passed compatibility checks.
+- `a8/results/person2/completed-2026-11-09/matrix_evaluation.csv`: **15 assessed
+  small-model RAG rows**, with actual answers, complete retrieved chunks, quality,
+  retrieval/generation/end-to-end latency and notes.
+- `scaling_evaluation.csv`, `scaling_summary.csv`, `scaling_pairs.csv` in that folder:
+  **10 assessed small/full hybrid requests**, fixed controls and paired findings.
+- `a8/person2_retrieval_scaling.ipynb`: executed offline analysis with full passages
+  and answers. `a8/person2_colab_executed.ipynb`: unchanged returned inference notebook.
+- `a8/person2/FINDINGS.md`: measured results, interpretation and scoring sensitivity.
+- `a8/person2_analysis.py`: frozen-control, full-row review hash, prompt and corpus
+  validation plus table export. No generation is rerun during analysis.
+- `a8/person2/README.md`, requirements and Colab instructions: setup and reproduction.
 
-## Validation
+## Findings for the report
 
-All three real Hugging Face models encoded the 20 full/hybrid chunks and retrieved
-Q1 successfully: vector shapes `(20,384)`, `(20,768)`, `(20,1024)`.
-Resolved revisions and actual hits are in `a8/results/person2/model_smoke_tests.json`.
-The small model uses its standard 256-token context. Nine A8 tests, 42 A7 tests and
-the repository's 221-test Django run passed; dependency consistency checks passed.
+All 15 matrix rows retrieve 100% of reference evidence. Mean answer quality is
+17.33 fixed, 55.00 overlap and 40.00 hybrid. This is the small-encoder slice only.
 
-## Pending before Person 2 can claim all assignment deliverables
+Small/full scaling keeps 100% evidence availability and rank-one supporting
+sources. Lower-ranked hit identities change for four queries, but reviewed noise
+remains 40% on both sizes. Mean answer quality is 35 versus 40; the difference
+comes entirely from the drill question. It is not robust evidence of a general
+benefit: an alternative treatment of the small grocery answer's “checked out”
+wording changes the small mean to 45. See the complete review and sensitivity note.
 
-Person 3 must select the shared A6/A7 generator, prompt, decoding and rubric.
-Use the same settings for small/medium/large runs. Then run actual generation for
-all 15 Person 2 matrix rows and the two scaling datasets, inspect outputs and
-complete context/answer quality ratings. Existing CSV quality/answer fields are
-empty, and rows are labeled `retrieval_only` deliberately.
+Colab median full-request latency is 35.97 seconds small versus 31.82 seconds full.
+Do not interpret this as a scaling speed advantage: five requests per dataset,
+variable output length, dataset-order execution and hosted CPU conditions limit it.
+Do not pool these measurements with Person 3's different machine timings.
 
-The supplied adapter accepts `generate_answer(query, hits)`; see README for exact
-return fields. Use a real jointly measured request for end-to-end latency. A sum of
-separately measured retrieval/generation stages is explicitly labeled as such.
-Human/student review of any assisted quality scores is still required.
+## Evidence and integration
 
-## Findings so far
+Raw matrix/scaling JSONL and manifests are unchanged. Reviews are AI-assisted,
+with fact indices, unsupported deductions, relevant ranks and rationale; hashes
+bind every field of each raw response. Student signoff is not recorded. All three
+returned ZIP snapshots agree; the returned notebook has no saved error outputs.
+No model weights are committed. The exact small input bundle is retained for replay.
 
-All 15 matrix rows retrieve all exact reference quotes within k=3. Both scaling
-sizes keep supporting sources at rank one and full evidence coverage. Lower-ranked
-contexts change for four of five scaling queries. Review their actual usefulness
-before calling them noise; no generated-answer conclusion is supported yet.
+Person 4 can reference these completed scaling rows in Step 2.5 and integrate this
+analysis notebook into the final team notebook. Person 3's 45-row matrix remains the
+matched evidence for the cross-encoder comparison; it is not overwritten by these
+separate Colab timings. The prior Mac retrieval-only run remains historical evidence.
 
-## Integration ownership
-
-Person 3 can import `load_encoder('medium')`, `build_index` and `search` for their
-15 rows and owns the shared runner/rubric and pooled model comparison. Person 4 can
-use `load_encoder('large')` for their 15 rows, then integrate the team notebook,
-analysis, requirements and final ZIP. This is a Person 2 handoff, not a final team ZIP.
-
-Model revision, source/data hashes, CPU environment and token counts are recorded
-with raw results. Preserve them when combining evidence. Do not compare model-family
-quality differences as effects of dimension alone. Do not overwrite raw retrieval
-evidence with reviewed/generated summaries.
+Rebuild tables with `python -m a8.person2_analysis` and run
+`python -m unittest discover -s a8/tests -v` from the repo/extracted handoff root.

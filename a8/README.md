@@ -72,7 +72,9 @@ Open [rag_system.ipynb](rag_system.ipynb) for the executed matrix. The [Person 3
 
 ## Canvas submission package
 
-Zip these four files for Canvas. Keep the full `a8/` tree on GitHub.
+Include the full `a8/` tree in the Canvas ZIP: the notebooks import its Python modules
+and read its handbook and saved evidence. The files below need those supporting files
+to run end-to-end after extraction.
 
 | File | Role |
 |---|---|
@@ -94,6 +96,16 @@ download). Set `RUN_INFERENCE = True` only for a fresh run. Do not commit model
 weights; public Hugging Face snapshots download on first inference.
 
 ```sh
-cd a8
-zip hestia-a8-canvas.zip rag_system.ipynb rag_analysis.md system_design_diagram.png requirements.txt README.md
+mkdir -p dist
+zip -r dist/hestia-a8-canvas.zip a8 -x '*__pycache__*' '*ipynb_checkpoints*' '*.safetensors' '*.bin' '*.pt' '*.pth'
 ```
+
+## Completed Person 2 evaluation and scaling
+
+[Person 2's executed analysis](person2_retrieval_scaling.ipynb) contains the 15
+small-model RAG rows and 10 paired scaling requests from the returned Colab run.
+[Findings](person2/FINDINGS.md), [handoff](person2/HANDOFF.md) and full evidence in
+`results/person2/completed-2026-11-09/` include actual answers, complete chunks,
+reviewed quality/noise and measured end-to-end latency. Rebuild the tables with
+`python -m a8.person2_analysis`. Reviews are AI-assisted; student signoff is not
+recorded. These Colab timings are separate from the matched Person 3 Mac matrix.
