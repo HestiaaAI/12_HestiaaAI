@@ -40,3 +40,21 @@ class AskHestiaTests(SimpleTestCase):
                 answer_question("Where is the drill?")
         self.assertEqual(error.exception.code, "model_unavailable")
         self.assertNotIn("private path", str(error.exception))
+
+    def test_index_keeps_adjacent_handbook_paragraphs_together(self):
+        """The A9 intervention changes chunking while keeping the model contract."""
+        import torch
+        from a8.corpus import load_chunks
+        from workflows.services.ask_hestia import _index
+        with patch("transformers.AutoTokenizer.from_pretrained"), \
+             patch("transformers.AutoModel.from_pretrained"), \
+             patch("workflows.services.ask_hestia.load_chunks", wraps=load_chunks) as chunks, \
+             patch("workflows.services.ask_hestia._encode",
+                   side_effect=lambda tokenizer, model, texts: torch.ones(len(texts), 2)):
+            _, _, indexed_chunks, vectors = _index.__wrapped__()
+        chunks.assert_called_once_with("overlap")
+        self.assertEqual(len(indexed_chunks), 20)
+        self.assertEqual(vectors.shape[0], len(indexed_chunks))
+        shopping = next(c for c in indexed_chunks if c.id == "overlap-shopping-01")
+        self.assertIn("shopping-02", shopping.paragraph_ids)
+        self.assertIn("leave the original item unchecked and add the note Out of stock", shopping.text)

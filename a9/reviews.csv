@@ -1,0 +1,17 @@
+phase,id,evidence_sha256,matched_facts,expected_behavior_met,usefulness,structure,notes
+baseline,Q1,bff3cc0a8de2ebf0f6e73456248b711cc6bcce3234b8a0553c66b331f1d06a2c,,no,misleading,Short prose with a wrong instruction,Omits card completion and morning unloading. Tells the user to store the tag separately.
+baseline,Q2,bb6d28704cb78082359df8434df662ed6e99b00677587d1e395822483ad3a3ba,,no,misleading,One short sentence,Reports a substitute purchase although none was approved or obtained.
+baseline,Q3,4abc35a987b763913402e87bc8065a82bf10f47e4da1fe7fb6b1a68d3d73f410,1,no,limited,"Three readable sentences, repeated logging","Correct home bin. Missing borrower name, expected return time, return of bits and entry closure."
+baseline,Q4,bd293f54f71bba0bbcd75535955d213be3ae1bdfd3c447a1a63d111ec4197599,2,no,limited,Two readable sentences,"Correctly reuses a fixture card, but omits Plumbing/Maintenance names, report details and notification."
+baseline,Q5,43cb47374468bb6435c7e481ec9dd8c62822caade8e18d0bb148d5f7e6f333c1,1,no,limited,Readable list in a single sentence,"Names supplies but omits exact placement, lamp check and readiness-card condition."
+baseline,G1,d15d17e56e3841ecd904ccc9a8b182334b5946f84fd3e34940bcf1b88b307554,,yes,helpful,Required-field message beside the form,Blank input is rejected before retrieval or generation.
+baseline,G2,cc2bd58d1fc0ad686c5919f40f0e9de3b92dcf1e887364a02e94614ce27e9a10,,yes,helpful,Length error beside the form,501 characters are rejected before retrieval or generation.
+baseline,G3,46012a168f7aae6ea30e6b42de11d073b32f4d8afcdafb59776006c23dced9b2,,yes,helpful,Clear abstention with a handbook explanation,No source meets the similarity threshold; generation is skipped.
+overlap,Q1,bf9d76d481d978e5f0122e4cf9c2f8dc696b1ae961d348cf816da08960cc57c1,1,no,misleading,Two short sentences with an ambiguous instruction,Completes the card. Refers to unloading the Running tag rather than the dishwasher and does not instruct clipping it.
+overlap,Q2,99d6b452679edde189dce6cc948ac589b6533fef6b20afa9571782843004441f,2,no,limited,Two-word answer,"Correct note Out of stock, but omits leaving the original item unchecked."
+overlap,Q3,f1c30b4777a93a888b4161dae32fd4e3410b53d73f5d70d4542a4b6242611d84,1,no,misleading,Two clear sentences with a false location,Finds the blue hallway bin but invents a green kitchen bin for returning the kit.
+overlap,Q4,76a0bd286dedfaae1c5cda797a4f78ed8069fcdfd0da54bb3b7fc503d187210d,1 2 3 4,yes,helpful,Complete prose paragraph,"Includes card type/board, all report details, reuse and notification."
+overlap,Q5,8e96be286e963c95fc6c10aa13377730efc762b96046f556c6e16bf9461a8b11,1,no,limited,Readable list in one sentence,"Correct supplies but still omits placement, lamp and readiness-card completion condition."
+overlap,G1,d15d17e56e3841ecd904ccc9a8b182334b5946f84fd3e34940bcf1b88b307554,,yes,helpful,Required-field message beside the form,Blank input is rejected before retrieval or generation.
+overlap,G2,cc2bd58d1fc0ad686c5919f40f0e9de3b92dcf1e887364a02e94614ce27e9a10,,yes,helpful,Length error beside the form,501 characters are rejected before retrieval or generation.
+overlap,G3,37fd602f06c0c851280cf2eb35c635b6f52fdb22baf8a80b0296a22739cf4fac,,yes,helpful,Clear abstention with a handbook explanation,No source meets the similarity threshold; generation is skipped.

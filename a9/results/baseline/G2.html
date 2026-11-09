@@ -1,0 +1,95 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Ask Hestia | Hestia</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=1794201232">
+    <meta name="theme-color" content="#5946a8">
+    
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="hestia-header">
+        <div class="container header-inner">
+            <a class="hestia-brand" href="/">
+                <img class="hestia-logo" src="/static/images/hestia-mark.svg" alt="" width="48" height="48">
+                <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
+            </a>
+            
+            <div class="header-actions">
+                <span class="logout-name">a9-evaluation</span>
+                <form class="logout-form" method="post" action="/accounts/logout/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="DcNsAe48Q0wZaPgRS9fE02bYWj9RHuUvz2HIKwH3xPtq8iBQMT8fnXOUIh5S1i59">
+                    <button type="submit">Sign out</button>
+                </form>
+            </div>
+            
+        </div>
+    </header>
+    
+    <nav class="navigation" aria-label="Primary navigation">
+        <div class="container nav-links">
+            <a class="nav-link" href="/">Home</a>
+            
+            <a class="nav-link" href="/tasks/cbv-generic/">Household tasks</a>
+            <a class="nav-link" href="/tasks/manage/">Task board</a>
+            
+            <a class="nav-link" href="/tasks/ai/">AI Brain Dump</a>
+            <a class="nav-link" href="/tasks/ask/">Ask Hestia</a>
+            <a class="nav-link" href="/tasks/search/">Search tasks</a>
+            <a class="nav-link" href="/lookup/">Product lookup</a>
+            <a class="nav-link" href="/analytics/tasks/">Task statistics</a>
+            <a class="nav-link" href="/reports/tasks/">Reports</a>
+            <a class="nav-link" href="/vega-lite/">Charts</a>
+            
+        </div>
+    </nav>
+    
+
+    
+    <main id="main-content" class="container" tabindex="-1">
+        
+<header class="page-header">
+    <span class="eyebrow">Household handbook</span>
+    <h1>Ask Hestia</h1>
+    <p>Ask about chores, shopping, inventory, maintenance, or preparing for guests.</p>
+</header>
+
+<section class="task-card">
+    <form method="post" action="/tasks/ask/">
+        <input type="hidden" name="csrfmiddlewaretoken" value="DcNsAe48Q0wZaPgRS9fE02bYWj9RHuUvz2HIKwH3xPtq8iBQMT8fnXOUIh5S1i59">
+        
+        <div class="form-field">
+            <label for="id_question">Your household question:</label>
+            <textarea name="question" cols="40" rows="3" placeholder="Where do we keep the shared cordless drill?" maxlength="500" required aria-invalid="true" aria-describedby="id_question_error" id="id_question">
+aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</textarea>
+            <ul class="errorlist" id="id_question_error"><li>Ensure this value has at most 500 characters (it has 501).</li></ul>
+        </div>
+        <p class="field-help">Up to 500 characters. Answers come from the example household handbook.</p>
+        <button type="submit">Ask Hestia</button>
+    </form>
+    <p class="field-help">The first question may take several minutes while local models download and load. Please keep this page open.</p>
+</section>
+
+
+
+
+
+        
+        
+        
+        
+    </main>
+    <footer class="hestia-footer">
+        <div class="container">
+            <strong>Hestia</strong> &middot; Household responsibilities, together.
+            <p>INFO 490 &middot; Team 12 &middot; University of Illinois Urbana-Champaign</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

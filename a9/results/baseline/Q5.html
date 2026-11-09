@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Ask Hestia | Hestia</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=1794201232">
+    <meta name="theme-color" content="#5946a8">
+    
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="hestia-header">
+        <div class="container header-inner">
+            <a class="hestia-brand" href="/">
+                <img class="hestia-logo" src="/static/images/hestia-mark.svg" alt="" width="48" height="48">
+                <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
+            </a>
+            
+            <div class="header-actions">
+                <span class="logout-name">a9-evaluation</span>
+                <form class="logout-form" method="post" action="/accounts/logout/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="Kwp4iiPb1rVjvaU7acPRhskBzJVmQxYvGmjksAs6IgSKtDf64WIsEnXxlHRnal99">
+                    <button type="submit">Sign out</button>
+                </form>
+            </div>
+            
+        </div>
+    </header>
+    
+    <nav class="navigation" aria-label="Primary navigation">
+        <div class="container nav-links">
+            <a class="nav-link" href="/">Home</a>
+            
+            <a class="nav-link" href="/tasks/cbv-generic/">Household tasks</a>
+            <a class="nav-link" href="/tasks/manage/">Task board</a>
+            
+            <a class="nav-link" href="/tasks/ai/">AI Brain Dump</a>
+            <a class="nav-link" href="/tasks/ask/">Ask Hestia</a>
+            <a class="nav-link" href="/tasks/search/">Search tasks</a>
+            <a class="nav-link" href="/lookup/">Product lookup</a>
+            <a class="nav-link" href="/analytics/tasks/">Task statistics</a>
+            <a class="nav-link" href="/reports/tasks/">Reports</a>
+            <a class="nav-link" href="/vega-lite/">Charts</a>
+            
+        </div>
+    </nav>
+    
+
+    
+    <main id="main-content" class="container" tabindex="-1">
+        
+<header class="page-header">
+    <span class="eyebrow">Household handbook</span>
+    <h1>Ask Hestia</h1>
+    <p>Ask about chores, shopping, inventory, maintenance, or preparing for guests.</p>
+</header>
+
+<section class="task-card">
+    <form method="post" action="/tasks/ask/">
+        <input type="hidden" name="csrfmiddlewaretoken" value="Kwp4iiPb1rVjvaU7acPRhskBzJVmQxYvGmjksAs6IgSKtDf64WIsEnXxlHRnal99">
+        
+        <div class="form-field">
+            <label for="id_question">Your household question:</label>
+            <textarea name="question" cols="40" rows="3" placeholder="Where do we keep the shared cordless drill?" maxlength="500" required id="id_question">
+A friend is staying overnight. What needs to be in place before I mark their room ready?</textarea>
+            
+        </div>
+        <p class="field-help">Up to 500 characters. Answers come from the example household handbook.</p>
+        <button type="submit">Ask Hestia</button>
+    </form>
+    <p class="field-help">The first question may take several minutes while local models download and load. Please keep this page open.</p>
+</section>
+
+
+
+
+<section class="task-card" aria-labelledby="ask-answer-heading">
+    <h2 id="ask-answer-heading">Answer</h2>
+    <p>A clean sheet set, two clean towels, and a filled water carafe.</p>
+    
+    <p class="field-help">Answered in 6.472 seconds.</p>
+</section>
+
+<section aria-labelledby="ask-sources-heading">
+    <h2 id="ask-sources-heading">Handbook sources</h2>
+    
+    <article class="task-card">
+        <h3>Preparing the guest room</h3>
+        <p class="field-help">guests · fixed-guests-01</p>
+        <p>The host adds an arrival date and approximate time to the household calendar once the visit is agreed. The entry identifies the resident responsible for preparing the sleeping space and lists any arrangements the guest has requested. This lets other residents plan shared room use and avoid storing personal items on the guest bed. Preparation can begin before the arrival time is exact, as long as the household agrees on which room will be used. Residents place unrelated belongings back in their own storage before the host checks the room. A simple calendar entry keeps these arrangements visible. Before an overnight guest arrives, put one clean sheet set, two clean towels, and a filled water carafe in the guest room. Set the towels on the bench at the foot of the bed and the carafe on the bedside table.</p>
+    </article>
+    
+    <article class="task-card">
+        <h3>Preparing the guest room</h3>
+        <p class="field-help">guests · fixed-guests-02</p>
+        <p>Check that the bedside lamp turns on. Record completion on the Guest Room Ready card after these items are in place and the lamp has been checked. If something is missing, leave the card open and write the missing item in the note. The host uses that note to finish preparation before welcoming the guest. Guest supplies are counted after the room is prepared so the host can identify which reserve items remain available. The linen inventory shows where additional sets normally live. If an item was borrowed from another room, record it on the Guest Room Ready card so the host can return it after the visit. Keep the surface beside the bed clear enough for the guest to place personal items. Extra decorations and reading materials may be added when space permits.</p>
+    </article>
+    
+</section>
+
+
+
+        
+        
+        
+        
+    </main>
+    <footer class="hestia-footer">
+        <div class="container">
+            <strong>Hestia</strong> &middot; Household responsibilities, together.
+            <p>INFO 490 &middot; Team 12 &middot; University of Illinois Urbana-Champaign</p>
+        </div>
+    </footer>
+    
+</body>
+</html>
