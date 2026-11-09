@@ -2,13 +2,14 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET, require_http_methods
 
 from .models import Task
+from households.context import require_household
 from .task_queries import filter_task_queryset
 
 
 def _render_search(request, *, params, submitted, search_method):
     q = params.get("q", "").strip()
     workspace_name = params.get("workspace_name", "").strip()
-    tasks = filter_task_queryset(Task.objects.all(), q=q, workspace_name=workspace_name) if submitted else Task.objects.none()
+    tasks = filter_task_queryset(Task.objects.filter(workspace=require_household(request).workspace), q=q, workspace_name=workspace_name) if submitted else Task.objects.none()
     return render(
         request,
         "tasks/search.html",

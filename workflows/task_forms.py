@@ -5,9 +5,9 @@ from households.models import Workspace
 from .models import Task
 
 
-def available_workspaces():
+def available_workspaces(membership=None):
     """The public assignment board uses all fictional demo households."""
-    return Workspace.objects.all()
+    return Workspace.objects.filter(pk=membership.workspace_id) if membership and membership.is_active else Workspace.objects.none()
 
 
 class TaskFilterForm(forms.Form):
@@ -18,9 +18,9 @@ class TaskFilterForm(forms.Form):
     priority = forms.ChoiceField(required=False, choices=[("", "All priorities"), *Task.Priority.choices])
     task_type = forms.ChoiceField(required=False, choices=[("", "All types"), *Task.TaskType.choices], label="Task type")
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="filter_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces()
+        self.fields["workspace"].queryset = available_workspaces(membership)
 
 
 class TaskCreateForm(forms.ModelForm):
@@ -39,9 +39,9 @@ class TaskCreateForm(forms.ModelForm):
             "recurrence_rule": forms.TextInput(attrs={"placeholder": "One-time task"}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="create_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces()
+        self.fields["workspace"].queryset = available_workspaces(membership)
         workspaces = list(self.fields["workspace"].queryset[:2])
         if len(workspaces) == 1 and not self.is_bound:
             self.initial.setdefault("workspace", workspaces[0].pk)

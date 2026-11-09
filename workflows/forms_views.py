@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.views.generic import ListView
 
 from households.models import Membership
+from households.context import require_household
 from .models import Task
 from .task_forms import TaskCreateForm, TaskFilterForm, available_workspaces
 
@@ -18,9 +19,9 @@ class TaskBoardView(ListView):
 
     def get_queryset(self):
         queryset = Task.objects.filter(
-            workspace__in=available_workspaces()
+            workspace=require_household(self.request).workspace
         ).select_related("workspace").order_by("-created_at", "-task_id")
-        self.filter_form = TaskFilterForm(self.request.GET)
+        self.filter_form = TaskFilterForm(self.request.GET, membership=self.request.active_membership)
         if not self.filter_form.is_valid():
             # An invalid/unauthorized filter must not silently expose a wider list.
             return queryset.none()
@@ -35,8 +36,8 @@ class TaskBoardView(ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = self.filter_form
-        context.setdefault("create_form", TaskCreateForm())
-        context["has_workspaces"] = available_workspaces().exists()
+        context.setdefault("create_form", TaskCreateForm(membership=self.request.active_membership))
+        context["has_workspaces"] = available_workspaces(self.request.active_membership).exists()
         context["has_filters"] = any(self.request.GET.get(key) for key in self.filter_form.fields)
         params = self.request.GET.copy()
         params.pop("page", None)
@@ -55,18 +56,15 @@ class TaskBoardView(ListView):
         return context
 
     def post(self, request, *args, **kwargs):
-        form = TaskCreateForm(request.POST)
+        membership = require_household(request)
+        form = TaskCreateForm(request.POST, membership=membership)
         if form.is_valid():
             # Never accept a creator ID from the browser.
-            membership = None
-            if request.user.is_authenticated:
-                membership = Membership.objects.filter(
-                    user=request.user, workspace=form.cleaned_data["workspace"], is_active=True
-                ).first()
-            # Anonymous submissions have no creator; never invent a membership.
+            form.instance.workspace = membership.workspace
             form.instance.created_by_membership = membership
             try:
                 with transaction.atomic():
+                    Membership.objects.select_for_update().get(pk=membership.pk, user=request.user, is_active=True)
                     task = form.save()
             except IntegrityError:
                 if not Task.objects.filter(workspace=form.cleaned_data["workspace"],
