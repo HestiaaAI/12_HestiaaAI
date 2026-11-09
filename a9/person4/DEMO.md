@@ -11,9 +11,13 @@ python manage.py migrate
 python manage.py runserver --settings=hestia_config.settings.development
 ```
 
-Sign in with a verified account that has an **active household membership**.
-Open **Ask Hestia** → `/tasks/ask/`. Cold start can take tens of seconds while
-MiniLM and Qwen download/load; warm requests in evaluation were ~8–12 s on CPU.
+Sign in (page is `@login_required`). Open **Ask Hestia** → `/tasks/ask/`.
+Cold start can take tens of seconds while MiniLM and Qwen download/load; warm
+page requests in evaluation were ~8–12 s on CPU.
+
+Stack to name: MiniLM + A8 **overlap** chunks + top-k=2 + Qwen2-0.5B — chosen from
+A6/A7 and the completed A8 matrices (Person 2 Colab MiniLM + Person 3 Mac
+cross-encoder), then confirmed on the A9 page eval.
 
 ## Two successful cases
 
@@ -39,24 +43,28 @@ Optional: blank submit or 501-character paste to show form errors before retriev
 > I need the shared cordless drill this afternoon. Where do I find it, what do I log, and where does the kit go when I finish?
 
 Show that retrieval can cite the blue hallway bin while the generator may invent
-a second return location (green kitchen bin in the recorded overlap run). This is
-a **generation hallucination with evidence present**—honest limitation.
+a second return location (**green kitchen bin** in the recorded A9 overlap run).
+Same hallucination class as A8 Person 2’s MiniLM Colab `small`/hybrid/Q3 in
+`a8/results/person2/completed-2026-11-09/`. This is a **generation hallucination
+with evidence present**—honest limitation.
 
 ## Technical explanation checklist (all teammates)
 
 During the 1v1, anyone should be able to answer:
 
 1. Where AI enters: `workflows/ask_hestia_views.py` → `answer_question`
-2. Which models: MiniLM + Qwen2-0.5B; overlap chunks from `a8.corpus`
+2. Which models: MiniLM + Qwen2-0.5B; overlap chunks from `a8.corpus`; top-k=2
 3. How inputs are processed: form validate → retrieve → generate or abstain → render
-4. Limitations: small generator, CPU latency, residual hallucinations (Q3), incomplete lists (Q5)
+4. Limitations: small generator, CPU latency, residual hallucinations (Q3 / green bin), incomplete lists (Q5); more handbook text alone did not fix quality in A8 scaling
 5. Pre-deployment improvements: stronger generator or checklist prompt, keep retrieval; never auto-execute chores
 
 ## Talking track (~2 minutes)
 
 Ask Hestia is Django RAG over our A8 handbook, not a general chatbot. We chose
-Qwen from A6/A7 local tradeoffs and overlap chunking from A9 evaluation. Demo:
-plumbing success, Australia abstention, drill hallucination.
+Qwen from A6/A7, MiniLM because A8 retrieval was already saturated at 384-d, and
+overlap chunking because it won on both MiniLM Colab and BGE Mac—and again on the
+A9 page before/after. Demo: plumbing success, Australia abstention, drill
+green-bin hallucination.
 
 ## Demo slot
 
