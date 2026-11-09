@@ -1,8 +1,18 @@
 # Ask Hestia · RAG analysis (Assignment 8)
 
-Team 12 · Hestia. Analysis for Parts 2–4. Measured runs are in
-`results/person3/` (45 matched generations) and `results/person2/` (retrieval +
-scaling). The executable matrix is `rag_system.ipynb`.
+Team 12 · Hestia. Analysis for Parts 2–4.
+
+**Evidence used (do not mix machines for latency claims):**
+
+| Slice | Path | What it measures |
+|---|---|---|
+| Cross-encoder matrix (Mac CPU) | `results/person3/` — 45 matched generations | MiniLM / MPNet / BGE × fixed / overlap / hybrid × Q1–Q5 |
+| MiniLM end-to-end + scaling (Colab CPU) | `results/person2/completed-2026-11-09/` — 15 matrix + 10 scaling rows | Same generator/prompt; assessed answers, noise, full request latency |
+| Historical retrieval-only (Mac) | `results/person2/small-cpu-2026-11-08/` | Pre-generation index timings; not relabeled as Colab |
+
+Executable overview: `rag_system.ipynb`. Person 2 detail: `person2/FINDINGS.md`,
+`person2_retrieval_scaling.ipynb`. Rebuild tables:
+`python -m a8.person3_analysis` and `python -m a8.person2_analysis`.
 
 **Frozen stack.** Generator `Qwen/Qwen2-0.5B-Instruct` (A6/A7-evaluated), greedy
 decoding, 128 new tokens, CPU, four PyTorch threads. Encoders:
@@ -23,12 +33,12 @@ checkout, Q4 bathroom drip report, Q5 guest-room readiness).
 
 ### Step 2.2 · Evaluation table
 
-The complete 45-row table (3 encoders × 3 chunkers × 5 queries) with **retrieved
-chunks**, answers, context quality, answer quality, latency and notes is
-`results/person3/evaluation.csv`. Raw prompts and hit lists are in
-`results/person3/{small,medium,large}/rows.jsonl`.
+**Team cross-encoder table (Person 3).** The complete 45-row table (3 encoders ×
+3 chunkers × 5 queries) with retrieved chunks, answers, context quality, answer
+quality, latency and notes is `results/person3/evaluation.csv`. Raw prompts and
+hit lists are in `results/person3/{small,medium,large}/rows.jsonl`.
 
-Large-encoder rows (Person 4 focus, filter `size=large` in that CSV):
+Large-encoder rows (Person 4 focus, filter `size=large`):
 
 | Embedding | Chunking | Query | Context quality | Answer quality | Retrieval ms | End-to-end s | Notes (abbrev.) |
 |---|---|---|---:|---:|---:|---:|---|
@@ -50,7 +60,15 @@ Large-encoder rows (Person 4 focus, filter `size=large` in that CSV):
 
 Scores are AI-assisted under `person3/RUBRIC.md`.
 
+**Person 2 MiniLM completion (Colab).** The same five queries × three chunkers with
+actual answers and hash-bound reviews are in
+`results/person2/completed-2026-11-09/matrix_evaluation.csv` (mean answer 37.44
+with 100% quote coverage on every row). That slice is the finished small-encoder
+RAG evaluation; it is not a second cross-encoder matrix.
+
 ### Step 2.3 · Compare embedding models
+
+From the matched Person 3 Mac matrix:
 
 | Encoder | Dims | Mean context % | Rank-1 support | Mean answer | Median retrieval | Median request |
 |---|---:|---:|---:|---:|---:|---:|
@@ -60,17 +78,24 @@ Scores are AI-assisted under `person3/RUBRIC.md`.
 
 **Retrieval.** Embedding size did not change quote coverage or first-support rank
 on these five queries: every encoder already retrieved every required span in the
-top three hits.
+top three hits. Person 2’s Colab MiniLM matrix repeats that ceiling (15/15 at
+100% context quality).
 
 **Answer quality.** Larger did **not** always win. BGE’s mean is highest, but MPNet
 scored below MiniLM. On kitchen-close with fixed chunks, MiniLM 66.67 > BGE 33.33
 > MPNet 0. Dimension alone cannot explain quality: training differs, and the
-0.5B generator can ignore evidence. Retrieval latency rose with encoder size;
-end-to-end medians did not, because generation dominates.
+0.5B generator can ignore evidence. Person 2’s assessed MiniLM mean (37.44)
+matches the Mac MiniLM mean exactly on the shared rubric—useful consistency for
+the small encoder, not a license to average Colab (~30–45 s) and Mac (~4–5 s)
+request times.
+
+**Product choice.** For Ask Hestia we keep MiniLM: retrieval is already saturated
+on this handbook, encode/load cost is lowest, and Transformers mean-pooling fits
+the existing Django HF path without `sentence-transformers`.
 
 ### Step 2.4 · Compare chunking strategies (large encoder)
 
-Holding BGE-large and the generator fixed:
+Holding BGE-large and the generator fixed (Person 3 Mac):
 
 | Strategy | Mean answer | Median | Perfect / zero |
 |---|---:|---:|---|
@@ -78,23 +103,29 @@ Holding BGE-large and the generator fixed:
 | **overlap** | **80.00** | **100** | **4 / 1** |
 | hybrid | 25.00 | 0 | 1 / 3 |
 
+**Corroboration on MiniLM (Person 2 Colab, same generator/prompt):** fixed 17.33,
+hybrid 40.00, **overlap 55.00**. Overlap wins on both encoder sizes for this
+handbook; absolute scores differ by machine/run, so treat the ranking as the
+finding, not the Colab percentages as interchangeable with Mac.
+
 **Which worked better?** Overlapping paragraphs. They keep a policy sentence with
 its surrounding constraints (for example Out of stock with “leave unchecked”).
 
 **Retrieval relevance.** Context quality was already 100% for all three chunkers
-on the large encoder. Chunking changed packing and distractors, not whether the
-answer key entered the top-k set.
+on the large encoder and on the MiniLM Colab matrix. Chunking changed packing and
+distractors, not whether the answer key entered the top-k set.
 
 **Final answers.** Fixed splits often put the critical quote in hit 2 while hit 1
 emphasized a neighboring rule (Q2). Hybrid pulled appliance-upkeep text into the
-kitchen-close prompt (Q1). Overlap produced four complete answers and one miss
-(Q3). Prefer overlap for this handbook + small generator stack.
+kitchen-close prompt (Q1) and, on MiniLM Colab, still invents a service call.
+Overlap produced four complete large-encoder answers and one miss (Q3). Prefer
+overlap for this handbook + small generator stack.
 
 ### Step 2.5 · Data scaling
 
-Person 2 completed a separate Colab CPU run with MiniLM + hybrid + k=3 and
-compared `small` (15 paragraphs / 10 chunks) with `full` (30 paragraphs / 20 chunks).
-The generator revision, prompt, greedy decoding, 128-token cap, CPU float32,
+Person 2 completed a Colab CPU run with MiniLM + hybrid + k=3 and compared
+`small` (15 paragraphs / 10 chunks) with `full` (30 paragraphs / 20 chunks).
+Generator revision, prompt, greedy decoding, 128-token cap, CPU float32,
 four-thread setting and recorded environment match across both datasets.
 
 | Dataset | Evidence coverage | Mean answer /100 | Reviewed irrelevant chunks | Median retrieval | Median full request |
@@ -128,28 +159,40 @@ than being relabeled as these new end-to-end requests.
 
 ### Step 3.1–3.2 · Three failures and root causes
 
-#### Failure 1 — Hallucinated service call (`large` / `hybrid` / Q1)
+Failures below use the completed evidence Person 2 flagged for integration
+(service-call invention, out-of-stock mishandling, invented kit location) plus the
+matched large-encoder matrix where noted.
 
-- **Observed:** Invented an “appliance maintenance card” and a service technician
-  despite Kitchen Close + Running-tag evidence in hits 1–2.
+#### Failure 1 — Hallucinated service call (`large` / `hybrid` / Q1; also MiniLM Colab hybrid Q1)
+
+- **Observed (Mac large/hybrid):** Invented an “appliance maintenance card” and a
+  service technician despite Kitchen Close + Running-tag evidence in hits 1–2.
+- **Also on MiniLM Colab hybrid/Q1:** score 0 with the same unsupported service /
+  status-card pattern (`matrix_evaluation.csv`).
 - **Root cause:** **Chunking + generation.** Hit 3 (`hybrid-maintenance-03`) is a
   neighboring-topic distractor admitted by hybrid packing. Not an embedding miss
   (context quality 100%). Not a bad query.
 
-#### Failure 2 — Wrong grocery action (`large` / `fixed` / Q2)
+#### Failure 2 — Wrong grocery action (`large` / `fixed` / Q2; MiniLM Colab fixed & hybrid Q2)
 
-- **Observed:** “Record … before closing it” instead of leave unchecked + Out of stock.
-- **Root cause:** **Chunking + generation.** Fixed cuts placed the outage quote in
-  hit 2; hit 1 emphasized substitute/purchase language. Embedding still retrieved
-  the quote. Query is correctly scoped.
+- **Observed:** “Record … before closing it” / purchase language instead of leave
+  unchecked + Out of stock.
+- **MiniLM Colab:** fixed Q2 and hybrid Q2 both score 0 with the same policy error
+  class despite 100% quote coverage.
+- **Root cause:** **Chunking + generation.** Fixed cuts place the outage quote in
+  hit 2 while hit 1 emphasizes substitute/purchase language. Embedding still
+  retrieved the quote. Query is correctly scoped.
 
-#### Failure 3 — Incomplete drill checkout (`large` / `overlap` / Q3)
+#### Failure 3 — Invented kit return location (MiniLM Colab `small` / `hybrid` / Q3)
 
-- **Observed:** Omits borrower name, blue bin and closing the entry; points at
-  appliance upkeep for return.
-- **Root cause:** **Generation** (instruction following under a short answer style).
-  Retrieval already had the blue bin and checkout fields. Overlap chunking is not
-  the primary fault—the other four overlap answers scored 100.
+- **Observed:** Small-set answer invents a **green kitchen bin** for returning the
+  drill kit; required evidence points at the blue hallway tool bin. Full-set hybrid
+  recovers the blue bin (25%) but still omits borrower name and entry closure.
+  Reviewed noise stays 67% on both sizes—extra paragraphs did not remove the
+  irrelevant hit pressure at k=3.
+- **Root cause:** **Generation** (hallucination with evidence present), not missing
+  retrieval. This is the same failure class later seen in Ask Hestia’s A9 overlap
+  demo limitation.
 
 ### Step 3.3 · One improvement (before / after)
 
@@ -178,7 +221,7 @@ decoding, encoder and chunk texts frozen. Removes distractor
 | Running tag / morning unload | missing / wrong | still incomplete |
 
 Partial gain confirms the distractor diagnosis without claiming top-k=2 fixes
-every missing fact.
+every missing fact. Ask Hestia ships with top-k=2 for the same reason.
 
 ---
 
@@ -188,10 +231,11 @@ every missing fact.
 
 | Factor | Cost / latency effect in this system |
 |---|---|
-| **Embedding size** | Index build and query encode grow with dimension (MiniLM ~9 ms vs BGE ~85 ms median retrieval). Storage for 20×1024 float32 vectors is still tiny vs model weights. |
-| **Chunk size / strategy** | More/longer chunks → more vectors at build time and slightly longer prompts. Overlap reduced answer failures more than it changed retrieval ms. |
+| **Embedding size** | Mac retrieval medians rise with dimension (MiniLM ~9 ms vs BGE ~85 ms). Colab MiniLM retrieval is ~36–39 ms on the scaling run—different host, not comparable. Vector storage for 20×1024 float32 is still tiny vs model weights. |
+| **Chunk size / strategy** | More/longer chunks → more vectors at build time and slightly longer prompts. Overlap reduced answer failures on both MiniLM Colab and BGE Mac more than it changed retrieval ms. |
+| **Corpus size** | Doubling paragraphs (Person 2 scaling) did **not** robustly improve mean answer quality or speed; generation still dominates (~30 s Colab medians). |
 | **Top-k** | Each extra passage lengthens the prompt and can introduce distractors (Failure 1). k=2 was enough for gold coverage on the measured cases and removed one hallucination. |
-| **Generation** | Dominates end-to-end time (~seconds) and would dominate paid token cost if hosted. |
+| **Generation** | Dominates end-to-end time on both Mac and Colab and would dominate paid token cost if hosted. |
 
 ### Step 4.2 · RAG vs fine-tuning vs pure prompting
 
@@ -199,7 +243,7 @@ every missing fact.
 |---|---|
 | **RAG** | Household policies that change; need citations; keep generator swappable. Default here. |
 | **Fine-tuning** | Stabilize format/style once facts are retrieved or known. A7 SLM still mixed facts after tuning—do not replace retrieval. |
-| **Pure prompting** | Only when answers are already in the base model. Fails for local handbook rules (Running tag, Out of stock). |
+| **Pure prompting** | Only when answers are already in the base model. Fails for local handbook rules (Running tag, Out of stock, tool-bin location). |
 
 ### Step 4.3 · Design for 10K users/day
 
@@ -212,26 +256,30 @@ team’s stack):
 |---|---|
 | User | Household member with a chores / shopping / tools / maintenance / guest question |
 | Query | Natural-language text; five fixed evaluation queries in `data/queries.json` |
-| Embedding | Free Hugging Face sentence-transformers: MiniLM (384), MPNet (768), BGE-large (1024) |
-| Vector Store | In-memory exact cosine index over A8 handbook chunks (`fixed` / `overlap` / `hybrid`) |
-| Retrieved Context | Top-k passages with scores (k=3 in the matrix; k=2 in the distractor fix) |
+| Embedding | Free Hugging Face sentence-transformers: MiniLM (384), MPNet (768), BGE-large (1024); **app default MiniLM** |
+| Vector Store | In-memory exact cosine index over A8 handbook chunks (`fixed` / `overlap` / `hybrid`); **app default overlap** |
+| Retrieved Context | Top-k passages with scores (k=3 in the matrix; **k=2 in the distractor fix and Ask Hestia**) |
 | LLM | Frozen A6/A7 model `Qwen/Qwen2-0.5B-Instruct`, greedy decode, 128 new tokens |
 | Response | Generated answer + retrieved evidence; scored with the shared rubric |
 
 **How it scales to 10K users/day.** Average load is only ~0.12 questions/s. One
 small CPU/GPU generation worker covers the mean; add a second replica for peaks.
 The vector store stays tiny (tens of handbook chunks), so search is not the
-bottleneck—generation is.
+bottleneck—generation is (Mac seconds; Colab tens of seconds on the measured host).
 
 **What to optimize first.** (1) Generation quality/latency or a stronger local
-generator after re-qualification. (2) Top-k / distractor control (hybrid Q1).
-(3) Keep overlap chunking as the default packer. (4) Version the index on handbook
-edits. Do not auto-execute chores from generated text without Hestia confirmation.
+generator after re-qualification. (2) Top-k / distractor control (hybrid Q1;
+green-bin Q3). (3) Keep overlap chunking as the default packer. (4) Version the
+index on handbook edits. Do not treat “more handbook paragraphs” as a quality
+fix after Person 2’s scaling result. Do not auto-execute chores from generated
+text without Hestia confirmation.
 
 ---
 
 ## Limits
 
-Five queries, one small generator, CPU timings, AI-assisted scores. Do not claim a
-universal ranking of embedding dimension or chunking. Rebuild comparison CSVs with
-`python -m a8.person3_analysis` (no model download).
+Five queries, one small generator, AI-assisted scores, two CPU environments.
+Do not claim a universal ranking of embedding dimension or chunking, and do not
+pool Colab vs Mac latencies. Rebuild comparison CSVs with
+`python -m a8.person3_analysis` and `python -m a8.person2_analysis` (no model
+download for analysis).
