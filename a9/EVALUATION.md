@@ -54,3 +54,16 @@ These are five content questions, one measured request each, with sequential bef
 Use a9.evaluate to replay the current or archived baseline backend through the actual Django page with a disposable database. a9.analyze validates the saved reviews and regenerates the table. Review fingerprints bind ratings to actual prompts, sources, outputs and displayed errors.
 
 Person 4 can demonstrate Q4 as a complete content answer, Q3 as a hallucination limitation, and G1/G2/G3 as graceful guardrails. A second successful content example still needs to be selected and verified for the team's demo rehearsal.
+
+## Person 4 demo selection (appended)
+
+Among Q1–Q5 in the overlap phase, only **Q4** has `expected_behavior_met=yes` with
+full content completeness. No second fully correct handbook answer is available in
+this evaluation. Person 4’s live demo therefore uses:
+
+1. **Success (content):** Q4 plumbing report  
+2. **Success (guardrail):** G3 capital-of-Australia abstention (`expected_behavior_met=yes`)  
+3. **Limitation:** Q3 green-bin hallucination  
+
+Script: [person4/DEMO.md](person4/DEMO.md). Re-verify those three prompts in a
+signed-in browser before the Thu 12 Nov 2026 · 8:30 AM · EDUC 333 slot.

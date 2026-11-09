@@ -85,8 +85,10 @@ page is production-ready.
 
 ### Demo readiness (Part 4)
 
-Script: [a9/person4/DEMO.md](a9/person4/DEMO.md) — Success Q4, Success G3,
-Limitation Q3 (green-bin class from A8 Person 2). Canvas:
+Script: [a9/person4/DEMO.md](a9/person4/DEMO.md). Mapped to measured overlap
+results: **Success Q4** (only Q1–Q5 case with `expected_behavior_met=yes` at
+100%), **Success G3** (abstention guardrail pass), **Limitation Q3** (green-bin
+hallucination; same class as A8 Person 2 Colab). Canvas:
 [docs/a9-canvas-submission.pdf](docs/a9-canvas-submission.pdf).
 
 ### Run Ask Hestia locally

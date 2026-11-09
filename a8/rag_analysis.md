@@ -200,14 +200,19 @@ matched large-encoder matrix where noted.
 decoding, encoder and chunk texts frozen. Removes distractor
 `hybrid-maintenance-03`.
 
-**Before (score 0):**
+**Saved evidence:** `results/person4/improvement_topk2_large_hybrid_Q1.json`
+(+ `improvement_summary.csv`). Validate with `python -m a8.person4_improvement`.
+Optional live regenerate: `python -m a8.person4_improvement --rerun`.
+
+**Before (score 0)** — baseline hits `hybrid-chores-01`, `hybrid-chores-02`,
+`hybrid-maintenance-03`:
 
 > I marked the completed Kitchen Close card on the household task board. The
 > dishwasher should be marked as "Running" on the appliance maintenance card.
 > The resident should contact the appliance service technician to have the
 > machine serviced.
 
-**After (score 33.33):**
+**After (score 33.33)** — same ranking truncated to top-2 (distractor removed):
 
 > I marked the Kitchen Close card as complete on the household task board. To
 > avoid creating a second closing card for the same evening, I should remove
@@ -216,6 +221,7 @@ decoding, encoder and chunk texts frozen. Removes distractor
 | | Before | After |
 |---|---|---|
 | Answer quality | 0 | 33.33 |
+| Hit IDs | chores-01, chores-02, **maintenance-03** | chores-01, chores-02 |
 | Service-call invention | yes | no |
 | Kitchen Close fact | confused | present |
 | Running tag / morning unload | missing / wrong | still incomplete |
@@ -282,4 +288,5 @@ Five queries, one small generator, AI-assisted scores, two CPU environments.
 Do not claim a universal ranking of embedding dimension or chunking, and do not
 pool Colab vs Mac latencies. Rebuild comparison CSVs with
 `python -m a8.person3_analysis` and `python -m a8.person2_analysis` (no model
-download for analysis).
+download for analysis). Validate the top-k improvement artifact with
+`python -m a8.person4_improvement`.

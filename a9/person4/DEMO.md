@@ -19,6 +19,22 @@ Stack to name: MiniLM + A8 **overlap** chunks + top-k=2 + Qwen2-0.5B — chosen 
 A6/A7 and the completed A8 matrices (Person 2 Colab MiniLM + Person 3 Mac
 cross-encoder), then confirmed on the A9 page eval.
 
+## Rubric mapping (2 successes + 1 limitation)
+
+From `a9/evaluation.csv` **overlap** phase (`expected_behavior_met=yes`):
+
+| Role | Case | Why it counts |
+|---|---|---|
+| **Success 1 (content)** | **Q4** bathroom drip | Only handbook content case with 100% completeness and `expected_behavior_met=yes` after overlap |
+| **Success 2 (guardrail)** | **G3** capital of Australia | Full pass: handbook abstention, no invented rule, no model call path needed |
+| **Limitation** | **Q3** cordless drill | Retrieval can show blue hallway bin; generator invents green kitchen return bin |
+
+Among Q1–Q5 after overlap, **no second fully correct content answer exists**
+(Q1 33%, Q2 50%, Q3 25% misleading, Q5 20%). Person 4 therefore uses G3 as the
+second success—assignment Part 4 asks for successful *cases*, including
+graceful failure/abstention—not two perfect handbook answers. Optional extras:
+G1 empty-field error, G2 501-character error (also `expected_behavior_met=yes`).
+
 ## Two successful cases
 
 ### Success A — Complete content answer (Q4)
