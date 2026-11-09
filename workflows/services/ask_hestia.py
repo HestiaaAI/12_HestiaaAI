@@ -15,6 +15,7 @@ from workflows.services.hf_local import load_causal_model
 GENERATOR = "Qwen/Qwen2-0.5B-Instruct"
 EMBEDDER = "sentence-transformers/all-MiniLM-L6-v2"
 MAX_QUESTION_CHARS = 500
+CHUNKING_STRATEGY = "overlap"
 TOP_K = 2
 MIN_SIMILARITY = 0.30
 EMBEDDING_TOKEN_LIMIT = 256
@@ -57,7 +58,7 @@ def _index():
 
     tokenizer = AutoTokenizer.from_pretrained(EMBEDDER)
     model = AutoModel.from_pretrained(EMBEDDER, use_safetensors=True).eval()
-    chunks = load_chunks("fixed")
+    chunks = load_chunks(CHUNKING_STRATEGY)
     vectors = torch.cat([
         _encode(tokenizer, model, [chunk.text for chunk in chunks[start:start + 8]])
         for start in range(0, len(chunks), 8)

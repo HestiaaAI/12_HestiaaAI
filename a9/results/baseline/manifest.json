@@ -1,0 +1,22 @@
+{
+  "backend_sha256": "b1e411ff57f3bb51bc8f6ac57809b61084035f24484dc0816d12b0dc87a3d316",
+  "generator": "Qwen/Qwen2-0.5B-Instruct",
+  "embedder": "sentence-transformers/all-MiniLM-L6-v2",
+  "top_k": 2,
+  "min_similarity": 0.3,
+  "torch_threads": 4,
+  "dtype": "torch.bfloat16",
+  "warmup_seconds": 12.550433750002412,
+  "inputs_sha256": "dcc1c1ccef9614c60c4ed9eb5183dba039063dd15cb110d0fc046152ca15de5e",
+  "python": "3.14.6 | packaged by Anaconda, Inc. | (main, Jul  9 2026, 14:30:20) [Clang 20.1.8 ]",
+  "device": "cpu",
+  "chunking": "fixed",
+  "generator_revision": "c540970f9e29518b1d8f06ab8b24cba66ad77b6d",
+  "embedding_revision": "1110a243fdf4706b3f48f1d95db1a4f5529b4d41",
+  "runtime_versions": {
+    "Django": "5.2.17",
+    "torch": "2.14.1",
+    "transformers": "4.57.6",
+    "huggingface-hub": "0.36.2"
+  }
+}

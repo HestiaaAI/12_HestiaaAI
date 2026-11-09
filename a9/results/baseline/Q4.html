@@ -1,0 +1,120 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <title>Ask Hestia | Hestia</title>
+    <link rel="stylesheet" href="/static/css/style.css?v=1794201226">
+    <meta name="theme-color" content="#5946a8">
+    
+</head>
+<body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header class="hestia-header">
+        <div class="container header-inner">
+            <a class="hestia-brand" href="/">
+                <img class="hestia-logo" src="/static/images/hestia-mark.svg" alt="" width="48" height="48">
+                <span><strong>Hestia</strong><small>AI-Powered Household Coordination</small></span>
+            </a>
+            
+            <div class="header-actions">
+                <span class="logout-name">a9-evaluation</span>
+                <form class="logout-form" method="post" action="/accounts/logout/">
+                    <input type="hidden" name="csrfmiddlewaretoken" value="WVarfOc36LpEoiajPPnsM6PHzt4TGCDPSL4Hp6PYNAm5mLviJzg391sDlr0U0qOt">
+                    <button type="submit">Sign out</button>
+                </form>
+            </div>
+            
+        </div>
+    </header>
+    
+    <nav class="navigation" aria-label="Primary navigation">
+        <div class="container nav-links">
+            <a class="nav-link" href="/">Home</a>
+            
+            <a class="nav-link" href="/tasks/cbv-generic/">Household tasks</a>
+            <a class="nav-link" href="/tasks/manage/">Task board</a>
+            
+            <a class="nav-link" href="/tasks/ai/">AI Brain Dump</a>
+            <a class="nav-link" href="/tasks/ask/">Ask Hestia</a>
+            <a class="nav-link" href="/tasks/search/">Search tasks</a>
+            <a class="nav-link" href="/lookup/">Product lookup</a>
+            <a class="nav-link" href="/analytics/tasks/">Task statistics</a>
+            <a class="nav-link" href="/reports/tasks/">Reports</a>
+            <a class="nav-link" href="/vega-lite/">Charts</a>
+            
+        </div>
+    </nav>
+    
+
+    
+    <main id="main-content" class="container" tabindex="-1">
+        
+<header class="page-header">
+    <span class="eyebrow">Household handbook</span>
+    <h1>Ask Hestia</h1>
+    <p>Ask about chores, shopping, inventory, maintenance, or preparing for guests.</p>
+</header>
+
+<section class="task-card">
+    <form method="post" action="/tasks/ask/">
+        <input type="hidden" name="csrfmiddlewaretoken" value="WVarfOc36LpEoiajPPnsM6PHzt4TGCDPSL4Hp6PYNAm5mLviJzg391sDlr0U0qOt">
+        
+        <div class="form-field">
+            <label for="id_question">Your household question:</label>
+            <textarea name="question" cols="40" rows="3" placeholder="Where do we keep the shared cordless drill?" maxlength="500" required id="id_question">
+The bathroom tap has a slow drip even with the handle shut. How do I report it to our household?</textarea>
+            
+        </div>
+        <p class="field-help">Up to 500 characters. Answers come from the example household handbook.</p>
+        <button type="submit">Ask Hestia</button>
+    </form>
+    <p class="field-help">The first question may take several minutes while local models download and load. Please keep this page open.</p>
+</section>
+
+
+
+
+<section class="task-card" aria-labelledby="ask-answer-heading">
+    <h2 id="ask-answer-heading">Answer</h2>
+    <p>Attach a photo if you can take one safely. Check for an existing card for that fixture before opening a new one, and add your observation to the existing card if it is already listed.</p>
+    
+    <p class="field-help">Answered in 7.051 seconds.</p>
+</section>
+
+<section aria-labelledby="ask-sources-heading">
+    <h2 id="ask-sources-heading">Handbook sources</h2>
+    
+    <article class="task-card">
+        <h3>Bathroom tap maintenance requests</h3>
+        <p class="field-help">maintenance · fixed-maintenance-01</p>
+        <p>Residents use the maintenance board to report problems with household fixtures. A useful report describes the fixture, the room, the symptom, and when it was noticed. A clear description makes it easier for the coordinator to recognize whether several residents are reporting the same problem. Photos can be useful if the issue is visible and the resident can take them without handling the fixture. If a photo cannot be taken easily, a written description is sufficient to start a report. The household coordinator checks the board to decide what follow-up is needed and records who will handle it. For a slow drip from the bathroom tap, open a Plumbing card on the Maintenance board. Write the room, the time you first noticed the drip, and whether it continues with the handle fully closed.</p>
+    </article>
+    
+    <article class="task-card">
+        <h3>Bathroom tap maintenance requests</h3>
+        <p class="field-help">maintenance · fixed-maintenance-02</p>
+        <p>Attach a photo if you can take one safely. Check for an existing card for that fixture before opening a new one, and add your observation to the existing card if it is already listed. Notify the household maintenance coordinator through that card. This is the household reporting workflow for a slow tap drip and leaves repair decisions with the coordinator. The coordinator reviews tap reports together with earlier maintenance notes for the same fixture. If a visit is planned, the coordinator records the appointment status and any access arrangements on the card. Residents add new observations to that card when the symptom changes, which keeps the account of the problem in one place. A card remains open while an inspection or repair is still pending.</p>
+    </article>
+    
+</section>
+
+
+
+        
+        
+        
+        
+    </main>
+    <footer class="hestia-footer">
+        <div class="container">
+            <strong>Hestia</strong> &middot; Household responsibilities, together.
+            <p>INFO 490 &middot; Team 12 &middot; University of Illinois Urbana-Champaign</p>
+        </div>
+    </footer>
+    
+</body>
+</html>

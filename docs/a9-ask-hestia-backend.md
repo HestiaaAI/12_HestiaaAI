@@ -63,7 +63,7 @@ text with Django autoescaping.
 | `latency_seconds` | Wall-clock seconds for retrieval and generation, including time waiting for the model lock and any first-load work |
 | `model_id`, `embedding_model_id` | Model identifiers for the evaluation record |
 
-The index searches 30 normalized chunk vectors using cosine similarity. It takes
+The current index searches 20 normalized overlapping-paragraph chunk vectors using cosine similarity. It takes
 up to two passages with scores of at least 0.30. With no eligible passage, the
 service returns `no_context` without calling Qwen. The threshold is provisional
 and should be evaluated on additional unrelated and ambiguous questions. The
@@ -102,3 +102,7 @@ For “Where does the shared cordless drill normally live?”, the revised servi
 returned “blue tool bin in the hallway cupboard.” with `fixed-inventory-01` as
 the top passage. That cold CPU request took 44.232 seconds.
 Answer quality and CPU latency remain limitations to evaluate in the app.
+
+## A9 integrated evaluation
+
+The [Person 3 evaluation](../a9/EVALUATION.md) records actual before/after page requests. The measured chunking intervention changes fixed chunks to overlapping paragraphs, improving the complete plumbing answer while preserving a documented drill-location hallucination. The [runner instructions](../a9/README.md) explain the saved evidence and replay.
