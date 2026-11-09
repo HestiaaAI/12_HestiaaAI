@@ -109,3 +109,10 @@ small-model RAG rows and 10 paired scaling requests from the returned Colab run.
 reviewed quality/noise and measured end-to-end latency. Rebuild the tables with
 `python -m a8.person2_analysis`. Reviews are AI-assisted; student signoff is not
 recorded. These Colab timings are separate from the matched Person 3 Mac matrix.
+
+## Person 4 top-k improvement evidence
+
+Failure analysis and the top-k 3→2 improvement for `large/full/hybrid/Q1` are in
+[rag_analysis.md](rag_analysis.md). Saved before/after artifact:
+`results/person4/improvement_topk2_large_hybrid_Q1.json`. Validate with
+`python -m a8.person4_improvement`.

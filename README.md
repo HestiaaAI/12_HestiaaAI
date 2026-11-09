@@ -5,6 +5,16 @@ shopping and an AI brain-dump workflow. This repository also contains the two
 independent Assignment 7 research submissions. **Django is not needed to review
 or run the Assignment 7 experiments.**
 
+## Current submissions: Assignment 8 + Assignment 9
+
+- **A9 Ask Hestia** (Django RAG at `/tasks/ask/`): setup below under
+  [Assignment 9](#assignment-9--ask-hestia-current-django-ai-feature); AI docs in
+  [README_AI.md](README_AI.md); demo [a9/person4/DEMO.md](a9/person4/DEMO.md).
+- **A8 RAG package:** [a8/README.md](a8/README.md), analysis
+  [a8/rag_analysis.md](a8/rag_analysis.md), Canvas ZIP on `dev-ag-a8-canvas-zip`.
+
+Historical A7 research package (still complete for review):
+
 ## Current submissions: Assignment 7
 
 Start with the [submission guide](a7/SUBMISSION.md). It maps every requirement to

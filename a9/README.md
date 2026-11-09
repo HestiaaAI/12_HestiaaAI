@@ -39,6 +39,10 @@ Use EVALUATION.md and evaluation.csv for steps 3.1–3.4 and integrate their fin
 ## Person 4 notes (appended)
 
 Person 4 integration is under [person4/](person4/): architecture diagram, README_AI
-append, demo rehearsal (Q4 + G3 successes, Q3 limitation) and Canvas PDF.
-Re-verify those three prompts in a signed-in browser before the live slot; cold
-CPU loads remain slow.
+append, demo rehearsal and Canvas PDF.
+
+**Demo selection locked:** Success Q4 (only fully correct content case after
+overlap), Success G3 (abstention; second measured pass), Limitation Q3 (green-bin
+hallucination). See [EVALUATION.md](EVALUATION.md) Person 4 note and
+[person4/DEMO.md](person4/DEMO.md). Re-verify in a signed-in browser before
+Thu 12 Nov 2026 · 8:30 AM · EDUC 333; cold CPU loads remain slow.
