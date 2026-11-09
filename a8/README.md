@@ -78,6 +78,7 @@ Zip these four files for Canvas. Keep the full `a8/` tree on GitHub.
 |---|---|
 | [rag_system.ipynb](rag_system.ipynb) | Full implementation and experiments |
 | [rag_analysis.md](rag_analysis.md) | Evaluation tables, comparisons, failures, system design |
+| [system_design_diagram.png](system_design_diagram.png) | System design diagram referenced by the analysis |
 | [requirements.txt](requirements.txt) | Dependencies |
 | This README | Setup and how to run the notebook |
 
@@ -94,5 +95,5 @@ weights; public Hugging Face snapshots download on first inference.
 
 ```sh
 cd a8
-zip hestia-a8-canvas.zip rag_system.ipynb rag_analysis.md requirements.txt README.md
+zip hestia-a8-canvas.zip rag_system.ipynb rag_analysis.md system_design_diagram.png requirements.txt README.md
 ```

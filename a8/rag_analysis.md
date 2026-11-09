@@ -180,20 +180,30 @@ every missing fact.
 
 ### Step 4.3 · Design for 10K users/day
 
-```mermaid
-flowchart LR
-    User --> Query
-    Query --> Embedding
-    Embedding --> VectorStore[Vector store / handbook index]
-    VectorStore --> RetrievedContext[Retrieved context]
-    RetrievedContext --> LLM
-    LLM --> Response
-```
+Project-specific system diagram (same RAG stages as the brief, labeled with this
+team’s stack):
 
-At 10K questions/day (~0.12 qps average), one small generation worker covers mean
-load; add a replica for peaks. Optimize generation and validation first, keep
-overlap chunking, default top-k=2 after the distractor finding, version the index
-on handbook edits, and never execute chores from text without Hestia confirmation.
+![Ask Hestia RAG system design with tech stack](system_design_diagram.png)
+
+| Stage | Hestia tech stack |
+|---|---|
+| User | Household member with a chores / shopping / tools / maintenance / guest question |
+| Query | Natural-language text; five fixed evaluation queries in `data/queries.json` |
+| Embedding | Free Hugging Face sentence-transformers: MiniLM (384), MPNet (768), BGE-large (1024) |
+| Vector Store | In-memory exact cosine index over A8 handbook chunks (`fixed` / `overlap` / `hybrid`) |
+| Retrieved Context | Top-k passages with scores (k=3 in the matrix; k=2 in the distractor fix) |
+| LLM | Frozen A6/A7 model `Qwen/Qwen2-0.5B-Instruct`, greedy decode, 128 new tokens |
+| Response | Generated answer + retrieved evidence; scored with the shared rubric |
+
+**How it scales to 10K users/day.** Average load is only ~0.12 questions/s. One
+small CPU/GPU generation worker covers the mean; add a second replica for peaks.
+The vector store stays tiny (tens of handbook chunks), so search is not the
+bottleneck—generation is.
+
+**What to optimize first.** (1) Generation quality/latency or a stronger local
+generator after re-qualification. (2) Top-k / distractor control (hybrid Q1).
+(3) Keep overlap chunking as the default packer. (4) Version the index on handbook
+edits. Do not auto-execute chores from generated text without Hestia confirmation.
 
 ---
 
