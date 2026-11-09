@@ -92,12 +92,35 @@ kitchen-close prompt (Q1). Overlap produced four complete answers and one miss
 
 ### Step 2.5 · Data scaling
 
-Person 2 fixed MiniLM + hybrid + k=3 and compared `small` (15 paragraphs) vs
-`full` (30). Supporting sources stayed at rank 1 with full quote coverage on both
-sizes. Lower-ranked IDs changed on four of five queries when neighboring topics
-were added—competition/noise risk without losing the gold evidence. Median warmed
-retrieval stayed ~5 ms; index build roughly doubled. Detail:
-`person2/FINDINGS.md`, `results/person2/.../retrieval_scaling.csv`.
+Person 2 completed a separate Colab CPU run with MiniLM + hybrid + k=3 and
+compared `small` (15 paragraphs / 10 chunks) with `full` (30 paragraphs / 20 chunks).
+The generator revision, prompt, greedy decoding, 128-token cap, CPU float32,
+four-thread setting and recorded environment match across both datasets.
+
+| Dataset | Evidence coverage | Mean answer /100 | Reviewed irrelevant chunks | Median retrieval | Median full request |
+|---|---:|---:|---:|---:|---:|
+| small | 100% | 35.00 | 40% | 39.26 ms | 35.97 s |
+| full | 100% | 40.00 | 40% | 35.85 ms | 31.82 s |
+
+Supporting sources remain at rank one, and all reference quotes remain in the top
+three. Added neighboring topics change lower-ranked hits on four queries without
+changing the reviewed noise fraction. Relevant approval/hand-off context is not
+classified as noise merely because it lacks a reference quote.
+
+The five-point mean answer difference comes only from Q3 (0 to 25): the smaller-set
+answer invents a green kitchen tool bin; the full-set answer returns the kit to the
+correct blue hallway bin but still omits facts. The aggregate ordering is sensitive
+to grading the small grocery answer's “checked out” wording: removing its unsupported
+status deduction changes the small mean to 45. These five questions do not establish
+a general quality or latency benefit from larger data. Timings are individual warmed
+requests in dataset order, with variable-length generation; they are not a repeated
+load test. Do not pool this Colab timing environment with the Mac comparisons above.
+
+Complete raw prompts/contexts/answers, hash-bound AI-assisted reviews and paired
+results are in `results/person2/completed-2026-11-09/`. See
+`person2/FINDINGS.md` and `person2_retrieval_scaling.ipynb`. Student signoff is not
+recorded. The earlier Mac retrieval-only results remain historical evidence rather
+than being relabeled as these new end-to-end requests.
 
 ---
 

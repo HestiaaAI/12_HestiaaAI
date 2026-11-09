@@ -34,7 +34,7 @@ def environment():
     for name in ['numpy', 'torch', 'sentence-transformers', 'transformers', 'huggingface-hub']:
         try: packages[name] = importlib.metadata.version(name)
         except importlib.metadata.PackageNotFoundError: packages[name] = None
-    try: commit = subprocess.check_output(['git','rev-parse','HEAD'], text=True).strip()
+    try: commit = subprocess.check_output(['git','rev-parse','HEAD'], text=True, stderr=subprocess.DEVNULL).strip()
     except (OSError, subprocess.CalledProcessError): commit = None
     import torch
     return {'torch_threads': torch.get_num_threads(), 'python': platform.python_version(), 'platform': platform.platform(),

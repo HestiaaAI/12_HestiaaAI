@@ -1,0 +1,3 @@
+dataset,queries,mean_context_quality,mean_answer_quality,mean_irrelevant_chunk_fraction,median_retrieval_ms,median_generation_ms,median_end_to_end_ms
+small,5,100.0,35.0,0.39999999999999997,39.25468800002818,35927.50292000005,35966.84719600012
+full,5,100.0,40.0,0.39999999999999997,35.84612000008747,31778.610197000035,31816.993324999887

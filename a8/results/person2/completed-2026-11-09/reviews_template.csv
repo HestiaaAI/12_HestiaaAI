@@ -1,0 +1,26 @@
+experiment,row_id,evidence_sha256,matched_facts,unsupported_count,relevant_ranks,notes
+matrix,small/full/fixed/Q1,6a546b1438554a101564d534a5886b720ffc5c2616891956e87164a2a6b6b5a9,,,,PENDING REVIEW
+matrix,small/full/fixed/Q2,731094581277ab25c911cda5ed2032e055b518741f7eefd14513838a6c12f5e4,,,,PENDING REVIEW
+matrix,small/full/fixed/Q3,bf0023a60d146df8b2ea2288592895a7e2024ce8b3ce39b8d02d7caa0e6b1200,,,,PENDING REVIEW
+matrix,small/full/fixed/Q4,f809e055090a604e5af7e80426aadf013d4f4060f4db02cab31509a66fee3afe,,,,PENDING REVIEW
+matrix,small/full/fixed/Q5,b00550978f176104268562dac9b871bc41b9fbb86e947e085b6efd849930ba42,,,,PENDING REVIEW
+matrix,small/full/overlap/Q1,855284b1ae3573563a36e8e51ada22f68da6b92da834770bfed6e985b05adfef,,,,PENDING REVIEW
+matrix,small/full/overlap/Q2,00e70a9593c6441ca31056bb99eabdffb666a6d4efe8bed9d268cfa9658cff90,,,,PENDING REVIEW
+matrix,small/full/overlap/Q3,297ad7c4daa34ce4472a83b0e33ed2e0c52aaf66a8d6580f75ea84a1ebaaa02f,,,,PENDING REVIEW
+matrix,small/full/overlap/Q4,5a9605cac2e53f25f895a51ae135416740d5df4fc60c7471c27adb3cdaddcb6a,,,,PENDING REVIEW
+matrix,small/full/overlap/Q5,0c7b44bdb6f43ae486bab756a02df30a655683413c07d768596ee0af2c9c6f75,,,,PENDING REVIEW
+matrix,small/full/hybrid/Q1,55a74a9e24413409a1e49cf6a44584a3731bbd703c57b27f3ba86fb69cd701c0,,,,PENDING REVIEW
+matrix,small/full/hybrid/Q2,dbb9cddeb3272d53e2033f6ac8dae0d84eabd662d6556efbb497b0f8176a0f02,,,,PENDING REVIEW
+matrix,small/full/hybrid/Q3,520c50d654df663c93d351c502f7fe701df1d2e62220611b40911f334634d4ed,,,,PENDING REVIEW
+matrix,small/full/hybrid/Q4,c905582e0c11cdec165809a381823d0d9c111adeaea225b1f4f41da24bbc3447,,,,PENDING REVIEW
+matrix,small/full/hybrid/Q5,35f5ca1022a8fdf844401f69e1cd586898ccb77678f2068480a8f20ebe2c1e35,,,,PENDING REVIEW
+scaling,small/small/hybrid/Q1,b25aedc831f6ab3c1413576e9ffde5e42fc23295007ee7ec4c5c7c7202dd0103,,,,PENDING REVIEW
+scaling,small/small/hybrid/Q2,33d24eb7b109ea07a4f01f85ebfada3baa361fc9c48c05d630ad8e1945d8d1e8,,,,PENDING REVIEW
+scaling,small/small/hybrid/Q3,034b6a816fe056b911dbc6287fcfaaba1a4d4802a753fba4ebb158445d9a5b8c,,,,PENDING REVIEW
+scaling,small/small/hybrid/Q4,53cab7fd96b4723505beb401bb91fae4034ab3c5f25c3ae8dfee3a2ec0e86e50,,,,PENDING REVIEW
+scaling,small/small/hybrid/Q5,f643bc8b9af08596249e277e68e7d65b090ee408d4cfa81a9408e2d2d2092158,,,,PENDING REVIEW
+scaling,small/full/hybrid/Q1,839a03d73af102ae9aabde14793a0231fd59a451437174a82ccf38bd4c8e0df2,,,,PENDING REVIEW
+scaling,small/full/hybrid/Q2,6575a2763a59dbadc436713384c3e17aa94093cd1707f80a3137f819c3b92ea1,,,,PENDING REVIEW
+scaling,small/full/hybrid/Q3,77bd92a029fcf459e0ce48bbe0268fe491757e22ad60359ee1d5f5a5bc01e19d,,,,PENDING REVIEW
+scaling,small/full/hybrid/Q4,84ac11d373dc1bac290e494a514d03806312cf45c81f501ab68b80622ff829e6,,,,PENDING REVIEW
+scaling,small/full/hybrid/Q5,229e3352d707f2ab644f9eb237d23f1f4dc55135ecc8f5e45d8922cad91c835e,,,,PENDING REVIEW
