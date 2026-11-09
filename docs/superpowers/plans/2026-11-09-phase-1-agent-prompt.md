@@ -1,6 +1,6 @@
 # Phase 1 delegation prompt
 
-You are the senior Django engineer implementing Phase 1 of Hestia's demo preparation. Your assignment is to complete household isolation and a shared active-household context across the existing application. Deliver working code, regression tests and a teammate integration contract. Do not stop at a proposal or a resolver helper.
+You are the senior Django engineer implementing Phase 1 of Hestia's demo preparation. Your assignment is to complete household isolation, consolidation of scattered assignment implementations, and a shared active-household context across the existing application. Deliver working code, regression tests and a teammate integration contract. Do not stop at a proposal or a resolver helper.
 
 ## Read first
 
@@ -17,7 +17,7 @@ Inspect actual current code and git state before changing anything. Base review 
 
 Roommates need one coherent household experience. A selected household must control task lists, details, creation, search, APIs, reports, exports, product lookup and AI task workflows. The selected household shown in navigation must match the data on every page. A household selector without actual query/write isolation is a failed deliverable.
 
-Reuse Django sessions/allauth and existing Workspace/Membership. Display Household in product copy. No new dependency, auth system, duplicated Household model, broad refactor or visual redesign. The UI teammate owns styling; provide stable names, form fields, context and useful semantic empty/error states.
+Reuse Django sessions/allauth and existing Workspace/Membership. Display Household in product copy. No new dependency, auth system, duplicated Household model or visual redesign. Targeted consolidation of assignment-driven duplication is explicitly in scope. The UI teammate owns styling; provide stable names, form fields, context and useful semantic empty/error states.
 
 ## Implement these four tasks in order
 
@@ -59,3 +59,16 @@ Use existing Python environment and explicit local test configuration; never cop
 Finish only Phase 1. Do not build household creation, invitations, member lifecycle, grocery expiry, Splitwise, task recurrence, PWA/native packaging or deployment. Those belong to later phases/teammates.
 
 Return: implemented behavior, commits/files, completed route matrix, actual test commands/counts/results, manual verification performed, known limitations and anything that blocks the acceptance gate. Report remaining later-phase work separately. The gate is satisfied only when existing data-bearing features consistently enforce active household isolation and the regression suite proves it.
+
+
+## Expanded mandatory Phase 1 assignment: consolidate the experience
+
+The user explicitly added removal/consolidation of isolated assignment services and functions to Phase 1. Read the “Phase 1 scope expansion — retire assignment fragmentation” and Task 5 sections in the phased plan and implement them after tasks 1–4. This is part of the completion gate, not a later suggestion.
+
+Deliver one canonical task board with integrated search/create, contextual AI drafting, task detail/action-plan and one insights destination. Selected-household Home leads to that board. Household selection persists across the journey. Replace top-level assignment/demo links with Tasks and Household; add Groceries/Expenses only when actual features exist. Keep product lookup as a secondary catalogue tool and sample-handbook help accurately labeled.
+
+Inventory callers/configuration before deleting code. Merge four separate list implementations and standalone search into the canonical workflow; old GET URLs become safe thin redirects and POST search remains read-only. Consolidate overlapping report aggregation behind explicit scoped query inputs. Share draft extraction/validation between HTML and JSON adapters while preserving their response contracts, provider behavior and review-before-save flow. Distinct model runtimes, task-plan generation and handbook retrieval do not become one generic AI service. Remove only proven-unused production wrappers/templates; preserve historical assignment artifacts.
+
+Add failing unified-journey, legacy alias, shared-helper/schema, household context, provider-failure and product-copy tests before restructuring. Document every keep/merge/remove/alias decision and its replacement. Hiding links alone does not satisfy the assignment. A full rewrite, new AI abstraction framework or deleting useful features also fails it.
+
+Final report must demonstrate both isolation and consolidation: canonical route map, removed/merged handlers/functions with replacement, remaining intentional adapters, real test evidence, and signed-in browser checks actually performed. Stop before household creation/invitations and other later phases.
