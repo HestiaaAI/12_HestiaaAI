@@ -9,6 +9,9 @@ from django.views.decorators.http import require_GET
 
 from analytics.views import priority_counts
 from workflows.models import Task
+from households.context import require_household
+
+SAMPLE_PRIORITIES = [{"label": label, "count": count} for (_, label), count in zip(Task.Priority.choices, (2, 4, 3, 1))]
 
 
 def chart_response(rows, *, public=False):
@@ -23,13 +26,13 @@ def chart_response(rows, *, public=False):
 @login_not_required
 @require_GET
 def task_priority_summary(request):
-    return chart_response(priority_counts(), public=True)
+    return chart_response(SAMPLE_PRIORITIES, public=True)
 
 
 @require_GET
 def task_creation_summary(request):
     """Daily task definitions, including zero days between first and last creation."""
-    grouped = list(Task.objects.order_by().annotate(date=TruncDate("created_at", tzinfo=timezone.utc))
+    grouped = list(Task.objects.filter(workspace=require_household(request).workspace).order_by().annotate(date=TruncDate("created_at", tzinfo=timezone.utc))
                    .values("date").annotate(count=Count("pk")).order_by("date"))
     if not grouped:
         return chart_response([])

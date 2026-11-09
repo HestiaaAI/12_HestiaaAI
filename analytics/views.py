@@ -11,14 +11,15 @@ from matplotlib.figure import Figure
 from matplotlib.ticker import MaxNLocator
 
 from workflows.models import Task
+from households.context import require_household
 
 # Matplotlib rendering is not thread-safe. Serialize charts in each worker.
 _chart_lock = Lock()
 
 
-def priority_counts():
+def priority_counts(tasks):
     """Aggregate in SQL, then include zero-count choices in model order."""
-    grouped = Task.objects.order_by().values("priority").annotate(count=Count("pk"))
+    grouped = tasks.order_by().values("priority").annotate(count=Count("pk"))
     counts = {row["priority"]: row["count"] for row in grouped}
     return [
         {"label": label, "count": counts.get(value, 0)}
@@ -30,16 +31,21 @@ def priority_counts():
 def task_stats(request):
     """Show all task definitions and their total and priority summary."""
     return render(request, "analytics/task_stats.html", {
-        "tasks": Task.objects.select_related("workspace").all(),
-        "total_tasks": Task.objects.count(),
-        "priority_counts": priority_counts(),
+        "tasks": Task.objects.filter(workspace=require_household(request).workspace).select_related("workspace"),
+        "total_tasks": Task.objects.filter(workspace=require_household(request).workspace).count(),
+        "priority_counts": priority_counts(Task.objects.filter(workspace=require_household(request).workspace)),
     })
 
 
 @require_safe
 def task_priority_chart(request):
     """Render fresh ORM counts as a PNG in memory, without pyplot or disk files."""
-    rows = priority_counts()
+    rows = priority_counts(Task.objects.filter(workspace=require_household(request).workspace))
+    return render_priority_chart(rows)
+
+
+def render_priority_chart(rows):
+    rows = rows or [{"label": "No tasks", "count": 0}]
     with _chart_lock:
         figure = Figure(figsize=(8, 4.5), dpi=120, layout="constrained")
         FigureCanvasAgg(figure)

@@ -36,8 +36,9 @@ def chart_spec(request, chart):
 def chart_image(request, chart):
     if chart not in CHARTS:
         raise Http404("Unknown chart")
-    filename, _ = CHARTS[chart]
-    path = ARTIFACTS / "outputs" / f"{filename}.png"
-    if not path.is_file():
-        raise Http404("Chart snapshot has not been generated")
-    return FileResponse(path.open("rb"), content_type="image/png")
+    from .views import render_priority_chart
+    from api.chart_views import SAMPLE_PRIORITIES, task_creation_summary
+    if chart == 'chart1':
+        return render_priority_chart(SAMPLE_PRIORITIES)
+    rows = json.loads(task_creation_summary(request).content)
+    return render_priority_chart([{'label': row['date'], 'count': row['count']} for row in rows])

@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views.decorators.http import require_GET
 
 from workflows.models import Task
+from households.context import require_household
 from workflows.task_queries import filter_task_queryset
 
 from .external import ExternalAPIError, compare_products
@@ -16,7 +17,7 @@ API_FIELDS = ("task_id", "title", "task_type", "priority")
 def task_list_api(request):
     """Section 6: filtered task list as JSON, e.g. /api/tasks/?q=groceries&workspace_name=demo."""
     tasks = filter_task_queryset(
-        Task.objects.all(),
+        Task.objects.filter(workspace=require_household(request).workspace),
         q=request.GET.get("q", ""),
         workspace_name=request.GET.get("workspace_name", ""),
     ).values(*API_FIELDS)
@@ -38,7 +39,7 @@ def response_demo(request):
 def product_compare_api(request):
     """A4: JSON comparison of ?q= against Open Food Facts and Hestia rows."""
     try:
-        payload = compare_products(request.GET.get("q", ""))
+        payload = compare_products(request.GET.get("q", ""), workspace=require_household(request).workspace)
     except ExternalAPIError as exc:
         return JsonResponse({"ok": False, "error": exc.message}, status=exc.status)
     return JsonResponse(payload)
@@ -55,7 +56,7 @@ def product_compare_page(request):
             {"q": "", "result": None, "error": None},
         )
     try:
-        result = compare_products(query)
+        result = compare_products(query, workspace=require_household(request).workspace)
     except ExternalAPIError as exc:
         return render(
             request,

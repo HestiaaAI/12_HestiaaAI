@@ -8,29 +8,31 @@ from django.utils import timezone
 from django.views.decorators.http import require_GET
 
 from workflows.models import Task
+from households.context import require_household
 
 EXPORT_FIELDS = ("id", "title", "household", "task_type", "priority")
 
 
-def task_records():
+def task_records(tasks):
     """Both formats export the same explicit fields in primary-key order."""
-    return Task.objects.order_by("pk").values(
+    return tasks.order_by("pk").values(
         "title", "task_type", "priority", id=F("pk"), household=F("workspace__name")
     )
 
 
-def grouped_summary(field, choices):
+def grouped_summary(tasks, field, choices):
     labels = dict(choices)
-    rows = Task.objects.order_by(field).values(field).annotate(count=Count("pk"))
+    rows = tasks.order_by(field).values(field).annotate(count=Count("pk"))
     return [{"label": labels.get(row[field], row[field]), "count": row["count"]} for row in rows]
 
 
 @require_GET
 def task_report(request):
+    tasks = Task.objects.filter(workspace=require_household(request).workspace)
     return render(request, "reports/tasks.html", {
-        "total_tasks": Task.objects.count(),
-        "priority_summary": grouped_summary("priority", Task.Priority.choices),
-        "type_summary": grouped_summary("task_type", Task.TaskType.choices),
+        "total_tasks": tasks.count(),
+        "priority_summary": grouped_summary(tasks, "priority", Task.Priority.choices),
+        "type_summary": grouped_summary(tasks, "task_type", Task.TaskType.choices),
     })
 
 
@@ -48,7 +50,7 @@ def tasks_csv(request):
     response["Content-Disposition"] = f'attachment; filename="tasks_{stamp}.csv"'
     writer = csv.writer(response)
     writer.writerow(EXPORT_FIELDS)
-    for task in task_records().iterator():
+    for task in task_records(Task.objects.filter(workspace=require_household(request).workspace)).iterator():
         writer.writerow(csv_cell(task[field]) for field in EXPORT_FIELDS)
     return response
 
@@ -56,7 +58,7 @@ def tasks_csv(request):
 @require_GET
 def tasks_json(request):
     generated_at = timezone.now()
-    tasks = [{field: task[field] for field in EXPORT_FIELDS} for task in task_records()]
+    tasks = [{field: task[field] for field in EXPORT_FIELDS} for task in task_records(Task.objects.filter(workspace=require_household(request).workspace))]
     response = JsonResponse({
         "generated_at": generated_at.isoformat(),
         "record_count": len(tasks),

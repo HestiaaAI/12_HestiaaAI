@@ -30,7 +30,7 @@ class ExternalAPIError(Exception):
         self.status = status
 
 
-def compare_products(raw_query):
+def compare_products(raw_query, *, workspace):
     """Return a processed comparison for one search term.
 
     Raises ExternalAPIError for a blank query or an upstream failure.
@@ -41,12 +41,12 @@ def compare_products(raw_query):
     if len(query) > MAX_QUERY_LENGTH:
         raise ExternalAPIError("Search terms must be 80 characters or fewer.", 400)
 
-    internal = _internal_matches(query)
+    internal = _internal_matches(query, workspace=workspace)
     external = _fetch_open_food_facts(query)
     return _build_payload(query, internal, external)
 
 
-def _internal_matches(query):
+def _internal_matches(query, *, workspace):
     """Read matching household rows. Nothing from the public API is written."""
     products = [
         {
@@ -54,7 +54,7 @@ def _internal_matches(query):
             "name": product.canonical_name,
             "workspace": product.workspace.name,
         }
-        for product in Product.objects.filter(canonical_name__icontains=query)
+        for product in Product.objects.filter(workspace=workspace, canonical_name__icontains=query)
         .select_related("workspace")
         .order_by("product_id")
     ]
@@ -65,7 +65,7 @@ def _internal_matches(query):
             "state": entry.state,
             "workspace": entry.workspace.name,
         }
-        for entry in ShoppingListEntry.objects.filter(item_name__icontains=query)
+        for entry in ShoppingListEntry.objects.filter(workspace=workspace, item_name__icontains=query)
         .select_related("workspace")
         .order_by("shopping_list_entry_id")
     ]
@@ -76,7 +76,7 @@ def _internal_matches(query):
             "workspace": task.workspace.name,
         }
         for task in Task.objects.filter(
-            Q(task_type=Task.TaskType.SHOPPING) & Q(title__icontains=query)
+            Q(workspace=workspace) & Q(task_type=Task.TaskType.SHOPPING) & Q(title__icontains=query)
         )
         .select_related("workspace")
         .order_by("task_id")
