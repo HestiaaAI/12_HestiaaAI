@@ -40,14 +40,14 @@ observe warm requests separately.
   SmolLM2 in the recorded tests. These benchmarks used different tasks from Ask
   Hestia, and the SmolLM2 run used different hardware. See
   `a7/results/architecture/model_summary.csv`.
-- **A8.** The backend imports `a8.corpus` and uses its full handbook with
-  overlapping-paragraph chunks (Person 3’s measured A9 intervention). It uses
+- **A8.** The backend imports `a8.corpus` and uses its full handbook with the
+  fixed, sentence-preserving chunks. It uses
   [MiniLM](https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2), a public
   384-dimensional sentence encoder, through Transformers with attention-mask
   mean pooling and L2 normalization. The 256-token limit is enforced before
-  encoding. The [Qwen model card](https://huggingface.co/Qwen/Qwen2-0.5B-Instruct)
-  documents the generator used locally. See [a9/EVALUATION.md](../a9/EVALUATION.md)
-  for the fixed-vs-overlap comparison on the live Django page.
+  encoding. This is an initial design choice while the full A8 comparison is
+  pending. The [Qwen model card](https://huggingface.co/Qwen/Qwen2-0.5B-Instruct)
+  documents the generator used locally.
 
 ## Django integration contract
 
@@ -106,3 +106,9 @@ Answer quality and CPU latency remain limitations to evaluate in the app.
 ## A9 integrated evaluation
 
 The [Person 3 evaluation](../a9/EVALUATION.md) records actual before/after page requests. The measured chunking intervention changes fixed chunks to overlapping paragraphs, improving the complete plumbing answer while preserving a documented drill-location hallucination. The [runner instructions](../a9/README.md) explain the saved evidence and replay.
+
+## Person 4 note (appended)
+
+The live Ask Hestia index now uses overlapping-paragraph chunks from Person 3’s
+measured A9 intervention (see [a9/EVALUATION.md](../a9/EVALUATION.md)). The A8
+bullet above records the original fixed-chunk service handoff.

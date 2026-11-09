@@ -1,11 +1,14 @@
-# Hestia AI — integrated AI features
+# Hestia AI Household Brain Dump — A6
 
-## Assignment 9 · Ask Hestia (Django RAG feature)
+## Assignment 9 Ask Hestia backend
 
-Ask Hestia is the primary A9 AI feature: signed-in handbook Q&A at `/tasks/ask/`.
-It reuses A8 retrieval/chunking and an A6/A7-tested local generator. No paid API
-is required for the main path. Backend contract:
-[docs/a9-ask-hestia-backend.md](docs/a9-ask-hestia-backend.md).
+The [Ask Hestia backend handoff](docs/a9-ask-hestia-backend.md) covers local setup,
+the Django service interface, A6/A7 model selection and A8 handbook retrieval.
+
+## Assignment 9 · Ask Hestia (Person 4 documentation)
+
+Person 4 appends the grader-facing design, evaluation summary, and demo notes below.
+The backend handoff above remains the service contract.
 
 ### AI workflow (Part 2.1)
 
@@ -86,9 +89,8 @@ python manage.py ask_hestia "Where does the shared cordless drill normally live?
 python manage.py test workflows.test_ask_hestia workflows.test_ask_hestia_views
 ```
 
-## Assignment 6 · AI Brain Dump
 
-### Run the Brain Dump app
+## Run the integrated app
 
 Use Python 3.12 or newer for the current complete requirements (verified separately
 on Python 3.14.3). The team benchmark notebook uses a separate Python 3.11 environment.

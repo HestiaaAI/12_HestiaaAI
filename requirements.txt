@@ -27,8 +27,8 @@ six==1.17.0
 sqlparse==0.6.0
 urllib3==2.8.0
 
-# Local Hugging Face — A6 Brain Dump and A9 Ask Hestia
-# Ask Hestia loads MiniLM + Qwen2-0.5B through Transformers (no sentence-transformers package required).
+# A6 local Hugging Face (Person 2)
+# A9 Ask Hestia also uses these packages for MiniLM + Qwen2-0.5B (Transformers; no sentence-transformers package required).
 accelerate==1.15.0
 huggingface-hub==0.36.2
 protobuf==6.33.6
