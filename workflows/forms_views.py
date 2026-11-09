@@ -8,7 +8,7 @@ from django.views.generic import ListView
 from households.models import Membership
 from households.context import HouseholdRequired, require_household
 from .models import Task
-from .task_forms import TaskCreateForm, TaskFilterForm, available_workspaces
+from .task_forms import TaskCreateForm, TaskFilterForm
 
 
 class TaskBoardView(ListView):
@@ -37,7 +37,7 @@ class TaskBoardView(ListView):
         context = super().get_context_data(**kwargs)
         context["filter_form"] = self.filter_form
         context.setdefault("create_form", TaskCreateForm(membership=self.request.active_membership))
-        context["has_workspaces"] = available_workspaces(self.request.active_membership).exists()
+        context["has_workspaces"] = bool(self.request.active_membership)
         context["has_filters"] = any(self.request.GET.get(key) for key in self.filter_form.fields)
         params = self.request.GET.copy()
         params.pop("page", None)

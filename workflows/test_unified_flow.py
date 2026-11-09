@@ -52,5 +52,3 @@ class UnifiedFlowTests(TestCase):
         self.assertRedirects(response,reverse('task_forms:board'))
         self.assertEqual(self.ta.__class__.objects.filter(workspace=self.a).count(),4)
         self.assertEqual(self.ta.__class__.objects.filter(workspace=self.b).count(),1)
-
-

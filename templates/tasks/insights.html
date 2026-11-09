@@ -3,6 +3,5 @@
 {% block content %}<h1>Household insights</h1><p>{{ total_tasks }} tasks in {{ active_household.name }}</p>
 <h2>Priority</h2><ul>{% for row in priority_summary %}<li>{{ row.label }}: {{ row.count }}</li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
 <h2>Task type</h2><ul>{% for row in type_summary %}<li>{{ row.label }}: {{ row.count }}</li>{% empty %}<li>No tasks yet.</li>{% endfor %}</ul>
-<img src="{% url 'analytics:task-priority-chart' %}" alt="Task counts by priority for the selected household" style="max-width:100%">
 <p><a href="{% url 'workflows:task-export-csv' %}">Download CSV</a></p>
 <a href="{% url 'task_forms:board' %}">Back to Tasks</a>{% endblock %}

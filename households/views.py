@@ -14,7 +14,7 @@ def onboarding(request):
 @login_required
 @require_GET
 def household_list(request):
-    return render(request, 'households/list.html', {'memberships': active_memberships(request.user)})
+    return render(request, 'households/list.html', {'memberships': request.household_memberships})
 
 
 @login_required

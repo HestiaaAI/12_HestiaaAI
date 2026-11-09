@@ -47,9 +47,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "households.access.HouseholdContextMiddleware",
-    "api.middleware.ApiAccessMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "households.access.AssignmentAccessMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]

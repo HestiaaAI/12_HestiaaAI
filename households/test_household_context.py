@@ -13,12 +13,19 @@ class ContextTests(TestCase):
         self.request.user = self.user
         SessionMiddleware(lambda r: None).process_request(self.request)
 
+    def next_request(self):
+        session = self.request.session
+        self.request = RequestFactory().get("/")
+        self.request.user = self.user
+        self.request.session = session
+
     def member(self, workspace, **kwargs):
         return Membership.objects.create(user=self.user, workspace=workspace, display_name='Member', **kwargs)
 
     def test_zero_and_one_membership(self):
         self.assertIsNone(resolve_active_membership(self.request))
         m = self.member(self.a)
+        self.next_request()
         self.assertEqual(resolve_active_membership(self.request), m)
         self.assertEqual(self.request.active_household, self.a)
 
@@ -27,10 +34,13 @@ class ContextTests(TestCase):
         self.member(self.b)
         self.assertIsNone(resolve_active_membership(self.request))
         self.request.session['active_workspace_id'] = self.a.pk
+        self.next_request()
         self.assertEqual(resolve_active_membership(self.request).workspace, self.a)
         Membership.objects.filter(workspace=self.a).update(is_active=False)
+        self.next_request()
         self.assertEqual(resolve_active_membership(self.request).workspace, self.b)
         Membership.objects.filter(workspace=self.b).update(is_active=False)
+        self.next_request()
         self.assertIsNone(resolve_active_membership(self.request))
         self.assertNotIn('active_workspace_id', self.request.session)
 

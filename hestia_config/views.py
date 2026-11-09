@@ -11,5 +11,5 @@ class HomePageView(TemplateView):
         if request.user.is_authenticated:
             if request.active_membership:
                 return redirect('task_forms:board')
-            return redirect('households:list' if request.household_memberships.exists() else 'households:onboarding')
+            return redirect('households:list' if request.household_memberships else 'households:onboarding')
         return super().get(request, *args, **kwargs)

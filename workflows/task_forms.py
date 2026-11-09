@@ -21,6 +21,7 @@ class TaskFilterForm(forms.Form):
     def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="filter_%s", **kwargs)
         self.fields["workspace"].queryset = available_workspaces(membership)
+        self.fields["workspace"].widget = forms.HiddenInput()
 
 
 class TaskCreateForm(forms.ModelForm):
@@ -42,9 +43,9 @@ class TaskCreateForm(forms.ModelForm):
     def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="create_%s", **kwargs)
         self.fields["workspace"].queryset = available_workspaces(membership)
-        workspaces = list(self.fields["workspace"].queryset[:2])
-        if len(workspaces) == 1 and not self.is_bound:
-            self.initial.setdefault("workspace", workspaces[0].pk)
+        self.fields["workspace"].widget = forms.HiddenInput()
+        if membership and not self.is_bound:
+            self.initial.setdefault('workspace', membership.workspace_id)
 
     def clean_title(self):
         title = self.cleaned_data["title"].strip()

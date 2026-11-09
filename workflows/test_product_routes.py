@@ -23,3 +23,7 @@ class ProductRouteTests(SimpleTestCase):
                             ('workflows:task-export-csv',{}),('ai_tasks:brain-dump',{}),
                             ('households:list',{}),('accounts:login',{}),('accounts:signup',{}),('product-lookup',{})]:
             self.assertEqual(resolve(reverse(name,kwargs=kwargs)).view_name,name)
+
+    def test_priority_png_no_longer_resolves(self):
+        with self.assertRaises(Resolver404):
+            resolve('/analytics/tasks/priority.png')

@@ -13,12 +13,12 @@ def grouped_summary(tasks, field, choices):
 
 
 def task_summary(tasks):
-    return {'total_tasks': tasks.count(),
-            'priority_summary': grouped_summary(tasks, 'priority', Task.Priority.choices),
+    priorities = grouped_summary(tasks, 'priority', Task.Priority.choices)
+    return {'total_tasks': sum(row['count'] for row in priorities),
+            'priority_summary': priorities,
             'type_summary': grouped_summary(tasks, 'task_type', Task.TaskType.choices)}
 
 
 @require_GET
 def insights(request):
     return render(request, 'tasks/insights.html', task_summary(Task.objects.filter(workspace=require_household(request).workspace)))
-

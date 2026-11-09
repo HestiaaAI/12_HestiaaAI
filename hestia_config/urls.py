@@ -23,7 +23,6 @@ from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
     path("households/", include("households.urls")),
-    path("analytics/", include("analytics.urls")),
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),

@@ -1,4 +1,4 @@
-"""Reports and downloads protected by ApiAccessMiddleware."""
+"""Private task export protected by the household access policy."""
 import csv
 
 from django.db.models import F

@@ -60,13 +60,13 @@ class IsolationTests(TestCase):
 
     def test_missing_household_returns_409_for_private_data(self):
         s=self.client.session;s.pop('active_workspace_id');s.save()
-        for name,kwargs in [('workflows:task-export-csv',{}),('analytics:task-priority-chart',{})]:
+        for name,kwargs in [('workflows:task-export-csv',{})]:
             response=self.client.get(reverse(name,kwargs=kwargs))
             self.assertEqual(response.status_code,409,name)
             self.assertEqual(response.json(),{'error':'Select a household to continue.','code':'household_required'})
 
     def test_private_responses_are_not_shared_cacheable(self):
-        for name in ['task_forms:board','workflows:task-export-csv','analytics:task-priority-chart']:
+        for name in ['task_forms:board','workflows:task-export-csv']:
             response=self.client.get(reverse(name))
             self.assertIn('no-store',response['Cache-Control'])
             self.assertIn('Cookie',response['Vary'])
@@ -134,7 +134,7 @@ class IsolationTests(TestCase):
         for name in ['task_forms:board','workflows:task-insights','ai_tasks:brain-dump']:
             self.assertRedirects(self.client.get(reverse(name)),reverse('households:list'),fetch_redirect_response=False)
         self.client.logout()
-        for name in ['workflows:task-export-csv','analytics:task-priority-chart']:
+        for name in ['workflows:task-export-csv']:
             self.assertEqual(self.client.get(reverse(name)).status_code,401)
 
     def test_membership_missing_inside_create_transaction_cannot_save(self):
