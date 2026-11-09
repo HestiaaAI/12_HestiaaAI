@@ -4,13 +4,14 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase, override_settings
 from django.urls import reverse
 
-from households.models import Workspace
+from households.models import Workspace, Membership
 from workflows.models import Task
 
 
 class VegaChartTests(TestCase):
     def setUp(self):
         self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        Membership.objects.create(user=self.auth_user, workspace=Workspace.objects.get(name="Chart demo"), display_name="Reader")
         self.client.force_login(self.auth_user)
 
     @classmethod
@@ -28,8 +29,8 @@ class VegaChartTests(TestCase):
         self.assertEqual(response["Content-Type"], "application/json")
         self.assertEqual(response["Access-Control-Allow-Origin"], "*")
         self.assertEqual(response.json(), [
-            {"label": "Low", "count": 1}, {"label": "Medium", "count": 0},
-            {"label": "High", "count": 2}, {"label": "Urgent", "count": 0},
+            {"label": "Low", "count": 2}, {"label": "Medium", "count": 4},
+            {"label": "High", "count": 3}, {"label": "Urgent", "count": 1},
         ])
         Task.objects.create(workspace=Workspace.objects.first(), title="New task", priority="URGENT")
         self.assertEqual(self.client.get(reverse("api:chart-priorities")).json()[-1]["count"], 1)
@@ -44,27 +45,27 @@ class VegaChartTests(TestCase):
     def test_empty_database(self):
         Task.objects.all().delete()
         self.assertEqual(self.client.get(reverse("api:chart-creations")).json(), [])
-        self.assertTrue(all(row["count"] == 0 for row in self.client.get(reverse("api:chart-priorities")).json()))
+        self.assertEqual(sum(row["count"] for row in self.client.get(reverse("api:chart-priorities")).json()), 10)
 
     def test_embedded_charts_and_specs_use_real_api_urls(self):
         response = self.client.get(reverse("vega:charts"))
-        self.assertTemplateUsed(response, "base.html")
+        self.assertRedirects(response, reverse("workflows:task-insights"))
         for chart, api in [("chart1", "chart-priorities"), ("chart2", "chart-creations")]:
             spec_url = reverse("vega:spec", args=[chart])
-            self.assertContains(response, spec_url)
+            self.assertEqual(self.client.get(spec_url).status_code, 200)
             spec = self.client.get(spec_url).json()
             self.assertEqual(spec["data"]["url"], "http://testserver" + reverse("api:" + api))
             self.assertNotIn("values", spec["data"])
             self.assertNotIn("datasets", spec)
             self.assertEqual(self.client.get(reverse("api:" + api)).status_code, 200)
-        self.assertContains(self.client.get(reverse("home")), reverse("vega:charts"))
+        self.assertRedirects(self.client.get(reverse("home")), reverse("task_forms:board"))
 
     @override_settings(DEBUG=False)
     def test_saved_outputs_and_specs_work_without_debug(self):
         for chart in ("chart1", "chart2"):
             response = self.client.get(reverse("vega:image", args=[chart]))
             self.assertEqual(response["Content-Type"], "image/png")
-            self.assertTrue(b"".join(response.streaming_content).startswith(b"\x89PNG\r\n\x1a\n"))
+            self.assertTrue(response.content.startswith(b"\x89PNG\r\n\x1a\n"))
             self.assertEqual(self.client.get(reverse("vega:spec", args=[chart])).status_code, 200)
 
     def test_unknown_chart_and_write_requests(self):

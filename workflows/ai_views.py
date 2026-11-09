@@ -106,7 +106,7 @@ def brain_dump(request):
                     else:
                         request.session.pop(DRAFT_KEY, None)
                         messages.success(request, f"Saved {count} approved task(s) to {membership.workspace.name}.")
-                        return redirect("ai_tasks:brain-dump")
+                        return redirect("task_forms:board")
         else:
             context["error"] = "Choose Organize My Tasks or confirm your reviewed tasks."
     context["has_workspaces"] = context["input_form"].fields["workspace"].queryset.exists()

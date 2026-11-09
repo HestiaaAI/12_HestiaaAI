@@ -6,13 +6,14 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from households.models import Workspace
+from households.models import Workspace, Membership
 from workflows.models import Task
 
 
 class ReportTests(TestCase):
     def setUp(self):
         self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        Membership.objects.create(user=self.auth_user, workspace=self.first.workspace, display_name="Reader")
         self.client.force_login(self.auth_user)
 
     @classmethod
@@ -23,14 +24,14 @@ class ReportTests(TestCase):
         Task.objects.create(workspace=home, title="Laundry", priority="HIGH", task_type="CHORE")
 
     def test_authenticated_report_totals_groups_and_download_links(self):
-        response = self.client.get(reverse("reports:task-report"))
+        response = self.client.get(reverse("reports:task-report"), follow=True)
         self.assertEqual(response.context["total_tasks"], 3)
         self.assertEqual({r["label"]: r["count"] for r in response.context["priority_summary"]}, {"High": 2, "Low": 1})
         self.assertEqual({r["label"]: r["count"] for r in response.context["type_summary"]}, {"Chore": 2, "Shopping": 1})
         self.assertTemplateUsed(response, "base.html")
         for name in ("tasks-csv", "tasks-json"):
             self.assertContains(response, reverse("reports:" + name))
-        self.assertContains(self.client.get(reverse("home")), reverse("reports:task-report"))
+        self.assertContains(self.client.get(reverse("task_forms:board")), reverse("workflows:task-insights"))
 
     def test_csv_headers_order_and_quoting(self):
         response = self.client.get(reverse("reports:tasks-csv"))
@@ -56,7 +57,7 @@ class ReportTests(TestCase):
 
     def test_empty_reports_and_exports(self):
         Task.objects.all().delete()
-        response = self.client.get(reverse("reports:task-report"))
+        response = self.client.get(reverse("reports:task-report"), follow=True)
         self.assertContains(response, "No tasks yet", count=2)
         self.assertEqual(response.context["total_tasks"], 0)
         data = self.client.get(reverse("reports:tasks-json")).json()

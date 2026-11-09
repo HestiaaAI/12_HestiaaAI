@@ -1,9 +1,9 @@
 """Reports and downloads protected by ApiAccessMiddleware."""
 import csv
 
-from django.db.models import Count, F
+from django.db.models import F
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.utils import timezone
 from django.views.decorators.http import require_GET
 
@@ -20,20 +20,9 @@ def task_records(tasks):
     )
 
 
-def grouped_summary(tasks, field, choices):
-    labels = dict(choices)
-    rows = tasks.order_by(field).values(field).annotate(count=Count("pk"))
-    return [{"label": labels.get(row[field], row[field]), "count": row["count"]} for row in rows]
-
-
 @require_GET
 def task_report(request):
-    tasks = Task.objects.filter(workspace=require_household(request).workspace)
-    return render(request, "reports/tasks.html", {
-        "total_tasks": tasks.count(),
-        "priority_summary": grouped_summary(tasks, "priority", Task.Priority.choices),
-        "type_summary": grouped_summary(tasks, "task_type", Task.TaskType.choices),
-    })
+    return redirect('workflows:task-insights')
 
 
 def csv_cell(value):

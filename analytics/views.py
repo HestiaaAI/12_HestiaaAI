@@ -1,10 +1,9 @@
-"""Read-only assignment analytics for fictional Task data."""
+"""Selected-household chart rendering with explicit input rows."""
 from io import BytesIO
 from threading import Lock
 
-from django.db.models import Count
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.decorators.http import require_safe
 from matplotlib.backends.backend_agg import FigureCanvasAgg
 from matplotlib.figure import Figure
@@ -12,6 +11,7 @@ from matplotlib.ticker import MaxNLocator
 
 from workflows.models import Task
 from households.context import require_household
+from workflows.task_insights import grouped_summary
 
 # Matplotlib rendering is not thread-safe. Serialize charts in each worker.
 _chart_lock = Lock()
@@ -19,22 +19,15 @@ _chart_lock = Lock()
 
 def priority_counts(tasks):
     """Aggregate in SQL, then include zero-count choices in model order."""
-    grouped = tasks.order_by().values("priority").annotate(count=Count("pk"))
-    counts = {row["priority"]: row["count"] for row in grouped}
-    return [
-        {"label": label, "count": counts.get(value, 0)}
-        for value, label in Task.Priority.choices
-    ]
+    grouped = grouped_summary(tasks, 'priority', Task.Priority.choices)
+    counts = {row['label']: row['count'] for row in grouped}
+    return [{'label': label, 'count': counts.get(label, 0)} for _, label in Task.Priority.choices]
 
 
 @require_safe
 def task_stats(request):
     """Show all task definitions and their total and priority summary."""
-    return render(request, "analytics/task_stats.html", {
-        "tasks": Task.objects.filter(workspace=require_household(request).workspace).select_related("workspace"),
-        "total_tasks": Task.objects.filter(workspace=require_household(request).workspace).count(),
-        "priority_counts": priority_counts(Task.objects.filter(workspace=require_household(request).workspace)),
-    })
+    return redirect('workflows:task-insights')
 
 
 @require_safe
@@ -44,7 +37,7 @@ def task_priority_chart(request):
     return render_priority_chart(rows)
 
 
-def render_priority_chart(rows):
+def render_priority_chart(rows, *, title="Tasks by priority", xlabel="Priority"):
     rows = rows or [{"label": "No tasks", "count": 0}]
     with _chart_lock:
         figure = Figure(figsize=(8, 4.5), dpi=120, layout="constrained")
@@ -54,7 +47,7 @@ def render_priority_chart(rows):
             bars = axes.bar([row["label"] for row in rows],
                             [row["count"] for row in rows],
                             color="#5946a8", label="Task definitions")
-            axes.set(title="Tasks by priority", xlabel="Priority", ylabel="Number of tasks")
+            axes.set(title=title, xlabel=xlabel, ylabel="Number of tasks")
             axes.yaxis.set_major_locator(MaxNLocator(integer=True))
             axes.set_ylim(0, max(1, max(row["count"] for row in rows) * 1.25))
             axes.bar_label(bars, padding=3)

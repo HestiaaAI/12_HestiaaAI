@@ -1,58 +1,37 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render
-from django.template import loader
+"""Canonical detail and compatibility redirects for old task list URLs."""
+from django.shortcuts import get_object_or_404, render, redirect
+from django.urls import reverse
 from django.views import View
-from django.views.generic import ListView
-
-from .models import Task
+from django.views.decorators.http import require_GET
 from households.context import require_household
+from .models import Task
+from .task_forms import TaskFilterForm
 
 
-def filter_tasks(queryset, request):
-    """Apply the same optional title search to each view's queryset."""
-    query = request.GET.get("q", "").strip()
-    return queryset.filter(title__icontains=query) if query else queryset
-
-
-def task_manual_view(request):
-    """Section 2: load and render the template manually into HttpResponse."""
-    tasks = filter_tasks(Task.objects.filter(workspace=require_household(request).workspace), request)
-    template = loader.get_template("tasks/task_list.html")
-    return HttpResponse(template.render({"tasks": tasks, "view_style": "HttpResponse FBV"}, request))
-
-
-def task_render_view(request):
-    """Section 2: the render shortcut combines loading and responding."""
-    tasks = filter_tasks(Task.objects.filter(workspace=require_household(request).workspace), request)
-    return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "render() FBV"})
-
-
-class TaskBaseView(View):
-    """Section 2: a base View with an explicit GET handler and model query."""
-
-    def get(self, request):
-        tasks = filter_tasks(Task.objects.filter(workspace=require_household(request).workspace), request)
-        return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "Base CBV"})
-
-
-class TaskListView(ListView):
-    """Section 2: Django handles the list response using the same template."""
-
-    model = Task
-    template_name = "tasks/task_list.html"
-    context_object_name = "tasks"
-    extra_context = {"view_style": "Generic CBV"}
-
-    def get_queryset(self):
-        return filter_tasks(super().get_queryset().filter(workspace=require_household(self.request).workspace), self.request)
+@require_GET
+def legacy_task_list(request):
+    membership = require_household(request)
+    params = request.GET.copy()
+    for key in list(params):
+        if key not in {'q', 'priority', 'task_type', 'page', 'workspace'}:
+            params.pop(key)
+    form = TaskFilterForm(params, membership=membership)
+    if not form.is_valid():
+        params = request.GET.copy()
+        for key in list(params):
+            if key not in {'q', 'priority', 'task_type', 'page'}:
+                params.pop(key)
+        # Preserve invalid supported filters so the board renders errors/zero
+        # results; never widen a forged workspace filter to real tasks.
+        if request.GET.get('workspace'):
+            params['workspace'] = request.GET['workspace']
+    else:
+        params.pop('workspace', None)
+    query = params.urlencode()
+    return redirect(reverse('task_forms:board') + ('?' + query if query else ''))
 
 
 class TaskDetailView(View):
-    """Load one Task by primary key and render its detail template."""
-
     def get(self, request, pk):
         task = get_object_or_404(Task, workspace=require_household(request).workspace, pk=pk)
-        can_plan = request.user.is_authenticated and task.workspace.memberships.filter(
-            user=request.user, is_active=True
-        ).exists()
-        return render(request, "tasks/task_detail.html", {"task": task, "can_generate_action_plan": can_plan})
+        return render(request, 'tasks/task_detail.html', {'task': task, 'can_generate_action_plan': True})

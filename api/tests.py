@@ -5,7 +5,7 @@ import requests
 from django.test import TestCase
 from django.urls import reverse
 
-from households.models import Workspace
+from households.models import Workspace, Membership
 from inventory.models import Product, ShoppingListEntry
 from workflows.models import Task
 
@@ -58,6 +58,7 @@ PUBLIC_HITS = {
 class ProductCompareApiTests(TestCase):
     def setUp(self):
         self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        Membership.objects.create(user=self.auth_user, workspace=self.product.workspace, display_name="Reader")
         self.client.force_login(self.auth_user)
 
     @classmethod

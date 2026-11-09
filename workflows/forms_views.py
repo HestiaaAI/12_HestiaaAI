@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.views.generic import ListView
 
 from households.models import Membership
-from households.context import require_household
+from households.context import HouseholdRequired, require_household
 from .models import Task
 from .task_forms import TaskCreateForm, TaskFilterForm, available_workspaces
 
@@ -66,6 +66,8 @@ class TaskBoardView(ListView):
                 with transaction.atomic():
                     Membership.objects.select_for_update().get(pk=membership.pk, user=request.user, is_active=True)
                     task = form.save()
+            except Membership.DoesNotExist:
+                raise HouseholdRequired()
             except IntegrityError:
                 if not Task.objects.filter(workspace=form.cleaned_data["workspace"],
                                            title=form.cleaned_data["title"]).exists():

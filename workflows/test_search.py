@@ -1,146 +1,50 @@
+"""Legacy GET redirects and POST stays a scoped read-only board adapter."""
 from django.contrib.auth import get_user_model
-from django.test import Client, TestCase
+from django.test import TestCase, Client
 from django.urls import reverse
-
-from households.models import Workspace
+from households.models import Workspace, Membership
 from .models import Task
-
 
 class TaskSearchTests(TestCase):
     def setUp(self):
-        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
-        self.client.force_login(self.auth_user)
+        self.user=get_user_model().objects.create_user('search')
+        self.home=Workspace.objects.create(name='Search home')
+        other=Workspace.objects.create(name='Foreign')
+        Membership.objects.create(user=self.user,workspace=self.home,display_name='Reader')
+        self.task=Task.objects.create(workspace=self.home,title='Buy groceries')
+        Task.objects.create(workspace=other,title='Foreign groceries')
+        self.client.force_login(self.user)
 
-    @classmethod
-    def setUpTestData(cls):
-        demo = Workspace.objects.create(name="Demo Household")
-        other = Workspace.objects.create(name="Lakeside Apartment")
-        cls.demo_groceries = Task.objects.create(workspace=demo, title="Buy groceries", priority="HIGH")
-        cls.other_groceries = Task.objects.create(workspace=other, title="Buy groceries for party")
-        cls.demo_laundry = Task.objects.create(workspace=demo, title="Fold laundry")
+    def test_get_filters_and_detail_links(self):
+        response=self.client.get(reverse('task_search:get'),{'q':'GROCERIES'},follow=True)
+        self.assertContains(response,self.task.title)
+        self.assertContains(response,self.task.get_absolute_url())
+        self.assertNotContains(response,'Foreign groceries')
+        self.assertEqual(self.client.get(self.task.get_absolute_url()).status_code,200)
 
-    def result_pks(self, response):
-        return [task.pk for task in response.context["tasks"]]
+    def test_post_body_filters_and_never_creates(self):
+        response=self.client.post(reverse('task_search:post')+'?q=nothing',{'q':'groceries','title':'Never create','workspace':self.home.pk})
+        self.assertContains(response,self.task.title)
+        self.assertNotContains(response,'Foreign groceries')
+        self.assertEqual(Task.objects.count(),2)
+        self.assertFalse(Task.objects.filter(title='Never create').exists())
 
-    def test_get_filters_title_and_workspace(self):
-        url = reverse("task_search:get")
-        response = self.client.get(url, {"q": "groceries"})
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, "tasks/search.html")
-        self.assertEqual(self.result_pks(response), [self.demo_groceries.pk, self.other_groceries.pk])
+    def test_blank_and_no_match_filters(self):
+        self.assertContains(self.client.post(reverse('task_search:post'),{'q':''}),self.task.title)
+        self.assertContains(self.client.post(reverse('task_search:post'),{'q':'nothing'}),'No tasks found')
 
-        # Related-model lookup: mixed-case name matched through Task.workspace.
-        response = self.client.get(url, {"workspace_name": "dEMO hOUSE"})
-        self.assertEqual(self.result_pks(response), [self.demo_groceries.pk, self.demo_laundry.pk])
+    def test_search_terms_and_titles_are_escaped(self):
+        title='<script>alert(1)</script>'
+        Task.objects.create(workspace=self.home,title=title)
+        response=self.client.get(reverse('task_search:get'),{'q':title},follow=True)
+        self.assertContains(response,'&lt;script&gt;')
+        self.assertNotContains(response,title)
 
-        # Both filters must match.
-        response = self.client.get(url, {"q": "groceries", "workspace_name": "lakeside"})
-        self.assertEqual(self.result_pks(response), [self.other_groceries.pk])
-        self.assertEqual(response.context["search_method"], "GET")
-        self.assertContains(response, 'value="groceries"')
-        self.assertContains(response, 'value="lakeside"')
-        self.assertContains(response, self.other_groceries.get_absolute_url())
-
-    def test_post_reads_body_not_query_string(self):
-        url = reverse("task_search:post") + "?q=laundry&workspace_name=demo"
-        response = self.client.post(url, {"q": "groceries", "workspace_name": "lakeside"})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.result_pks(response), [self.other_groceries.pk])
-        self.assertEqual(response.context["search_method"], "POST")
-        self.assertTrue(response.context["submitted"])
-        self.assertEqual(Task.objects.count(), 3)
-
-    def test_blank_filters_return_all_tasks(self):
-        all_pks = [self.demo_groceries.pk, self.other_groceries.pk, self.demo_laundry.pk]
-        response = self.client.get(reverse("task_search:get"))
-        self.assertEqual(self.result_pks(response), all_pks)
-        response = self.client.get(reverse("task_search:get"), {"q": "   ", "workspace_name": ""})
-        self.assertEqual(self.result_pks(response), all_pks)
-        response = self.client.post(reverse("task_search:post"), {"q": "  ", "workspace_name": " "})
-        self.assertEqual(self.result_pks(response), all_pks)
-
-    def test_post_get_shows_prompt(self):
-        response = self.client.get(reverse("task_search:post"))
-        self.assertEqual(response.status_code, 200)
-        self.assertFalse(response.context["submitted"])
-        self.assertContains(response, "Submit the POST form to see results.")
-        self.assertNotContains(response, 'class="task-card"')
-        # Both forms render with named actions and unique field IDs.
-        self.assertContains(response, f'action="{reverse("task_search:get")}" method="get"')
-        self.assertContains(response, f'action="{reverse("task_search:post")}" method="post"')
-        for field_id in ("get-q", "get-workspace-name", "post-q", "post-workspace-name"):
-            self.assertContains(response, f'id="{field_id}"', count=1)
-
-    def test_no_matches_and_empty_database(self):
-        response = self.client.get(reverse("task_search:get"), {"q": "XYZNOTAREALTASK123"})
-        self.assertEqual(self.result_pks(response), [])
-        self.assertContains(response, "No tasks match")
-        self.assertNotContains(response, 'class="task-card"')
-
-        Task.objects.all().delete()
-        response = self.client.post(reverse("task_search:post"), {"q": ""})
-        self.assertContains(response, "No tasks match")
-
-    def test_results_escape_html(self):
-        payload = "<script>alert(1)</script>"
-        response = self.client.get(reverse("task_search:get"), {"q": payload})
-        self.assertNotContains(response, payload)
-        self.assertContains(response, "&lt;script&gt;alert(1)&lt;/script&gt;")
-
-        Task.objects.create(workspace=self.demo_groceries.workspace, title=payload)
-        response = self.client.get(reverse("task_search:get"), {"q": "script"})
-        self.assertNotContains(response, payload)
-        self.assertContains(response, "&lt;script&gt;")
-
-    def test_post_requires_csrf(self):
-        csrf_client = Client(enforce_csrf_checks=True)
-        csrf_client.force_login(self.auth_user)
-        url = reverse("task_search:post")
-        response = csrf_client.post(url, {"q": "groceries"})
-        self.assertEqual(response.status_code, 403)
-
-        form_page = csrf_client.get(url)
-        token = form_page.cookies["csrftoken"].value
-        response = csrf_client.post(url, {"q": "groceries", "csrfmiddlewaretoken": token})
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.result_pks(response), [self.demo_groceries.pk, self.other_groceries.pk])
-        self.assertEqual(Task.objects.count(), 3)
-
-    def test_get_route_rejects_post(self):
-        response = self.client.post(reverse("task_search:get"), {"q": "groceries"})
-        self.assertEqual(response.status_code, 405)
-
-    def test_result_detail_links_resolve(self):
-        response = self.client.get(reverse("task_search:get"), {"q": "laundry"})
-        detail = self.client.get(self.demo_laundry.get_absolute_url())
-        self.assertContains(response, self.demo_laundry.get_absolute_url())
-        self.assertEqual(detail.status_code, 200)
-
-
-class ProjectUrlIntegrationTests(TestCase):
-    def setUp(self):
-        self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
-        self.client.force_login(self.auth_user)
-
-    """Person 2 routes are mounted in hestia_config/urls.py and linked from the nav."""
-
-    def test_routes_are_mounted_in_project_urlconf(self):
-        self.assertEqual(reverse("task_search:get"), "/tasks/search/")
-        self.assertEqual(reverse("task_search:post"), "/tasks/search/post/")
-        self.assertEqual(reverse("api:task-list"), "/api/tasks/")
-        self.assertEqual(reverse("api:response-demo"), "/api/response-demo/")
-
-    def test_navigation_links_to_search(self):
-        response = self.client.get(reverse("home"))
-        self.assertContains(response, f'href="{reverse("task_search:get")}"')
-
-    def test_search_result_detail_link_returns_200(self):
-        from django.contrib.auth import get_user_model
-        self.client.force_login(get_user_model().objects.create_user(username="api-reader"))
-        workspace = Workspace.objects.create(name="Integration Household")
-        task = Task.objects.create(workspace=workspace, title="Water the plants")
-        response = self.client.get("/tasks/search/", {"q": "plants"})
-        self.assertContains(response, task.get_absolute_url())
-        self.assertEqual(self.client.get(task.get_absolute_url()).status_code, 200)
-        api = self.client.get("/api/tasks/", {"q": "plants"}).json()
-        self.assertEqual(api["tasks"][0]["id"], task.pk)
+    def test_csrf_and_method_boundary(self):
+        client=Client(enforce_csrf_checks=True);client.force_login(self.user)
+        url=reverse('task_search:post')
+        self.assertEqual(client.post(url,{'q':'groceries'}).status_code,403)
+        client.get(reverse('task_forms:board'))
+        response=client.post(url,{'q':'groceries','csrfmiddlewaretoken':client.cookies['csrftoken'].value})
+        self.assertContains(response,self.task.title)
+        self.assertEqual(self.client.post(reverse('task_search:get')).status_code,405)

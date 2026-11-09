@@ -9,7 +9,7 @@ from django.test import Client, RequestFactory, TestCase, override_settings
 from django.urls import resolve, reverse
 
 from api.middleware import ApiAccessMiddleware
-from households.models import Workspace
+from households.models import Workspace, Membership
 from workflows.models import Task
 
 
@@ -24,6 +24,7 @@ class ApiAccessTests(TestCase):
     def setUpTestData(cls):
         cls.user = get_user_model().objects.create_user(username="reader")
         workspace = Workspace.objects.create(name="Private household")
+        Membership.objects.create(user=cls.user, workspace=workspace, display_name="Reader")
         Task.objects.create(workspace=workspace, title="Private task", priority="HIGH")
 
     def test_anonymous_requests_cannot_read_other_apis_or_exports(self):
@@ -39,13 +40,13 @@ class ApiAccessTests(TestCase):
                     self.assertIn("Cookie", response["Vary"])
             upstream.assert_not_called()
 
-    def test_public_api_is_database_backed_and_aggregate_only(self):
+    def test_public_api_is_fixed_sample_and_aggregate_only(self):
         response = self.client.get(reverse("api:chart-priorities"), HTTP_ORIGIN="https://vega.github.io")
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response["Content-Type"], "application/json")
         self.assertEqual(response["Access-Control-Allow-Origin"], "*")
         self.assertNotIn("Access-Control-Allow-Credentials", response)
-        self.assertEqual(sum(row["count"] for row in response.json()), 1)
+        self.assertEqual(sum(row["count"] for row in response.json()), 10)
         for row in response.json():
             self.assertEqual(set(row), {"label", "count"})
         self.assertNotContains(response, "Private")
@@ -67,6 +68,7 @@ class ApiAccessTests(TestCase):
         self.assertEqual(self.client.get("/api/tasks/").status_code, 401)
 
     def test_anonymous_chart_page_only_embeds_public_data(self):
+        self.client.logout()
         response = self.client.get("/vega-lite/")
         self.assertContains(response, 'id="priority-chart"')
         self.assertNotContains(response, 'id="creation-chart"')

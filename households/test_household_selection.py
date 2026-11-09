@@ -33,3 +33,11 @@ class SelectionTests(TestCase):
     def test_login_boundary(self):
         self.client.logout()
         self.assertEqual(self.client.get(reverse('households:list')).status_code, 302)
+
+    def test_invalid_switch_preserves_even_a_stale_session_selection(self):
+        session=self.client.session
+        session['active_workspace_id']=987654
+        session.save()
+        before=dict(self.client.session)
+        self.assertEqual(self.client.post(reverse('households:switch'),{'workspace_id':self.b.pk}).status_code,400)
+        self.assertEqual(dict(self.client.session),before)

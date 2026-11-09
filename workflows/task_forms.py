@@ -6,7 +6,7 @@ from .models import Task
 
 
 def available_workspaces(membership=None):
-    """The public assignment board uses all fictional demo households."""
+    """Default-deny workspace choices for an explicitly supplied membership."""
     return Workspace.objects.filter(pk=membership.workspace_id) if membership and membership.is_active else Workspace.objects.none()
 
 
@@ -14,7 +14,7 @@ class TaskFilterForm(forms.Form):
     q = forms.CharField(required=False, max_length=200, label="Search tasks",
                         widget=forms.TextInput(attrs={"type": "search", "placeholder": "Search by title…"}))
     workspace = forms.ModelChoiceField(queryset=Workspace.objects.none(), required=False,
-                                       empty_label="All households", label="Household")
+                                       empty_label="Selected household", label="Household")
     priority = forms.ChoiceField(required=False, choices=[("", "All priorities"), *Task.Priority.choices])
     task_type = forms.ChoiceField(required=False, choices=[("", "All types"), *Task.TaskType.choices], label="Task type")
 

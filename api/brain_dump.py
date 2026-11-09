@@ -6,7 +6,7 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
 from workflows.services.brain_dump import BrainDumpError
-from workflows.services.hf_local import extract_tasks
+from workflows import ai_adapter
 
 # Guardrail: keep prompts bounded for local CPU inference.
 MAX_BRAIN_DUMP_CHARS = 4000
@@ -26,6 +26,8 @@ def brain_dump_extract(request):
             body = json.loads(request.body.decode("utf-8") or "{}")
         except ValueError:
             return JsonResponse({"error": "Request body must be JSON."}, status=400)
+        if not isinstance(body, dict):
+            return JsonResponse({"error": "Request body must be a JSON object."}, status=400)
         text = str(body.get("text") or "")
     else:
         text = str(request.POST.get("text") or "")
@@ -43,20 +45,20 @@ def brain_dump_extract(request):
         )
 
     try:
-        result = extract_tasks(text)
-    except BrainDumpError as exc:
-        return JsonResponse({"error": str(exc)}, status=422)
+        result = ai_adapter.get_suggestions(text)
+    except (BrainDumpError, ai_adapter.SuggestionsUnavailable) as exc:
+        return JsonResponse({"error": str(exc) or "Suggestions are unavailable or invalid."}, status=422)
     except Exception as exc:  # noqa: BLE001
         return JsonResponse(
-            {"error": f"Unexpected Brain Dump failure: {exc}"},
+            {"error": "Brain Dump is unavailable. Please try again later."},
             status=500,
         )
 
     return JsonResponse(
         {
-            "tasks": result["tasks"],
-            "warnings": result["warnings"],
-            "model_id": result["model_id"],
+            "tasks": result,
+            "warnings": getattr(result, "warnings", []),
+            "model_id": getattr(result, "model_id", ""),
             "saved": False,
             "message": "Review and confirm before saving through the Task module.",
         }

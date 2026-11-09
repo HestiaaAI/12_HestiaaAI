@@ -4,6 +4,14 @@ from django.conf import settings
 from .ai_forms import MAX_TASKS, ReviewTaskForm
 
 
+class SuggestedTasks(list):
+    """Validated drafts plus transport metadata retained for the JSON adapter."""
+    def __init__(self, tasks, result):
+        super().__init__(tasks)
+        self.warnings = result.get("warnings", [])
+        self.model_id = result.get("model_id", "mock")
+
+
 class SuggestionsUnavailable(Exception):
     pass
 
@@ -25,7 +33,7 @@ def get_suggestions(text):
         result = extract_tasks(text)
     else:
         raise SuggestionsUnavailable()
-    return validate_suggestions(result)
+    return SuggestedTasks(validate_suggestions(result), result)
 
 
 def validate_suggestions(result):

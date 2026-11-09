@@ -2,8 +2,8 @@
 import json
 
 from django.conf import settings
-from django.http import FileResponse, Http404, JsonResponse
-from django.shortcuts import render
+from django.http import Http404, JsonResponse
+from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.decorators.http import require_GET
 
@@ -16,6 +16,8 @@ ARTIFACTS = settings.BASE_DIR / "docs" / "a4-person-1"
 
 @require_GET
 def charts(request):
+    if request.user.is_authenticated:
+        return redirect("workflows:task-insights")
     return render(request, "analytics/vega_charts.html")
 
 
@@ -37,8 +39,11 @@ def chart_image(request, chart):
     if chart not in CHARTS:
         raise Http404("Unknown chart")
     from .views import render_priority_chart
-    from api.chart_views import SAMPLE_PRIORITIES, task_creation_summary
+    from api.chart_views import SAMPLE_PRIORITIES
+    from households.context import require_household
+    from workflows.models import Task
+    from workflows.task_insights import daily_task_counts
     if chart == 'chart1':
         return render_priority_chart(SAMPLE_PRIORITIES)
-    rows = json.loads(task_creation_summary(request).content)
-    return render_priority_chart([{'label': row['date'], 'count': row['count']} for row in rows])
+    rows = daily_task_counts(Task.objects.filter(workspace=require_household(request).workspace))
+    return render_priority_chart([{'label': row['date'], 'count': row['count']} for row in rows], title='Tasks created by day', xlabel='Date (UTC)')

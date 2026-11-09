@@ -32,7 +32,7 @@ class BrainDumpApiTests(TestCase):
         )
         self.assertEqual(response.status_code, 400)
 
-    @patch("api.brain_dump.extract_tasks")
+    @patch("workflows.services.hf_local.extract_tasks")
     def test_success_returns_drafts_not_saved(self, mock_extract):
         mock_extract.return_value = {
             "tasks": [
@@ -59,7 +59,7 @@ class BrainDumpApiTests(TestCase):
         self.assertEqual(payload["tasks"][0]["title"], "Buy milk")
         mock_extract.assert_called_once()
 
-    @patch("api.brain_dump.extract_tasks")
+    @patch("workflows.services.hf_local.extract_tasks")
     def test_model_error_422(self, mock_extract):
         mock_extract.side_effect = BrainDumpError("Model output is not valid JSON")
         self.client.login(username="braindump", password="pass-12345")

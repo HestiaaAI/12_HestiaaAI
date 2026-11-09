@@ -2,13 +2,14 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
 
-from households.models import Workspace
+from households.models import Workspace, Membership
 from .models import Task
 
 
 class TaskApiTests(TestCase):
     def setUp(self):
         self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        Membership.objects.create(user=self.auth_user, workspace=self.demo_groceries.workspace, display_name="Reader")
         self.client.force_login(self.auth_user)
 
     @classmethod
@@ -50,18 +51,18 @@ class TaskApiTests(TestCase):
         # Deterministic primary-key ordering, independent of Task.Meta.ordering.
         self.assertEqual(
             self.ids(body["tasks"]),
-            [self.demo_groceries.pk, self.other_groceries.pk, self.demo_laundry.pk],
+            [self.demo_groceries.pk, self.demo_laundry.pk],
         )
 
     def test_api_filters_title_and_workspace(self):
-        self.assertEqual(self.ids(self.get_tasks(q="GROCERIES")), [self.demo_groceries.pk, self.other_groceries.pk])
+        self.assertEqual(self.ids(self.get_tasks(q="GROCERIES")), [self.demo_groceries.pk])
         self.assertEqual(self.ids(self.get_tasks(workspace_name="demo")), [self.demo_groceries.pk, self.demo_laundry.pk])
-        self.assertEqual(self.ids(self.get_tasks(q="groceries", workspace_name="LAKESIDE")), [self.other_groceries.pk])
+        self.assertEqual(self.ids(self.get_tasks(q="groceries", workspace_name="LAKESIDE")), [])
         # Unknown parameters are ignored.
-        self.assertEqual(len(self.get_tasks(workspace="1", page="2")), 3)
+        self.assertEqual(len(self.get_tasks(workspace="1", page="2")), 2)
 
     def test_api_blank_filters_and_no_matches(self):
-        self.assertEqual(len(self.get_tasks(q="   ", workspace_name="")), 3)
+        self.assertEqual(len(self.get_tasks(q="   ", workspace_name="")), 2)
         self.assertEqual(self.get_tasks(q="XYZNOTAREALTASK123"), [])
         Task.objects.all().delete()
         self.assertEqual(self.get_tasks(), [])

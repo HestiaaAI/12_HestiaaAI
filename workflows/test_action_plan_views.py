@@ -35,7 +35,7 @@ class ActionPlanViewTests(TestCase):
     def test_detail_link_is_visible_only_to_active_members(self):
         self.assertContains(self.client.get(self.task.get_absolute_url()), self.page)
         self.client.force_login(self.outsider)
-        self.assertNotContains(self.client.get(self.task.get_absolute_url()), self.page)
+        self.assertRedirects(self.client.get(self.task.get_absolute_url()), reverse("households:onboarding"))
 
     def test_get_previews_disclosure_and_never_calls_groq(self):
         response = self.client.get(self.page)
@@ -82,14 +82,14 @@ class ActionPlanViewTests(TestCase):
 
     def test_other_household_and_inactive_members_cannot_send_task_data(self):
         self.client.force_login(self.outsider)
-        self.assertEqual(self.client.get(self.page).status_code, 404)
+        self.assertRedirects(self.client.get(self.page), reverse("households:onboarding"))
         response = self.client.post(self.api)
-        self.assertEqual(response.status_code, 404)
-        self.assertEqual(response.json(), {"error": "Task not found."})
+        self.assertEqual(response.status_code, 409)
+        self.assertEqual(response.json()["code"], "household_required")
         self.client.force_login(self.user)
         self.membership.is_active = False
         self.membership.save(update_fields=["is_active"])
-        self.assertEqual(self.client.post(self.api).status_code, 404)
+        self.assertEqual(self.client.post(self.api).status_code, 409)
         self.generate.assert_not_called()
 
     def test_missing_task_returns_json_404(self):

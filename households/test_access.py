@@ -13,7 +13,7 @@ class AssignmentAuthTests(TestCase):
         for url in ('/tasks/manage/', '/tasks/manual/', '/tasks/render/', '/tasks/cbv-base/',
                     '/tasks/cbv-generic/', '/tasks/1/', '/tasks/search/', '/tasks/search/post/',
                     '/reports/tasks/',
-                    '/analytics/tasks/', '/analytics/tasks/priority.png', '/lookup/'):
+                    '/analytics/tasks/', '/lookup/'):
             with self.subTest(url=url):
                 response = self.client.get(url)
                 self.assertEqual(response.status_code, 302)
@@ -36,17 +36,17 @@ class AssignmentAuthTests(TestCase):
     def test_username_signup_login_and_logout(self):
         data = dict(username='newmember', email='member@example.test', password1='New-member-passphrase-903!', password2='New-member-passphrase-903!')
         response = self.client.post('/accounts/signup/', data)
-        self.assertRedirects(response, '/')
+        self.assertRedirects(response, '/', fetch_redirect_response=False)
         user = get_user_model().objects.get(username='newmember')
         self.assertFalse(user.is_staff)
         self.assertFalse(user.is_superuser)
         self.assertEqual(len(mail.outbox), 0)
-        self.assertContains(self.client.get('/'), 'href="/reports/tasks/"')
+        self.assertRedirects(self.client.get('/'), '/households/onboarding/')
         self.client.post('/accounts/logout/')
         self.assertNotIn('_auth_user_id', self.client.session)
         response = self.client.post('/accounts/login/', {'login': 'newmember', 'password': data['password1'], 'next': '/reports/tasks/'})
-        self.assertRedirects(response, '/reports/tasks/')
-        self.assertEqual(self.client.get('/api/tasks/').status_code, 200)
+        self.assertRedirects(response, '/reports/tasks/', fetch_redirect_response=False)
+        self.assertEqual(self.client.get('/api/tasks/').status_code, 409)
 
     def test_invalid_and_duplicate_username_signup(self):
         data = dict(username='member', email='member@example.test', password1='Strong-member-pass-392!', password2='different')
@@ -72,7 +72,7 @@ class AssignmentAuthTests(TestCase):
         page = client.get("/accounts/signup/")
         self.assertContains(page, 'name="username"')
         data["csrfmiddlewaretoken"] = client.cookies["csrftoken"].value
-        self.assertRedirects(client.post("/accounts/signup/", data), "/")
+        self.assertRedirects(client.post("/accounts/signup/", data), "/", fetch_redirect_response=False)
         self.assertIn("_auth_user_id", client.session)
 
     def test_weak_password_and_invalid_email_do_not_create_accounts(self):

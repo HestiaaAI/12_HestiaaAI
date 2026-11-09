@@ -35,7 +35,7 @@ class LoginTests(TestCase):
         }, follow=True)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.client.session["_auth_user_id"], str(self.user.pk))
-        self.assertRedirects(response, "/")
+        self.assertRedirects(response, "/households/onboarding/", fetch_redirect_response=False)
         self.assertNotContains(response, 'type="password"')
 
     def test_safe_local_next_is_preserved_on_error_and_used_on_success(self):
@@ -132,7 +132,7 @@ class LogoutTests(TestCase):
         self.user.first_name = "Hestia"
         self.user.last_name = "Preview"
         self.user.save(update_fields=["first_name", "last_name"])
-        response = self.client.get("/")
+        response = self.client.get("/households/onboarding/")
         self.assertContains(response, 'logout-name">Hestia Preview</span>')
 
     def test_csrf_required_and_valid_token_ends_session(self):
