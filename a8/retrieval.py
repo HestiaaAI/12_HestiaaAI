@@ -28,7 +28,8 @@ def load_encoder(size='small', device='cpu', revision=None):
     from huggingface_hub import model_info
     from sentence_transformers import SentenceTransformer
     spec = MODELS[size]
-    revision = model_info(spec['model_id'], revision=revision).sha
+    if not re.fullmatch(r'[0-9a-f]{40}', revision or ''):
+        revision = model_info(spec['model_id'], revision=revision).sha
     encoder = SentenceTransformer(spec['model_id'], revision=revision, device=device)
     encoder.max_seq_length = spec['max_seq_length']
     if encoder.get_sentence_embedding_dimension() != spec['dimension']:

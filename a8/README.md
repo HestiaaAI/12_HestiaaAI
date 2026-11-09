@@ -65,3 +65,7 @@ prompt, decoding and top-k. The larger corpus adds 15 paragraphs on neighboring
 topics. Both datasets retain all five reference answers, and the chunks from the
 retained topics keep their IDs and text. Measure whether the added documents change
 ranking, answer quality or latency.
+
+## Shared generator and 45-row experiment
+
+Open [rag_system.ipynb](rag_system.ipynb) for the executed matrix. The [Person 3 handoff](person3/README.md) includes repeat instructions, the [quality rubric](person3/RUBRIC.md), and the [three-model comparison](person3/COMPARISON.md).
