@@ -16,10 +16,13 @@ class BrainDumpForm(forms.Form):
                            widget=forms.Textarea(attrs={"rows": 7, "placeholder":
                                "Guests are coming tomorrow, the kitchen is messy, we need groceries, and the bathroom tap is leaking."}))
 
-    def __init__(self, *args, user, **kwargs):
+    def __init__(self, *args, user, membership=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["workspace"].queryset = Workspace.objects.filter(
-            memberships__user=user, memberships__is_active=True)
+            memberships__user=user, memberships__is_active=True, pk=membership.workspace_id if membership else None)
+        self.fields["workspace"].widget = forms.HiddenInput()
+        if membership and not self.is_bound:
+            self.initial.setdefault("workspace", membership.workspace_id)
 
 
 class ReviewTaskForm(TaskCreateForm):

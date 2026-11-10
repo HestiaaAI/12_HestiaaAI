@@ -98,7 +98,7 @@ class BrainDumpTests(TestCase):
                      "form-1-DELETE": "on", "workspace": self.other.pk,
                      "created_by_membership": 999, "form-0-workspace": self.other.pk})
         response = self.client.post(self.url, data)
-        self.assertRedirects(response, self.url, fetch_redirect_response=False)
+        self.assertRedirects(response, reverse("task_forms:board"), fetch_redirect_response=False)
         self.assertEqual(Task.objects.count(), 2)
         task = Task.objects.get(title="Edited kitchen")
         self.assertEqual(task.workspace, self.home)
@@ -159,7 +159,7 @@ class BrainDumpTests(TestCase):
         self.assertContains(self.client.post(self.url, data), "review expired")
         data = self.payload(self.generate())
         Membership.objects.filter(pk=self.member.pk).update(is_active=False)
-        self.assertContains(self.client.post(self.url, data), "access changed")
+        self.assertRedirects(self.client.post(self.url, data), reverse("households:onboarding"))
         self.assertFalse(Task.objects.exists())
 
     def test_expired_draft(self):

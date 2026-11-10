@@ -10,7 +10,7 @@
 </section>
 <article class="task-card">
     <dl class="task-details">
-        <div><dt>Workspace</dt><dd>{{ task.workspace }}</dd></div>
+        <div><dt>Household</dt><dd>{{ task.workspace }}</dd></div>
         <div><dt>Type</dt><dd>{{ task.get_task_type_display }}</dd></div>
         <div><dt>Priority</dt><dd>{{ task.get_priority_display }}</dd></div>
         <div><dt>Location</dt><dd>{{ task.default_location|default:"No location specified" }}</dd></div>
@@ -23,7 +23,7 @@
         {% if can_generate_action_plan %}
         <a class="button-link" href="{% url 'workflows:task-action-plan' task.pk %}">Create an AI action plan</a>
         {% endif %}
-        <a class="button-link" href="{% url 'workflows:task-cbv-generic' %}">Back to household tasks</a>
+        <a class="button-link" href="{% url 'task_forms:board' %}">Back to Tasks</a>
     </p>
 </article>
 {% endblock %}

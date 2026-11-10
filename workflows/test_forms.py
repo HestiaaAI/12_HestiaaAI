@@ -6,7 +6,6 @@ from households.models import Membership, Workspace
 from .models import Task
 
 
-@override_settings(ROOT_URLCONF="workflows.forms_preview_urls")
 class TaskBoardTests(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -51,7 +50,7 @@ class TaskBoardTests(TestCase):
     def test_valid_post_creates_model_and_redirects_without_repeat_on_refresh(self):
         before = Task.objects.count()
         response = self.client.post(self.url, self.payload(title="  Water the plants  ", created_by_membership="999"))
-        self.assertRedirects(response, self.url + f"?workspace={self.home.pk}", fetch_redirect_response=False)
+        self.assertRedirects(response, self.url, fetch_redirect_response=False)
         task = Task.objects.get(title="Water the plants")
         self.assertEqual(task.created_by_membership, self.membership)
         self.assertEqual(task.workspace, self.home)
@@ -75,18 +74,18 @@ class TaskBoardTests(TestCase):
         self.assertTrue(response.context["create_form"].errors)
         self.assertEqual(Task.objects.count(), before)
 
-    def test_all_assignment_households_are_available(self):
+    def test_only_selected_household_is_available(self):
         response = self.client.get(self.url)
-        self.assertContains(response, "Other household")
+        self.assertNotContains(response, "Other household")
         response = self.client.post(self.url, self.payload(workspace=self.other.pk))
-        self.assertEqual(response.status_code, 302)
-        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+        self.assertTrue(response.context['create_form'].has_error('workspace'))
+        self.assertFalse(Task.objects.filter(title="Water the plants").exists())
 
-    def test_inactive_membership_does_not_block_assignment_creation(self):
+    def test_inactive_membership_blocks_creation(self):
         Membership.objects.filter(pk=self.membership.pk).update(is_active=False)
-        self.assertContains(self.client.get(self.url), "Buy groceries")
+        self.assertRedirects(self.client.get(self.url), reverse('households:onboarding'))
         self.client.post(self.url, self.payload())
-        self.assertIsNone(Task.objects.get(title="Water the plants").created_by_membership)
+        self.assertFalse(Task.objects.filter(title="Water the plants").exists())
 
     def test_anonymous_get_and_post_require_login_without_creating_task(self):
         self.client.logout()
@@ -102,7 +101,7 @@ class TaskBoardTests(TestCase):
 
     def test_no_households_explains_setup(self):
         Workspace.objects.all().delete()
-        self.assertContains(self.client.get(self.url), "No households available")
+        self.assertRedirects(self.client.get(self.url), reverse("households:onboarding"))
 
     def test_real_csrf_protection_rejects_missing_token_and_accepts_valid_token(self):
         client = Client(enforce_csrf_checks=True)

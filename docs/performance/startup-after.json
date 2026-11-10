@@ -1,0 +1,37 @@
+[
+  {
+    "startup_ms": 310.398,
+    "matplotlib_loaded": false,
+    "torch_loaded": false,
+    "research_loaded": false,
+    "errors": 0
+  },
+  {
+    "startup_ms": 179.446,
+    "matplotlib_loaded": false,
+    "torch_loaded": false,
+    "research_loaded": false,
+    "errors": 0
+  },
+  {
+    "startup_ms": 178.563,
+    "matplotlib_loaded": false,
+    "torch_loaded": false,
+    "research_loaded": false,
+    "errors": 0
+  },
+  {
+    "startup_ms": 183.14,
+    "matplotlib_loaded": false,
+    "torch_loaded": false,
+    "research_loaded": false,
+    "errors": 0
+  },
+  {
+    "startup_ms": 173.457,
+    "matplotlib_loaded": false,
+    "torch_loaded": false,
+    "research_loaded": false,
+    "errors": 0
+  }
+]

@@ -1,4 +1,4 @@
-"""Person 4 review adapter; Person 2 owns the local inference service."""
+"""Task-draft generation and form-backed validation."""
 from django.conf import settings
 
 from .ai_forms import MAX_TASKS, ReviewTaskForm

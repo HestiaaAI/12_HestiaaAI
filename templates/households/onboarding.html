@@ -1,0 +1,2 @@
+{% extends 'base.html' %}
+{% block content %}<h1>Your household</h1><p>You do not have an active household yet. Ask your household organizer for access. Household creation and invitations will be available in a later update.</p><a href="{% url 'households:list' %}">Choose a household</a><a href="{% url 'accounts:logout' %}">Sign out</a>{% endblock %}

@@ -1,26 +1,27 @@
-"""Person 4: validated GET filters and a model-backed Task creation form."""
+"""Scoped task filters and model-backed task creation."""
 from django import forms
 
 from households.models import Workspace
 from .models import Task
 
 
-def available_workspaces():
-    """The public assignment board uses all fictional demo households."""
-    return Workspace.objects.all()
+def available_workspaces(membership=None):
+    """Default-deny workspace choices for an explicitly supplied membership."""
+    return Workspace.objects.filter(pk=membership.workspace_id) if membership and membership.is_active else Workspace.objects.none()
 
 
 class TaskFilterForm(forms.Form):
     q = forms.CharField(required=False, max_length=200, label="Search tasks",
                         widget=forms.TextInput(attrs={"type": "search", "placeholder": "Search by title…"}))
     workspace = forms.ModelChoiceField(queryset=Workspace.objects.none(), required=False,
-                                       empty_label="All households", label="Household")
+                                       empty_label="Selected household", label="Household")
     priority = forms.ChoiceField(required=False, choices=[("", "All priorities"), *Task.Priority.choices])
     task_type = forms.ChoiceField(required=False, choices=[("", "All types"), *Task.TaskType.choices], label="Task type")
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="filter_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces()
+        self.fields["workspace"].queryset = available_workspaces(membership)
+        self.fields["workspace"].widget = forms.HiddenInput()
 
 
 class TaskCreateForm(forms.ModelForm):
@@ -39,12 +40,12 @@ class TaskCreateForm(forms.ModelForm):
             "recurrence_rule": forms.TextInput(attrs={"placeholder": "One-time task"}),
         }
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, membership=None, **kwargs):
         super().__init__(*args, auto_id="create_%s", **kwargs)
-        self.fields["workspace"].queryset = available_workspaces()
-        workspaces = list(self.fields["workspace"].queryset[:2])
-        if len(workspaces) == 1 and not self.is_bound:
-            self.initial.setdefault("workspace", workspaces[0].pk)
+        self.fields["workspace"].queryset = available_workspaces(membership)
+        self.fields["workspace"].widget = forms.HiddenInput()
+        if membership and not self.is_bound:
+            self.initial.setdefault('workspace', membership.workspace_id)
 
     def clean_title(self):
         title = self.cleaned_data["title"].strip()

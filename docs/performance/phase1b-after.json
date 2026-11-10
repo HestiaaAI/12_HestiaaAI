@@ -1,0 +1,212 @@
+{
+  "python": "3.13.7",
+  "platform": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+  "database": "SQLite in-memory",
+  "warm_samples": 7,
+  "measurements": [
+    {
+      "page": "task_forms:board",
+      "tasks": 10,
+      "memberships": 1,
+      "first_ms": 4.255,
+      "warm_median_ms": 4.262,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "households:list",
+      "tasks": 10,
+      "memberships": 1,
+      "first_ms": 1.035,
+      "warm_median_ms": 0.894,
+      "queries": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "page": "workflows:task-insights",
+      "tasks": 10,
+      "memberships": 1,
+      "first_ms": 1.333,
+      "warm_median_ms": 1.313,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "task_forms:board",
+      "tasks": 10,
+      "memberships": 20,
+      "first_ms": 6.014,
+      "warm_median_ms": 4.46,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "households:list",
+      "tasks": 10,
+      "memberships": 20,
+      "first_ms": 1.687,
+      "warm_median_ms": 1.463,
+      "queries": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "page": "workflows:task-insights",
+      "tasks": 10,
+      "memberships": 20,
+      "first_ms": 1.637,
+      "warm_median_ms": 1.402,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "task_forms:board",
+      "tasks": 1000,
+      "memberships": 1,
+      "first_ms": 4.878,
+      "warm_median_ms": 4.408,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "households:list",
+      "tasks": 1000,
+      "memberships": 1,
+      "first_ms": 1.155,
+      "warm_median_ms": 0.904,
+      "queries": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "page": "workflows:task-insights",
+      "tasks": 1000,
+      "memberships": 1,
+      "first_ms": 1.513,
+      "warm_median_ms": 1.545,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "task_forms:board",
+      "tasks": 1000,
+      "memberships": 20,
+      "first_ms": 4.895,
+      "warm_median_ms": 4.91,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    },
+    {
+      "page": "households:list",
+      "tasks": 1000,
+      "memberships": 20,
+      "first_ms": 1.822,
+      "warm_median_ms": 1.462,
+      "queries": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ]
+    },
+    {
+      "page": "workflows:task-insights",
+      "tasks": 1000,
+      "memberships": 20,
+      "first_ms": 1.903,
+      "warm_median_ms": 1.795,
+      "queries": [
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5,
+        5
+      ]
+    }
+  ]
+}

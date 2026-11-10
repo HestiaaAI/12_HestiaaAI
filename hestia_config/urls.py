@@ -19,12 +19,9 @@ from django.urls import include, path
 
 from api.views import product_compare_page
 from hestia_config.views import HomePageView
-from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
-    path("vega-lite/", include("analytics.vega_urls")),
-    path("reports/", include("reports.urls")),
-    path("analytics/", include("analytics.urls")),
+    path("households/", include("households.urls")),
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),
@@ -32,10 +29,7 @@ urlpatterns = [
     path("accounts/", include("allauth.socialaccount.providers.google.urls")),
     path("admin/", admin.site.urls),
     path("lookup/", product_compare_page, name="product-lookup"),
-    path("api/", include("api.urls")),
-    path("tasks/search/", include("workflows.search_urls")),
     path("tasks/manage/", include("workflows.forms_urls")),
-    path("tasks/ask/", ask_hestia_page, name="ask-hestia"),
     path("tasks/ai/", include("workflows.ai_urls")),
     path("tasks/", include("workflows.urls")),
 ]

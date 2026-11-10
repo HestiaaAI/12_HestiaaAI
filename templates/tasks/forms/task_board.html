@@ -19,9 +19,10 @@
 
     {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
     {% if not has_workspaces %}
-    <div class="hf-notice" role="status"><strong>No households available.</strong> Load the assignment demo data with <code>python manage.py seed_template_demo</code>, then refresh this page.</div>
+    <div class="hf-notice" role="status"><strong>No households available.</strong> Choose a household to continue.</div>
     {% endif %}
 
+    {% block task_board_actions %}<p><a href="{% url 'ai_tasks:brain-dump' %}">Organize with AI</a> · <a href="{% url 'workflows:task-insights' %}">Insights</a> · <a href="{% url 'product-lookup' %}">Product catalogue lookup</a></p>{% endblock %}
     <section class="hf-filter-panel" aria-labelledby="filter-heading">
         <div class="hf-section-heading"><h2 id="filter-heading">Find your next task</h2><span>Filter your household responsibilities</span></div>
         {# GET puts read-only filters into a bookmarkable URL; it never saves data. #}
@@ -50,7 +51,7 @@
                     {% if filter_form.errors %}<p>Check the highlighted filters and try again.</p>
                     {% elif has_filters %}<p>No tasks match these filters. Try another title, household, or priority.</p><a href="{% url 'task_forms:board' %}">Show all my tasks</a>
                     {% elif has_workspaces %}<p>A little planning goes a long way. Add your first task using the form.</p>
-                    {% else %}<p>Tasks will appear after the assignment demo data is loaded.</p>{% endif %}
+                    {% else %}<p>Choose a household to see its tasks.</p>{% endif %}
                 </div>
             {% endfor %}
             </div>
@@ -73,7 +74,7 @@
                 <p class="hf-help">Fields marked * are required.</p>
                 <button class="hf-button hf-create-button" type="submit">Create task <span aria-hidden="true">+</span></button>
             </form>
-            {% else %}<p class="hf-help">Load a demo household before creating tasks.</p>{% endif %}
+            {% else %}<p class="hf-help">Choose a household before creating tasks.</p>{% endif %}
         </aside>
     </div>
 </div>

@@ -4,7 +4,7 @@
 
 {% block content %}
 <section class="page-header">
-    <p class="eyebrow">A4 &middot; External API</p>
+    <p class="eyebrow">Product catalogue</p>
     <h1>Product lookup</h1>
     <p>Search a public food database and compare it with products, shopping items, and shopping tasks already in Hestia. Public results are not saved.</p>
 </section>
@@ -30,7 +30,7 @@
         <p>{{ result.analysis.summary }}</p>
         <p>
             Source: {{ result.source.name }}.
-            <a href="{% url 'api:product-compare' %}?q={{ q|urlencode }}">Open the JSON API</a>
+
         </p>
     </section>
 
@@ -110,4 +110,5 @@
         </div>
     </section>
 {% endif %}
+<p><a href="{% url 'task_forms:board' %}">Back to Tasks</a></p>
 {% endblock %}

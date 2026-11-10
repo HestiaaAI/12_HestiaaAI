@@ -5,7 +5,7 @@ import requests
 from django.test import TestCase
 from django.urls import reverse
 
-from households.models import Workspace
+from households.models import Workspace, Membership
 from inventory.models import Product, ShoppingListEntry
 from workflows.models import Task
 
@@ -58,6 +58,7 @@ PUBLIC_HITS = {
 class ProductCompareApiTests(TestCase):
     def setUp(self):
         self.auth_user = get_user_model().objects.create_user(username="feature-test-member")
+        Membership.objects.create(user=self.auth_user, workspace=self.product.workspace, display_name="Reader")
         self.client.force_login(self.auth_user)
 
     @classmethod
@@ -84,17 +85,17 @@ class ProductCompareApiTests(TestCase):
 
     def test_missing_query_does_not_call_the_api(self):
         with patch("api.external.requests.get") as get:
-            response = self.client.get(reverse("api:product-compare"))
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json(), {"ok": False, "error": "Provide a search term with ?q=."})
+            response = self.client.get(reverse("product-lookup"))
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Enter a product name")
         get.assert_not_called()
 
     def test_combines_public_products_with_household_rows(self):
         with patch("api.external.requests.get", return_value=FakeResponse(PUBLIC_HITS)) as get:
-            response = self.client.get(reverse("api:product-compare"), {"q": "oat milk"})
+            response = self.client.get(reverse("product-lookup"), {"q": "oat milk"})
 
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response["Content-Type"], "application/json")
+        self.assertTrue(response["Content-Type"].startswith("text/html"))
         get.assert_called_once_with(
             OPEN_FOOD_FACTS_SEARCH_URL,
             params={
@@ -105,7 +106,7 @@ class ProductCompareApiTests(TestCase):
             headers={"User-Agent": "HestiaAI-INFO490/1.0 (educational class project)"},
             timeout=REQUEST_TIMEOUT_SECONDS,
         )
-        body = response.json()
+        body = response.context["result"]
         self.assertTrue(body["ok"])
         self.assertEqual(body["query"], "oat milk")
         self.assertEqual(body["source"]["name"], "Open Food Facts")
@@ -139,18 +140,18 @@ class ProductCompareApiTests(TestCase):
 
     def test_upstream_http_error_is_handled(self):
         with patch("api.external.requests.get", return_value=FakeResponse({}, status_code=503)):
-            response = self.client.get(reverse("api:product-compare"), {"q": "milk"})
+            response = self.client.get(reverse("product-lookup"), {"q": "milk"})
         self.assertEqual(response.status_code, 502)
-        self.assertFalse(response.json()["ok"])
+        self.assertContains(response, "could not be reached", status_code=502)
 
     def test_timeout_is_handled(self):
         with patch("api.external.requests.get", side_effect=requests.Timeout("timed out")):
-            response = self.client.get(reverse("api:product-compare"), {"q": "milk"})
+            response = self.client.get(reverse("product-lookup"), {"q": "milk"})
         self.assertEqual(response.status_code, 502)
-        self.assertIn("could not be reached", response.json()["error"])
+        self.assertContains(response, "could not be reached", status_code=502)
 
     def test_api_is_read_only(self):
-        response = self.client.post(reverse("api:product-compare"), {"q": "milk"})
+        response = self.client.post(reverse("product-lookup"), {"q": "milk"})
         self.assertEqual(response.status_code, 405)
 
     def test_page_renders_the_comparison(self):
@@ -158,8 +159,7 @@ class ProductCompareApiTests(TestCase):
             response = self.client.get(reverse("product-lookup"), {"q": "oat milk"})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Oat milk")
-        self.assertContains(response, "Open the JSON API")
-        self.assertContains(response, reverse("api:product-compare"))
+        self.assertNotContains(response, "Open the JSON API")
 
     def test_blank_page_does_not_call_the_api(self):
         with patch("api.external.requests.get") as get:

@@ -10,7 +10,7 @@ OPENAI_API_KEY = env("OPENAI_API_KEY", default="")
 GROQ_API_KEY = env("GROQ_API_KEY", default="")
 GROQ_MODEL = env("GROQ_MODEL", default="openai/gpt-oss-20b")
 
-# A6 Person 2 — local Hugging Face Brain Dump (shared contract with ai_prototype.ipynb)
+# Local task drafting provider (loaded only on explicit generation)
 HESTIA_BRAIN_DUMP_BACKEND = env("HESTIA_BRAIN_DUMP_BACKEND", default="local")
 HESTIA_TASK_BREAKDOWN_CALLABLE = env("HESTIA_TASK_BREAKDOWN_CALLABLE", default="")
 HF_TOKEN = env("HF_TOKEN", default="")
@@ -21,7 +21,6 @@ HF_BRAIN_DUMP_MODEL = env(
 HF_BRAIN_DUMP_DEVICE = env("HF_BRAIN_DUMP_DEVICE", default="cpu")
 HF_BRAIN_DUMP_MAX_NEW_TOKENS = env.int("HF_BRAIN_DUMP_MAX_NEW_TOKENS", default=220)
 HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
-HF_ASK_HESTIA_DEVICE = env("HF_ASK_HESTIA_DEVICE", default="cpu")
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -46,9 +45,8 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
-    "api.middleware.ApiAccessMiddleware",
+    "households.access.HouseholdContextMiddleware",
     "allauth.account.middleware.AccountMiddleware",
-    "households.access.AssignmentAccessMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -63,6 +61,7 @@ TEMPLATES = [
         "OPTIONS": {
             "context_processors": [
                 "django.template.context_processors.request",
+                "households.context_processors.household_context",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
             ],
@@ -105,7 +104,6 @@ LOGIN_URL = "accounts:login"
 # Return to home after a direct sign-in; honor an explicit safe local next URL.
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "accounts:login"
-PUBLIC_API_VIEW_NAMES = {"api:chart-priorities"}
 
 # Keep the existing User model and allauth for later Google OAuth integration.
 AUTHENTICATION_BACKENDS = [
