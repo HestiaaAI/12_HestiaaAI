@@ -1,0 +1,117 @@
+{
+  "experiment": "person4_topk_improvement",
+  "case_id": "large/full/hybrid/Q1",
+  "description": "Baseline top-k=3 includes hybrid-maintenance-03 distractor and invents a service call. Intervention truncates the same ranked hit list to top-k=2 (frozen generator/prompt/decoding/corpus/encoder).",
+  "controls_frozen": {
+    "generator": "Qwen/Qwen2-0.5B-Instruct",
+    "generator_revision": "c540970f9e29518b1d8f06ab8b24cba66ad77b6d",
+    "embedding_model": "BAAI/bge-large-en-v1.5",
+    "dataset": "full",
+    "strategy": "hybrid",
+    "query_id": "Q1",
+    "decoding": "greedy",
+    "max_new_tokens": 128
+  },
+  "before": {
+    "top_k": 3,
+    "hit_ids": [
+      "hybrid-chores-01",
+      "hybrid-chores-02",
+      "hybrid-maintenance-03"
+    ],
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "hybrid-chores-01",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-01",
+          "chores-02"
+        ],
+        "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete.",
+        "score": 0.7531383037567139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "hybrid-chores-02",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-03"
+        ],
+        "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved.",
+        "score": 0.7529339790344238
+      },
+      {
+        "rank": 3,
+        "chunk_id": "hybrid-maintenance-03",
+        "document": "maintenance",
+        "section": "Scheduled appliance upkeep",
+        "paragraph_ids": [
+          "maintenance-04",
+          "maintenance-05"
+        ],
+        "text": "The appliance upkeep list contains routine checks for shared equipment such as the vacuum and the laundry machines. Each appliance has its own card so residents can see which equipment has been checked and what still needs attention. When adding a planned task, the coordinator records the appliance name, the item to inspect, and the target week. Residents consult the manufacturer's instructions for equipment-specific steps. The household task board is a scheduling and recordkeeping tool. It can track where the instructions are stored and identify who agreed to perform the next check.\n\nSpare appliance consumables are stored near the shared cleaning shelf and labeled with the equipment they fit. Residents check the part description before taking a replacement because different models can use similar-looking parts. The scheduled upkeep card can list an item that needs replenishing, while the shopping list is used to request the purchase. When a consumable is installed, the resident records the change date on the appliance card. Any unused pieces return to their labeled location. This gives the next reviewer a clear account of what was replaced and what remains in reserve.",
+        "score": 0.6345027685165405
+      }
+    ],
+    "answer": "I marked the completed Kitchen Close card on the household task board. The dishwasher should be marked as \"Running\" on the appliance maintenance card. The resident should contact the appliance service technician to have the machine serviced.",
+    "answer_quality": 0.0,
+    "retrieved_context_quality": 100.0,
+    "source_row": "a8/results/person3/large/rows.jsonl",
+    "notes": "Mentions the closing card but invents an appliance maintenance card and a service call."
+  },
+  "after": {
+    "top_k": 2,
+    "hit_ids": [
+      "hybrid-chores-01",
+      "hybrid-chores-02"
+    ],
+    "hits": [
+      {
+        "rank": 1,
+        "chunk_id": "hybrid-chores-01",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-01",
+          "chores-02"
+        ],
+        "text": "The kitchen closer takes the evening handoff after the last meal. The schedule assigns one closer for each evening and lists a backup for weeks when a resident travels. Before starting, the closer checks the task board for notes about items soaking or food waiting to cool. A note should identify the item and the resident who will finish it. The closer can complete the rest of the routine while that resident handles the exception. Clean cookware belongs in the drying rack until it is dry enough to put away. Keep the main counter available for breakfast preparation.\n\nWhen the evening kitchen close is finished, mark the existing Kitchen Close card complete on the household task board. If the dishwasher is running, clip the Running tag to its handle and leave unloading for the next morning. If a soaking pan remains, record the pan and its owner in the card note so the morning resident can identify it. Do not create a second closing card for the same evening. The completion note is the handoff for the next resident, even when some equipment is still occupied. The Running tag only identifies dishwasher status and does not mark the kitchen task complete.",
+        "score": 0.7531383037567139
+      },
+      {
+        "rank": 2,
+        "chunk_id": "hybrid-chores-02",
+        "document": "chores",
+        "section": "Kitchen closing routine",
+        "paragraph_ids": [
+          "chores-03"
+        ],
+        "text": "The morning resident checks the latest completion note before unloading dishes or putting away items left near the sink. If the dishwasher has a Running tag, check that the cycle has ended before moving the tag to its storage hook. The morning task board keeps dishwasher unloading separate from kitchen closing, which lets each resident record their own work. If the note identifies a soaking pan, leave it in the named location until the assigned resident handles it. The morning resident can use the free counter to set out breakfast supplies while these remaining items are resolved.",
+        "score": 0.7529339790344238
+      }
+    ],
+    "removed_distractor": {
+      "chunk_id": "hybrid-maintenance-03",
+      "section": "Scheduled appliance upkeep",
+      "score": 0.6345027685165405,
+      "reason": "Neighboring appliance-upkeep passage pulled into hybrid top-3."
+    },
+    "answer": "I marked the Kitchen Close card as complete on the household task board. To avoid creating a second closing card for the same evening, I should remove the Running tag from the dishwasher.",
+    "answer_quality": 33.33,
+    "service_call_invention": false,
+    "kitchen_close_fact": true,
+    "running_tag_complete": false,
+    "notes": "Recorded Person 4 improvement run: service-call hallucination removed; Kitchen Close completion retained; Running-tag / morning-unload facts still incomplete."
+  },
+  "comparison": {
+    "answer_quality_before": 0.0,
+    "answer_quality_after": 33.33,
+    "delta": 33.33,
+    "interpretation": "Partial gain confirms distractor diagnosis; top-k=2 does not fix every missing fact."
+  },
+  "recorded_at": "2026-11-09",
+  "artifact_note": "Before state is bound to the committed Person 3 large/hybrid/Q1 row. After answer is the measured top-k=2 continuation documented in a8/rag_analysis.md Step 3.3. Reproduce with: python -m a8.person4_improvement"
+}

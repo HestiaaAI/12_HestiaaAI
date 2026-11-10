@@ -1,0 +1,3 @@
+case_id,phase,top_k,answer_quality,hit_ids,service_call,answer
+large/full/hybrid/Q1,before,3,0.0,hybrid-chores-01|hybrid-chores-02|hybrid-maintenance-03,yes,"I marked the completed Kitchen Close card on the household task board. The dishwasher should be marked as ""Running"" on the appliance maintenance card. The resident should contact the appliance service technician to have the machine serviced."
+large/full/hybrid/Q1,after,2,33.33,hybrid-chores-01|hybrid-chores-02,no,"I marked the Kitchen Close card as complete on the household task board. To avoid creating a second closing card for the same evening, I should remove the Running tag from the dishwasher."
