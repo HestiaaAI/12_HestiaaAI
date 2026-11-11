@@ -24,6 +24,7 @@ HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
 HF_ASK_HESTIA_DEVICE = env("HF_ASK_HESTIA_DEVICE", default="cpu")
 
 INSTALLED_APPS = [
+    "expenses",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -148,3 +149,8 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Hestia <noreply@example.invalid>")
+
+# Optional Web Push keys belong in .env, never in source control.
+WEBPUSH_PUBLIC_KEY = env("WEBPUSH_PUBLIC_KEY", default="")
+WEBPUSH_PRIVATE_KEY = env("WEBPUSH_PRIVATE_KEY", default="")
+WEBPUSH_SUBJECT = env("WEBPUSH_SUBJECT", default="")

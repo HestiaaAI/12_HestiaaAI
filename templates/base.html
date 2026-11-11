@@ -1,4 +1,4 @@
-{% load static %}
+{% load static avatars %}
 {% now "U" as ts %}
 <!DOCTYPE html>
 <html lang="en">
@@ -9,6 +9,8 @@
     <title>{% block title %}Hestia{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ ts }}">
     <link rel="stylesheet" href="{% static 'css/demo.css' %}?v={{ ts }}">
+    <link rel="manifest" href="/hestia.webmanifest">
+    <link rel="apple-touch-icon" href="/static/images/hestia-app-192.png">
     <meta name="theme-color" content="#fcf7e6">
     {% block extra_css %}{% endblock %}
 </head>
@@ -21,7 +23,8 @@
             </a>
             {% if user.is_authenticated %}
             <div class="header-actions">
-                <span class="logout-name">{{ user.get_full_name|default:user.get_username }}</span>
+                <a class="profile-avatar-link" href="{% url 'accounts:avatar' %}" aria-label="Edit your avatar"><span class="profile-avatar">{% face_avatar user %}</span><span class="logout-name">{{ user.get_full_name|default:user.get_username }}</span></a>
+                <a class="header-reminders" href="{% url 'expenses:reminders' %}" aria-label="Bill reminder inbox">🔔</a>
                 <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
                     {% csrf_token %}
                     <button type="submit">Sign out</button>
@@ -39,6 +42,7 @@
             <a class="nav-link" href="{% url 'workflows:task-cbv-generic' %}" {% if request.path|slice:":7" == "/tasks/" %}aria-current="page"{% endif %}>Tasks</a>
             <a class="nav-link" href="{% url 'groceries:list' %}" {% if request.resolver_match.namespace == "groceries" and request.resolver_match.url_name != "household" %}aria-current="page"{% endif %}>Groceries</a>
             <a class="nav-link" href="{% url 'groceries:household' %}" {% if request.resolver_match.url_name == "household" %}aria-current="page"{% endif %}>Household</a>
+            <a class="nav-link" href="{% url 'expenses:home' %}" {% if request.resolver_match.namespace == "expenses" %}aria-current="page"{% endif %}>Expenses</a>
             <details class="demo-more"><summary>More</summary><div>
                 <a class="nav-link" href="{% url 'task_forms:board' %}">Task board</a>
                 {% url 'ai_tasks:brain-dump' as ai_brain_dump_url %}

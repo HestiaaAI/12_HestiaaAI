@@ -7,6 +7,9 @@ from allauth.account.adapter import DefaultAccountAdapter
 
 
 class AccountAdapter(DefaultAccountAdapter):
+    def get_signup_redirect_url(self, request):
+        return reverse("accounts:avatar")
+
     def is_safe_url(self, url):
         request = context.request
         return url_has_allowed_host_and_scheme(

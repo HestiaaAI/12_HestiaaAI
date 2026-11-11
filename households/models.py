@@ -7,6 +7,8 @@ TEMPERATURE_VALIDATORS = [MinValueValidator(55), MaxValueValidator(85)]
 
 
 class Workspace(models.Model):
+    simplify_debts = models.BooleanField(default=True)
+
     """
     Represents one household or team using Hestia.
 
@@ -125,3 +127,9 @@ class ThermostatPreference(models.Model):
                 name="thermostat_night_range_order",
             ),
         ]
+
+
+class UserAvatar(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="hestia_avatar")
+    options = models.JSONField(default=dict)
+    updated_at = models.DateTimeField(auto_now=True)

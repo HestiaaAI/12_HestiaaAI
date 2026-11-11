@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from expenses.notification_views import service_worker, manifest
 from django.contrib import admin
 from django.urls import include, path
 
@@ -22,6 +23,9 @@ from hestia_config.views import HomePageView
 from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
+    path("hestia-worker.js",service_worker),
+    path("hestia.webmanifest",manifest),
+    path("expenses/", include("expenses.urls")),
     path("vega-lite/", include("analytics.vega_urls")),
     path("reports/", include("reports.urls")),
     path("analytics/", include("analytics.urls")),

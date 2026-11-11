@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load avatars %}
 {% block title %}Household | Hestia{% endblock %}
 {% block content %}
 <section class="demo-page">
@@ -10,7 +11,7 @@
         <p>{{ roommates|length }} member{{ roommates|length|pluralize }}</p>
         <ul class="demo-members">
         {% for member in roommates %}
-            <li><span class="demo-avatar" aria-hidden="true">{{ member.display_name|slice:":1"|upper }}</span>
+            <li><span class="demo-avatar" aria-hidden="true">{% face_avatar member %}</span>
                 <strong>{{ member.display_name }}</strong>{% if member.user_id == user.pk %}<small>You</small>{% endif %}</li>
         {% endfor %}
         </ul>

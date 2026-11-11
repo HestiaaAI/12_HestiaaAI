@@ -1,0 +1,10 @@
+{% extends 'expenses/base.html' %}
+{% load avatars %}{% load static expense_tags %}
+{% block expenses_active %}{% endblock %}{% block household_active %}active{% endblock %}
+{% block content %}
+<div class="page-heading"><div><h1>Meet the home club</h1><p>A shared home. A little balance for everyone.</p></div></div>
+<div class="home-scene small-scene"><img src="{% static 'expenses/living-room.png' %}" alt="A cozy living room"></div>
+<section class="card sage house-card"><h2>{{ workspace.name }}</h2><p>Your household's shared expenses.</p></section>
+<div class="roommate-grid">{% for row in member_rows %}<article class="card member-card"><span class="avatar large {% cycle 'sage' 'peach' 'cream' %}">{% face_avatar row.member %}</span><h3>{{ row.member.display_name }}</h3><small>{% if row.member.pk == actor.pk %}You{% else %}{{ row.member.get_role_display }}{% endif %}{% if not row.member.is_active %} · Former roommate{% endif %}</small><p>{% if row.balance > 0 %}Gets back {{ row.amount|usd }}{% elif row.balance < 0 %}Owes {{ row.amount|usd }}{% else %}All square{% endif %}</p></article>{% endfor %}</div>
+<a class="button primary switch-house" href="{% url 'expenses:home' %}">Your households</a>
+{% endblock %}
