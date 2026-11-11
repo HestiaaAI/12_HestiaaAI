@@ -179,3 +179,6 @@ Use /tasks/insights/ as the single private insights page, with priority/type sum
 **Additional Phase 1 acceptance gate:** a user can choose a household, find/create a task, generate/review/save AI drafts, open task details/action plans, inspect household insights and return to the same board through one connected journey. Duplicate assignment list/search/aggregate business logic has been merged or removed with documented replacements. Old links either reach the canonical experience safely or remain documented data adapters; no technical demo navigation or seed instructions appear in normal screens. Existing useful services remain modular where responsibilities differ. A UI-only hiding of duplicate navigation is insufficient.
 
 Phase 5 now focuses on final visual integration, completed grocery/expense modules and end-to-end demo polish; canonical navigation and backend consolidation are Phase 1 work.
+
+
+**Confirmed Ask Hestia decision:** Retain this feature. Phase 1B improves integration and truthful handbook labeling; household-aware retrieval follows incrementally with scoped evidence and confirmed writes. Any earlier deletion recommendation is superseded. See the confirmed product decision in `2026-11-09-product-first-cleanup.md`.

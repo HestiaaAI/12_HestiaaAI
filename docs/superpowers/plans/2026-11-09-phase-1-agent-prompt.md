@@ -74,3 +74,6 @@ Inventory callers/configuration before deleting code. Merge four separate list i
 Add failing unified-journey, legacy alias, shared-helper/schema, household context, provider-failure and product-copy tests before restructuring. Document every keep/merge/remove/alias decision and its replacement. Hiding links alone does not satisfy the assignment. A full rewrite, new AI abstraction framework or deleting useful features also fails it.
 
 Final report must demonstrate both isolation and consolidation: canonical route map, removed/merged handlers/functions with replacement, remaining intentional adapters, real test evidence, and signed-in browser checks actually performed. Stop before household creation/invitations and other later phases.
+
+
+**Confirmed Ask Hestia decision:** Retain this feature. Phase 1B improves integration and truthful handbook labeling; household-aware retrieval follows incrementally with scoped evidence and confirmed writes. Any earlier deletion recommendation is superseded. See the confirmed product decision in `2026-11-09-product-first-cleanup.md`.
