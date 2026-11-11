@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}Household settings | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow" aria-labelledby="settings-title">
+    <header><p class="eyebrow">{{ active_household.name }}</p><h1 id="settings-title">Household settings</h1><p>The household timezone controls upcoming grocery dates. Existing timestamps stay unchanged.</p></header>
+    <form method="post" class="demo-panel demo-form">{% csrf_token %}
+        {% if form.errors %}<div class="form-errors" role="alert"><p>Check the fields below.</p>{{ form.non_field_errors }}</div>{% endif %}
+        {% for field in form %}<div class="form-field">{{ field.as_field_group }}</div>{% endfor %}
+        <div class="demo-actions"><button class="demo-button" type="submit">Save settings</button><a href="{% url 'households:detail' %}">Back to household</a></div>
+    </form>
+</section>
+{% endblock %}

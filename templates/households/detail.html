@@ -4,18 +4,20 @@
 <section class="demo-page">
     <div class="demo-heading"><div><p class="demo-kicker">Household</p><h1>Meet the home club</h1></div></div>
     <div class="demo-hero" aria-hidden="true"></div>
-    {% include "inventory/workspace_switcher.html" %}
+    <p>{{ workspace.name }} · {{ workspace.timezone }} · <a href="{% url 'households:list' %}">Switch household</a></p>
+    {% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
+    {% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
     <section class="demo-panel demo-sage">
         <h2>{{ workspace.name }}</h2>
         <p>{{ roommates|length }} member{{ roommates|length|pluralize }}</p>
         <ul class="demo-members">
         {% for member in roommates %}
             <li><span class="demo-avatar" aria-hidden="true">{{ member.display_name|slice:":1"|upper }}</span>
-                <strong>{{ member.display_name }}</strong>{% if member.user_id == user.pk %}<small>You</small>{% endif %}</li>
+                <strong>{{ member.display_name }}</strong>{% if member.user_id == user.pk %}<small>You</small>{% endif %}<small>{{ member.get_role_display }}</small></li>
         {% endfor %}
         </ul>
     </section>
-    {% if can_manage_household %}<p><a class="demo-button" href="{% url 'households:invites' %}">Invite roommates</a></p>{% endif %}
+    {% if can_manage_household %}<p class="demo-actions"><a class="demo-button" href="{% url 'households:invites' %}">Invite roommates</a> <a class="demo-button" href="{% url 'households:settings' %}">Household settings</a></p>{% endif %}
     <div class="demo-grid">
         <a class="demo-panel demo-tile" href="{% url 'task_forms:board' %}"><strong>Tasks</strong><span>See household responsibilities</span></a>
         <a class="demo-panel demo-tile" href="{% url 'groceries:workspace' workspace.pk %}"><strong>Groceries</strong><span>See what’s in stock</span></a>

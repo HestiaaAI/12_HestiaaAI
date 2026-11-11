@@ -8,7 +8,7 @@
     <div class="demo-grid">
         <a class="demo-panel demo-tile demo-peach" href="{% url 'task_forms:board' %}"><strong>Tasks</strong><span>See what needs doing</span></a>
         <a class="demo-panel demo-tile demo-sage" href="{% url 'groceries:list' %}"><strong>Groceries</strong><span>Use what you have</span></a>
-        <a class="demo-panel demo-tile" href="{% url 'groceries:household' %}"><strong>Household</strong><span>See who’s at home</span></a>
+        <a class="demo-panel demo-tile" href="{% url 'households:detail' %}"><strong>Household</strong><span>See who’s at home</span></a>
     </div>
     {% else %}
     <div class="demo-panel demo-sage"><a class="demo-button" href="{% url 'accounts:login' %}">Sign in</a></div>

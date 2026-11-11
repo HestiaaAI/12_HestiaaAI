@@ -124,7 +124,7 @@ class InvitationAcceptanceTests(InvitationFixture,TestCase):
         groceries=self.client.get(reverse('groceries:list'),follow=True)
         self.assertContains(groceries,'Shared invited milk')
         self.assertNotContains(groceries,'Unrelated apples')
-        roster=self.client.get(reverse('groceries:household'))
+        roster=self.client.get(reverse('households:detail'))
         self.assertContains(roster,self.actor.display_name)
         self.assertNotContains(roster,'Invite roommates')
         self.assertEqual(self.client.get(reverse('workflows:task-insights')).context['total_tasks'],1)

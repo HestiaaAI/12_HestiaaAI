@@ -1,7 +1,9 @@
 from django.urls import path
-from . import views, invitation_views, invitation_acceptance
+from . import views, invitation_views, invitation_acceptance, management_views
 app_name = 'households'
 urlpatterns = [
+    path('current/', management_views.detail, name='detail'),
+    path('current/settings/', management_views.settings, name='settings'),
     path("invites/<str:token>/", invitation_acceptance.accept, name="accept-invite"),
     path("current/invites/", invitation_views.invites, name="invites"),
     path("current/invites/<int:invitation_id>/revoke/", invitation_views.revoke, name="revoke-invite"),

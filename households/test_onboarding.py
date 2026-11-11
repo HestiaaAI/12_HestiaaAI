@@ -130,7 +130,7 @@ class HouseholdCreationTests(TestCase):
         groceries=self.client.get(reverse('groceries:list'),follow=True)
         self.assertNotContains(groceries,'Original milk')
         self.assertContains(groceries,new.workspace.name)
-        roster=self.client.get(reverse('groceries:household'))
+        roster=self.client.get(reverse('households:detail'))
         self.assertEqual(roster.context['active_household'],new.workspace)
         self.assertEqual(self.client.get(reverse('workflows:task-insights')).context['total_tasks'],0)
         self.client.post(reverse('households:switch'),{'workspace_id':old.workspace_id})
@@ -203,11 +203,11 @@ class OnboardingJourneyTests(TestCase):
 
     def test_creation_preserves_current_product_navigation_and_context(self):
         response=self.client.post(reverse('households:create'),{'name':'Shared house','timezone':'America/Chicago'},follow=True)
-        for name in ['task_forms:board','groceries:list','groceries:household','ask-hestia','workflows:task-insights']:
+        for name in ['task_forms:board','groceries:list','households:detail','ask-hestia','workflows:task-insights']:
             # Insights is offered on the board; other destinations remain primary navigation.
             self.assertContains(response,reverse(name))
         self.assertContains(response,'Shared house')
-        for name in ['groceries:list','groceries:household','workflows:task-insights','ask-hestia']:
+        for name in ['groceries:list','households:detail','workflows:task-insights','ask-hestia']:
             page=self.client.get(reverse(name),follow=True)
             self.assertEqual(page.context['active_household'].name,'Shared house')
 

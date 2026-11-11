@@ -14,7 +14,7 @@
         {% if invitation.status == 'pending' %}<form method="post" action="{% url 'households:revoke-invite' invitation.pk %}">{% csrf_token %}<button type="submit">Revoke invitation</button></form>{% endif %}
         {% if invitation.status != 'accepted' %}<form method="post" action="{% url 'households:resend-invite' invitation.pk %}">{% csrf_token %}<input type="hidden" name="nonce" value="{{ form.nonce.value }}"><button type="submit">Reissue invitation</button></form>{% endif %}
     </li>{% empty %}<li>No invitations yet.</li>{% endfor %}</ul></section>
-    <a href="{% url 'groceries:household' %}">Back to household</a>
+    <a href="{% url 'households:detail' %}">Back to household</a>
 </section>
 {% endblock %}
 

@@ -80,13 +80,7 @@ def groceries(request, workspace_id=None):
 
 @login_required
 def household(request):
-    available = request.household_memberships
-    member = require_household(request)
-    return render(request, "inventory/household.html", {
-        "workspace": member.workspace,
-        "memberships": available,
-        "roommates": member.workspace.memberships.filter(is_active=True),
-    })
+    return redirect('households:detail')
 
 
 @login_required

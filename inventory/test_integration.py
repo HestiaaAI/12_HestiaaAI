@@ -29,7 +29,7 @@ class SharedHouseholdTests(TestCase):
         self.assertRedirects(self.client.get(reverse('groceries:list')), reverse('groceries:workspace', args=[self.b.pk]))
 
     def test_roster_cannot_override_selection_with_query(self):
-        response = self.client.get(reverse('groceries:household'), {'workspace':self.b.pk})
+        response = self.client.get(reverse('households:detail'), {'workspace':self.b.pk})
         self.assertEqual(response.context['workspace'], self.a)
 
     def test_no_selection_requires_shared_picker(self):

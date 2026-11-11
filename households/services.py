@@ -190,3 +190,51 @@ def accept_invitation(*, user, raw_token):
     invitation.accepted_by = user
     invitation.save(update_fields=['accepted_at','accepted_by'])
     return member
+
+class HouseholdError(Exception):
+    """Safe errors for fresh household administration and departure checks."""
+    messages = {
+        'forbidden': 'Your household access or owner permissions changed. Reload and try again.',
+        'not_found': 'Member not found in this household.',
+        'inactive': 'This member is no longer active. Reload the household page.',
+        'self_remove': 'To remove yourself, use Leave household.',
+        'last_owner': 'Transfer ownership to another active roommate before leaving. A household must keep an active owner.',
+        'self_transfer': 'Choose another active roommate to become owner.',
+        'invalid_target': 'Choose an active member with an active linked account.',
+    }
+
+    def __init__(self, code):
+        self.code = code
+        super().__init__(self.messages[code])
+
+
+def locked_household(actor):
+    """Workspace first, then memberships in PK order; caller must be atomic."""
+    try:
+        workspace = Workspace.objects.select_for_update().get(pk=actor.workspace_id)
+    except (Workspace.DoesNotExist, AttributeError):
+        raise HouseholdError('forbidden')
+    members = list(Membership.objects.select_for_update(of=('self',)).select_related('user').filter(
+        workspace=workspace).order_by('pk'))
+    current = next((m for m in members if m.pk == actor.pk and m.user_id == actor.user_id), None)
+    if current is None or not current.is_active or not current.user_id or not current.user.is_active:
+        raise HouseholdError('forbidden')
+    return workspace, current, members
+
+
+def require_owner(member):
+    if member.role != Membership.MemberRole.OWNER:
+        raise HouseholdError('forbidden')
+
+
+@transaction.atomic
+def update_household(*, actor, name: str, timezone: str) -> Workspace:
+    workspace, current, members = locked_household(actor)
+    require_owner(current)
+    form = HouseholdCreateForm({'name': name, 'timezone': timezone})
+    if not form.is_valid():
+        raise ValidationError(form.errors.as_data())
+    workspace.name = form.cleaned_data['name']
+    workspace.timezone = form.cleaned_data['timezone']
+    workspace.save(update_fields=['name', 'timezone', 'updated_at'])
+    return workspace
