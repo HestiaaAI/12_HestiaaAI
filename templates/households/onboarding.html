@@ -6,8 +6,7 @@
     <div class="demo-panel">
         <p>A household keeps your shared tasks, groceries and roommates together. Create one to get started; you’ll become its owner.</p>
         <p>Your new household starts empty, ready for your own tasks and groceries.</p>
-        <div class="demo-actions"><a class="demo-button" href="{% url 'households:create' %}">Create household</a>
-        <form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<button class="demo-button demo-secondary" type="submit">Sign out</button></form></div>
+        <div class="demo-actions"><a class="demo-button" href="{% url 'households:create' %}">Create household</a></div>
     </div>
 </section>
 {% endblock %}
