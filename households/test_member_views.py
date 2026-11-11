@@ -26,8 +26,9 @@ class MemberActionTests(ManagementFixture,TestCase):
         for name in ['remove-member','transfer-owner','leave']:
             url=self.action(name)
             self.assertEqual(self.client.get(url).status_code,405)
-            page=self.client.post(url)
-            self.assertContains(page,'Confirm',status_code=400)
+            page=self.client.post(url,follow=True)
+            self.assertContains(page,'Confirm')
+            self.assertEqual(page.redirect_chain[0][0],reverse('households:detail'))
         self.actor.refresh_from_db();self.member.refresh_from_db()
         self.assertTrue(self.member.is_active);self.assertEqual(self.actor.role,'OWNER')
         self.assertEqual(self.member.role,'ADULT')
@@ -68,8 +69,8 @@ class MemberActionTests(ManagementFixture,TestCase):
         self.assertTrue(self.task.__class__.objects.filter(pk=self.task.pk).exists())
 
     def test_sole_owner_leave_blocked_and_self_remove_explained(self):
-        self.assertContains(self.client.post(self.action('leave'),{'confirm':'yes'}),'Transfer ownership',status_code=400)
-        self.assertContains(self.client.post(self.action('remove-member',self.actor),{'confirm':'yes'}),'use Leave household',status_code=400)
+        self.assertContains(self.client.post(self.action('leave'),{'confirm':'yes'},follow=True),'Transfer ownership')
+        self.assertContains(self.client.post(self.action('remove-member',self.actor),{'confirm':'yes'},follow=True),'use Leave household')
         self.actor.refresh_from_db();self.assertTrue(self.actor.is_active)
 
     def test_transfer_refreshes_capabilities_and_pending_invitation_controls(self):
@@ -87,9 +88,10 @@ class MemberActionTests(ManagementFixture,TestCase):
                 Membership.objects.filter(pk=self.member.pk).update(is_active=True)
                 self.selected(self.roommate)
                 extras=[services.create_household(user=self.roommate,name=f'Other {i}',timezone='UTC') for i in range(count)]
-                page=self.client.post(self.action('leave'),{'confirm':'yes'})
+                page=self.client.post(self.action('leave'),{'confirm':'yes'},follow=True)
                 expected='households:onboarding' if count==0 else ('task_forms:board' if count==1 else 'households:list')
                 self.assertRedirects(page,reverse(expected))
+                self.assertContains(page,'You left the household')
                 self.assertIn('_auth_user_id',self.client.session)
                 self.assertNotIn('active_workspace_id',self.client.session)
                 for m in extras:m.refresh_from_db();self.assertTrue(m.is_active)
@@ -110,6 +112,15 @@ class MemberActionTests(ManagementFixture,TestCase):
             Membership.objects.filter(pk=self.member.pk).update(is_active=False)
             return real_transfer(**kwargs)
         with patch('households.management_views.transfer_ownership',side_effect=deactivate):
-            page=self.client.post(self.action('transfer-owner'),{'confirm':'yes'})
-        self.assertContains(page,'active member',status_code=400)
+            page=self.client.post(self.action('transfer-owner'),{'confirm':'yes'},follow=True)
+        self.assertContains(page,'active member')
         self.actor.refresh_from_db();self.assertEqual(self.actor.role,'OWNER')
+
+    def test_blocked_action_returns_to_canonical_get_so_refresh_is_safe(self):
+        response=self.client.post(self.action('leave'),{'confirm':'yes'},follow=True)
+        self.assertRedirects(response,reverse('households:detail'))
+        page=response
+        self.assertEqual(self.client.get(reverse('households:detail')).status_code,200)
+        self.assertContains(page,'Transfer ownership')
+        self.assertContains(page,'role="alert"')
+        self.actor.refresh_from_db();self.assertTrue(self.actor.is_active)

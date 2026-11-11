@@ -5,8 +5,7 @@
     <div class="demo-heading"><div><p class="demo-kicker">Household</p><h1>Meet the home club</h1></div></div>
     <div class="demo-hero" aria-hidden="true"></div>
     <p>{{ workspace.name }} · {{ workspace.timezone }} · <a href="{% url 'households:list' %}">Switch household</a></p>
-    {% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
-    {% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+    {% for message in messages %}<p class="{% if 'error' in message.tags %}form-errors{% else %}demo-messages{% endif %}" role="{% if 'error' in message.tags %}alert{% else %}status{% endif %}">{{ message }}</p>{% endfor %}
     <section class="demo-panel demo-sage">
         <h2>{{ workspace.name }}</h2>
         <p>{{ roommates|length }} member{{ roommates|length|pluralize }}</p>

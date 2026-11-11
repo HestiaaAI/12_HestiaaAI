@@ -2,6 +2,7 @@
 {% block title %}Choose a household | Hestia{% endblock %}
 {% block content %}
 <section class="demo-page demo-narrow" aria-labelledby="household-picker-title">
+    {% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
     <header><h1 id="household-picker-title">Choose a household</h1><p>Your tasks and groceries follow the household you choose.</p></header>
     <div class="demo-panel">
         {% for membership in memberships %}<form method="post" action="{% url 'households:switch' %}">{% csrf_token %}<button class="demo-button" name="workspace_id" value="{{ membership.workspace_id }}">{{ membership.workspace.name }}</button></form>

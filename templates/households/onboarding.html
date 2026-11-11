@@ -2,6 +2,7 @@
 {% block title %}Your household | Hestia{% endblock %}
 {% block content %}
 <section class="demo-page demo-narrow" aria-labelledby="onboarding-title">
+    {% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
     <header><p class="eyebrow">Welcome home</p><h1 id="onboarding-title">Your household starts here</h1></header>
     <div class="demo-panel">
         <p>A household keeps your shared tasks, groceries and roommates together. Create one to get started; you’ll become its owner.</p>

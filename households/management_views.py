@@ -11,19 +11,14 @@ from .models import Membership
 from .services import HouseholdError, update_household, remove_member, leave_household, transfer_ownership
 
 
-def detail_response(request, *, status=200, error=None):
+@login_required
+@require_GET
+def detail(request):
     member = require_household(request)
     return render(request, 'households/detail.html', {
         'workspace': member.workspace,
         'roommates': Membership.objects.filter(workspace=member.workspace, is_active=True).select_related('user'),
-        'error': error,
-    }, status=status)
-
-
-@login_required
-@require_GET
-def detail(request):
-    return detail_response(request)
+    })
 
 
 @login_required
@@ -52,7 +47,8 @@ def membership_action(request, operation, membership_id=None):
         if actor.role != Membership.MemberRole.OWNER:
             raise PermissionDenied('Only current household owners can manage members.')
     if request.POST.get('confirm') != 'yes':
-        return detail_response(request, status=400, error='Confirm this action using the form below. Nothing changed.')
+        messages.error(request, 'Confirm this action using the form below. Nothing changed.')
+        return redirect('households:detail')
     try:
         if operation == 'leave':
             leave_household(actor=actor)
@@ -68,7 +64,8 @@ def membership_action(request, operation, membership_id=None):
             if request.active_membership is None:
                 raise HouseholdRequired()
             raise PermissionDenied(str(exc))
-        return detail_response(request, status=400, error=str(exc))
+        messages.error(request, str(exc))
+        return redirect('households:detail')
     if operation == 'leave':
         request.session.pop('active_workspace_id', None)
         resolve_active_membership(request, refresh=True)
