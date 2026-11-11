@@ -40,7 +40,8 @@ class PageMeasurementTests(TestCase):
                             self.assertEqual(len(response.context['tasks']), 6)
                         runs.append(elapsed)
                         queries.append(len(captured))
-                        expected = {"task_forms:board":5, "households:list":3, "workflows:task-insights":5}
+                        # Board annotates occurrences/assignments and loads roommate assignees.
+                        expected = {"task_forms:board":8, "households:list":3, "workflows:task-insights":5}
                         self.assertEqual(len(captured), expected[name], (name,task_count,membership_count))
                     measurements.append({'page':name, 'tasks':task_count, 'memberships':membership_count,
                                          'first_ms':round(runs[0],3), 'warm_median_ms':round(median(runs[1:]),3),
@@ -92,7 +93,9 @@ class ContextWorkTests(TestCase):
                 response=self.client.get(reverse(name))
             self.assertEqual(response.status_code,200)
             membership_reads=[q for q in queries if 'FROM "households_membership"' in q['sql']]
-            self.assertEqual(len(membership_reads),1,name)
+            # Board also loads active roommate assignees for the create form.
+            expected = 2 if name == 'task_forms:board' else 1
+            self.assertEqual(len(membership_reads), expected, name)
 
     def test_insights_uses_accessible_text_without_image_request(self):
         Task.objects.create(workspace=self.home,title='A real task',priority='HIGH')

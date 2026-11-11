@@ -1,75 +1,138 @@
 {% extends "base.html" %}
 {% load static %}
-{% block title %}Task board | Hestia{% endblock %}
+{% block title %}Tasks | Hestia{% endblock %}
 {% block extra_css %}
 {# Increment this version when the asset changes to refresh browser caches. #}
-<link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20260926-1">
+<link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20261111-2">
 <link rel="icon" type="image/svg+xml" href="{% static 'images/hestia-mark.svg' %}">
 {% endblock %}
 {% block content %}
-<div class="hf-board">
-    <header class="demo-heading"><div><p class="demo-kicker">{{ active_household.name }}</p><h1>A little teamwork, a happier home</h1><p>Find, plan, and share your household responsibilities.</p></div></header>
-    <div class="demo-hero" aria-hidden="true"></div>
+<div class="hf-board hc-tasks demo-page">
+    <header class="hc-tasks-heading demo-heading">
+        <div>
+            <p class="demo-kicker">{% if active_household %}{{ active_household.name }}{% else %}The little home club{% endif %}</p>
+            <h1>A happy little home</h1>
+            <p>{{ day_headline }}{% if selected_day == today %} · Let’s take it easy.{% endif %}</p>
+        </div>
+    </header>
+    <div class="demo-hero" role="img" aria-label="Cozy living room illustration"></div>
 
     {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
     {% if not has_workspaces %}
     <div class="hf-notice" role="status"><strong>No households available.</strong> Choose a household to continue.</div>
     {% endif %}
 
-    {% block task_board_actions %}<p><a href="{% url 'ai_tasks:brain-dump' %}">Organize with AI</a> · <a href="{% url 'workflows:task-insights' %}">Insights</a> · <a href="{% url 'product-lookup' %}">Product catalogue lookup</a></p>{% endblock %}
-    <section class="hf-filter-panel" aria-labelledby="filter-heading">
-        <div class="hf-section-heading"><h2 id="filter-heading">Find your next task</h2><span>Filter your household responsibilities</span></div>
-        {# GET puts read-only filters into a bookmarkable URL; it never saves data. #}
-        <form class="hf-filters" method="get" action="{% url 'task_forms:board' %}">
+    {% block task_board_actions %}
+    <p class="hc-secondary-links">
+        <a href="{% url 'ai_tasks:brain-dump' %}">Organize with AI</a> ·
+        <a href="{% url 'workflows:task-insights' %}">Insights</a> ·
+        <a href="{% url 'product-lookup' %}">Product catalogue lookup</a>
+    </p>
+    {% endblock %}
+
+    <nav class="hc-day-strip" aria-label="Choose a day">
+        {% for day in day_strip %}
+        <a class="hc-day{% if not day_filter_active and day.date == today %} is-today{% endif %}"
+           href="?{% if filter_query %}{{ filter_query }}&amp;{% endif %}day={{ day.iso }}"
+           {% if day_filter_active and day.selected %}aria-current="date"{% endif %}>
+            <span>{{ day.label }}</span>
+            <strong>{{ day.number }}</strong>
+        </a>
+        {% endfor %}
+        {% if day_filter_active %}
+        <a class="hc-day" href="{% url 'task_forms:board' %}{% if filter_query %}?{{ filter_query }}{% endif %}">All</a>
+        {% endif %}
+    </nav>
+
+    <details class="demo-panel hc-filters-panel">
+        <summary>Search &amp; filters</summary>
+        <form class="hf-filters" method="get" action="{% url 'task_forms:board' %}" style="margin-top:1rem">
+            {% if day_filter_active %}<input type="hidden" name="day" value="{{ selected_day|date:'Y-m-d' }}">{% endif %}
             {% for field in filter_form %}{% include "tasks/forms/field.html" %}{% endfor %}
-            <button class="hf-button" type="submit">Apply filters</button>
+            <button class="demo-button" type="submit">Apply filters</button>
             {% if has_filters %}<a class="hf-clear" href="{% url 'task_forms:board' %}">Clear filters</a>{% endif %}
         </form>
+    </details>
+
+    <section aria-labelledby="results-heading">
+        <div class="demo-section-heading">
+            <h2 id="results-heading">{% if has_filters %}Matching tasks{% else %}Your spaces, in balance{% endif %}</h2>
+            <span class="hf-count">{{ paginator.count }} task{{ paginator.count|pluralize }}</span>
+        </div>
+        <div class="hc-task-list">
+        {% for task in tasks %}
+            <article class="hc-task-card demo-{{ task.board_tone }}">
+                <div>
+                    <p class="demo-kicker">{{ task.board_space }} · {{ task.get_priority_display }}</p>
+                    <h3><a href="{% url 'task_forms:edit' task.pk %}">{{ task.title }}</a></h3>
+                    {% if task.description %}<p class="hc-task-meta">{{ task.description }}</p>{% endif %}
+                    <p class="hc-task-meta">{{ task.board_assignee_label }} · {{ task.board_due_label }}</p>
+                    <div class="hc-task-actions">
+                        {% if task.board_occurrence and task.board_occurrence.state != "IN_PROGRESS" and task.board_occurrence.state != "REPORTED_COMPLETE" and task.board_occurrence.state != "CANCELLED" and task.board_occurrence.state != "SKIPPED" %}
+                        <form method="post" action="{% url 'task_forms:occurrence_start' task.board_occurrence.pk %}">{% csrf_token %}<button type="submit">Start</button></form>
+                        {% endif %}
+                        <a href="{% url 'task_forms:edit' task.pk %}">Edit</a>
+                        <a href="{{ task.get_absolute_url }}">Details</a>
+                        <form method="post" action="{% url 'task_forms:delete' task.pk %}" onsubmit="return confirm('Delete this task?');">{% csrf_token %}<button type="submit">Delete</button></form>
+                    </div>
+                </div>
+                {% if task.board_occurrence and task.board_occurrence.state != "REPORTED_COMPLETE" and task.board_occurrence.state != "CANCELLED" and task.board_occurrence.state != "SKIPPED" %}
+                <form method="post" action="{% url 'task_forms:occurrence_complete' task.board_occurrence.pk %}">
+                    {% csrf_token %}
+                    <button class="hc-complete" type="submit" aria-label="Mark {{ task.title }} complete">✓</button>
+                </form>
+                {% elif task.board_occurrence and task.board_occurrence.state == "REPORTED_COMPLETE" %}
+                <span class="hc-complete is-done" aria-label="Completed">✓</span>
+                {% else %}
+                <a class="hc-complete" href="{% url 'task_forms:edit' task.pk %}" aria-label="Schedule {{ task.title }}">+</a>
+                {% endif %}
+            </article>
+        {% empty %}
+            <div class="hf-empty demo-panel">
+                <span aria-hidden="true">&#10003;</span><h3>No tasks found</h3>
+                {% if filter_form.errors %}<p>Check the highlighted filters and try again.</p>
+                {% elif has_filters or day_filter_active %}<p>No tasks match these filters. Try another title, day, or priority.</p><a href="{% url 'task_forms:board' %}">Show all my tasks</a>
+                {% elif has_workspaces %}<p>A little planning goes a long way. Add your first task below.</p>
+                {% else %}<p>Choose a household to see its tasks.</p>{% endif %}
+            </div>
+        {% endfor %}
+        </div>
+        {% if is_paginated %}<nav class="hf-pagination" aria-label="Task pages">
+            {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
+            <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
+            {% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">Next</a>{% endif %}
+        </nav>{% endif %}
     </section>
 
-    <div class="hf-columns">
-        <section class="hf-results" aria-labelledby="results-heading">
-            <div class="hf-section-heading hf-list-heading"><h2 id="results-heading">{% if has_filters %}Matching tasks{% else %}Your task board{% endif %}</h2><span class="hf-count">{{ paginator.count }} task{{ paginator.count|pluralize }}</span></div>
-            <div class="hf-task-grid">
-            {% for task in tasks %}
-                <article class="hf-task-card">
-                    <div class="hf-card-top"><span class="hf-type">{{ task.get_task_type_display }}</span><span class="hf-priority hf-priority-{{ task.priority|lower }}">{{ task.get_priority_display }}</span></div>
-                    <h3><a href="{{ task.get_absolute_url }}">{{ task.title }}</a></h3>
-                    <p class="hf-description">{{ task.description|default:"No description yet." }}</p>
-                    <dl><div><dt>Household</dt><dd>{{ task.workspace.name }}</dd></div><div><dt>Location</dt><dd>{{ task.default_location|default:"Not specified" }}</dd></div><div><dt>Repeats</dt><dd>{{ task.recurrence_rule|default:"One-time task" }}</dd></div></dl>
-                    <p class="hf-card-footer">Added {{ task.created_at|date:"M j, Y" }}</p>
-                </article>
-            {% empty %}
-                <div class="hf-empty">
-                    <span aria-hidden="true">&#10003;</span><h3>No tasks found</h3>
-                    {% if filter_form.errors %}<p>Check the highlighted filters and try again.</p>
-                    {% elif has_filters %}<p>No tasks match these filters. Try another title, household, or priority.</p><a href="{% url 'task_forms:board' %}">Show all my tasks</a>
-                    {% elif has_workspaces %}<p>A little planning goes a long way. Add your first task using the form.</p>
-                    {% else %}<p>Choose a household to see its tasks.</p>{% endif %}
-                </div>
-            {% endfor %}
-            </div>
-            {% if is_paginated %}<nav class="hf-pagination" aria-label="Task pages">
-                {% if page_obj.has_previous %}<a href="?{{ filter_query }}&amp;page={{ page_obj.previous_page_number }}">Previous</a>{% endif %}
-                <span>Page {{ page_obj.number }} of {{ paginator.num_pages }}</span>
-                {% if page_obj.has_next %}<a href="?{{ filter_query }}&amp;page={{ page_obj.next_page_number }}">Next</a>{% endif %}
-            </nav>{% endif %}
-        </section>
-
-        <aside class="hf-create-panel" aria-labelledby="create-heading">
-            <p class="hf-eyebrow">Make a little progress</p><h2 id="create-heading">Add a task</h2>
-            <p class="hf-intro">Give the next thing a place to start.</p>
+    <aside class="demo-panel hc-create" aria-labelledby="create-heading">
+        <details {% if create_form.errors %}open{% endif %}>
+            <summary id="create-heading">Add a task</summary>
+            <p class="hf-intro">Assign it, set a due date, and keep everyone aligned.</p>
             {% if has_workspaces %}
-            {# POST modifies data. Django middleware validates this CSRF token. #}
-            <form method="post" action="{% url 'task_forms:board' %}" class="hf-create-form">
+            <form method="post" action="{% url 'task_forms:board' %}" class="hf-create-form demo-form">
                 {% csrf_token %}
                 {% if create_form.errors %}<div class="hf-error-summary" role="alert"><strong>We couldn't add this task.</strong><p>Review the errors below. Your entries have been kept.</p>{{ create_form.non_field_errors }}</div>{% endif %}
                 {% for field in create_form %}{% include "tasks/forms/field.html" %}{% endfor %}
                 <p class="hf-help">Fields marked * are required.</p>
-                <button class="hf-button hf-create-button" type="submit">Create task <span aria-hidden="true">+</span></button>
+                <button class="demo-button" type="submit">Create task</button>
             </form>
             {% else %}<p class="hf-help">Choose a household before creating tasks.</p>{% endif %}
-        </aside>
-    </div>
+        </details>
+    </aside>
 </div>
+
+<nav class="hc-tabbar" aria-label="Primary sections">
+    <a href="{% url 'task_forms:board' %}" aria-current="page">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01"/></svg>
+        Tasks
+    </a>
+    <a href="{% url 'groceries:list' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 7h16l-1.2 11H5.2L4 7zm4-3h8l1 3H7l1-3z"/></svg>
+        Groceries
+    </a>
+    <a href="{% url 'households:detail' %}">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 10.5 12 4l8 6.5V20H4z"/></svg>
+        Household
+    </a>
+</nav>
 {% endblock %}
