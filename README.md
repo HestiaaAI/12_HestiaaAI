@@ -171,3 +171,9 @@ the web app's actual paths and using the same environment as the web app:
 The scheduled check writes counts to the scheduler log. Roommates see the
 current alerts inside Groceries. On PythonAnywhere, schedule availability depends
 on the account. See [PythonAnywhere scheduled tasks](https://help.pythonanywhere.com/pages/ScheduledTasks/).
+
+On **Groceries**, choose **Scan receipt** to read an English receipt photo and
+review the resulting batches. Enter any missing quantities and storage locations,
+then save. You can paste receipt text if the scanner is unavailable. The photo is
+processed in the browser using Tesseract.js. **Use microphone** on the add or
+edit form dictates the grocery name in browsers that support speech recognition.

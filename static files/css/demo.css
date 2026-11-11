@@ -63,3 +63,12 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .hestia-header .logout-name { color: var(--hestia-muted); }
 .demo-task-heading .demo-hero { margin-top: 1rem; }
 .task-card { background: var(--demo-paper); border-radius: 1.25rem; }
+
+.grocery-field { margin-bottom: 1rem; }
+.grocery-field small, #voice-status { color: var(--hestia-muted); }
+.receipt-rows { display: grid; gap: .75rem; margin-block: 1rem; }
+.receipt-row { min-width: 0; border: 1px solid var(--hestia-border); }
+.receipt-row legend { font-weight: 700; }
+.demo-form input[type="checkbox"] { width: auto; }
+.demo-form textarea { width: 100%; box-sizing: border-box; font: inherit; }
+#scan-image[hidden] { display: none; }

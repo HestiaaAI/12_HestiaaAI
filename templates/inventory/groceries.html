@@ -6,7 +6,10 @@
     <div class="demo-heading">
         <div><p class="demo-kicker">{{ workspace.name }}</p><h1>Good things inside</h1>
         <p>See what’s on hand and what needs using soon.</p></div>
-        <a class="demo-button" href="{% url 'groceries:add' workspace.pk %}">Add a batch</a>
+        <div class="demo-actions grocery-entry">
+            <a href="{% url 'groceries:scan' workspace.pk %}">Scan receipt</a>
+            <a class="demo-button" href="{% url 'groceries:add' workspace.pk %}">Add a batch</a>
+        </div>
     </div>
     <div class="demo-hero" aria-hidden="true"></div>
     {% include "inventory/workspace_switcher.html" %}

@@ -14,8 +14,9 @@ from inventory import grocery_ai
 from inventory.expiry import (
     SOON_DAYS, batch_snapshot, expiring_batches, household_today, suggestion_inputs,
 )
-from inventory.forms import GroceryBatchForm
+from inventory.forms import GroceryBatchForm, ReceiptBatchFormSet
 from inventory.models import GroceryBatch
+from inventory.receipt import MAX_RECEIPT_TEXT, receipt_drafts
 from workflows.models import Task, TaskOccurrence
 
 
@@ -174,3 +175,41 @@ def approve(request, workspace_id):
             TaskOccurrence.objects.create(task=task)
     messages.success(request, "Added the meal idea to Tasks." if created else "This grocery task is already on the board.")
     return redirect(task)
+
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def scan_receipt(request, workspace_id):
+    workspace = membership_for(request, workspace_id).workspace
+    review = None
+    receipt_error = ""
+    if request.method == "POST":
+        if request.POST.get("action") == "review":
+            receipt_text = request.POST.get("receipt_text", "")
+            if len(receipt_text) > MAX_RECEIPT_TEXT:
+                receipt_error = "The receipt text is too long. Use a shorter receipt or add batches manually."
+            else:
+                rows = receipt_drafts(receipt_text)
+                if rows:
+                    review = ReceiptBatchFormSet(initial=rows)
+                else:
+                    receipt_error = "No grocery rows found. Try a clearer photo or add batches manually."
+        elif request.POST.get("action") == "save":
+            review = ReceiptBatchFormSet(request.POST)
+            if review.is_valid():
+                with transaction.atomic():
+                    Workspace.objects.select_for_update().get(pk=workspace_id)
+                    for form in review.forms:
+                        if form.cleaned_data.get("DELETE"):
+                            continue
+                        batch = form.save(commit=False)
+                        batch.workspace = workspace
+                        batch.save()
+                messages.success(request, "Reviewed groceries added to your household.")
+                return redirect("groceries:workspace", workspace_id=workspace_id)
+        else:
+            raise Http404
+    return render(request, "inventory/scan_receipt.html", {
+        "workspace": workspace, "review": review, "receipt_error": receipt_error,
+    })

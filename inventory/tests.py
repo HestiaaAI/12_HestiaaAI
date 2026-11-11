@@ -13,7 +13,7 @@ from inventory.models import GroceryBatch
 from workflows.models import Task, TaskOccurrence
 
 
-class GroceryWorkflowTests(TestCase):
+class GroceryTestCase(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.home = Workspace.objects.create(name="Maple House")
@@ -39,6 +39,7 @@ class GroceryWorkflowTests(TestCase):
             "storage": "fridge", "expires_on": day.isoformat(),
         })
 
+class GroceryWorkflowTests(GroceryTestCase):
     def test_roommates_share_distinct_batches_and_can_edit_or_close_them(self):
         self.client.force_login(self.owner)
         self.assertRedirects(self.add(self.today + timedelta(days=1)), self.url("workspace"))
@@ -106,3 +107,35 @@ class GroceryWorkflowTests(TestCase):
         self.assertRedirects(self.client.post(self.url("approve"), {"suggestion": draft}),
                              self.url("workspace"))
         self.assertFalse(Task.objects.exists())
+
+
+class ReceiptScanTests(GroceryTestCase):
+    def test_receipt_review_does_not_save_until_confirmed(self):
+        self.client.force_login(self.owner)
+        page = self.client.post(self.url("scan"), {
+            "action": "review",
+            "receipt_text": "2 x WHOLE MILK 5.98\nBANANAS 0.82\n1.12 lb @ $0.73/lb\nTOTAL 6.80\n",
+        })
+        self.assertContains(page, "WHOLE MILK")
+        self.assertContains(page, "BANANAS")
+        self.assertEqual(len(page.context["review"].initial), 2)
+        self.assertEqual(page.context["review"].initial[1]["quantity"], "1.12")
+        self.assertFalse(GroceryBatch.objects.exists())
+
+        data = {
+            "action": "save", "form-TOTAL_FORMS": "2", "form-INITIAL_FORMS": "2",
+            "form-0-name": "Whole milk", "form-0-quantity": "2", "form-0-unit": "carton",
+            "form-0-storage": "fridge", "form-0-expires_on": self.today.isoformat(),
+            "form-1-name": "Bananas", "form-1-quantity": "", "form-1-unit": "lb",
+            "form-1-storage": "pantry",
+        }
+        self.assertContains(self.client.post(self.url("scan"), data), "This field is required.")
+        self.assertFalse(GroceryBatch.objects.exists())
+        data["form-1-DELETE"] = "on"
+        self.assertRedirects(self.client.post(self.url("scan"), data), self.url("workspace"))
+        batch = GroceryBatch.objects.get()
+        self.assertEqual((batch.workspace, batch.name, batch.expires_on), (self.home, "Whole milk", self.today))
+
+    def test_outsider_cannot_scan_for_another_household(self):
+        self.client.force_login(self.outsider)
+        self.assertEqual(self.client.get(self.url("scan")).status_code, 404)
