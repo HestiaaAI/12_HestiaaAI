@@ -35,3 +35,14 @@ def require_household(request):
     if membership is None:
         raise HouseholdRequired()
     return membership
+
+
+def fresh_household(request):
+    """Fresh access check immediately before an external provider invocation."""
+    selected = require_household(request)
+    try:
+        return Membership.objects.select_related('workspace').get(
+            pk=selected.pk, user=request.user, workspace_id=selected.workspace_id,
+            is_active=True, user__is_active=True)
+    except Membership.DoesNotExist:
+        raise HouseholdRequired()

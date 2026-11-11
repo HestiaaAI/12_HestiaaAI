@@ -10,8 +10,8 @@ from django.shortcuts import redirect, render
 from django.views.decorators.cache import never_cache
 from django.views.decorators.http import require_http_methods
 
-from households.models import Membership
-from households.context import require_household
+from households.models import Membership, Workspace
+from households.context import require_household, fresh_household
 from .ai_adapter import get_suggestions
 from .ai_breakdown import suggest_steps
 from .ai_forms import BrainDumpForm, ConfirmationForm, TaskReviewFormSet
@@ -36,6 +36,7 @@ def brain_dump(request):
             form = BrainDumpForm(request.POST, user=request.user, membership=selected)
             context["input_form"] = form
             if form.is_valid():
+                fresh_household(request)
                 try:
                     tasks = get_suggestions(form.cleaned_data["text"])
                 except Exception:
@@ -59,7 +60,7 @@ def brain_dump(request):
                 if draft != request.session.get(DRAFT_KEY) or draft["user"] != request.user.pk or draft["workspace"] != selected.workspace_id:
                     raise signing.BadSignature()
                 membership = Membership.objects.select_related("workspace").get(
-                    user=request.user, workspace_id=draft["workspace"], is_active=True)
+                    user=request.user, workspace_id=draft["workspace"], is_active=True, user__is_active=True)
             except (signing.BadSignature, KeyError, Membership.DoesNotExist):
                 context["error"] = "This review expired or household access changed. Please organize your tasks again."
             else:
@@ -72,6 +73,7 @@ def brain_dump(request):
                 if review.total_form_count() != draft["count"]:
                     context["error"] = "The review changed unexpectedly. Please organize your tasks again."
                 elif action == "breakdown" and valid:
+                    fresh_household(request)
                     try:
                         index = int(request.POST["breakdown_index"])
                         if not 0 <= index < len(review.forms) or review.forms[index].cleaned_data.get("DELETE"):
@@ -90,9 +92,10 @@ def brain_dump(request):
                     try:
                         with transaction.atomic():
                             # Recheck membership inside the save transaction.
-                            Membership.objects.select_for_update().get(
+                            Workspace.objects.select_for_update().get(pk=membership.workspace_id)
+                            Membership.objects.select_for_update(of=('self',)).get(
                                 pk=membership.pk, user=request.user,
-                                workspace_id=draft["workspace"], is_active=True)
+                                workspace_id=draft["workspace"], is_active=True, user__is_active=True)
                             count = 0
                             for form in review.forms:
                                 if form.cleaned_data.get("DELETE"):

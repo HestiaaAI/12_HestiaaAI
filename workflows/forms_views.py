@@ -4,7 +4,7 @@ from django.db import IntegrityError, transaction
 from django.shortcuts import redirect
 from django.views.generic import ListView
 
-from households.models import Membership
+from households.models import Membership, Workspace
 from households.context import HouseholdRequired, require_household
 from .models import Task
 from .task_forms import TaskCreateForm, TaskFilterForm
@@ -63,7 +63,8 @@ class TaskBoardView(ListView):
             form.instance.created_by_membership = membership
             try:
                 with transaction.atomic():
-                    Membership.objects.select_for_update().get(pk=membership.pk, user=request.user, is_active=True)
+                    Workspace.objects.select_for_update().get(pk=membership.workspace_id)
+                    Membership.objects.select_for_update(of=('self',)).get(pk=membership.pk, user=request.user, user__is_active=True, is_active=True)
                     task = form.save()
             except Membership.DoesNotExist:
                 raise HouseholdRequired()

@@ -10,7 +10,7 @@ from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
 
 from households.models import Membership, Workspace
-from households.context import require_household, HouseholdRequired
+from households.context import require_household, HouseholdRequired, fresh_household
 from inventory import grocery_ai
 from inventory.expiry import (
     SOON_DAYS, batch_snapshot, expiring_batches, household_today, suggestion_inputs,
@@ -39,7 +39,7 @@ def membership_for(request, workspace_id):
 
 def fresh_member(request, workspace_id):
     try:
-        return Membership.objects.select_for_update().get(user=request.user, workspace_id=workspace_id, is_active=True)
+        return Membership.objects.select_for_update(of=('self',)).get(user=request.user, user__is_active=True, workspace_id=workspace_id, is_active=True)
     except Membership.DoesNotExist:
         raise HouseholdRequired()
 
@@ -130,6 +130,7 @@ def close_batch(request, workspace_id, batch_id):
 @require_POST
 def suggest(request, workspace_id):
     member = membership_for(request, workspace_id)
+    member = fresh_household(request)
     batches = suggestion_inputs(member.workspace, household_today(member.workspace))
     if not batches:
         messages.info(request, "Add a grocery batch expiring soon to get a meal idea.")
@@ -194,6 +195,7 @@ def scan_receipt(request, workspace_id):
             if len(receipt_text) > MAX_RECEIPT_TEXT:
                 receipt_error = "The receipt text is too long. Use a shorter receipt or add batches manually."
             else:
+                fresh_household(request)
                 rows = receipt_drafts(receipt_text)
                 if rows:
                     review = ReceiptBatchFormSet(initial=rows)

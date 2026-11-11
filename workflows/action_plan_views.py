@@ -9,7 +9,7 @@ from django.views.decorators.http import require_http_methods
 
 from .action_plans import ActionPlanError, generate_action_plan
 from .models import Task
-from households.context import require_household
+from households.context import require_household, fresh_household
 
 
 def _member_task(request, pk):
@@ -36,6 +36,7 @@ def action_plan_page(request, pk):
     context = {"task": task, "plan": None, "error": None}
     status = 200
     if request.method == "POST":
+        fresh_household(request)
         try:
             context["plan"] = _generate_for_user(request.user, task)
         except ActionPlanError as exc:
