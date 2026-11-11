@@ -20,8 +20,12 @@ python manage.py runserver
 Account login/signup/verification uses Django/allauth. After signup/sign-in, new users can create a household at `/households/create/`
 and become its owner without admin provisioning. Existing users can create
 another household from the shared picker. Signup never auto-enrolls users in a
-sample household. Invitations and member management remain later phases. Do not use the tracked
-historical database as a source of real accounts or production data.
+sample household. Owners can invite roommates from Household, copy/reissue/revoke
+links, and intended recipients verify their email before explicitly joining.
+Configure a private mail backend for email delivery; console preview uses copy
+links and cannot verify invitation accounts. Broader member management remains a
+later phase. Do not use the tracked historical database as a source of real
+accounts or production data.
 
 ## Current product routes
 

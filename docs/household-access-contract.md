@@ -1,6 +1,6 @@
-# Household product access/UI contract — Phase 2
+# Household product access/UI contract — Phase 3
 
-Current integrated product contract. The UI/grocery integration below supersedes historical Phase 1B handbook removal; Phase 2 adds authenticated household creation. Canonical task, grocery, roster, Insights and restored Ask Hestia journeys share the existing context. Removed assignment-only transports remain 404.
+Current integrated product contract. The UI/grocery integration below supersedes historical Phase 1B handbook removal; Phase 2 adds authenticated household creation; Phase 3 adds owner invitations and verified explicit joining. Canonical task, grocery, roster, Insights and restored Ask Hestia journeys share the existing context. Removed assignment-only transports remain 404.
 
 ## Current application routes
 
@@ -11,6 +11,10 @@ Current integrated product contract. The UI/grocery integration below supersedes
 | `/households/onboarding/` | `households:onboarding` | GET; explanation and Create household action | Login; existing members continue to board/picker. `test_onboarding` |
 | `/households/create/` | `households:create` | GET form / CSRF POST creation | Login, including users with no membership; atomic server-owned household/owner; selects new household. `test_onboarding` |
 | `/households/switch/` | `households:switch` | POST `workspace_id`, CSRF | Fresh active membership; invalid 400, GET 405, no external `next`; invalid choice preserves even stale session. `test_household_selection` |
+| `/households/current/invites/` | `households:invites` | GET list/form; POST issue | Current selected OWNER, CSRF, signed one-use nonce, throttles; `test_invitation_views` |
+| `/households/current/invites/<id>/revoke/` | `households:revoke-invite` | POST revoke pending | Current OWNER; foreign ID 404, roommate 403; CSRF |
+| `/households/current/invites/<id>/resend/` | `households:resend-invite` | POST fresh link | Same owner/scope/CSRF/nonce/throttles as issue; prior pending links revoked |
+| `/households/invites/<token>/` | `households:accept-invite` | GET preview; CSRF POST `action=accept` or `verify` | Public generic preview; matching verified allauth address for joining; `test_invitation_acceptance` |
 | `/tasks/manage/` | `task_forms:board` | GET filter, POST create | Selected household; `test_forms`, `test_isolation` |
 | `/tasks/<pk>/` | `workflows:task-detail` | GET; details | Selected household query before object lookup; foreign 404 even for dual member. `test_isolation`, `workflows.tests` |
 | `/tasks/<pk>/action-plan/` | `workflows:task-action-plan` | GET disclosure, POST plan preview | Selected task before provider; CSRF; no writes. `test_action_plan_views`, `test_ai_action_plan` |
@@ -31,7 +35,7 @@ Accounts, password reset, email verification, OAuth/provider callbacks and Djang
 - Signed-in CSV without context → 409 `{"error":"Select a household to continue.","code":"household_required"}`.
 - Foreign task → 404, including dual-member sessions; no staff bypass outside admin.
 - Invalid switch → 400 without selection mutation; wrong methods → 405 once access requirements pass; CSRF rejection → 403.
-- Future privileged operations on a selected household must use 403 for insufficient role. Phase 1B adds no owner-only writes.
+- Future privileged operations on a selected household must use 403 for insufficient role. Phase 3 invitation issue/reissue/revoke requires current ownership.
 
 Private and authenticated responses use no-store/private caching and `Vary: Cookie`. Do not introduce shared user/household content caches. The action-plan cooldown is a per-user timestamp, not a content cache. A removed/inactive/null-user membership cannot authorize a subsequent request or a fresh write check. Historical user data is not migrated/deleted.
 
@@ -65,7 +69,7 @@ Local Hugging Face task extraction and Groq task-plan generation remain distinct
 
 ## Future groceries/expenses and later phases
 
-Reuse Workspace/Membership, the snapshot/context and explicit fresh mutation checks. Derive workspace and actor on the server, scope root queries before filters/serialization, validate every related ID in the selected workspace, return foreign-object 404 and selected-household privilege 403, require CSRF on mutations, preserve private cache isolation. Include A/B, dual-member, removed/inactive/null-user, forged related IDs, exports and write-time revocation tests. Do not show unimplemented screens/actions. Household creation is implemented in Phase 2. Invitations, member lifecycle, new grocery features, expenses, recurrence and deployment remain later phases.
+Reuse Workspace/Membership, the snapshot/context and explicit fresh mutation checks. Derive workspace and actor on the server, scope root queries before filters/serialization, validate every related ID in the selected workspace, return foreign-object 404 and selected-household privilege 403, require CSRF on mutations, preserve private cache isolation. Include A/B, dual-member, removed/inactive/null-user, forged related IDs, exports and write-time revocation tests. Do not show unimplemented screens/actions. Household creation is implemented in Phase 2. Invitations and verified joining are implemented in Phase 3. Member lifecycle, new grocery features, expenses, recurrence and deployment remain later phases.
 
 ## Complete resolved framework/product inventory
 
@@ -73,6 +77,10 @@ The generated appendix includes account/admin-generated patterns as well as the 
 
 | Resolved pattern | Name | Policy | Verification |
 |---|---|---|---|
+| `/households/current/invites/` | `households:invites` | Selected OWNER | test_invitation_views |
+| `/households/current/invites/<int:invitation_id>/revoke/` | `households:revoke-invite` | Selected OWNER / CSRF POST | test_invitation_views |
+| `/households/current/invites/<int:invitation_id>/resend/` | `households:resend-invite` | Selected OWNER / CSRF POST | test_invitation_views |
+| `/households/invites/<str:token>/` | `households:accept-invite` | Public private preview / verified explicit join | test_invitation_acceptance |
 | `/groceries/` | `groceries:list` | H | inventory.tests / inventory.test_integration / test_onboarding |
 | `/groceries/household/` | `groceries:household` | H | inventory.tests / inventory.test_integration / test_onboarding |
 | `/groceries/<int:workspace_id>/` | `groceries:workspace` | H | inventory.tests / inventory.test_integration / test_onboarding |
@@ -241,3 +249,21 @@ Zero memberships → useful onboarding with a working Create household action an
 Home/allauth account/social adapters, safe local `next`, email-verification settings, signup-disable policy and OAuth linking protections are unchanged. Mandatory verification is exercised end-to-end by tests before creation; token/profile calls are mocked for Google callback tests. Signup does not auto-enroll into any household. Creation accepts no external redirect target. Context, private no-store responses, fresh task/grocery mutation checks, signed AI drafts, startup/archive tests and fixed query budgets remain intact.
 
 UI teammate: new `templates/households/create.html` receives `form` with stable fields/IDs `name`/`id_name` and `timezone`/`id_timezone`; existing shared template context is unchanged. The picker receives the existing `memberships` snapshot and uses POST switch forms plus the new create link. No new grocery features, invite/join links or lifecycle controls are introduced. Verification evidence/limits are in `household-phase2-verification.md`.
+
+## Phase 3 invitation and verification contract
+
+Owners reach invitations from the Household roster. Issue accepts `email` and a signed `nonce`; workspace, inviter and role are server-owned. Reissue accepts a nonce and derives the email from its scoped invitation. Revoke accepts only CSRF. Recipient emails are trimmed/lowercased/validated. Status is derived from revoked/accepted timestamps and seven-day expiry (equal to now is expired). Foreign IDs are 404; selected-household roommates are 403. Every write rechecks ownership in its transaction.
+
+Issuance returns a direct POST response to display the newly generated copyable link once. A signed user/workspace nonce expires after one hour; an atomic cache consume plus unique persisted SHA-256 `request_digest` prevents repeat issuance even after cache loss. No raw copy link is stored in the database or session. Reloading the GET does not recover it; reissue creates another token and revokes preceding pending links for that recipient in that household. Tokens have 32 random bytes and only unique SHA-256 digests persist. Emails and all links use `ACCOUNT_PUBLIC_ORIGIN`, never incoming Host.
+
+Allauth rate limits are 10 issues per minute per user/household and 1 per minute per household/normalized recipient, covering reissue too. Configure a shared atomic cache for all workers; the development local-memory cache provides process-local throttling only. Database nonce uniqueness protects successful issuance replay independently of that cache. Nonces consumed by invalid/rate-limited attempts require a fresh page.
+
+Acceptance GET is read-only and initially generic. Only the matching verified allauth EmailAddress authorizes revealing the invited household name and accepting; User.email alone cannot authorize membership. Signup, sign-in and verification retain a strictly validated local invitation continuation, including a temporary session path. This path is navigation state, never a grant. Mandatory verification/OAuth protections remain. Optional general verification still requires matching verified invitation identity; the `verify` POST uses allauth delivery and throttles and never joins, even when the address is already verified. Wrong-account GET never signs out; switching accounts is a CSRF POST.
+
+The transactional order is workspace, invitation, account (acceptance), then membership. New or reactivated membership is ordinary ADULT, displayed Roommate, with assignment/receipt enabled and source management disabled. Active membership remains unchanged. Used links can only return their original accepting account's still-active membership; they cannot reactivate a removed member. Historical null-user rows are never guessed/attached. Selection changes and context refresh happen only after success, followed by the task board welcome. No member removal/transfer/role editing is shipped.
+
+Mail is scheduled with `transaction.on_commit`; rollback sends nothing. Delivery failure does not invalidate the invitation and the owner sees an honest copy/reissue recovery message. “Sent” means accepted by the configured backend, not verified inbox delivery. Console preview is intentionally suppressed for invitations and invitation-related verification to avoid logging bearer links/private email. Configure SMTP or another private Django backend; no verification bypass is provided. File/locmem backends are test fixtures, not inbox proof.
+
+Invitation responses are private/no-store, vary on Cookie, use no-referrer and noindex, and load local assets only. Acceptance CSP restricts scripts/styles/forms to the same origin (inline existing styles allowed; no inline scripts). A small local form handler uses same-origin, CORS-mode fetch with ordinary CSRF FormData: native no-referrer POSTs can send Origin:null and fail Django's origin check. It neither trusts null origins nor disables CSRF. Returned HTML replaces the page; redirects update its local URL, preserving one-time links, welcome/error messages and keyboard submission. JavaScript is required for these private forms, with an explicit noscript explanation.
+
+Django's default console/admin-email handlers prepend a redaction filter for raw/encoded invitation paths, private recipient/request data and exception locals. The live request is never mutated. Deployment must additionally redact token-bearing paths and encoded invitation continuations in reverse-proxy/CDN/load-balancer access logs, tracing/APM, analytics, request-body capture and error reporters; Python logging filters cannot protect those external systems. Do not log request bodies/cookies or full query strings. For example map any request URI containing `/households/invites/` or `%2Fhouseholds%2Finvites%2F` to a fixed `[private invitation]` log value before writing access logs. Keep account confirmation credentials private too. Use HTTPS and secure session/CSRF cookies in deployment.
