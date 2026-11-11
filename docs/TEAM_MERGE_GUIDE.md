@@ -6,8 +6,8 @@ Reviewed 2026-11-11. This is a product integration contract for Darshan, Shivani
 
 | Source | Reviewed tip | What is present / integration status |
 |---|---|---|
-| Local household-member-management | 85f6d61 | Accepted local Phase 1–4 foundation: cleanup, UI/groceries, Ask Hestia, onboarding/create, verified invitations, settings, roster, remove/leave/transfer. Phase 4 report records 367 whole-project tests with 8 PostgreSQL skips; that report was inspected, not independently rerun in this review. |
-| origin/household-invitations | 42a7121 | Latest remote household branch; does NOT include local Phase 4. |
+| origin/household-member-management | 9f9405b | Published Phase 1–4 foundation (implementation tip 85f6d61) plus integration instructions: cleanup, UI/groceries, Ask Hestia, onboarding/create, verified invitations, settings, roster, remove/leave/transfer. Phase 4 report records 367 whole-project tests with 8 PostgreSQL skips; that report was inspected, not independently rerun in this review. |
+| origin/household-invitations | 42a7121 | Older Phase 3 branch; use origin/household-member-management for integration. |
 | origin/household-product-cleanup | 109d2d3 | Older remote snapshot; does not contain all local integration/onboarding/invitation/member-management work. Do not use as current integration base. |
 | origin/main | fc037f5 | Assignment/grading baseline; keep A8/A9 functionality and grading deployment here until released by user. |
 | origin/cn32-demo | c7fc59f | Chaitanya: groceries/receipt/voice/UI plus thermostat planner; earlier 95ff152 grocery work is already integrated locally. Latest new feature is weather-aware thermostat. |
@@ -24,11 +24,9 @@ The fetch and source review completed. No teammate feature was merged or run dur
 - expenses branch: conflicts in hestia_config/settings/base.py, hestia_config/urls.py, households/models.py, households/test_access.py, inventory/views.py, static files/css/demo.css, templates/base.html and deleted templates/inventory/household.html.
 - These are Git conflicts only. Cleanly merging files may still restore obsolete routes or weaken permissions. Review all incoming files, not just conflict markers.
 
-## 2. Publish one integration baseline before team handoff
+## 2. Published integration baseline and team handoff
 
-Darshan must make the accepted Phase 4 commit and these instructions available to teammates before their agents start. Currently that commit is local only. Publishing is a separate explicitly authorized action; this guide does not perform it.
-
-Recommended shared target: `demo-integration`, initially at accepted Phase 4 plus these instructions. Alternatively use a published household-member-management branch consistently. Record the chosen target and exact SHA in each handoff. Never mix targets between agents.
+Confirmed after fetch: `origin/household-member-management` at `9f9405b` contains Phase 4 and the original integration guide/skill. Use this published branch as the shared integration target. Refetch before starting and record its current SHA; accept subsequent documentation/integration commits deliberately. No separate demo-integration branch is required.
 
 Each teammate creates a separate integration branch from that published target (e.g. integrate-thermostat, integrate-expenses, integrate-dynamic-tasks), then merges/ports their feature into it. Keep their original source branch intact. Integrate to the shared target one feature at a time. Later agents rebase their integration work onto the newly accepted target, or merge that updated target into their integration branch and rerun checks; never overwrite accepted work with their old main-based snapshot.
 
@@ -142,7 +140,19 @@ A clean Git merge is not acceptance. Coordinator reviews product behavior, permi
 
 ## 9. Remaining information and decisions
 
-- Darshan: publish chosen Phase 4 integration baseline/instructions when authorized, then record remote target SHA. This review did not publish it.
+- Published target confirmed: origin/household-member-management at 9f9405b in this review. Updated instructions may need a subsequent authorized push; always use the latest accepted target.
 - Anushka: provide exact dynamic-task branch/commit; apply the same model/context/occurrence constraints and keep grocery-generated tasks visible on canonical board. No current branch-specific assessment is possible.
 - Team: personal purchase lists are household-visible allocation lists; explicitly private lists/notes remain a separate creator-only concept. Resolve misleading copy before acceptance.
 - PostgreSQL races, real provider/email/notification delivery and clean dependency install are acceptance evidence items, not assumed from source review.
+
+
+## 10. No pre-created test household dependency
+
+Teammates created households for their isolated feature checks. These are disposable development data, not required product records. The integrated app must start correctly with an empty database and let users create/join households through the implemented onboarding and verified invitations.
+
+- Do not merge local database files, seed records, fixed household/member/user IDs, test credentials or automatic demo membership. Do not run seed_expenses_demo/seed_trends_demo as part of startup, migrations or normal onboarding. Keep any useful seed command explicitly opt-in for disposable development only.
+- Replace assumptions about a particular test household with the current selected membership/context. Feature code must work for any newly created household and its invited roommates.
+- Preserve automated test fixtures and factories in separate test databases. End-to-end verification may create disposable households through real product flows; no permanent seeded household is required.
+- Do not indiscriminately delete existing database rows. If cleaning an existing shared/demo database, identify the exact disposable household, dependent expenses/settlements/receipts and affected accounts, back up the data and obtain authorization for the concrete destructive action. Never touch grading or real household data.
+
+Acceptance includes: fresh disposable database → signup → verified invite/create/join → tasks/groceries/expenses/thermostat work without manually inserted household records.
