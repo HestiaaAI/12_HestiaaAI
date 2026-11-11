@@ -206,3 +206,12 @@ The generated appendix includes account/admin-generated patterns as well as the 
 | `/tasks/insights/` | `workflows:task-insights` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
 | `/tasks/<int:pk>/action-plan/` | `workflows:task-action-plan` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
 | `/tasks/<int:pk>/` | `workflows:task-detail` | H | test_forms / test_ai / test_action_plan_views / test_isolation / test_unified_flow / api.tests / analytics.tests |
+
+
+## UI/grocery integration — 2026-11-10
+
+Supersedes Phase 1B removal of Ask Hestia. `/tasks/ask/` (`ask-hestia`) is authenticated, read-only handbook help; it does not require household selection or use private household records. Its corpus ships under workflows/services/handbook_data and does not import research packages.
+
+The `groceries` namespace is selected-household protected. `/groceries/` redirects to the selected household; `/groceries/household/` shows its roster. Explicit workspace paths must equal the selected household, even for dual members. Switch with the existing CSRF POST household picker; query parameters and grocery links do not change selection. Every batch create/edit/close, receipt save and meal-task approval revalidates active membership inside its transaction. Existing task creator/AI approval protection and private no-store responses remain.
+
+UI: Tasks, Groceries, Household and Ask Hestia share the teammate’s palette/assets and selected-household label. Insights, CSV, task drafting and catalogue lookup remain contextual task-board actions. Assignment list/search/chart routes stay removed. GroceryBatch migration 0002 is required; the incoming public-task visibility flag/migration was omitted because all task data is already household-scoped. Existing research files and main are untouched.

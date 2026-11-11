@@ -8,14 +8,8 @@
 {% endblock %}
 {% block content %}
 <div class="hf-board">
-    <header class="hf-hero">
-        <div class="hf-hero-copy">
-            <p class="hf-eyebrow">A home that works together</p>
-            <h1>Small tasks.<br><span>More room for life.</span></h1>
-            <p>Find what needs doing, make a plan, and keep your household moving.</p>
-        </div>
-        <img class="hf-hero-mark" src="{% static 'images/hestia-mark.svg' %}" width="112" height="112" alt="Hestia home and hearth logo">
-    </header>
+    <header class="demo-heading"><div><p class="demo-kicker">{{ active_household.name }}</p><h1>A little teamwork, a happier home</h1><p>Find, plan, and share your household responsibilities.</p></div></header>
+    <div class="demo-hero" aria-hidden="true"></div>
 
     {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
     {% if not has_workspaces %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{% if batch %}Edit batch{% else %}Add batch{% endif %} | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow">
+    <div class="demo-heading"><div><p class="demo-kicker">{{ workspace.name }}</p>
+    <h1>{% if batch %}Edit grocery batch{% else %}Add grocery batch{% endif %}</h1>
+    <p>Add separate batches when purchases have different expiry dates.</p></div></div>
+    <form class="demo-panel demo-form" method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+        <div class="grocery-field">
+            {{ field.errors }}
+            {{ field.label_tag }}
+            {{ field }}
+            {% if field.name == "name" %}
+            <div class="demo-actions"><button id="dictate-grocery" type="button">Use microphone</button></div>
+            <small>Your browser’s speech service may process audio.</small>
+            <div id="voice-status" role="status"></div>
+            {% endif %}
+        </div>
+        {% endfor %}
+        <div class="demo-actions"><button class="demo-button">Save batch</button>
+        <a href="{% url 'groceries:workspace' workspace.pk %}">Cancel</a></div>
+    </form>
+</section>
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'js/grocery-voice.js' %}" defer></script>{% endblock %}

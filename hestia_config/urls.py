@@ -19,8 +19,11 @@ from django.urls import include, path
 
 from api.views import product_compare_page
 from hestia_config.views import HomePageView
+from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
+    path("groceries/", include("inventory.urls")),
+    path("tasks/ask/", ask_hestia_page, name="ask-hestia"),
     path("households/", include("households.urls")),
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),

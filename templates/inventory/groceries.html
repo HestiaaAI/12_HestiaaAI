@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Groceries | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page">
+    <div class="demo-heading">
+        <div><p class="demo-kicker">{{ workspace.name }}</p><h1>Good things inside</h1>
+        <p>See what’s on hand and what needs using soon.</p></div>
+        <div class="demo-actions grocery-entry">
+            <a href="{% url 'groceries:scan' workspace.pk %}">Scan receipt</a>
+            <a class="demo-button" href="{% url 'groceries:add' workspace.pk %}">Add a batch</a>
+        </div>
+    </div>
+    <div class="demo-hero" aria-hidden="true"></div>
+    {% include "inventory/workspace_switcher.html" %}
+    {% if overdue or soon %}
+    <section class="demo-panel demo-peach" aria-labelledby="expiry-heading">
+        <h2 id="expiry-heading">A little nudge from your fridge</h2>
+        {% if overdue %}<p><strong>Past the saved date</strong> · {% for batch in overdue %}{{ batch.name }} ({{ batch.expires_on|date:"M j" }}){% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+        {% if soon %}<p><strong>Due within {{ soon_days }} days</strong> · {% for batch in soon %}{{ batch.name }} ({{ batch.expires_on|date:"M j" }}){% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+    </section>
+    {% endif %}
+    <section aria-labelledby="stock-heading">
+        <div class="demo-section-heading"><h2 id="stock-heading">In stock</h2>
+            <nav class="demo-filters" aria-label="Storage filters">
+                <a href="{% url 'groceries:workspace' workspace.pk %}" {% if not storage %}aria-current="page"{% endif %}>All</a>
+                {% for value, label in storage_choices %}<a href="?storage={{ value }}" {% if storage == value %}aria-current="page"{% endif %}>{{ label }}</a>{% endfor %}
+            </nav>
+        </div>
+        <div class="demo-grid">
+        {% for batch in batches %}
+            <article class="demo-panel demo-batch">
+                <p class="demo-kicker">{{ batch.get_storage_display }}</p>
+                <h3>{{ batch.name }}</h3>
+                <p>{{ batch.quantity|floatformat:"-3" }} {{ batch.unit }} · {% if batch.expires_on %}<time datetime="{{ batch.expires_on|date:"Y-m-d" }}">{{ batch.expires_on|date:"M j, Y" }}</time>{% else %}No expiry date{% endif %}</p>
+                <div class="demo-actions">
+                    <a href="{% url 'groceries:edit' workspace.pk batch.pk %}">Edit</a>
+                    <form method="post" action="{% url 'groceries:close' workspace.pk batch.pk %}">
+                        {% csrf_token %}
+                        <button name="state" value="consumed">Mark consumed</button>
+                        <button name="state" value="discarded">Discard</button>
+                    </form>
+                </div>
+            </article>
+        {% empty %}
+            <p class="demo-panel">No batches in this view. <a href="{% url 'groceries:add' workspace.pk %}">Add a grocery batch</a>.</p>
+        {% endfor %}
+        </div>
+    </section>
+    <section class="demo-panel demo-sage" aria-labelledby="meal-heading">
+        <p class="demo-kicker">AI meal ideas</p>
+        <h2 id="meal-heading">What could we make?</h2>
+        {% if suggestion_error %}<p role="alert">{{ suggestion_error }}</p>{% endif %}
+        {% if idea %}
+            <p>{{ idea }}</p>
+            <form method="post" action="{% url 'groceries:approve' workspace.pk %}">
+                {% csrf_token %}<input type="hidden" name="suggestion" value="{{ suggestion_token }}">
+                <button class="demo-button">Approve and add to Tasks</button>
+            </form>
+        {% elif soon %}
+            <p>Get an idea for using groceries that are coming up on their saved dates.</p>
+        {% else %}
+            <p>Meal ideas are available when a batch expires today or within the next {{ soon_days }} days.</p>
+        {% endif %}
+        {% if soon %}
+            <form method="post" action="{% url 'groceries:suggest' workspace.pk %}" class="demo-suggest">
+                {% csrf_token %}<button class="{% if not idea %}demo-button{% endif %}">{% if idea %}Try another idea{% else %}Suggest a meal{% endif %}</button>
+            </form>
+        {% endif %}
+    </section>
+    {% if history %}
+    <details class="demo-panel demo-history"><summary>Recent batch history</summary><ul>
+        {% for batch in history %}<li>{{ batch.name }} · {{ batch.quantity|floatformat:"-3" }} {{ batch.unit }} · {{ batch.get_state_display }}{% if batch.closed_at %} · {{ batch.closed_at|date:"M j" }}{% endif %}</li>{% endfor %}
+    </ul></details>
+    {% endif %}
+</section>
+{% endblock %}
+{% block extra_js %}
+<script>
+document.querySelector(".demo-suggest")?.addEventListener("submit", (event) => {
+    const button = event.currentTarget.querySelector("button");
+    button.disabled = true;
+    button.textContent = "Thinking of a meal…";
+});
+</script>
+{% endblock %}

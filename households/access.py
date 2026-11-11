@@ -20,7 +20,7 @@ class HouseholdContextMiddleware(MiddlewareMixin):
             return None
         name = match.view_name
         data = name == 'workflows:task-export-csv'
-        household = match.app_name in {'workflows', 'task_forms', 'ai_tasks'} or name == 'product-lookup'
+        household = match.app_name in {'workflows', 'task_forms', 'ai_tasks', 'groceries'} or name == 'product-lookup'
         private = household or match.app_name == 'households'
         request._household_data = data
         request._private_response = private

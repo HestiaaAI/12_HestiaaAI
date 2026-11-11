@@ -1,20 +1,17 @@
 {% extends "base.html" %}
-
 {% block title %}Home | Hestia{% endblock %}
-
 {% block content %}
-<section class="page-header">
-    <p class="eyebrow">Household coordination</p>
-    <h1>Welcome to Hestia</h1>
-    <p>Make room for everyday life with shared household tasks.</p>
-</section>
-<section class="home-grid">
-
-    <article class="task-card">
-        <h2>Sign in</h2>
-        <p>Sign in or create an account to access shared tasks and household insights.</p>
-        <a class="button-link" href="{% url 'accounts:login' %}">Go to login</a>
-    </article>
-
+<section class="demo-page">
+    <div class="demo-heading"><div><h1>A happy little home</h1><p>Shared tasks, groceries, household insights, and the people you live with.</p></div></div>
+    <div class="demo-hero" aria-hidden="true"></div>
+    {% if user.is_authenticated %}
+    <div class="demo-grid">
+        <a class="demo-panel demo-tile demo-peach" href="{% url 'task_forms:board' %}"><strong>Tasks</strong><span>See what needs doing</span></a>
+        <a class="demo-panel demo-tile demo-sage" href="{% url 'groceries:list' %}"><strong>Groceries</strong><span>Use what you have</span></a>
+        <a class="demo-panel demo-tile" href="{% url 'groceries:household' %}"><strong>Household</strong><span>See who’s at home</span></a>
+    </div>
+    {% else %}
+    <div class="demo-panel demo-sage"><a class="demo-button" href="{% url 'accounts:login' %}">Sign in</a></div>
+    {% endif %}
 </section>
 {% endblock %}

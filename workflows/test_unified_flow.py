@@ -82,7 +82,6 @@ class UnifiedFlowTests(TestCase):
         self.assertIsInstance(form.fields['workspace'].widget,HiddenInput)
         self.assertEqual(form.initial['workspace'],self.a.pk)
 
-    def test_no_sample_handbook_route(self):
-        from django.urls import resolve, Resolver404
-        with self.assertRaises(Resolver404):
-            resolve('/tasks/ask/')
+    def test_required_handbook_route_is_restored(self):
+        from django.urls import resolve
+        self.assertEqual(resolve('/tasks/ask/').view_name, 'ask-hestia')

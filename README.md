@@ -60,3 +60,12 @@ Historical experiments remain in source control and use their own requirements;
 they are outside the product's runtime and release package. The retired handbook
 experiment depended on the old product adapter and must be reproduced from the
 Phase 1A revision, rather than restored as a production feature.
+
+
+## Integrated demo
+
+The demo combines the cleaned task board and Insights with shared grocery batches, expiry reminders, receipt review and browser voice entry. All use the same selected household. Switch households using the shared picker; direct foreign-household URLs are denied even for users belonging to both households.
+
+Ask Hestia is retained at `/tasks/ask/` and answers from the bundled example handbook, not live household data. Its required corpus ships under `workflows/services/handbook_data`; inference remains lazy. Grocery meal suggestions use the same local generator and inference lock. Provider behavior is tested with mocks; local model availability is an environment requirement.
+
+The integrated branch requires the new grocery migration; run `python manage.py migrate` against a separate demo database. Do not migrate or seed the grading environment. Assignment 8/9 originals remain in the repository, while product archives exclude research folders.
