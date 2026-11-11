@@ -18,7 +18,7 @@ _chart_lock = Lock()
 
 def priority_counts():
     """Aggregate in SQL, then include zero-count choices in model order."""
-    grouped = Task.objects.order_by().values("priority").annotate(count=Count("pk"))
+    grouped = Task.objects.visible_to().order_by().values("priority").annotate(count=Count("pk"))
     counts = {row["priority"]: row["count"] for row in grouped}
     return [
         {"label": label, "count": counts.get(value, 0)}
@@ -30,8 +30,8 @@ def priority_counts():
 def task_stats(request):
     """Show all task definitions and their total and priority summary."""
     return render(request, "analytics/task_stats.html", {
-        "tasks": Task.objects.select_related("workspace").all(),
-        "total_tasks": Task.objects.count(),
+        "tasks": Task.objects.visible_to().select_related("workspace").all(),
+        "total_tasks": Task.objects.visible_to().count(),
         "priority_counts": priority_counts(),
     })
 

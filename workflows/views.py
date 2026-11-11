@@ -15,14 +15,14 @@ def filter_tasks(queryset, request):
 
 def task_manual_view(request):
     """Section 2: load and render the template manually into HttpResponse."""
-    tasks = filter_tasks(Task.objects.all(), request)
+    tasks = filter_tasks(Task.objects.visible_to(request.user), request)
     template = loader.get_template("tasks/task_list.html")
     return HttpResponse(template.render({"tasks": tasks, "view_style": "HttpResponse FBV"}, request))
 
 
 def task_render_view(request):
     """Section 2: the render shortcut combines loading and responding."""
-    tasks = filter_tasks(Task.objects.all(), request)
+    tasks = filter_tasks(Task.objects.visible_to(request.user), request)
     return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "render() FBV"})
 
 
@@ -30,7 +30,7 @@ class TaskBaseView(View):
     """Section 2: a base View with an explicit GET handler and model query."""
 
     def get(self, request):
-        tasks = filter_tasks(Task.objects.all(), request)
+        tasks = filter_tasks(Task.objects.visible_to(request.user), request)
         return render(request, "tasks/task_list.html", {"tasks": tasks, "view_style": "Base CBV"})
 
 
@@ -43,14 +43,14 @@ class TaskListView(ListView):
     extra_context = {"view_style": "Generic CBV"}
 
     def get_queryset(self):
-        return filter_tasks(super().get_queryset(), self.request)
+        return filter_tasks(super().get_queryset().visible_to(self.request.user), self.request)
 
 
 class TaskDetailView(View):
     """Load one Task by primary key and render its detail template."""
 
     def get(self, request, pk):
-        task = get_object_or_404(Task, pk=pk)
+        task = get_object_or_404(Task.objects.visible_to(request.user), pk=pk)
         can_plan = request.user.is_authenticated and task.workspace.memberships.filter(
             user=request.user, is_active=True
         ).exists()

@@ -14,21 +14,21 @@ EXPORT_FIELDS = ("id", "title", "household", "task_type", "priority")
 
 def task_records():
     """Both formats export the same explicit fields in primary-key order."""
-    return Task.objects.order_by("pk").values(
+    return Task.objects.visible_to().order_by("pk").values(
         "title", "task_type", "priority", id=F("pk"), household=F("workspace__name")
     )
 
 
 def grouped_summary(field, choices):
     labels = dict(choices)
-    rows = Task.objects.order_by(field).values(field).annotate(count=Count("pk"))
+    rows = Task.objects.visible_to().order_by(field).values(field).annotate(count=Count("pk"))
     return [{"label": labels.get(row[field], row[field]), "count": row["count"]} for row in rows]
 
 
 @require_GET
 def task_report(request):
     return render(request, "reports/tasks.html", {
-        "total_tasks": Task.objects.count(),
+        "total_tasks": Task.objects.visible_to().count(),
         "priority_summary": grouped_summary("priority", Task.Priority.choices),
         "type_summary": grouped_summary("task_type", Task.TaskType.choices),
     })

@@ -1,0 +1,11 @@
+{% if memberships|length > 1 %}
+<nav class="demo-filters demo-households" aria-label="Switch household">
+    {% for member in memberships %}
+        {% if request.resolver_match.url_name == "household" %}
+        <a href="?workspace={{ member.workspace_id }}" {% if member.workspace_id == workspace.pk %}aria-current="page"{% endif %}>{{ member.workspace.name }}</a>
+        {% else %}
+        <a href="{% url 'groceries:workspace' member.workspace_id %}" {% if member.workspace_id == workspace.pk %}aria-current="page"{% endif %}>{{ member.workspace.name }}</a>
+        {% endif %}
+    {% endfor %}
+</nav>
+{% endif %}

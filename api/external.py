@@ -75,7 +75,7 @@ def _internal_matches(query):
             "title": task.title,
             "workspace": task.workspace.name,
         }
-        for task in Task.objects.filter(
+        for task in Task.objects.visible_to().filter(
             Q(task_type=Task.TaskType.SHOPPING) & Q(title__icontains=query)
         )
         .select_related("workspace")

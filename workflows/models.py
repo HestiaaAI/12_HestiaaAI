@@ -7,7 +7,18 @@ from intake.models import SourceDocument
 from inventory.models import Product, ShoppingListEntry
 
 
+class TaskQuerySet(models.QuerySet):
+    def visible_to(self, user=None):
+        public = models.Q(household_only=False)
+        if user is None or not user.is_authenticated:
+            return self.filter(public)
+        household_ids = Membership.objects.filter(user=user, is_active=True).values("workspace_id")
+        return self.filter(public | models.Q(workspace_id__in=household_ids))
+
+
 class Task(models.Model):
+    objects = TaskQuerySet.as_manager()
+
     """
     Represents a reusable responsibility, errand, appointment, or deadline.
 
@@ -31,6 +42,7 @@ class Task(models.Model):
         URGENT = "URGENT", "Urgent"
 
     task_id = models.AutoField(primary_key=True)
+    household_only = models.BooleanField(default=False)
 
     workspace = models.ForeignKey(
         Workspace,

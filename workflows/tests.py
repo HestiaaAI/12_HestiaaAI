@@ -124,7 +124,7 @@ class Person1HomeNavDetailTests(TestCase):
         response = self.client.get(reverse("home"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "home.html")
-        self.assertContains(response, "Welcome to Hestia")
+        self.assertContains(response, "A happy little home")
 
     def test_base_navigation_uses_named_urls(self):
         response = self.client.get(reverse("home"))
@@ -135,7 +135,9 @@ class Person1HomeNavDetailTests(TestCase):
         self.assertContains(response, 'href="' + reverse("analytics:task-stats") + '"')
         self.assertContains(response, 'action="' + reverse("accounts:logout") + '"')
         self.assertContains(response, "Home")
-        self.assertContains(response, "Household tasks")
+        self.assertContains(response, "Groceries")
+        self.assertContains(response, reverse("groceries:list"))
+        self.assertContains(response, reverse("groceries:household"))
         self.assertContains(response, "Task board")
         self.assertContains(response, "Search tasks")
         self.assertContains(response, "Task statistics")

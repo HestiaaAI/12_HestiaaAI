@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -187,3 +189,39 @@ class ShoppingListEntry(models.Model):
 
     def __str__(self):
         return f"{self.item_name} - {self.get_state_display()}"
+
+class GroceryBatch(models.Model):
+    """One purchase or package, with its own quantity and expiry date."""
+
+    class Storage(models.TextChoices):
+        FRIDGE = "fridge", "Fridge"
+        PANTRY = "pantry", "Pantry"
+        FREEZER = "freezer", "Freezer"
+
+    class State(models.TextChoices):
+        ACTIVE = "active", "In stock"
+        CONSUMED = "consumed", "Consumed"
+        DISCARDED = "discarded", "Discarded"
+
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name="grocery_batches")
+    name = models.CharField(max_length=100)
+    quantity = models.DecimalField(max_digits=10, decimal_places=3,
+                                   validators=[MinValueValidator(Decimal("0.001"))])
+    unit = models.CharField(max_length=30, default="item")
+    storage = models.CharField(max_length=10, choices=Storage.choices, default=Storage.FRIDGE)
+    expires_on = models.DateField(null=True, blank=True)
+    state = models.CharField(max_length=10, choices=State.choices, default=State.ACTIVE)
+    created_at = models.DateTimeField(auto_now_add=True)
+    closed_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ["name", "created_at", "pk"]
+        constraints = [
+            models.CheckConstraint(condition=models.Q(quantity__gt=0), name="grocery_batch_positive_quantity"),
+        ]
+        indexes = [
+            models.Index(fields=["workspace", "state", "expires_on"], name="grocery_batch_expiry_idx"),
+        ]
+
+    def __str__(self):
+        return self.name

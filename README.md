@@ -129,3 +129,45 @@ See [a8/README.md](a8/README.md) and [a8/rag_analysis.md](a8/rag_analysis.md)
 (Person 4 analysis uses Person 3’s 45-row matrix plus Person 2’s completed Colab
 MiniLM evaluations under `a8/results/person2/completed-2026-11-09/`). Canvas ZIP
 on branch `dev-ag-a8-canvas-zip`: `a8/hestia-a8-canvas.zip` (full `a8/` tree).
+
+
+## Grocery tracking demo
+
+Open **Groceries** after signing in with an active household membership. To
+prepare two demo accounts, create or select a Workspace in Django admin and
+add one active Membership for each account under that Workspace.
+
+1. Add two milk batches with different expiry dates, one tomorrow and one next week.
+2. Sign in as the second roommate and update one batch's quantity. Mark a batch
+   consumed or discarded to move it to recent history.
+3. On a batch expiring today or within three days, select **Suggest a meal**.
+   The existing local Qwen model uses up to six eligible batches. Select
+   **Approve and add to Tasks** to create a household-only task. A changed
+   batch or expired draft requires generating a fresh suggestion.
+
+The page evaluates dates in the household's timezone whenever it loads. Past-date
+batches are listed separately and excluded from meal suggestions. The first model
+request downloads the same Qwen checkpoint used by Ask Hestia, so warm it on
+the demo machine before presenting.
+
+To deploy this branch on the existing PythonAnywhere web app, use the web app's
+virtualenv and deployment checkout. Update the checkout to `cn32-demo`, install
+the dependencies, and run the following against the web app's database:
+
+```sh
+python manage.py migrate --settings=hestia_config.settings.production
+python manage.py collectstatic --noinput --settings=hestia_config.settings.production
+python manage.py check_grocery_expiry --settings=hestia_config.settings.production
+```
+
+Reload the web app from the Web tab. To run a daily expiry report on a host
+with scheduling enabled, add this command to the host scheduler, substituting
+the web app's actual paths and using the same environment as the web app:
+
+```sh
+/path/to/venv/bin/python /path/to/checkout/manage.py check_grocery_expiry --settings=hestia_config.settings.production
+```
+
+The scheduled check writes counts to the scheduler log. Roommates see the
+current alerts inside Groceries. On PythonAnywhere, schedule availability depends
+on the account. See [PythonAnywhere scheduled tasks](https://help.pythonanywhere.com/pages/ScheduledTasks/).

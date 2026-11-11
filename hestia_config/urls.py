@@ -33,6 +33,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("lookup/", product_compare_page, name="product-lookup"),
     path("api/", include("api.urls")),
+    path("groceries/", include("inventory.urls")),
     path("tasks/search/", include("workflows.search_urls")),
     path("tasks/manage/", include("workflows.forms_urls")),
     path("tasks/ask/", ask_hestia_page, name="ask-hestia"),

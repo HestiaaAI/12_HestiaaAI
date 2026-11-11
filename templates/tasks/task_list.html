@@ -9,14 +9,15 @@ Use Django comments for template examples: HTML comments still execute tags.
 {% block title %}Household Tasks | Hestia{% endblock %}
 
 {% block content %}
-<section class="page-header">
+<section class="page-header demo-task-heading">
     <p class="eyebrow">Household coordination</p>
     <h1>Household Tasks</h1>
     <p>Keep recurring routines and one-time responsibilities in one place.</p>
+    {% if view_style == "Generic CBV" %}<div class="demo-hero" aria-hidden="true"></div>{% endif %}
 </section>
 {% if view_style %}
-<section class="view-demo" aria-label="Assignment demonstration">
-    <p class="eyebrow">Assignment demonstration: {{ view_style }}</p>
+<details class="view-demo">
+    <summary>Assignment demonstration: {{ view_style }}</summary>
     <nav class="view-examples" aria-label="View implementation examples">
         <a href="{% url 'workflows:task-manual' %}">HttpResponse</a>
         <a href="{% url 'workflows:task-render' %}">render()</a>

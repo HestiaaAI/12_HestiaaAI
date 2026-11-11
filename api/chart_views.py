@@ -29,7 +29,7 @@ def task_priority_summary(request):
 @require_GET
 def task_creation_summary(request):
     """Daily task definitions, including zero days between first and last creation."""
-    grouped = list(Task.objects.order_by().annotate(date=TruncDate("created_at", tzinfo=timezone.utc))
+    grouped = list(Task.objects.visible_to().order_by().annotate(date=TruncDate("created_at", tzinfo=timezone.utc))
                    .values("date").annotate(count=Count("pk")).order_by("date"))
     if not grouped:
         return chart_response([])

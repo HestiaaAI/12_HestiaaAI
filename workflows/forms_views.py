@@ -17,7 +17,7 @@ class TaskBoardView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = Task.objects.filter(
+        queryset = Task.objects.visible_to(self.request.user).filter(
             workspace__in=available_workspaces()
         ).select_related("workspace").order_by("-created_at", "-task_id")
         self.filter_form = TaskFilterForm(self.request.GET)

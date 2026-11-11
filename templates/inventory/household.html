@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Household | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page">
+    <div class="demo-heading"><div><p class="demo-kicker">Household</p><h1>Meet the home club</h1></div></div>
+    <div class="demo-hero" aria-hidden="true"></div>
+    {% include "inventory/workspace_switcher.html" %}
+    <section class="demo-panel demo-sage">
+        <h2>{{ workspace.name }}</h2>
+        <p>{{ roommates|length }} member{{ roommates|length|pluralize }}</p>
+        <ul class="demo-members">
+        {% for member in roommates %}
+            <li><span class="demo-avatar" aria-hidden="true">{{ member.display_name|slice:":1"|upper }}</span>
+                <strong>{{ member.display_name }}</strong>{% if member.user_id == user.pk %}<small>You</small>{% endif %}</li>
+        {% endfor %}
+        </ul>
+    </section>
+    <div class="demo-grid">
+        <a class="demo-panel demo-tile" href="{% url 'workflows:task-cbv-generic' %}"><strong>Tasks</strong><span>See household responsibilities</span></a>
+        <a class="demo-panel demo-tile" href="{% url 'groceries:workspace' workspace.pk %}"><strong>Groceries</strong><span>See what’s in stock</span></a>
+    </div>
+</section>
+{% endblock %}

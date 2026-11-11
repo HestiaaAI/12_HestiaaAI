@@ -16,7 +16,7 @@ API_FIELDS = ("task_id", "title", "task_type", "priority")
 def task_list_api(request):
     """Section 6: filtered task list as JSON, e.g. /api/tasks/?q=groceries&workspace_name=demo."""
     tasks = filter_task_queryset(
-        Task.objects.all(),
+        Task.objects.visible_to(request.user),
         q=request.GET.get("q", ""),
         workspace_name=request.GET.get("workspace_name", ""),
     ).values(*API_FIELDS)

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}{% if batch %}Edit batch{% else %}Add batch{% endif %} | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow">
+    <div class="demo-heading"><div><p class="demo-kicker">{{ workspace.name }}</p>
+    <h1>{% if batch %}Edit grocery batch{% else %}Add grocery batch{% endif %}</h1>
+    <p>Add separate batches when purchases have different expiry dates.</p></div></div>
+    <form class="demo-panel demo-form" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="demo-actions"><button class="demo-button">Save batch</button>
+        <a href="{% url 'groceries:workspace' workspace.pk %}">Cancel</a></div>
+    </form>
+</section>
+{% endblock %}

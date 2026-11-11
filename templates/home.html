@@ -1,41 +1,17 @@
 {% extends "base.html" %}
-
 {% block title %}Home | Hestia{% endblock %}
-
 {% block content %}
-<section class="page-header">
-    <p class="eyebrow">Household coordination</p>
-    <h1>Welcome to Hestia</h1>
-    <p>Coordinate household documents, inventory, shopping, and shared tasks in one place.</p>
-</section>
-<section class="home-grid">
+<section class="demo-page">
+    <div class="demo-heading"><div><h1>A happy little home</h1><p>Shared tasks, groceries, and the people you live with.</p></div></div>
+    <div class="demo-hero" aria-hidden="true"></div>
     {% if user.is_authenticated %}
-    <article class="task-card">
-        <h2>Household tasks</h2>
-        <p>Open the shared task list, then click a title to load that task by primary key.</p>
-        <a class="button-link" href="{% url 'workflows:task-cbv-generic' %}">Open tasks</a>
-    </article>
-    <article class="task-card">
-        <h2>Task board</h2>
-        <p>Filter and create tasks.</p>
-        <a class="button-link" href="{% url 'task_forms:board' %}">Open task board</a>
-    </article>
-    <article class="task-card">
-        <h2>Search tasks</h2>
-        <p>Use GET for a bookmarkable filter URL, or POST to keep search terms out of the address bar.</p>
-        <a class="button-link" href="{% url 'task_search:get' %}">Open search</a>
-    </article>
-    <article class="task-card">
-        <h2>Task statistics</h2>
-        <p>See ORM totals, grouped priority counts, and the Matplotlib chart for this database.</p>
-        <a class="button-link" href="{% url 'analytics:task-stats' %}">Open statistics</a>
-    </article>
+    <div class="demo-grid">
+        <a class="demo-panel demo-tile demo-peach" href="{% url 'workflows:task-cbv-generic' %}"><strong>Tasks</strong><span>See what needs doing</span></a>
+        <a class="demo-panel demo-tile demo-sage" href="{% url 'groceries:list' %}"><strong>Groceries</strong><span>Use what you have</span></a>
+        <a class="demo-panel demo-tile" href="{% url 'groceries:household' %}"><strong>Household</strong><span>See who’s at home</span></a>
+    </div>
     {% else %}
-    <article class="task-card">
-        <h2>Sign in</h2>
-        <p>Sign in or create an account to access tasks, reports, and charts.</p>
-        <a class="button-link" href="{% url 'accounts:login' %}">Go to login</a>
-    </article>
+    <div class="demo-panel demo-sage"><a class="demo-button" href="{% url 'accounts:login' %}">Sign in</a></div>
     {% endif %}
 </section>
 {% endblock %}
