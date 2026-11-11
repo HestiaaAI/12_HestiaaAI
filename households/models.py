@@ -106,6 +106,7 @@ class HouseholdInvitation(models.Model):
     workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name='invitations')
     email = models.EmailField(max_length=254)
     token_digest = models.CharField(max_length=64, unique=True)
+    request_digest = models.CharField(max_length=64, unique=True, null=True, blank=True, editable=False)
     invited_by = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, related_name='issued_invitations')
     created_at = models.DateTimeField(auto_now_add=True)
     expires_at = models.DateTimeField()

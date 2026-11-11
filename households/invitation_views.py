@@ -62,13 +62,13 @@ def issue_response(request, member, *, form, email):
     if not ratelimit.consume(request,action='household_invite',key=key) or not ratelimit.consume(request,action='household_invite_recipient',key=recipient_key):
         return invitation_page(request,member,form=form,status=429,error='Please wait before sending another invitation. Try again in a minute.')
     try:
-        invitation,raw_token=issue_invitation(actor=member,email=email)
+        invitation,raw_token=issue_invitation(actor=member,email=email,request_digest=hashlib.sha256(form.cleaned_data["nonce"].encode()).hexdigest())
     except InvitationError as exc:
-        status={'forbidden':403,'not_found':404}.get(exc.code,400)
+        status={'forbidden':403,'not_found':404,'request_used':409}.get(exc.code,400)
         return invitation_page(request,member,form=form,status=status,error=str(exc))
     from django.conf import settings
     url=settings.ACCOUNT_PUBLIC_ORIGIN.rstrip('/')+reverse('households:accept-invite',args=[raw_token])
-    return invitation_page(request,member,invite_url=url,issued_invitation=invitation)
+    return invitation_page(request,member,invite_url=url,issued_invitation=invitation,delivery_status=invitation.delivery_status)
 
 
 @login_required

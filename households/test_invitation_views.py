@@ -39,6 +39,9 @@ class OwnerInvitationTests(InvitationFixture,TestCase):
         self.assertEqual(HouseholdInvitation.objects.count(),1)
         self.assertIsNone(HouseholdInvitation.objects.get().revoked_at)
         self.assertNotIn(url,str(dict(self.client.session)))
+        cache.clear()
+        self.assertEqual(self.client.post(reverse('households:invites'),data).status_code,409)
+        self.assertEqual(HouseholdInvitation.objects.count(),1)
 
     def test_foreign_invitation_ids_return_404_and_get_mutations_405(self):
         other=create_household(user=self.owner,name='Other',timezone='UTC')
@@ -90,3 +93,34 @@ class OwnerInvitationTests(InvitationFixture,TestCase):
         self.client.post(reverse('households:switch'),{'workspace_id':other.workspace_id})
         self.assertEqual(self.client.post(reverse('households:invites'),data).status_code,400)
         self.assertFalse(HouseholdInvitation.objects.exists())
+
+    def test_ownership_loss_inside_issue_transaction_is_denied(self):
+        from .services import issue_invitation
+        data=self.payload()
+        def changed(**kwargs):
+            Membership.objects.filter(pk=self.actor.pk).update(role='ADULT')
+            return issue_invitation(**kwargs)
+        with patch('households.invitation_views.issue_invitation',side_effect=changed):
+            self.assertEqual(self.client.post(reverse('households:invites'),data).status_code,403)
+        self.assertFalse(HouseholdInvitation.objects.exists())
+
+    def test_owner_mutations_accept_real_csrf_and_reject_missing_tokens(self):
+        secure=Client(enforce_csrf_checks=True);secure.force_login(self.owner)
+        listing=reverse('households:invites')
+        page=secure.get(listing)
+        csrf=secure.cookies['csrftoken'].value
+        payload={'email':self.roommate.email,'nonce':page.context['form'].initial['nonce'],'csrfmiddlewaretoken':csrf}
+        self.assertEqual(secure.post(listing,payload,HTTP_ORIGIN='http://testserver').status_code,200)
+        original=HouseholdInvitation.objects.get()
+        resend=reverse('households:resend-invite',args=[original.pk])
+        revoke=reverse('households:revoke-invite',args=[original.pk])
+        self.assertEqual(secure.post(resend).status_code,403)
+        self.assertEqual(secure.post(revoke).status_code,403)
+        cache.clear()
+        page=secure.get(listing)
+        self.assertEqual(secure.post(resend,{'nonce':page.context['form'].initial['nonce'],'csrfmiddlewaretoken':csrf},HTTP_ORIGIN='http://testserver').status_code,200)
+        newer=HouseholdInvitation.objects.exclude(pk=original.pk).get()
+        response=secure.post(reverse('households:revoke-invite',args=[newer.pk]),{'csrfmiddlewaretoken':csrf},HTTP_ORIGIN='http://testserver')
+        self.assertEqual(response.status_code,302)
+        newer.refresh_from_db();self.assertIsNotNone(newer.revoked_at)
+        self.assertEqual(secure.post(listing,payload,HTTP_ORIGIN='https://attacker.example').status_code,403)

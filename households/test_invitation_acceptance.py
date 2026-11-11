@@ -106,3 +106,69 @@ class InvitationAcceptanceTests(InvitationFixture,TestCase):
         HouseholdInvitation.objects.filter(pk=self.invitation.pk).update(revoked_at=timezone.now())
         self.assertEqual(self.client.post(self.url).status_code,400)
         self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+
+    def test_post_join_connected_modules_use_invited_household(self):
+        from .services import create_household
+        from workflows.models import Task
+        from inventory.models import GroceryBatch
+        private=create_household(user=self.roommate,name='Previous private household',timezone='UTC')
+        Task.objects.create(workspace=private.workspace,title='Unrelated private task')
+        Task.objects.create(workspace=self.actor.workspace,title='Shared invited task')
+        GroceryBatch.objects.create(workspace=private.workspace,name='Unrelated apples',quantity=1)
+        GroceryBatch.objects.create(workspace=self.actor.workspace,name='Shared invited milk',quantity=1)
+        self.client.force_login(self.roommate)
+        self.client.post(self.url)
+        board=self.client.get(reverse('task_forms:board'))
+        self.assertContains(board,'Shared invited task')
+        self.assertNotContains(board,'Unrelated private task')
+        groceries=self.client.get(reverse('groceries:list'),follow=True)
+        self.assertContains(groceries,'Shared invited milk')
+        self.assertNotContains(groceries,'Unrelated apples')
+        roster=self.client.get(reverse('groceries:household'))
+        self.assertContains(roster,self.actor.display_name)
+        self.assertNotContains(roster,'Invite roommates')
+        self.assertEqual(self.client.get(reverse('workflows:task-insights')).context['total_tasks'],1)
+        self.assertEqual(self.client.session['active_workspace_id'],self.actor.workspace_id)
+
+    def test_unverified_request_throttle_and_mail_failure_are_honest(self):
+        EmailAddress.objects.filter(user=self.roommate).update(verified=False)
+        self.client.force_login(self.roommate)
+        with patch('households.invitation_acceptance.send_verification_email_to_address',return_value=False):
+            self.assertContains(self.client.post(self.url,{'action':'verify'}),'Please wait',status_code=429)
+        with patch('households.invitation_acceptance.send_verification_email_to_address',side_effect=OSError('Private recipient diagnostic')):
+            response=self.client.post(self.url,{'action':'verify'})
+        self.assertContains(response,'could not be sent',status_code=503)
+        self.assertNotContains(response,'Private recipient diagnostic',status_code=503)
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+
+    def test_wrong_account_post_logout_preserves_intended_login_destination(self):
+        from urllib.parse import urlencode
+        self.roommate.set_password('Roommate-test-passphrase-923!');self.roommate.save()
+        self.client.force_login(self.owner)
+        page=self.client.get(self.url)
+        self.assertIn('_auth_user_id',self.client.session)
+        response=self.client.post(reverse('accounts:logout'),{'next':page.context['logout_next']},follow=True)
+        self.assertNotIn('_auth_user_id',self.client.session)
+        response=self.client.post(reverse('accounts:login')+'?'+urlencode({'next':self.url}),{'login':self.roommate.email,'password':'Roommate-test-passphrase-923!'},follow=True)
+        self.assertContains(response,'Join household')
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+
+    def test_changed_email_verification_between_preview_and_post_blocks_join(self):
+        self.client.force_login(self.roommate)
+        self.assertContains(self.client.get(self.url),'Join household')
+        EmailAddress.objects.filter(user=self.roommate).update(verified=False)
+        self.assertEqual(self.client.post(self.url).status_code,403)
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+
+    def test_only_local_invite_continuations_are_allowed(self):
+        from .invitation_continuation import validated_invite_next
+        for value in ['https://evil.invalid'+self.url,'//evil.invalid'+self.url,'http://[','/accounts/logout/',self.url+'?next=https://evil.invalid']:
+            self.assertIsNone(validated_invite_next(value))
+        self.assertEqual(validated_invite_next(self.url),self.url)
+
+    def test_verification_button_never_implicitly_accepts_already_verified_user(self):
+        self.client.force_login(self.roommate)
+        self.assertRedirects(self.client.post(self.url,{'action':'verify'}),self.url)
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+        self.assertEqual(self.client.post(self.url,{'action':'unrecognized'}).status_code,400)
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())

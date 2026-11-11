@@ -1,10 +1,20 @@
 """Atomic household writes with an authenticated, server-owned actor."""
+import hashlib
+import re
+import secrets
+from datetime import timedelta
+from allauth.account.models import EmailAddress
+from django.core.validators import validate_email
+from django.db.models import Q
+from django.utils import timezone
+from django.views.decorators.debug import sensitive_variables
+
 from django.contrib.auth import get_user_model
 from django.core.exceptions import PermissionDenied, ValidationError
 from django.db import transaction
 
 from .forms import HouseholdCreateForm
-from .models import Membership, Workspace
+from .models import HouseholdInvitation, Membership, Workspace
 
 
 @transaction.atomic
@@ -32,23 +42,14 @@ def create_household(*, user, name: str, timezone: str) -> Membership:
     )
 
 
-# Workspace is always the first lock, then invitations, then memberships.
-import hashlib
-import re
-import secrets
-from datetime import timedelta
-from django.core.validators import validate_email
-from django.db.models import Q
-from django.utils import timezone
-from django.views.decorators.debug import sensitive_variables
-from allauth.account.models import EmailAddress
-from .models import HouseholdInvitation
+# Locks: workspace → invitation → account (acceptance) → membership.
 
 
 class InvitationError(Exception):
     """Safe domain errors; messages never contain tokens or recipient details."""
     messages = {
         'invalid': 'This invitation is invalid or no longer available.',
+        'request_used': 'This request was already processed. Reload before creating another invitation.',
         'forbidden': 'Only a current household owner can manage invitations.',
         'not_found': 'Invitation not found.',
         'invalid_email': 'Enter a valid email address.',
@@ -111,12 +112,15 @@ def locked_owner(actor):
 
 @transaction.atomic
 @sensitive_variables()
-def issue_invitation(*, actor, email):
+def issue_invitation(*, actor, email, request_digest=None):
     workspace = Workspace.objects.select_for_update().get(pk=actor.workspace_id)
     pending = HouseholdInvitation.objects.select_for_update().filter(
         workspace=workspace, email=normalized_email(email), accepted_at__isnull=True, revoked_at__isnull=True)
     list(pending)
+    used_request = HouseholdInvitation.objects.select_for_update().filter(request_digest=request_digest).exists() if request_digest else False
     owner = locked_owner(actor)
+    if used_request:
+        raise InvitationError("request_used")
     email = normalized_email(email)
     active = Membership.objects.filter(workspace=workspace, is_active=True).filter(
         Q(user__email__iexact=email) | Q(user__emailaddress__email__iexact=email, user__emailaddress__verified=True))
@@ -127,7 +131,9 @@ def issue_invitation(*, actor, email):
     raw_token = secrets.token_urlsafe(32)
     invitation = HouseholdInvitation.objects.create(
         workspace=workspace, email=email, token_digest=hashlib.sha256(raw_token.encode()).hexdigest(),
-        invited_by=owner, expires_at=now+timedelta(days=7))
+        invited_by=owner, expires_at=now+timedelta(days=7), request_digest=request_digest)
+    from .invitation_mail import schedule_invitation_email
+    schedule_invitation_email(invitation, raw_token)
     return invitation, raw_token
 
 
@@ -151,6 +157,12 @@ def accept_invitation(*, user, raw_token):
     candidate = invitation_for_token(raw_token)
     Workspace.objects.select_for_update().get(pk=candidate.workspace_id)
     invitation = HouseholdInvitation.objects.select_for_update().get(pk=candidate.pk)
+    if not getattr(user, 'is_authenticated', False):
+        raise InvitationError('authentication_required')
+    try:
+        user = get_user_model().objects.select_for_update().get(pk=user.pk,is_active=True)
+    except get_user_model().DoesNotExist:
+        raise InvitationError('authentication_required')
     invitation_identity(user, invitation)
     if invitation.revoked_at:
         raise InvitationError('revoked')

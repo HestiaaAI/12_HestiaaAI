@@ -23,7 +23,7 @@ def private_invitation_response(response):
     patch_vary_headers(response,('Cookie',))
     response['Referrer-Policy']='no-referrer'
     response['X-Robots-Tag']='noindex, nofollow, noarchive'
-    response['Content-Security-Policy']="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; script-src 'none'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+    response['Content-Security-Policy']="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; script-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
     return response
 
 
@@ -31,6 +31,8 @@ def private_invitation_response(response):
 @sensitive_post_parameters()
 @sensitive_variables()
 def accept(request,token):
+    if request.method == 'POST' and request.POST.get('action','accept') not in {'accept','verify'}:
+        return private_invitation_response(HttpResponse('Choose Join household or Send verification email.',status=400))
     context={'error':None,'can_accept':False,'needs_verification':False}
     status=200
     try:
@@ -53,12 +55,15 @@ def accept(request,token):
         try:
             invitation_identity(request.user,invitation)
             context.update(can_accept=True,invitation=invitation)
+            if request.method == 'POST' and request.POST.get('action') == 'verify':
+                messages.info(request,'Your email is already verified. Review this invitation and choose Join household.')
+                return private_invitation_response(redirect(path))
             if request.method == 'POST':
                 member=accept_invitation(user=request.user,raw_token=token)
                 request.session['active_workspace_id']=member.workspace_id
                 request.session.pop(INVITE_NEXT,None)
                 resolve_active_membership(request,refresh=True)
-                messages.success(request,f'Welcome to {member.workspace.name}. You are now a household roommate.')
+                messages.success(request,f'Welcome to {member.workspace.name}. You can now share household tasks and groceries.')
                 return private_invitation_response(redirect('task_forms:board'))
         except InvitationError as exc:
             context['error']=str(exc)

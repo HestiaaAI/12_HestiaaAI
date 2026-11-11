@@ -9,7 +9,10 @@ INVITE_NEXT = 'household_invite_next'
 def validated_invite_next(value):
     if not isinstance(value,str):
         return None
-    parts=urlsplit(value)
+    try:
+        parts=urlsplit(value)
+    except ValueError:
+        return None
     if parts.scheme or parts.netloc or parts.query or parts.fragment or not value.startswith('/') or value.startswith('//'):
         return None
     try:

@@ -40,3 +40,10 @@ class AccountAdapter(DefaultAccountAdapter):
 
     def get_email_verification_redirect_url(self, email_address):
         return invitation_next(self.request) or super().get_email_verification_redirect_url(email_address)
+
+    def send_confirmation_mail(self, request, emailconfirmation, signup):
+        from .invitation_mail import console_preview_backend
+        if invitation_next(request) and console_preview_backend():
+            from smtplib import SMTPException
+            raise SMTPException('Configure private email delivery for invitation verification.')
+        return super().send_confirmation_mail(request,emailconfirmation,signup)

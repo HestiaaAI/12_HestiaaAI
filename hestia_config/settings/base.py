@@ -152,3 +152,11 @@ ACCOUNT_RATE_LIMITS = {
     "household_invite": "10/m/key",
     "household_invite_recipient": "1/m/key",
 }
+
+# Preserve Django's existing console/admin-email handlers, adding redaction first.
+from copy import deepcopy
+from django.utils.log import DEFAULT_LOGGING
+LOGGING = deepcopy(DEFAULT_LOGGING)
+LOGGING['filters']['invitation_privacy'] = {'()':'households.invitation_privacy.InvitationLogFilter'}
+for invitation_log_handler in LOGGING['handlers'].values():
+    invitation_log_handler.setdefault('filters', []).insert(0, 'invitation_privacy')

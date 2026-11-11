@@ -144,6 +144,12 @@ class InvitationServiceTests(InvitationFixture,TestCase):
         first.refresh_from_db();self.assertIsNone(first.revoked_at)
         self.assertEqual(HouseholdInvitation.objects.count(),1)
 
+    def test_account_deactivation_after_preview_cannot_accept(self):
+        invitation,token=self.issue()
+        get_user_model().objects.filter(pk=self.roommate.pk).update(is_active=False)
+        self.assertCode('authentication_required',lambda:accept_invitation(user=self.roommate,raw_token=token))
+        self.assertFalse(Membership.objects.filter(user=self.roommate).exists())
+
 # Row-lock proof is intentionally database-specific, never claimed from SQLite.
 from unittest import skipUnless
 from django.db import connection, close_old_connections, connections
