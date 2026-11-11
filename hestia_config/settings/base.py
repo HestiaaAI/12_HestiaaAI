@@ -146,3 +146,9 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_USE_TLS = env.bool("EMAIL_USE_TLS", default=True)
 EMAIL_TIMEOUT = 10
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL", default="Hestia <noreply@example.invalid>")
+
+# Shared-cache-backed invitation limits; allauth preserves its default actions.
+ACCOUNT_RATE_LIMITS = {
+    "household_invite": "10/m/key",
+    "household_invite_recipient": "1/m/key",
+}

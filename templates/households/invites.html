@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}Roommate invitations | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow">
+    <header><p>{{ active_household.name }}</p><h1>Invite a roommate</h1><p>Only the invited person can join after verifying their email. Links expire in seven days.</p></header>
+    {% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
+    {% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+    {% if invite_url %}<section class="demo-panel" aria-labelledby="copy-title"><h2 id="copy-title">New invitation link</h2><p>Copy this link now. It is shown only in this response. Reissuing creates a new link and invalidates the previous one.</p><label for="invite-link">Copy invitation link</label><textarea id="invite-link" readonly rows="4" style="width:100%;box-sizing:border-box">{{ invite_url }}</textarea></section>{% endif %}
+    <form method="post" class="demo-panel demo-form" action="{% url 'households:invites' %}">{% csrf_token %}{{ form.nonce }}{{ form.email.as_field_group }}<button class="demo-button" type="submit">Create invitation</button></form>
+    <section class="demo-panel"><h2>Invitations</h2><ul>
+    {% for invitation in invitations %}<li><p>{{ invitation.email }} — {{ invitation.status|capfirst }} — expires {{ invitation.expires_at|date:"M j, Y H:i" }}</p>
+        {% if invitation.status == 'pending' %}<form method="post" action="{% url 'households:revoke-invite' invitation.pk %}">{% csrf_token %}<button type="submit">Revoke invitation</button></form>{% endif %}
+        {% if invitation.status != 'accepted' %}<form method="post" action="{% url 'households:resend-invite' invitation.pk %}">{% csrf_token %}<input type="hidden" name="nonce" value="{{ form.nonce.value }}"><button type="submit">Reissue invitation</button></form>{% endif %}
+    </li>{% empty %}<li>No invitations yet.</li>{% endfor %}</ul></section>
+    <a href="{% url 'groceries:household' %}">Back to household</a>
+</section>
+{% endblock %}

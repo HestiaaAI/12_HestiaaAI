@@ -16,3 +16,9 @@ class HouseholdCreateForm(forms.Form):
         except (ZoneInfoNotFoundError, ValueError):
             raise forms.ValidationError('Enter a valid city timezone, such as America/Chicago.')
         return value
+
+
+class InvitationForm(forms.Form):
+    email = forms.EmailField(max_length=254, label='Roommate email',
+                             widget=forms.EmailInput(attrs={'autocomplete':'email'}))
+    nonce = forms.CharField(widget=forms.HiddenInput())

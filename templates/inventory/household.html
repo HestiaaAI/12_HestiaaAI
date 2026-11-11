@@ -15,6 +15,7 @@
         {% endfor %}
         </ul>
     </section>
+    {% if can_manage_household %}<p><a class="demo-button" href="{% url 'households:invites' %}">Invite roommates</a></p>{% endif %}
     <div class="demo-grid">
         <a class="demo-panel demo-tile" href="{% url 'task_forms:board' %}"><strong>Tasks</strong><span>See household responsibilities</span></a>
         <a class="demo-panel demo-tile" href="{% url 'groceries:workspace' workspace.pk %}"><strong>Groceries</strong><span>See what’s in stock</span></a>

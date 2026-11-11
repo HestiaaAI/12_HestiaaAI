@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Household invitation | Hestia{% endblock %}
+{% block content %}<section class="demo-page demo-narrow"><header><h1>Household invitation</h1></header>
+{% for message in messages %}<p class="demo-messages" role="status">{{ message }}</p>{% endfor %}
+{% if error %}<p class="form-errors" role="alert">{{ error }}</p>{% endif %}
+{% if login_url %}
+{% if not user.is_authenticated %}<div class="demo-panel"><p>You’re invited to join a household. Sign in or create an account using the email that received the invitation. Verify that email before joining.</p><a class="demo-button" href="{{ login_url }}">Sign in to continue</a> <a href="{{ signup_url }}">Create an account</a></div>
+{% elif can_accept %}<div class="demo-panel"><h2>{{ invitation.workspace.name }}</h2><p>Joining shares this household’s tasks, groceries and roster. Nothing changes until you accept.</p><form method="post">{% csrf_token %}<button class="demo-button" type="submit">Join household</button></form></div>
+{% else %}{% if needs_verification %}<form method="post">{% csrf_token %}<button class="demo-button" name="action" value="verify">Send verification email</button></form>{% endif %}<form method="post" action="{% url 'accounts:logout' %}">{% csrf_token %}<input type="hidden" name="next" value="{{ logout_next }}"><button type="submit">Sign out and use another account</button></form>{% endif %}
+{% endif %}
+</section>{% endblock %}

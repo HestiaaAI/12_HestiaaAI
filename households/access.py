@@ -24,7 +24,7 @@ class HouseholdContextMiddleware(MiddlewareMixin):
         private = household or match.app_name == 'households'
         request._household_data = data
         request._private_response = private
-        if private and not request.user.is_authenticated:
+        if private and not request.user.is_authenticated and name != 'households:accept-invite':
             if data:
                 return JsonResponse({'error': 'Authentication required.'}, status=401)
             return redirect_to_login(request.get_full_path(), settings.LOGIN_URL)
@@ -47,6 +47,10 @@ class HouseholdContextMiddleware(MiddlewareMixin):
             return self.household_required_response(request)
 
     def process_response(self, request, response):
+        match = getattr(request, 'resolver_match', None)
+        if match and match.view_name == 'households:accept-invite':
+            from .invitation_acceptance import private_invitation_response
+            response = private_invitation_response(response)
         if getattr(request, '_private_response', False) or request.user.is_authenticated:
             add_never_cache_headers(response)
             patch_vary_headers(response, ('Cookie',))
