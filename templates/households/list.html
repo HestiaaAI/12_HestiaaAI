@@ -1,2 +1,12 @@
 {% extends 'base.html' %}
-{% block content %}<h1>Choose a household</h1>{% for membership in memberships %}<form method="post" action="{% url 'households:switch' %}">{% csrf_token %}<button name="workspace_id" value="{{ membership.workspace_id }}">{{ membership.workspace.name }}</button></form>{% empty %}<p>No active household memberships.</p><a href="{% url 'households:onboarding' %}">Getting started</a>{% endfor %}{% endblock %}
+{% block title %}Choose a household | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow" aria-labelledby="household-picker-title">
+    <header><h1 id="household-picker-title">Choose a household</h1><p>Your tasks and groceries follow the household you choose.</p></header>
+    <div class="demo-panel">
+        {% for membership in memberships %}<form method="post" action="{% url 'households:switch' %}">{% csrf_token %}<button class="demo-button" name="workspace_id" value="{{ membership.workspace_id }}">{{ membership.workspace.name }}</button></form>
+        {% empty %}<p>No active household memberships yet.</p>{% endfor %}
+    </div>
+    <p><a class="demo-button" href="{% url 'households:create' %}">{% if memberships %}Create another household{% else %}Create household{% endif %}</a></p>
+</section>
+{% endblock %}

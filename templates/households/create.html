@@ -4,7 +4,7 @@
 <section class="demo-page demo-narrow" aria-labelledby="create-household-title">
     <header><p class="eyebrow">A home that works together</p><h1 id="create-household-title">Create household</h1>
     <p>Give your shared home a name. You’ll become its owner and start with an empty task board and grocery list.</p></header>
-    <form method="post" action="{% url 'households:create' %}" class="demo-card">
+    <form method="post" action="{% url 'households:create' %}" class="demo-panel demo-form">
         {% csrf_token %}
         {% if form.errors %}<div class="form-errors" role="alert"><p>We couldn't create your household. Check the fields below.</p>{{ form.non_field_errors }}</div>{% endif %}
         {% for field in form %}<div class="form-field">{{ field.as_field_group }}</div>{% endfor %}

@@ -11,6 +11,10 @@ from .services import create_household
 @login_required
 @require_GET
 def onboarding(request):
+    if request.active_membership:
+        return redirect('task_forms:board')
+    if request.household_memberships:
+        return redirect('households:list')
     return render(request, 'households/onboarding.html')
 
 
