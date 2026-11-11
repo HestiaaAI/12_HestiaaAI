@@ -9,7 +9,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.views.decorators.http import require_http_methods, require_POST
 
-from households.models import Membership, Workspace
+from households.energy import WeatherUnavailable, find_location, outdoor_temperatures, recommend_temperature
+from households.energy_forms import ThermostatPreferenceForm, WeatherLocationForm
+from households.models import Membership, ThermostatPreference, Workspace
 from inventory import grocery_ai
 from inventory.expiry import (
     SOON_DAYS, batch_snapshot, expiring_batches, household_today, suggestion_inputs,
@@ -212,4 +214,78 @@ def scan_receipt(request, workspace_id):
             raise Http404
     return render(request, "inventory/scan_receipt.html", {
         "workspace": workspace, "review": review, "receipt_error": receipt_error,
+    })
+
+
+
+@login_required
+@require_http_methods(["GET", "POST"])
+def household_energy(request, workspace_id):
+    member = membership_for(request, workspace_id)
+    workspace = member.workspace
+    can_set_location = member.role == Membership.MemberRole.OWNER
+    roommates = workspace.memberships.filter(is_active=True, user__isnull=False)
+    preference = ThermostatPreference.objects.filter(membership=member).first()
+    preferences_form = ThermostatPreferenceForm(instance=preference)
+    location_form = WeatherLocationForm(initial={"location": workspace.weather_location})
+    period = request.GET.get("period")
+    if period not in ("day", "night"):
+        period = None
+
+    if request.method == "POST":
+        action = request.POST.get("action")
+        if action == "preferences":
+            preferences_form = ThermostatPreferenceForm(request.POST, instance=preference)
+            if preferences_form.is_valid():
+                ThermostatPreference.objects.update_or_create(
+                    membership=member, defaults=preferences_form.cleaned_data,
+                )
+                messages.success(request, "Your comfort ranges are saved.")
+                return redirect("groceries:energy", workspace_id=workspace_id)
+        elif action == "location" and can_set_location:
+            location_form = WeatherLocationForm(request.POST)
+            if location_form.is_valid():
+                query = location_form.cleaned_data["location"]
+                try:
+                    location = find_location(query)
+                except WeatherUnavailable as exc:
+                    location_form.add_error("location", str(exc))
+                else:
+                    workspace.weather_location = query
+                    workspace.save(update_fields=["weather_location", "updated_at"])
+                    messages.success(request, f"Weather location set to {location['label']}.")
+                    return redirect("groceries:energy", workspace_id=workspace_id)
+        else:
+            raise Http404
+
+    preferences = list(ThermostatPreference.objects.filter(membership__in=roommates)
+                       .select_related("membership").order_by("membership__display_name", "pk"))
+    recommendation = None
+    weather_error = ""
+    if period and preferences and workspace.weather_location:
+        ranges = [(getattr(item, f"{period}_min"), getattr(item, f"{period}_max"))
+                  for item in preferences]
+        try:
+            location = find_location(workspace.weather_location)
+            temperatures = outdoor_temperatures(location, period)
+        except WeatherUnavailable as exc:
+            weather_error = str(exc)
+        else:
+            setpoint = recommend_temperature(ranges, temperatures)
+            recommendation = {
+                "setpoint": setpoint,
+                "location": location["label"],
+                "outdoor_low": min(temperatures),
+                "outdoor_high": max(temperatures),
+                "outside_ranges": [
+                    {"name": item.membership.display_name, "low": low, "high": high}
+                    for item, (low, high) in zip(preferences, ranges)
+                    if not low <= setpoint <= high
+                ],
+            }
+    return render(request, "inventory/energy.html", {
+        "workspace": workspace, "can_set_location": can_set_location,
+        "preferences_form": preferences_form, "location_form": location_form,
+        "responses": len(preferences), "roommate_count": roommates.count(), "period": period,
+        "recommendation": recommendation, "weather_error": weather_error,
     })

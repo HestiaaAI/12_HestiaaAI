@@ -7,6 +7,7 @@ app_name = "groceries"
 urlpatterns = [
     path("", views.groceries, name="list"),
     path("household/", views.household, name="household"),
+    path("household/<int:workspace_id>/energy/", views.household_energy, name="energy"),
     path("<int:workspace_id>/", views.groceries, name="workspace"),
     path("<int:workspace_id>/scan/", views.scan_receipt, name="scan"),
     path("<int:workspace_id>/add/", views.edit_batch, name="add"),
