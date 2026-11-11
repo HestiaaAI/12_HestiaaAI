@@ -17,10 +17,10 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-Account login/signup/verification uses Django/allauth. At this phase, household
-records and memberships must be provisioned through authorized Django admin or
-controlled fixtures. Signup does not automatically enroll users in a sample
-household. Creation and invitations are later phases. Do not use the tracked
+Account login/signup/verification uses Django/allauth. After signup/sign-in, new users can create a household at `/households/create/`
+and become its owner without admin provisioning. Existing users can create
+another household from the shared picker. Signup never auto-enrolls users in a
+sample household. Invitations and member management remain later phases. Do not use the tracked
 historical database as a source of real accounts or production data.
 
 ## Current product routes
@@ -57,9 +57,8 @@ Product archives use `git archive` and `.gitattributes` to omit research package
 notebooks, assignment evidence, optional experiment requirements and the tracked
 historical SQLite database. No research/data files are automatically deleted.
 Historical experiments remain in source control and use their own requirements;
-they are outside the product's runtime and release package. The retired handbook
-experiment depended on the old product adapter and must be reproduced from the
-Phase 1A revision, rather than restored as a production feature.
+they are outside the product's runtime and release package. The retained Ask Hestia feature uses its bundled product-local handbook,
+with the source labeling and inference behavior described below.
 
 
 ## Integrated demo
