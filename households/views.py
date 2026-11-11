@@ -1,8 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render
-from django.views.decorators.http import require_GET, require_POST
-from .context import active_memberships
+from django.views.decorators.http import require_GET, require_POST, require_http_methods
+from .context import active_memberships, resolve_active_membership
+from .forms import HouseholdCreateForm
+from .services import create_household
 
 
 @login_required
@@ -26,3 +29,17 @@ def switch(request):
         return HttpResponseBadRequest('Choose an active household membership.')
     request.session['active_workspace_id'] = membership.workspace_id
     return redirect('task_forms:board')
+
+
+@login_required
+@require_http_methods(['GET', 'POST'])
+def create(request):
+    form = HouseholdCreateForm(request.POST if request.method == 'POST' else None)
+    if request.method == 'POST' and form.is_valid():
+        membership = create_household(user=request.user, **form.cleaned_data)
+        # The atomic service has committed before session selection changes.
+        request.session['active_workspace_id'] = membership.workspace_id
+        resolve_active_membership(request, refresh=True)
+        messages.success(request, f'Household “{membership.workspace.name}” created. Add your first task to get started.')
+        return redirect('task_forms:board')
+    return render(request, 'households/create.html', {'form': form})
