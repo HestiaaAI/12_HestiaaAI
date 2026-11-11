@@ -102,7 +102,7 @@ def invitation_identity(user, invitation):
 def locked_owner(actor):
     # Caller holds the workspace row before reaching a membership lock.
     try:
-        return Membership.objects.select_for_update().get(
+        return Membership.objects.select_for_update(of=('self',)).get(
             pk=actor.pk, workspace_id=actor.workspace_id, user_id=actor.user_id,
             user__is_active=True, is_active=True, role=Membership.MemberRole.OWNER,
         )
@@ -238,3 +238,61 @@ def update_household(*, actor, name: str, timezone: str) -> Workspace:
     workspace.timezone = form.cleaned_data['timezone']
     workspace.save(update_fields=['name', 'timezone', 'updated_at'])
     return workspace
+
+
+def household_target(members, membership_id):
+    target = next((m for m in members if m.pk == membership_id), None)
+    if target is None:
+        raise HouseholdError('not_found')
+    return target
+
+
+def active_owners(members):
+    # Historical null-user/deactivated accounts cannot keep a household usable.
+    return [m for m in members if m.is_active and m.role == Membership.MemberRole.OWNER
+            and m.user_id and m.user.is_active]
+
+
+def apply_role(member, role):
+    member.role = role
+    member.can_manage_sources = role == Membership.MemberRole.OWNER
+    member.can_assign_tasks = True
+    member.can_receive_assignments = True
+    member.save(update_fields=['role', 'can_manage_sources', 'can_assign_tasks', 'can_receive_assignments'])
+
+
+@transaction.atomic
+def remove_member(*, actor, membership_id: int) -> None:
+    workspace, current, members = locked_household(actor)
+    target = household_target(members, membership_id)
+    require_owner(current)
+    if target.pk == current.pk:
+        raise HouseholdError('self_remove')
+    if not target.is_active:
+        raise HouseholdError('inactive')
+    if target in active_owners(members) and len(active_owners(members)) <= 1:
+        raise HouseholdError('last_owner')
+    target.is_active = False
+    target.save(update_fields=['is_active'])
+
+
+@transaction.atomic
+def leave_household(*, actor) -> None:
+    workspace, current, members = locked_household(actor)
+    if current.role == Membership.MemberRole.OWNER and len(active_owners(members)) <= 1:
+        raise HouseholdError('last_owner')
+    current.is_active = False
+    current.save(update_fields=['is_active'])
+
+
+@transaction.atomic
+def transfer_ownership(*, actor, membership_id: int) -> None:
+    workspace, current, members = locked_household(actor)
+    target = household_target(members, membership_id)
+    require_owner(current)
+    if target.pk == current.pk:
+        raise HouseholdError('self_transfer')
+    if not target.is_active or not target.user_id or not target.user.is_active:
+        raise HouseholdError('invalid_target')
+    apply_role(target, Membership.MemberRole.OWNER)
+    apply_role(current, Membership.MemberRole.ADULT)
