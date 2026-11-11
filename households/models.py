@@ -53,7 +53,7 @@ class Membership(models.Model):
 
     class MemberRole(models.TextChoices):
         OWNER = "OWNER", "Owner"
-        ADULT = "ADULT", "Adult"
+        ADULT = "ADULT", "Roommate"
         CHILD = "CHILD", "Child"
         CAREGIVER = "CAREGIVER", "Caregiver"
         LIMITED = "LIMITED", "Limited"
@@ -100,3 +100,31 @@ class Membership(models.Model):
 
     def __str__(self):
         return f"{self.display_name} - {self.workspace.name}"
+
+class HouseholdInvitation(models.Model):
+    """Digest-only, email-bound grant; raw tokens are never persisted."""
+    workspace = models.ForeignKey(Workspace, on_delete=models.CASCADE, related_name='invitations')
+    email = models.EmailField(max_length=254)
+    token_digest = models.CharField(max_length=64, unique=True)
+    invited_by = models.ForeignKey(Membership, on_delete=models.SET_NULL, null=True, related_name='issued_invitations')
+    created_at = models.DateTimeField(auto_now_add=True)
+    expires_at = models.DateTimeField()
+    accepted_at = models.DateTimeField(null=True, blank=True)
+    accepted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, blank=True, related_name='accepted_household_invitations')
+    revoked_at = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        ordering = ['-created_at', '-pk']
+        indexes = [models.Index(fields=['workspace', 'email'], name='household_invite_email_idx')]
+
+    @property
+    def status(self):
+        from django.utils import timezone
+        if self.revoked_at:
+            return 'revoked'
+        if self.accepted_at:
+            return 'accepted'
+        return 'expired' if self.expires_at <= timezone.now() else 'pending'
+
+    def __str__(self):
+        return f'Household invitation {self.pk}'
