@@ -64,6 +64,9 @@ Keep the printed backup path for rollback. For a busy production site, arrange a
 The explicit fetch refspec works even if the original server clone fetched only `main`.
 
 ```sh
+# Register the branch in a main-only clone so --track recognizes it.
+refspec='+refs/heads/household-member-management:refs/remotes/origin/household-member-management'
+git config --get-all remote.origin.fetch | grep -Fx -- "$refspec" >/dev/null || git config --add remote.origin.fetch "$refspec"
 git fetch origin refs/heads/household-member-management:refs/remotes/origin/household-member-management
 
 if git show-ref --verify --quiet refs/heads/household-member-management; then
