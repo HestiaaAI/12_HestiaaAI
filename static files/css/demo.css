@@ -84,3 +84,7 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .household-members li { flex: 1 1 15rem; min-width: 0; overflow-wrap: anywhere; align-content: start; }
 .household-members details { margin-top: .55rem; }
 .demo-page details summary { cursor: pointer; }
+
+.energy-result { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid var(--hestia-border); }
+.energy-result h3 { font-size: 2rem; }
+.energy-result h3 small { font-size: 1rem; }
