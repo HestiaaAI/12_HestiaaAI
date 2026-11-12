@@ -16,6 +16,7 @@ from .services import save_expense,lock_household,cents
 from .insights import household_today
 from .bill_calendar import month_calendar,advance
 from .reminders import collect_reminders
+from .bill_tasks import sync_bill_task
 
 class BillForm(forms.Form):
     icon=forms.ChoiceField(choices=RecurringBill.ICONS,required=False,label='Bill type / icon')
@@ -75,6 +76,7 @@ def recurring(request,workspace_id):
             else:
                 bill=RecurringBill.objects.create(workspace=actor.workspace,created_by=actor,amount_cents=cents(amount),anchor_day=data['next_due'].day,**data)
             bill.participants.set(people)
+            sync_bill_task(bill)
         return redirect('expenses:recurring',workspace_id=workspace_id)
     try:
         year=int(request.GET.get('year',today.year));month=int(request.GET.get('month',today.month))
@@ -97,6 +99,7 @@ def recurring_action(request,workspace_id,bill_id):
             from django.core.exceptions import PermissionDenied
             raise PermissionDenied
         bill.active=action=='resume';bill.save(update_fields=['active'])
+        sync_bill_task(bill)
     elif action=='record':
         try:
             if not bill.active:raise ValidationError('Resume this bill before recording it.')
@@ -110,8 +113,10 @@ def recurring_action(request,workspace_id,bill_id):
             total=cents(amount);base,remainder=divmod(total,len(people))
             expense=save_expense(actor,{'title':bill.title,'amount':amount,'paid_by':bill.paid_by,'category':bill.category,'date':due,'split_method':'equal','note':'Recurring bill · '+due.isoformat()}, {p.pk:base+(i<remainder) for i,p in enumerate(people)},uuid4())
             RecurringBillEntry.objects.create(bill=bill,due=due,expense=expense)
+            sync_bill_task(bill, recorded=True)
             bill.next_due=advance(due,bill.frequency,bill.anchor_day)
             bill.save(update_fields=['next_due'])
+            sync_bill_task(bill)
         except ValidationError as exc:error=' '.join(exc.messages)
     else:error='Choose a valid bill action.'
     if error:

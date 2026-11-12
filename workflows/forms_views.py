@@ -4,6 +4,7 @@ from datetime import date
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError, transaction
+from django.db.models import Q
 from django.http import Http404, HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
@@ -91,7 +92,17 @@ class TaskBoardView(ListView):
             if filters[field]:
                 queryset = queryset.filter(**{field: filters[field]})
         self.selected_day = self._selected_day()
+        visible_days = board_day_strip(self.selected_day)
+        queryset = queryset.filter(
+            Q(recurring_bill__isnull=True) |
+            Q(recurring_bill__active=True,
+              recurring_bill__next_due__range=(visible_days[0]["date"], visible_days[-1]["date"]))
+        )
         if self.request.GET.get("day"):
+            queryset = queryset.filter(
+                Q(recurring_bill__isnull=True) |
+                Q(recurring_bill__next_due=self.selected_day)
+            )
             queryset = queryset.filter(
                 occurrences__due_at__date=self.selected_day
             ).distinct()

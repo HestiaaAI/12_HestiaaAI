@@ -34,6 +34,28 @@ class TaskBoardTests(TestCase):
         )
         Task.objects.create(workspace=cls.other, title="Private other task")
 
+    def test_recurring_bills_follow_the_visible_five_day_window(self):
+        from expenses.models import RecurringBill
+        from unittest.mock import patch
+        from datetime import date
+        regular=Task.objects.get(title="Buy groceries")
+        for day in (9,10,14,15):
+            task=Task.objects.create(workspace=self.home,title=f"Pay bill {day}")
+            RecurringBill.objects.create(workspace=self.home,task=task,title=f"Bill {day}",paid_by=self.membership,created_by=self.membership,amount_cents=1000,next_due=date(2026,11,day))
+        with patch("workflows.forms_views.timezone.localdate",return_value=date(2026,11,12)):
+            response=self.client.get(reverse("task_forms:board"))
+            names={t.title for t in response.context["tasks"]}
+            self.assertIn("Pay bill 10",names)
+            self.assertIn("Pay bill 14",names)
+            self.assertNotIn("Pay bill 9",names)
+            self.assertNotIn("Pay bill 15",names)
+            self.assertIn(regular.title,names)
+        with patch("workflows.forms_views.timezone.localdate",return_value=date(2026,11,13)):
+            response=self.client.get(reverse("task_forms:board"))
+            names={t.title for t in response.context["tasks"]}
+            self.assertNotIn("Pay bill 10",names)
+            self.assertIn("Pay bill 15",names)
+
     def setUp(self):
         self.client.force_login(self.user)
         session = self.client.session

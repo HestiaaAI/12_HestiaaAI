@@ -20,7 +20,7 @@ from inventory.expiry import (
 )
 from inventory.forms import GroceryBatchForm, ReceiptBatchFormSet
 from inventory.models import GroceryBatch
-from inventory.receipt import MAX_RECEIPT_TEXT, receipt_drafts
+from inventory.receipt import MAX_RECEIPT_TEXT, MAX_RECEIPT_ROWS, receipt_drafts
 from workflows.models import Task, TaskOccurrence
 
 
@@ -194,13 +194,17 @@ def scan_receipt(request, workspace_id):
     receipt_error = ""
     if request.method == "POST":
         if request.POST.get("action") == "review":
-            receipt_text = request.POST.get("receipt_text", "")
-            if len(receipt_text) > MAX_RECEIPT_TEXT:
+            receipts = request.POST.getlist("receipt_text")
+            if len(receipts) > 5:
+                receipt_error = "Use at most five receipts at once."
+            elif any(len(text) > MAX_RECEIPT_TEXT for text in receipts):
                 receipt_error = "The receipt text is too long. Use a shorter receipt or add batches manually."
             else:
                 fresh_household(request)
-                rows = receipt_drafts(receipt_text)
-                if rows:
+                rows = [row for text in receipts for row in receipt_drafts(text)]
+                if len(rows) > MAX_RECEIPT_ROWS:
+                    receipt_error = "Use at most 40 grocery items at once. Scan fewer receipts."
+                elif rows:
                     review = ReceiptBatchFormSet(initial=rows)
                 else:
                     receipt_error = "No grocery rows found. Try a clearer photo or add batches manually."
