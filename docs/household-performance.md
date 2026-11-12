@@ -25,6 +25,8 @@ Before measurements preceded route cleanup. After measurements were repeated aft
 
 Measured fixed default-page budgets, enforced on all four fixture sizes: board **5**, picker **3**, Insights **5**. Board: session + user + membership snapshot + pagination count + six task rows. Picker: session + user + membership/workspace snapshot, without N+1 lookups. Insights: session + user + membership snapshot + priority grouping + type grouping; total derives from priority counts instead of a redundant count query. Explicit submitted workspace filters legitimately require a validation query; these default-page budgets do not cover extra user filters, CSRF/session writes or exports.
 
+**Dynamic tasks integration update:** the canonical board budget is now **8** queries (adds occurrence annotation, assignment prefetch, and roommate assignee choices for create/assign). Membership table reads on the board are **2** (selected-context snapshot + assignee queryset). Picker and Insights budgets are unchanged.
+
 `resolve_active_membership`/`require_household` and context processor reuse one request-local snapshot. The next HTTP request starts a new snapshot; revoked membership is re-read then. Task creation and approved AI persistence still fetch/lock the active actor inside their existing transaction. A regression revokes membership after form validation to prove the read snapshot cannot authorize a write. An error after revocation refreshes context before translating to onboarding/picker. Switching validates directly; invalid switch leaves even a stale session untouched.
 
 ## PNG and startup decision

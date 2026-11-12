@@ -45,8 +45,13 @@
             <a class="nav-link" href="{% url 'households:detail' %}">Household</a>
             <a class="nav-link" href="{% url 'expenses:home' %}">Expenses</a>
             <a class="nav-link" href="{% url 'ask-hestia' %}">Ask Hestia</a>
-            {% if active_household %}<span class="nav-household">{{ active_household.name }}</span>{% endif %}
-            <a class="nav-link" href="{% url 'households:list' %}">Switch household</a>
+            <span class="nav-household-actions">
+                {% if active_household %}
+                <span class="nav-household-name">{{ active_household.name }}</span>
+                <span class="nav-household-sep" aria-hidden="true"></span>
+                {% endif %}
+                <a class="nav-household-switch" href="{% url 'households:list' %}">Switch household</a>
+            </span>
             {% else %}
             <a class="nav-link" href="{% url 'home' %}">Home</a>
             <a class="nav-link" href="{% url 'accounts:signup' %}">Create account</a>

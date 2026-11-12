@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Edit {{ task.title }} | Hestia{% endblock %}
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/hestia.css' %}?v=20261111-1">
+<link rel="stylesheet" href="{% static 'css/demo.css' %}?v=20261111-1">
+<link rel="icon" type="image/svg+xml" href="{% static 'images/hestia-mark.svg' %}">
+{% endblock %}
+{% block content %}
+<div class="hf-board demo-page demo-narrow">
+    <header class="demo-heading">
+        <div>
+            <p class="demo-kicker">Dynamic task management</p>
+            <h1>Edit task</h1>
+            <p>Update details, reschedule the current occurrence, or reassign a roommate.</p>
+        </div>
+    </header>
+    <div class="demo-hero" aria-hidden="true"></div>
+
+    {% for message in messages %}<div class="hf-notice" role="status">{{ message }}</div>{% endfor %}
+
+    <section class="demo-panel" aria-labelledby="edit-heading">
+        <h2 id="edit-heading">{{ task.title }}</h2>
+        <p class="hf-intro">Household: {{ task.workspace.name }}{% if occurrence %} · Current status: {{ occurrence.get_state_display }}{% endif %}</p>
+        <form method="post" class="hf-create-form demo-form">
+            {% csrf_token %}
+            {% if form.errors %}<div class="hf-error-summary" role="alert"><strong>We couldn't save these changes.</strong>{{ form.non_field_errors }}</div>{% endif %}
+            {% for field in form %}{% include "tasks/forms/field.html" %}{% endfor %}
+            <div class="demo-actions" style="margin-top:1rem">
+                <button class="demo-button" type="submit">Save changes</button>
+                <a href="{% url 'task_forms:board' %}">Back to board</a>
+            </div>
+        </form>
+    </section>
+
+    {% if occurrence %}
+    <aside class="demo-panel demo-sage" aria-labelledby="quick-heading">
+        <p class="demo-kicker">Quick actions</p>
+        <h2 id="quick-heading">Reassign / reschedule</h2>
+        <p class="hf-intro">Adjust the current occurrence without changing the whole task definition.</p>
+        <form method="post" action="{% url 'task_forms:occurrence_reassign' occurrence.pk %}" class="demo-form">
+            {% csrf_token %}
+            <p>
+                <label for="quick_assignee">Assign to</label>
+                <select id="quick_assignee" name="assignee">
+                    <option value="">Keep current assignee</option>
+                    {% for member in roommates %}
+                    <option value="{{ member.pk }}">{{ member.display_name }}</option>
+                    {% endfor %}
+                </select>
+            </p>
+            <p>
+                <label for="quick_due">New due date</label>
+                <input id="quick_due" type="datetime-local" name="due_at"{% if occurrence.due_at %} value="{{ occurrence.due_at|date:'Y-m-d\\TH:i' }}"{% endif %}>
+            </p>
+            <button class="demo-button" type="submit">Apply</button>
+        </form>
+    </aside>
+    {% endif %}
+</div>
+{% endblock %}

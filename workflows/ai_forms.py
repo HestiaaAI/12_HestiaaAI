@@ -35,7 +35,11 @@ class ReviewTaskForm(TaskCreateForm):
     def __init__(self, *args, **kwargs):
         # TaskCreateForm assumes a workspace field. Reuse its model fields and
         # clean_title while keeping every relationship outside browser control.
+        kwargs.pop("membership", None)
         forms.ModelForm.__init__(self, *args, **kwargs)
+        # Board-only schedule fields should not appear in AI review.
+        self.fields.pop("due_at", None)
+        self.fields.pop("assignee", None)
 
 
 class ReviewFormSet(BaseFormSet):
