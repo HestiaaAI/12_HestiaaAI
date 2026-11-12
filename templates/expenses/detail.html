@@ -1,0 +1,18 @@
+{% extends 'expenses/base.html' %}
+{% load avatars %}{% load expense_tags %}
+{% block title %}{{ expense.title }}{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'expenses:overview' workspace.pk %}">{% icon 'back' %} Back to our shared tab</a>
+<div class="detail-layout">
+  <section class="card detail-summary peach receipt-ticket">
+    <span class="ticket-tab">Receipt</span><span class="category">{% icon 'receipt' %}{{ expense.get_category_display }}</span><h1>{{ expense.title }}</h1><strong class="big-money">{{ expense.amount_cents|usd }}</strong><p>{{ expense.paid_by.display_name }} paid on {{ expense.date|date:"F j, Y" }}</p>
+    {% if expense.note %}<p class="expense-note">{{ expense.note }}</p>{% endif %}
+    <small>Added by {{ expense.created_by.display_name }}{% if expense.version > 1 %} · Updated {{ expense.updated_at|date:"M j, g:i A" }}{% endif %}</small>
+    {% if can_edit %}<a class="button primary" href="{% url 'expenses:edit' workspace.pk expense.pk %}">Edit expense</a>{% endif %}
+  </section>
+  <section class="card white share-breakdown"><h2>Splitting with</h2><p class="muted">{% if expense.split_method == 'equal' %}Split equally, with every cent accounted for.{% else %}Custom amounts chosen for this purchase.{% endif %}</p>
+    {% for share in expense.shares.all %}<div class="receipt-share"><div class="share-row"><span class="avatar {% cycle 'sage' 'peach' 'cream' %}">{% face_avatar share.member %}</span><span>{{ share.member.display_name }}{% if not share.member.is_active %}<small>Former roommate</small>{% endif %}</span><strong>{{ share.amount_cents|usd }}</strong></div><div class="share-meter tone-{% cycle 'teal' 'peach' 'gold' %}" role="img" aria-label="{{ share.member.display_name }} share: {{ share.amount_cents|usd }}"><i style="width:{% widthratio share.amount_cents expense.amount_cents 100 %}%"></i></div></div>{% endfor %}
+    {% if can_edit %}<details class="delete-panel"><summary>Remove this expense</summary><p>This removes the purchase from everyone's balance. Confirmed payment records remain in the ledger.</p><form method="post" action="{% url 'expenses:delete' workspace.pk expense.pk %}">{% csrf_token %}<input type="hidden" name="version" value="{{ expense.version }}"><button class="button danger">Remove expense</button></form></details>{% endif %}
+  </section>
+</div>
+<section class="card white"><h2>The little paper trail</h2>{% for event in expense.events.all %}<p><strong>{{ event.actor.display_name }}</strong> · {{ event.get_kind_display }} · {{ event.created_at|date:"M j, g:i A" }}{% if event.text %}<br>{{ event.text }}{% endif %}</p>{% endfor %}<form method="post" action="{% url 'expenses:comment' workspace.pk expense.pk %}">{% csrf_token %}<label for="comment-text">Add a comment</label><textarea id="comment-text" name="text" required maxlength="500" rows="2"></textarea><button class="button primary">Post comment</button></form></section>{% endblock %}

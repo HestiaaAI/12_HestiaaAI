@@ -23,6 +23,7 @@ HF_BRAIN_DUMP_MAX_NEW_TOKENS = env.int("HF_BRAIN_DUMP_MAX_NEW_TOKENS", default=2
 HF_BRAIN_DUMP_SHOT_MODE = env("HF_BRAIN_DUMP_SHOT_MODE", default="few")
 
 INSTALLED_APPS = [
+    "expenses",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -160,3 +161,8 @@ LOGGING = deepcopy(DEFAULT_LOGGING)
 LOGGING['filters']['invitation_privacy'] = {'()':'households.invitation_privacy.InvitationLogFilter'}
 for invitation_log_handler in LOGGING['handlers'].values():
     invitation_log_handler.setdefault('filters', []).insert(0, 'invitation_privacy')
+
+# Optional Web Push keys belong in .env, never in source control.
+WEBPUSH_PUBLIC_KEY = env("WEBPUSH_PUBLIC_KEY", default="")
+WEBPUSH_PRIVATE_KEY = env("WEBPUSH_PRIVATE_KEY", default="")
+WEBPUSH_SUBJECT = env("WEBPUSH_SUBJECT", default="")

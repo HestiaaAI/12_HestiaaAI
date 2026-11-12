@@ -14,6 +14,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from expenses.notification_views import service_worker, manifest
 from django.contrib import admin
 from django.urls import include, path
 
@@ -25,6 +26,9 @@ urlpatterns = [
     path("groceries/", include("inventory.urls")),
     path("tasks/ask/", ask_hestia_page, name="ask-hestia"),
     path("households/", include("households.urls")),
+    path("hestia-worker.js",service_worker),
+    path("hestia.webmanifest",manifest),
+    path("expenses/", include("expenses.urls")),
     path("", HomePageView.as_view(), name="home"),
     path("accounts/", include("households.auth_urls")),
     path("accounts/", include("households.account_routes")),

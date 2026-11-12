@@ -76,3 +76,9 @@ README_old.md
 
 # Generated submission bundles
 dist/
+
+# Local web-push signing keys
+.local-secrets/
+
+# Private local setup checklist
+/user_input.md

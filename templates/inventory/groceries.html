@@ -7,7 +7,9 @@
         <div><p class="demo-kicker">{{ workspace.name }}</p><h1>Good things inside</h1>
         <p>See what’s on hand and what needs using soon.</p></div>
         <div class="demo-actions grocery-entry">
-            <a href="{% url 'groceries:scan' workspace.pk %}">Scan receipt</a>
+            <a href="{% url 'groceries:shopping' workspace.pk %}">Shopping lists</a>
+            <a href="{% url 'groceries:receipt-split' workspace.pk %}">Scan &amp; split receipt</a>
+            <a href="{% url 'groceries:scan' workspace.pk %}">Stock-only scan</a>
             <a class="demo-button" href="{% url 'groceries:add' workspace.pk %}">Add a batch</a>
         </div>
     </div>

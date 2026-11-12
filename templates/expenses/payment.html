@@ -1,0 +1,16 @@
+{% extends 'expenses/base.html' %}{% load expense_tags static %}
+{% block title %}Record a payment{% endblock %}
+{% block content %}
+<a class="back-link" href="{% url 'expenses:overview' workspace.pk %}">{% icon 'back' %} Back to our shared tab</a>
+<div class="page-heading"><div><h1>How much did you pay?</h1><p>Enter what you paid today. For example, paying $200 of $500 leaves $300 after your roommate confirms receipt.</p></div></div>
+<div class="editor card">
+  <div class="help-note peach">{% icon 'people' %}<p>Your roommate will confirm they received the payment. Then your balances update. Use your usual payment method to send the money.</p></div>
+  <form method="post">{% csrf_token %}{{ form.request_token }}{{ form.request_token.errors }}{{ form.non_field_errors }}
+    <div class="form-grid">{% for field in form.visible_fields %}<div class="field {% if field.name == 'note' %}full{% endif %}">{{ field.label_tag }}{{ field }}{{ field.errors }}</div>{% endfor %}</div>
+    <button class="button primary full-button">Send for confirmation</button>
+  </form>
+</div>
+{{ payment_amounts|json_script:"settlement-amounts" }}
+{% endblock %}
+
+{% block extra_js %}<script src="{% static 'expenses/settle.js' %}" defer></script>{% endblock %}

@@ -1,0 +1,6 @@
+{% extends 'expenses/base.html' %}{% load expense_tags static %}
+{% block content %}
+<div class="page-heading"><div><h1>Find your little home</h1><p>Choose a household to open its shared tab.</p></div></div>
+<div class="home-scene"><img src="{% static 'expenses/living-room.png' %}" alt="A welcoming shared living room"></div>
+<div class="household-list">{% for choice in choices %}<a class="card sage household-choice" href="{% url 'expenses:overview' choice.workspace_id %}">{% icon 'home' %}<div><h2>{{ choice.workspace.name }}</h2><p>Open shared expenses as {{ choice.display_name }}</p></div>{% icon 'arrow' %}</a>{% empty %}<section class="card peach empty"><h2>A home to share</h2><p>Join or create a household first. Its shared expenses will appear here once your membership is active.</p><a class="button primary" href="{% url 'home' %}">Go to Hestia home</a></section>{% endfor %}</div>
+{% endblock %}

@@ -1,8 +1,14 @@
 from django.conf import settings
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
 
+TEMPERATURE_VALIDATORS = [MinValueValidator(55), MaxValueValidator(85)]
+
+
 class Workspace(models.Model):
+    simplify_debts = models.BooleanField(default=True)
+
     """
     Represents one household or team using Hestia.
 
@@ -26,6 +32,8 @@ class Workspace(models.Model):
         max_length=50,
         default="America/Chicago",
     )
+
+    weather_location = models.CharField(max_length=80, blank=True)
 
     members = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -129,3 +137,29 @@ class HouseholdInvitation(models.Model):
 
     def __str__(self):
         return f'Household invitation {self.pk}'
+
+
+class ThermostatPreference(models.Model):
+    membership = models.OneToOneField(Membership, on_delete=models.CASCADE)
+    day_min = models.PositiveSmallIntegerField(validators=TEMPERATURE_VALIDATORS)
+    day_max = models.PositiveSmallIntegerField(validators=TEMPERATURE_VALIDATORS)
+    night_min = models.PositiveSmallIntegerField(validators=TEMPERATURE_VALIDATORS)
+    night_max = models.PositiveSmallIntegerField(validators=TEMPERATURE_VALIDATORS)
+
+    class Meta:
+        constraints = [
+            models.CheckConstraint(
+                condition=models.Q(day_min__lte=models.F("day_max")),
+                name="thermostat_day_range_order",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(night_min__lte=models.F("night_max")),
+                name="thermostat_night_range_order",
+            ),
+        ]
+
+
+class UserAvatar(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="hestia_avatar")
+    options = models.JSONField(default=dict)
+    updated_at = models.DateTimeField(auto_now=True)
