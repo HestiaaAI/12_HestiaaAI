@@ -80,5 +80,7 @@ dist/
 # Local web-push signing keys
 .local-secrets/
 
-# Private local setup checklist
+# Private operator setup checklist and local SMTP settings
 /user_input.md
+/hestia_config/settings/local_email.py
+/docs/superpowers/plans/2026-11-09-household-phases.mddocs/superpowers/plans/2026-11-09-household-phases.md
