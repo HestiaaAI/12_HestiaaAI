@@ -1,7 +1,33 @@
 /* Photos stay in this browser. Only reviewed text and explicit AI-name consent are submitted. */
 const count=document.querySelector('#id_receipts-TOTAL_FORMS');
-document.querySelector('#add-receipt')?.addEventListener('click',()=>{let total=Number(count.value);if(total>=5)return;let template=document.querySelector('#receipt-empty');document.querySelector('#receipt-inputs').insertAdjacentHTML('beforeend',template.innerHTML.replaceAll('__prefix__',String(total)));count.value=String(total+1);if(total+1>=5)document.querySelector('#add-receipt').disabled=true});
-document.addEventListener('click',async event=>{const button=event.target.closest('[data-read-photo]');if(!button)return;let card=button.closest('.receipt-input'),file=card.querySelector('[data-photo]').files[0],status=card.querySelector('[data-ocr-status]'),text=card.querySelector('textarea');const payer=card.querySelector('[name$="-payer"]');if(!payer.value){status.textContent='Choose who paid before scanning this receipt.';payer.reportValidity();return}if(!file||!['image/jpeg','image/png','image/webp'].includes(file.type)||file.size>10*1024*1024){status.textContent='Choose a JPEG, PNG or WebP photo under 10 MB.';return}if(!window.Tesseract){status.textContent='Scanner unavailable. Paste the receipt text instead.';return}button.disabled=true;let worker;try{status.textContent='Reading the photo on this device…';worker=await Tesseract.createWorker('eng',1,{logger:({status:s,progress})=>{if(s==='recognizing text')status.textContent='Reading… '+Math.round(progress*100)+'%'}});const result=await worker.recognize(file,{rotateAuto:true});if(result.data.text.length>16000)throw Error();text.value=result.data.text;resetBillReview(card);status.textContent='Photo read. Review the bill below, then tick to fill the totals.'}catch{status.textContent='Could not read this photo. Try a clearer image or paste the receipt text.'}finally{await worker?.terminate();button.disabled=false}});
+function addReceiptCard(){
+ const total=Number(count.value);if(total>=5)return null;
+ document.querySelector('#receipt-inputs').insertAdjacentHTML('beforeend',document.querySelector('#receipt-empty').innerHTML.replaceAll('__prefix__',String(total)));
+ count.value=String(total+1);document.querySelector('#add-receipt').disabled=total+1>=5;
+ return document.querySelector('#receipt-inputs').lastElementChild;
+}
+document.querySelector('#add-receipt')?.addEventListener('click',addReceiptCard);
+function validReceiptPhoto(file){return ['image/jpeg','image/png','image/webp'].includes(file.type)&&file.size<=10*1024*1024}
+async function readReceiptPhoto(card,file,worker){
+ const status=card.querySelector('[data-ocr-status]');
+ status.textContent='Reading '+file.name+'…';
+ const result=await worker.recognize(file,{rotateAuto:true});
+ if(!result.data.text.trim()||result.data.text.length>16000)throw Error('Unreadable receipt');
+ card.querySelector('textarea').value=result.data.text;resetBillReview(card);
+ status.textContent=file.name+' read. Choose who paid, review the bill, then tick to fill the totals.';
+}
+document.addEventListener('click',async event=>{
+ const button=event.target.closest('[data-read-photo]');if(!button)return;
+ const card=button.closest('.receipt-input'),file=card.querySelector('[data-photo]').files[0],status=card.querySelector('[data-ocr-status]');
+ const payer=card.querySelector('[name$="-payer"]');
+ if(!payer.value){status.textContent='Choose who paid before scanning this receipt.';payer.reportValidity();return}
+ if(!file||!validReceiptPhoto(file)){status.textContent='Choose a JPEG, PNG or WebP photo under 10 MB.';return}
+ if(!window.Tesseract){status.textContent='Scanner unavailable. Paste the receipt text instead.';return}
+ button.disabled=true;let worker;
+ try{worker=await Tesseract.createWorker('eng');await readReceiptPhoto(card,file,worker)}
+ catch{status.textContent='Could not read this photo. Try again or paste receipt text.'}
+ finally{try{await worker?.terminate()}finally{button.disabled=false}}
+});
 
 function normalizedBillText(text){
  const lines=text.split(/\r?\n/).map(line=>line.trim()).filter(Boolean),matches=lines.map(line=>line.match(/^(\d{1,3})[.)]?\s+(.+)$/)),numbers=matches.filter(Boolean).map(m=>Number(m[1]));

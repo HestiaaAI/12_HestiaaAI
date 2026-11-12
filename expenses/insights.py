@@ -81,6 +81,6 @@ def activity_rows(workspace):
         if payment.resolved_at and payment.status!='pending':
             member=payment.sender if payment.status=='cancelled' else payment.receiver
             rows.append({'id':f'payment-{payment.pk}-resolved','at':payment.resolved_at,'kind':f'payment_{payment.status}','actor_id':member.pk,'actor':member,
-                'verb':{'confirmed':'confirmed receiving a payment','rejected':'declined a payment','cancelled':'cancelled a payment record'}[payment.status],
+                'verb':{'confirmed':'confirmed a settlement payment','rejected':'declined a payment','cancelled':'cancelled a payment record'}[payment.status],
                 'title':f'{payment.sender.display_name} → {payment.receiver.display_name}','text':payment.note,'amount':payment.amount_cents,'current_value':False})
     return sorted(rows,key=lambda r:(r['at'],r['id']),reverse=True)

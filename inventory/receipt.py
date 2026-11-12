@@ -1,6 +1,8 @@
 """Extract draft grocery rows from common English receipt layouts."""
 
 import re
+from datetime import datetime, timedelta
+from django.utils import timezone
 
 MAX_RECEIPT_ROWS = 40
 MAX_RECEIPT_TEXT = 16000
@@ -18,13 +20,42 @@ QUANTITY_LINE = re.compile(
 COUNT_PREFIX = re.compile(r"^(\d{1,7})\s*[x×]\s+", re.I)
 
 
-def receipt_drafts(text):
+def receipt_purchase_date(text, fallback=None):
+    for match in re.finditer(r"(?:date|purchased)\s*:?\s*(\d{4}-\d{2}-\d{2}|\d{1,2}/\d{1,2}/\d{4})", text, re.I):
+        for fmt in ("%Y-%m-%d", "%m/%d/%Y"):
+            try:
+                return datetime.strptime(match.group(1), fmt).date()
+            except ValueError:
+                pass
+    return fallback or timezone.localdate()
+
+
+def stock_suggestion(name, purchased_on):
+    # Editable demo estimates for newly bought, unopened goods, not package dates.
+    rules = [
+        (r"frozen|ice cream|ice cubes", "freezer", 90),
+        (r"soap|detergent|skincare", "pantry", None),
+        (r"chicken|fish|salmon|beef|turkey|deli", "fridge", None),
+        (r"milk|paneer|yogurt|yoghurt|cheese|tofu|butter|cream", "fridge", 7),
+        (r"bread", "pantry", 7),
+        (r"egg", "fridge", 21),
+        (r"banana|apple|orange|carrot|pepper|spinach", "fridge", 7),
+        (r"rice|pasta|tea|coffee|lentil|chickpea|oats|sugar|salt|chocolate|cereal|flour|oil|cracker|biscuit|protein bars|breakfast supplies|sparkling water", "pantry", 180),
+    ]
+    for pattern, storage, days in rules:
+        if re.search(r"\b(?:" + pattern + r")(?:s)?\b", name, re.I):
+            return {"storage": storage, "expires_on": purchased_on + timedelta(days=days) if days is not None else None}
+    return {"storage": "", "expires_on": None}
+
+
+def receipt_drafts(text, purchased_on=None):
+    purchased_on = purchased_on or receipt_purchase_date(text)
     rows = []
     for line in text.splitlines():
         line = " ".join(line.split())
         detail = QUANTITY_LINE.match(line)
         if detail:
-            if rows and rows[-1]["quantity"] is None:
+            if rows:
                 quantity, unit = detail.groups()
                 unit = unit.lower()
                 rows[-1].update(
@@ -37,6 +68,10 @@ def receipt_drafts(text):
         if not price:
             continue
         name = re.sub(r"^\d{4,15}\s+", "", line[:price.start()]).strip(" -:.*")
+        inline = re.search(r"\s+(\d{1,4})\s*[x×@](?:\s*\$?\d+[.,]\d{2})?\s*$", name, re.I)
+        inline_quantity = inline.group(1) if inline else None
+        if inline:
+            name = name[:inline.start()].strip()
         count = COUNT_PREFIX.match(name)
         if count:
             name = name[count.end():]
@@ -46,7 +81,8 @@ def receipt_drafts(text):
             break
         rows.append({
             "name": name[:100],
-            "quantity": count.group(1) if count else None,
+            "quantity": count.group(1) if count else inline_quantity or "1",
             "unit": "item",
+            **stock_suggestion(name, purchased_on),
         })
     return rows
