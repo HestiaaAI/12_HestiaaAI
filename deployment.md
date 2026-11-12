@@ -2,6 +2,21 @@
 
 Use the accepted `household-member-management` branch. `main` and `/home/hestia12/12_HestiaaAI` remain the assignment/grading environment: do not update or migrate them for this product release.
 
+## Deployment script
+
+After this script is available in the server checkout, run in a PythonAnywhere Bash console:
+
+```sh
+cd /home/hestia12/hestia-household-invitations
+bash deploy.sh
+```
+
+`deploy.sh` fetches `household-member-management`, requires a clean checkout on that branch, refuses divergent history or changed requirements, backs up the product database/settings, fast-forwards, checks Django, migrates and collects static files. It stops on errors. Review dependency changes and install them using the manual steps below before retrying. It does not reset local changes or seed data. Coordinate a quiet period for migrations; the script lock prevents overlapping script runs, not user writes.
+
+When it succeeds, reload the app from the PythonAnywhere **Web** tab and perform the smoke checks below. If it fails after the checkout or schema changes, inspect the error before reloading; rollback requires the compatible code/database backup described below.
+
+For the initial installation, use the fetch/update commands below to obtain `deploy.sh` first. `bash deploy.sh --help` is safe locally; normal execution is specific to this production layout.
+
 ## Existing production layout
 
 - Site: https://hestia12.pythonanywhere.com/
