@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Thermostat planner | Hestia{% endblock %}
+{% block content %}
+<section class="demo-page demo-narrow">
+    <div class="demo-heading"><div><p class="demo-kicker">{{ workspace.name }}</p>
+        <h1>Thermostat planner</h1>
+        <p>Find a setting that balances roommate comfort with the weather outside.</p>
+    </div></div>
+    <a href="{% url 'households:detail' %}">Back to Household</a>
+    <section class="demo-panel demo-sage">
+        <h2>Suggested setting</h2>
+        <p>{{ responses }} of {{ roommate_count }} active roommates have shared their ranges.</p>
+        {% if workspace.weather_location and responses %}
+        <form method="get" action="{% url 'groceries:energy' workspace.pk %}" class="demo-actions">
+            <button class="demo-button" name="period" value="day">Daytime · current weather</button>
+            <button class="demo-button" name="period" value="night">Overnight · 10 PM–6 AM</button>
+        </form>
+        {% elif not workspace.weather_location %}
+        <p>{% if can_set_location %}Set a weather location below to get started.{% else %}Ask your household owner to set a weather location.{% endif %}</p>
+        {% else %}
+        <p>Save a comfort range below to get a suggestion.</p>
+        {% endif %}
+        {% if weather_error %}<p role="alert">{{ weather_error }}</p>{% endif %}
+        {% if recommendation %}
+        <div class="energy-result" aria-live="polite">
+            <h3>{{ recommendation.setpoint }}°F <small>{% if period == "night" %}Overnight{% else %}Daytime{% endif %}</small></h3>
+            <p>Outside in {{ recommendation.location }}:
+                {{ recommendation.outdoor_low|floatformat:1 }}{% if recommendation.outdoor_low != recommendation.outdoor_high %}–{{ recommendation.outdoor_high|floatformat:1 }}{% endif %}°F
+                <a href="https://open-meteo.com/">Open-Meteo</a>
+            </p>
+            {% if recommendation.outside_ranges %}
+            <p><strong>Compromise.</strong> The submitted ranges don’t all overlap. This setting minimizes the largest difference from any range.</p>
+            <ul>{% for row in recommendation.outside_ranges %}
+                <li>{{ row.name }} prefers {{ row.low }}–{{ row.high }}°F.</li>
+            {% endfor %}</ul>
+            {% else %}
+            <p>Within every submitted range. Among those settings, this has the smallest average difference from outdoor temperatures.</p>
+            {% endif %}
+            <p>Use this as a manual suggestion. Energy use depends on your home and equipment.</p>
+        </div>
+        {% endif %}
+    </section>
+    <form class="demo-panel demo-form" method="post" action="{% url 'groceries:energy' workspace.pk %}">
+        {% csrf_token %}
+        <h2>Your comfort ranges</h2>
+        <p>Enter the lowest and highest temperatures you’re comfortable with for each period.</p>
+        {{ preferences_form.as_p }}
+        <button class="demo-button" name="action" value="preferences">Save my ranges</button>
+    </form>
+    {% if can_set_location %}
+    <form class="demo-panel demo-form" method="post" action="{% url 'groceries:energy' workspace.pk %}">
+        {% csrf_token %}
+        <h2>Weather location</h2>
+        {{ location_form.as_p }}
+        <button class="demo-button" name="action" value="location">Save location</button>
+    </form>
+    {% endif %}
+</section>
+{% endblock %}

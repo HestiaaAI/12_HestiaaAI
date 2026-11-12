@@ -1,4 +1,4 @@
-{% load static %}
+{% load static avatars %}
 {% now "U" as ts %}
 <!DOCTYPE html>
 <html lang="en">
@@ -8,6 +8,9 @@
     {# Each child overrides this block to set its browser-tab title. #}
     <title>{% block title %}Hestia{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}?v={{ ts }}">
+    <link rel="manifest" href="/hestia.webmanifest">
+    <link rel="apple-touch-icon" href="/static/images/hestia-app-192.png">
+    <link rel="icon" type="image/svg+xml" href="{% static 'images/hestia-logo.svg' %}">
     <meta name="theme-color" content="#fcf7e6">
     {% block extra_css %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/demo.css' %}?v={{ ts }}">
@@ -17,11 +20,12 @@
     <header class="hestia-header">
         <div class="container header-inner">
             <a class="hestia-brand" href="{% block brand_url %}{% url 'home' %}{% endblock %}">
-                <span class="hestia-wordmark" aria-hidden="true">⌂</span><span><strong>hestia</strong></span>
+                <img class="hestia-logo" src="{% static 'images/hestia-logo.svg' %}" alt="Hestia"><span><strong>hestia</strong></span>
             </a>
             {% if user.is_authenticated %}
             <div class="header-actions">
-                <span class="logout-name">{{ user.get_full_name|default:user.get_username }}</span>
+                <a class="profile-avatar-link" href="{% url 'accounts:avatar' %}" aria-label="Edit your avatar"><span class="profile-avatar">{% face_avatar user %}</span><span class="logout-name">{{ user.get_full_name|default:user.get_username }}</span></a>
+                <a class="header-reminders" href="{% url 'expenses:reminders' %}" aria-label="Bill reminder inbox">🔔</a>
                 <form class="logout-form" method="post" action="{% url 'accounts:logout' %}">
                     {% csrf_token %}
                     <button type="submit">Sign out</button>
@@ -39,6 +43,7 @@
             <a class="nav-link" href="{% url 'task_forms:board' %}">Tasks</a>
             <a class="nav-link" href="{% url 'groceries:list' %}">Groceries</a>
             <a class="nav-link" href="{% url 'households:detail' %}">Household</a>
+            <a class="nav-link" href="{% url 'expenses:home' %}">Expenses</a>
             <a class="nav-link" href="{% url 'ask-hestia' %}">Ask Hestia</a>
             {% if active_household %}<span class="nav-household">{{ active_household.name }}</span>{% endif %}
             <a class="nav-link" href="{% url 'households:list' %}">Switch household</a>

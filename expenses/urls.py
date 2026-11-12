@@ -1,0 +1,35 @@
+from django.urls import path
+from . import views, purchase_views, insight_views, recurring_views, notification_views, settle_views
+
+app_name = "expenses"
+urlpatterns = [
+    path("<int:workspace_id>/payment-mode/",settle_views.payment_mode,name="payment-mode"),
+    path("<int:workspace_id>/settle/",settle_views.settle,name="settle"),
+    path("reminders/",notification_views.inbox,name="reminders"),
+    path("reminders/<int:reminder_id>/read/",notification_views.reminder_read,name="reminder-read"),
+    path("push/subscribe/",notification_views.subscribe,name="push-subscribe"),
+    path("push/unsubscribe/",notification_views.unsubscribe,name="push-unsubscribe"),
+    path("push/config/",notification_views.push_config,name="push-config"),
+    path("<int:workspace_id>/recurring/",recurring_views.recurring,name="recurring"),
+    path("<int:workspace_id>/recurring/<int:bill_id>/",recurring_views.recurring_action,name="recurring-action"),
+    path("<int:workspace_id>/trends/",insight_views.trends,name="trends"),
+    path("<int:workspace_id>/activity/",insight_views.activity,name="activity"),
+    path("<int:workspace_id>/shopping/<int:item_id>/check/",purchase_views.check_purchase,name="purchase-check"),
+    path("<int:workspace_id>/shopping/",purchase_views.purchase_list,name="purchases"),
+    path("<int:workspace_id>/shopping/<int:item_id>/join/",purchase_views.join_purchase,name="purchase-join"),
+    path("<int:workspace_id>/receipts/",purchase_views.receipt_upload,name="receipts"),
+    path("<int:workspace_id>/receipts/<int:draft_id>/",purchase_views.receipt_review,name="receipt-review"),
+    path("<int:workspace_id>/history/<int:member_id>/", views.person_history, name="person"),
+    path("<int:workspace_id>/export.csv", views.export_csv, name="export"),
+    path("<int:workspace_id>/<int:expense_id>/comment/", views.comment, name="comment"),
+    path("<int:workspace_id>/<int:expense_id>/restore/", views.restore, name="restore"),
+    path("", views.households, name="home"),
+    path("<int:workspace_id>/", views.overview, name="overview"),
+    path("<int:workspace_id>/members/", views.members, name="members"),
+    path("<int:workspace_id>/add/", views.expense_form, name="add"),
+    path("<int:workspace_id>/<int:expense_id>/", views.detail, name="detail"),
+    path("<int:workspace_id>/<int:expense_id>/edit/", views.expense_form, name="edit"),
+    path("<int:workspace_id>/<int:expense_id>/delete/", views.delete, name="delete"),
+    path("<int:workspace_id>/payments/add/", views.payment_form, name="payment"),
+    path("<int:workspace_id>/payments/<int:payment_id>/<str:action>/", views.payment_action, name="payment-action"),
+]

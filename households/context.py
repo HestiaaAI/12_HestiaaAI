@@ -7,7 +7,7 @@ class HouseholdRequired(Exception):
 
 
 def active_memberships(user):
-    rows = Membership.objects.select_related('workspace')
+    rows = Membership.objects.select_related('workspace', 'user__hestia_avatar')
     return rows.filter(user=user, is_active=True) if user.is_authenticated else rows.none()
 
 
@@ -41,7 +41,7 @@ def fresh_household(request):
     """Fresh access check immediately before an external provider invocation."""
     selected = require_household(request)
     try:
-        return Membership.objects.select_related('workspace').get(
+        return Membership.objects.select_related('workspace', 'user__hestia_avatar').get(
             pk=selected.pk, user=request.user, workspace_id=selected.workspace_id,
             is_active=True, user__is_active=True)
     except Membership.DoesNotExist:

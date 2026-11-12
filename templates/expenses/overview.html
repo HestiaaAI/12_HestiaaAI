@@ -1,0 +1,66 @@
+{% extends 'expenses/base.html' %}
+{% load avatars %}{% load static expense_tags %}
+{% block content %}
+{% include 'expenses/tabs.html' %}
+<div class="splitter-heading"><div><p class="splitter-kicker">{{ workspace.name }}</p><h1>Bill splitter<span>.</span></h1><p>A little give. A little take. All shared fairly.</p></div><a class="manual-expense-add" href="{% url 'expenses:add' workspace.pk %}" aria-label="Add an expense manually" title="Add expense">＋</a></div>
+{% for message in messages %}<p class="notice" role="status">{{ message }}</p>{% endfor %}
+
+{% include 'expenses/settle_summary.html' %}
+<div class="splitter-top-grid">
+<section class="bill-feature"><div class="bill-feature-copy"><span class="bill-label">Shared this month</span><strong>{{ month_total|usd }}</strong><p>Little costs of living together.</p><a class="button primary" href="{% url 'expenses:add' workspace.pk %}">Split now {% icon 'arrow' %}</a></div><div class="floating-roommates"><span>Split with</span><div class="avatar-rail">{% for person in housemates %}<a href="{% url 'expenses:person' workspace.pk person.pk %}" title="{{ person.display_name }}" aria-label="History with {{ person.display_name }}"><span class="avatar {% cycle 'sage' 'peach' 'cream' %}">{% face_avatar person %}</span></a>{% endfor %}<a class="rail-plus" aria-label="View household members" href="{% url 'expenses:members' workspace.pk %}">＋</a></div></div></section>
+<section class="balance-companion"><div class="summary-triplet"><div><small>You owe</small><strong>{{ owe|usd }}</strong></div><div><small>You’re owed</small><strong>{{ owed|usd }}</strong></div><div><small>Your net</small><strong>{{ balance|usd }}</strong></div></div><p class="muted">Pending payments stay out of your balance until the receiver confirms.</p><div class="roommate-balances">{% for row in pair_rows %}<a class="roommate-bubble {% if row.balance < 0 %}negative{% endif %}" href="{% url 'expenses:person' workspace.pk row.member.pk %}"><span class="avatar {% cycle 'sage' 'peach' 'cream' %}">{% face_avatar row.member %}</span><strong>{{ row.member.display_name }}</strong><small>{% if row.balance > 0 %}Owes you {{ row.amount|usd }}{% elif row.balance < 0 %}You owe {{ row.amount|usd }}{% else %}All square{% endif %}</small></a>{% endfor %}</div></section>
+</div>
+<div class="overview-grid splitter-ledger-grid">
+  <div class="left-column">
+
+    <section class="balance-card">
+      <div class="balance-top"><span>{% icon 'wallet' %} Your shared balance</span><span class="tiny-pill">USD</span></div>
+      {% if balance > 0 %}<h2>{{ balance_abs|usd }} <small>to get back</small></h2>
+      {% elif balance < 0 %}<h2>{{ balance_abs|usd }} <small>to settle up</small></h2>
+      {% else %}<h2>All settled.</h2>{% endif %}
+      <p>{% if balance > 0 %}You covered a little extra for your home.{% elif balance < 0 %}A little settling up keeps things easy.{% else %}Your household balance is settled.{% endif %}</p>
+      <a class="button primary" href="{% url 'expenses:settle' workspace.pk %}">Settle up {% icon 'arrow' %}</a>
+      <small>Balances update once the receiver confirms.</small>
+    </section>
+    <div class="stat-pair">
+      <section class="stat sage"><span>This month, together</span><strong>{{ month_total|usd }}</strong><small>Total household spending</small></section>
+      <section class="stat white"><span>You picked up</span><strong>{{ your_paid|usd }}</strong><small>Purchases you paid for this month</small></section>
+    </div>
+    {% if transfers %}
+    <section class="card gentle">
+      <h2>A simple way to settle</h2><p class="muted">These suggestions balance the whole household.</p>
+      {% for transfer in transfers %}
+      <div class="transfer"><span class="avatar tone-{% cycle 'sage' 'peach' 'cream' %}">{% face_avatar transfer.sender %}</span><div><strong>{{ transfer.sender.display_name }} <span class="muted">to</span> {{ transfer.receiver.display_name }}</strong><span>{{ transfer.amount_cents|usd }}</span></div>
+        {% if transfer.sender_id == actor.pk %}<a class="small-link" href="{% url 'expenses:payment' workspace.pk %}?receiver={{ transfer.receiver_id }}&amp;amount={{ transfer.amount_cents|dollars }}" data-payment-cents="{{ transfer.amount_cents }}">Record</a>{% endif %}
+      </div>
+      {% endfor %}
+    </section>
+    {% endif %}
+  </div>
+  <div class="right-column">
+    <section class="expenses-section">
+      <div id="activity" class="section-heading"><h2>Activity</h2><span class="section-label">{{ page.paginator.count }} events</span></div>
+      <p class="muted">Purchases, changes and payment confirmations, all in one place.</p>
+      <p><a class="small-link" href="{% url 'expenses:export' workspace.pk %}">Download CSV</a> · <button type="button" class="small-link" data-print>Print / save PDF</button></p>
+      {% include 'expenses/activity_feed.html' %}
+    </section>
+    <details class="card white"><summary>Original vs simplified debts</summary><p class="muted">Original debts offset each pair’s shared purchases. Simplified suggestions preserve each person’s total balance.</p><h3>Original debts</h3>{% for transfer in direct %}<p class="flow-transfer">{{ transfer.sender.display_name }} → {{ transfer.receiver.display_name }} <strong>{{ transfer.amount_cents|usd }}</strong></p>{% empty %}<p>All square.</p>{% endfor %}<h3>Simplified payments</h3>{% for transfer in transfers %}<p class="flow-transfer">{{ transfer.sender.display_name }} → {{ transfer.receiver.display_name }} <strong>{{ transfer.amount_cents|usd }}</strong></p>{% empty %}<p>All square.</p>{% endfor %}</details>
+    <section class="payments-section">
+      <div class="section-heading"><h2>A little settling up</h2>{% icon 'leaf' %}</div>
+      {% for payment in payments %}
+      <article class="payment-card">
+        <div class="row"><span class="avatar {% if payment.status == 'confirmed' %}sage{% else %}peach{% endif %}">{% face_avatar payment.sender %}</span><div class="payment-info"><strong>{{ payment.sender.display_name }} to {{ payment.receiver.display_name }}</strong><small>{{ payment.created_at|date:"M j" }}{% if payment.note %} · {{ payment.note }}{% endif %}</small></div><b>{{ payment.amount_cents|usd }}</b></div>
+        <span class="status {{ payment.status }}">{% if payment.status == 'pending' %}{% icon 'clock' %}{% else %}{% icon 'check' %}{% endif %}{{ payment.get_status_display }}</span>
+        {% if payment.status == 'pending' %}
+          {% if payment.receiver_id == actor.pk %}<div class="payment-actions">
+            <form method="post" action="{% url 'expenses:payment-action' workspace.pk payment.pk 'confirm' %}">{% csrf_token %}<button class="button primary">I received this</button></form>
+            <form method="post" action="{% url 'expenses:payment-action' workspace.pk payment.pk 'reject' %}">{% csrf_token %}<button class="button quiet">Decline</button></form></div>
+          {% elif payment.sender_id == actor.pk %}<form method="post" action="{% url 'expenses:payment-action' workspace.pk payment.pk 'cancel' %}">{% csrf_token %}<button class="small-link">Cancel record</button></form>{% endif %}
+        {% endif %}
+      </article>
+      {% empty %}<p class="empty-inline">Payment records will appear here when someone settles up.</p>{% endfor %}
+    </section>
+  </div>
+</div>
+{% if deleted_expenses %}<details class="card white"><summary>Recently removed · undo</summary>{% for expense in deleted_expenses %}<p>{{ expense.title }} · {{ expense.amount_cents|usd }}</p><form method="post" action="{% url 'expenses:restore' workspace.pk expense.pk %}">{% csrf_token %}<input type="hidden" name="version" value="{{ expense.version }}"><button class="button outlined">Restore expense</button></form>{% endfor %}</details>{% endif %}
+{% endblock %}
