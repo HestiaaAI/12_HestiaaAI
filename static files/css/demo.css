@@ -17,7 +17,7 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .hestia-wordmark { display: inline-grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: 38% 38% 42% 42%; background: var(--demo-sage); color: var(--hestia-primary-dark); font-size: 1.35rem; }
 .navigation { background: var(--hestia-background); border-color: var(--hestia-border); }
 .navigation .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
-.navigation .nav-link { border-radius: 1rem; color: var(--hestia-primary-dark); padding: .65rem .95rem; }
+.navigation .nav-link { border-radius: 1rem; border-bottom: 0; color: var(--hestia-primary-dark); padding: .65rem .95rem; line-height: 1; }
 .navigation .nav-link[aria-current="page"], .navigation .nav-link:hover { background: var(--demo-sage); }
 .demo-more { margin-inline-start: auto; position: relative; }
 .demo-more summary { cursor: pointer; padding: .55rem; }
@@ -79,7 +79,36 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .hf-board .demo-hero { width: 100%; margin-bottom: 1.5rem; }
 .hf-board .hf-create-panel, .hf-board .hf-filter-panel, .hf-board .hf-task-card { background: #fffdf8; border-color: #dddcc9; border-radius: 1.25rem; }
 .hf-board .hf-button:hover { background: #28534e; }
-.nav-household { color: #4f6258; padding: .5rem; }
+.nav-household-actions {
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .65rem 0;
+    font-size: .92rem;
+    font-weight: 600;
+    line-height: 1;
+}
+.nav-household-name {
+    max-width: 9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--hestia-muted);
+}
+.nav-household-sep {
+    width: 1px;
+    height: .85em;
+    background: #9baaa0;
+    flex: 0 0 auto;
+}
+.nav-household-switch {
+    color: var(--hestia-primary-dark);
+    text-decoration: none;
+}
+.nav-household-switch:hover {
+    text-decoration: underline;
+}
 
 .household-members li { flex: 1 1 15rem; min-width: 0; overflow-wrap: anywhere; align-content: start; }
 .household-members details { margin-top: .55rem; }
@@ -97,3 +126,167 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .receipt-item-heading{font-size:1rem;line-height:1.5;margin:0 0 20px;overflow-wrap:anywhere}.receipt-review-line{overflow-wrap:anywhere}.receipt-review-line p{max-width:100%}.recurring-bills form button{max-width:100%;white-space:normal}
 
 .hestia-logo{width:64px;height:64px;object-fit:contain;flex-shrink:0}@media(max-width:600px){.hestia-logo{width:52px;height:52px}}
+
+/* Little Home Club — Tasks surface (Anushka) */
+.hc-tasks {
+    max-width: 26rem;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.1rem;
+    padding: 0.35rem 0 5.5rem;
+}
+.hc-tasks .demo-hero {
+    height: clamp(8.5rem, 34vw, 12.5rem);
+    margin: 0;
+}
+.hc-tasks-heading h1 {
+    font-size: clamp(2.1rem, 9vw, 2.85rem);
+    line-height: 1.05;
+    letter-spacing: -0.055em;
+    margin: 0.2rem 0 0.35rem;
+    color: var(--hestia-text);
+}
+.hc-tasks-heading p { margin: 0; color: var(--hestia-muted); }
+.hc-day-strip {
+    display: flex;
+    gap: 0.45rem;
+    overflow-x: auto;
+    padding: 0.15rem 0.1rem 0.35rem;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+.hc-day {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    min-width: 3.15rem;
+    display: grid;
+    place-items: center;
+    gap: 0.2rem;
+    padding: 0.55rem 0.4rem;
+    border-radius: 1.15rem;
+    text-decoration: none;
+    color: var(--hestia-muted);
+    font-weight: 650;
+}
+.hc-day span { font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.hc-day strong {
+    display: grid;
+    place-items: center;
+    width: 2.1rem;
+    height: 2.1rem;
+    border-radius: 50%;
+    font-size: 1rem;
+}
+.hc-day[aria-current="date"],
+.hc-day.is-today strong {
+    background: var(--hestia-primary);
+    color: #fffdf8;
+}
+.hc-day:hover { background: color-mix(in srgb, var(--demo-sage) 70%, white); }
+.hc-task-list { display: grid; gap: 0.75rem; }
+.hc-task-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.75rem;
+    align-items: center;
+    border-radius: 1.35rem;
+    padding: 1rem 1rem 1rem 1.15rem;
+    color: var(--hestia-text);
+    text-decoration: none;
+}
+.hc-task-card.demo-peach { background: var(--demo-peach); }
+.hc-task-card.demo-sage { background: var(--demo-sage); }
+.hc-task-card.demo-paper { background: var(--demo-paper); border: 1px solid var(--hestia-border); }
+.hc-task-card .demo-kicker { margin: 0 0 0.25rem; color: color-mix(in srgb, var(--hestia-text) 72%, transparent); }
+.hc-task-card h3 { margin: 0; font-size: 1.12rem; letter-spacing: -0.02em; }
+.hc-task-card h3 a { color: inherit; text-decoration: none; }
+.hc-task-meta { margin: 0.45rem 0 0; font-size: 0.9rem; color: var(--hestia-muted); }
+.hc-complete {
+    width: 2.35rem;
+    height: 2.35rem;
+    border-radius: 50%;
+    border: 2px solid color-mix(in srgb, var(--hestia-primary-dark) 45%, white);
+    background: transparent;
+    color: var(--hestia-primary-dark);
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    padding: 0;
+    font-size: 1rem;
+    line-height: 1;
+}
+.hc-complete:hover,
+.hc-complete.is-done {
+    background: var(--hestia-primary-dark);
+    border-color: var(--hestia-primary-dark);
+    color: white;
+}
+.hc-task-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    margin-top: 0.65rem;
+}
+.hc-task-actions a,
+.hc-task-actions button {
+    font: inherit;
+    font-size: 0.8rem;
+    color: var(--hestia-primary-dark);
+    background: transparent;
+    border: 0;
+    padding: 0.25rem 0.4rem;
+    border-radius: 0.55rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+.hc-task-actions a:hover,
+.hc-task-actions button:hover { background: color-mix(in srgb, white 55%, transparent); }
+.hc-create details > summary {
+    cursor: pointer;
+    list-style: none;
+    font-weight: 750;
+    color: var(--hestia-primary-dark);
+}
+.hc-create details > summary::-webkit-details-marker { display: none; }
+.hc-filters-panel { margin-top: 0.35rem; }
+.hc-tabbar {
+    position: fixed;
+    left: 50%;
+    bottom: 0.75rem;
+    transform: translateX(-50%);
+    width: min(24.5rem, calc(100% - 1.5rem));
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.25rem;
+    padding: 0.45rem;
+    border-radius: 1.35rem;
+    background: color-mix(in srgb, var(--demo-paper) 92%, white);
+    border: 1px solid var(--hestia-border);
+    box-shadow: 0 0.55rem 1.6rem #253f3722;
+    z-index: 20;
+}
+.hc-tabbar a,
+.hc-tabbar span {
+    display: grid;
+    place-items: center;
+    gap: 0.15rem;
+    padding: 0.55rem 0.35rem;
+    border-radius: 1rem;
+    text-decoration: none;
+    color: var(--hestia-muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+}
+.hc-tabbar svg { width: 1.25rem; height: 1.25rem; }
+.hc-tabbar a[aria-current="page"] {
+    background: var(--demo-sage);
+    color: var(--hestia-primary-dark);
+}
+.hc-tabbar .is-soon { opacity: 0.55; }
+@media (min-width: 48rem) {
+    .hc-tasks { max-width: 42rem; padding-bottom: 2rem; }
+    .hc-tabbar { display: none; }
+}
+
+.hc-secondary-links { margin: 0; font-size: .9rem; }
+.hc-secondary-links a { color: var(--hestia-primary-dark); }
