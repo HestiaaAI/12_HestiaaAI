@@ -33,14 +33,14 @@
     <nav class="hc-day-strip" aria-label="Choose a day">
         {% for day in day_strip %}
         <a class="hc-day{% if not day_filter_active and day.date == today %} is-today{% endif %}"
-           href="?{% if filter_query %}{{ filter_query }}&amp;{% endif %}day={{ day.iso }}"
+           href="?{% if filter_query_no_day %}{{ filter_query_no_day }}&amp;{% endif %}day={{ day.iso }}"
            {% if day_filter_active and day.selected %}aria-current="date"{% endif %}>
             <span>{{ day.label }}</span>
             <strong>{{ day.number }}</strong>
         </a>
         {% endfor %}
         {% if day_filter_active %}
-        <a class="hc-day" href="{% url 'task_forms:board' %}{% if filter_query %}?{{ filter_query }}{% endif %}">All</a>
+        <a class="hc-day" href="{% url 'task_forms:board' %}{% if filter_query_no_day %}?{{ filter_query_no_day }}{% endif %}">All</a>
         {% endif %}
     </nav>
 

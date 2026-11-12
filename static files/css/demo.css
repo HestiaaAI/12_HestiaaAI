@@ -17,7 +17,7 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .hestia-wordmark { display: inline-grid; place-items: center; width: 2.35rem; height: 2.35rem; border-radius: 38% 38% 42% 42%; background: var(--demo-sage); color: var(--hestia-primary-dark); font-size: 1.35rem; }
 .navigation { background: var(--hestia-background); border-color: var(--hestia-border); }
 .navigation .nav-links { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; }
-.navigation .nav-link { border-radius: 1rem; color: var(--hestia-primary-dark); padding: .65rem .95rem; }
+.navigation .nav-link { border-radius: 1rem; border-bottom: 0; color: var(--hestia-primary-dark); padding: .65rem .95rem; line-height: 1; }
 .navigation .nav-link[aria-current="page"], .navigation .nav-link:hover { background: var(--demo-sage); }
 .demo-more { margin-inline-start: auto; position: relative; }
 .demo-more summary { cursor: pointer; padding: .55rem; }
@@ -79,7 +79,36 @@ body { background: var(--hestia-background); color: var(--hestia-text); font-fam
 .hf-board .demo-hero { width: 100%; margin-bottom: 1.5rem; }
 .hf-board .hf-create-panel, .hf-board .hf-filter-panel, .hf-board .hf-task-card { background: #fffdf8; border-color: #dddcc9; border-radius: 1.25rem; }
 .hf-board .hf-button:hover { background: #28534e; }
-.nav-household { color: #4f6258; padding: .5rem; }
+.nav-household-actions {
+    margin-inline-start: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: .65rem;
+    padding: .65rem 0;
+    font-size: .92rem;
+    font-weight: 600;
+    line-height: 1;
+}
+.nav-household-name {
+    max-width: 9rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--hestia-muted);
+}
+.nav-household-sep {
+    width: 1px;
+    height: .85em;
+    background: #9baaa0;
+    flex: 0 0 auto;
+}
+.nav-household-switch {
+    color: var(--hestia-primary-dark);
+    text-decoration: none;
+}
+.nav-household-switch:hover {
+    text-decoration: underline;
+}
 
 .household-members li { flex: 1 1 15rem; min-width: 0; overflow-wrap: anywhere; align-content: start; }
 .household-members details { margin-top: .55rem; }

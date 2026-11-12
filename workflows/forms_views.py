@@ -115,6 +115,9 @@ class TaskBoardView(ListView):
         params = self.request.GET.copy()
         params.pop("page", None)
         context["filter_query"] = params.urlencode()
+        params_no_day = params.copy()
+        params_no_day.pop("day", None)
+        context["filter_query_no_day"] = params_no_day.urlencode()
         selected_day = getattr(self, "selected_day", self._selected_day())
         context["selected_day"] = selected_day
         context["day_strip"] = board_day_strip(selected_day)
