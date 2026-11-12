@@ -5,6 +5,7 @@
 <section class="demo-page demo-narrow">
     <div class="demo-heading"><div><p class="demo-kicker">{{ workspace.name }}</p>
     <h1>Scan a receipt</h1><p>Review the groceries before adding them to your household.</p></div></div>
+    <nav class="demo-actions" aria-label="Receipt scan mode"><a href="{% url 'groceries:shopping' workspace.pk %}">Shopping checklist</a><a href="{% url 'groceries:receipt-split' workspace.pk %}">Match shopping list &amp; split costs</a><span>Current mode: add groceries to stock</span></nav>
     {% if receipt_error %}<p role="alert">{{ receipt_error }}</p>{% endif %}
     {% if review %}
     <form class="demo-form" method="post">

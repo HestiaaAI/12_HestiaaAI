@@ -31,6 +31,7 @@
         <p>Your access to {{ workspace.name }} ends. Shared records remain. Your account and other household memberships remain. If you are the only active owner, transfer ownership first.</p>
         <form method="post" action="{% url 'households:leave' %}">{% csrf_token %}<input type="hidden" name="confirm" value="yes"><button class="demo-button" type="submit">Confirm leave</button></form>
     </details></section>
+    <p><a class="demo-button" href="{% url 'groceries:energy' workspace.pk %}">Thermostat planner</a> <a class="demo-button" href="{% url 'expenses:overview' workspace.pk %}">Shared expenses</a></p>
     <div class="demo-grid">
         <a class="demo-panel demo-tile" href="{% url 'task_forms:board' %}"><strong>Tasks</strong><span>See household responsibilities</span></a>
         <a class="demo-panel demo-tile" href="{% url 'groceries:workspace' workspace.pk %}"><strong>Groceries</strong><span>See what’s in stock</span></a>
