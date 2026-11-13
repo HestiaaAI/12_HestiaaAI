@@ -2,6 +2,7 @@
 from collections import Counter
 from datetime import date, timedelta
 from decimal import Decimal
+from math import ceil
 from random import Random
 from statistics import mean, quantiles
 
@@ -70,12 +71,16 @@ def dashboard(request):
         {"day": day, "count": count, "bar": 100 * count / peak}
         for day, count in sorted(daily_counts.items())
     ]
+    latency_limit = ceil(max(max(feature["mean_latency"], feature["p95"]) for feature in features))
     for feature, input_type in zip(features, INPUTS):
+        feature["mean_position"] = 100 * feature["mean_latency"] / latency_limit
+        feature["p95_position"] = 100 * feature["p95"] / latency_limit
         feature["input"] = input_type
         feature["share"] = 100 * feature["count"] / overall["count"]
         feature["cost_share"] = 100 * feature["cost"] / overall["cost"]
     return render(request, "analytics/dashboard.html", {
         "days": days, "overall": overall, "features": features, "daily": daily,
         "start": daily[0]["day"], "end": END_DATE,
+        "latency_limit": latency_limit, "latency_midpoint": latency_limit / 2,
         "peak": peak, "peak_day": peak_day, "input_rate": INPUT_RATE, "output_rate": OUTPUT_RATE,
     })

@@ -14,6 +14,46 @@
 <div><dt>Failure rate</dt><dd>{{ overall.failure_rate|floatformat:1 }}%</dd></div>
 <div><dt>Estimated cost</dt><dd>&#36;{{ overall.cost|floatformat:4 }}</dd></div>
 </dl>
+<div class="monitor-comparisons">
+    <section class="monitor-card" aria-labelledby="latency-comparison">
+        <h2 id="latency-comparison">Response time by feature</h2>
+        <p class="monitor-legend"><span class="legend-mean">Mean</span><span class="legend-p95">P95</span></p>
+        <div class="monitor-chart">
+            {% for row in features %}
+            <div class="monitor-chart-row">
+                <span class="monitor-chart-label">{{ row.label }}</span>
+                <div class="monitor-track latency-track" aria-hidden="true">
+                    <span class="latency-mean" style="left: {{ row.mean_position|floatformat:'2u' }}%"></span>
+                    <span class="latency-p95" style="left: {{ row.p95_position|floatformat:'2u' }}%"></span>
+                </div>
+                <span class="monitor-chart-values"><span class="monitor-sr-only">Mean </span>{{ row.mean_latency|floatformat:2 }} s <span aria-hidden="true">/</span> <span class="monitor-sr-only">P95 </span>{{ row.p95|floatformat:2 }} s</span>
+            </div>
+            {% endfor %}
+            <div class="monitor-chart-row monitor-scale" aria-hidden="true">
+                <span></span><div><span>0</span><span>{{ latency_midpoint|floatformat:"-1" }}</span><span>{{ latency_limit }} s</span></div>
+            </div>
+        </div>
+    </section>
+    <section class="monitor-card" aria-labelledby="spend-comparison">
+        <h2 id="spend-comparison">Usage share vs. spend share</h2>
+        <p class="monitor-legend"><span class="legend-usage">Requests</span><span class="legend-spend">Estimated spend</span></p>
+        <div class="monitor-chart">
+            {% for row in features %}
+            <div class="monitor-chart-row">
+                <span class="monitor-chart-label">{{ row.label }}</span>
+                <div class="monitor-track spend-track" aria-hidden="true">
+                    <span class="spend-usage" style="width: {{ row.share|floatformat:'2u' }}%"></span>
+                    <span class="spend-cost" style="width: {{ row.cost_share|floatformat:'2u' }}%"></span>
+                </div>
+                <span class="monitor-chart-values"><span class="monitor-sr-only">Requests </span>{{ row.share|floatformat:0 }}% <span aria-hidden="true">/</span> <span class="monitor-sr-only">Estimated spend </span>{{ row.cost_share|floatformat:0 }}%</span>
+            </div>
+            {% endfor %}
+            <div class="monitor-chart-row monitor-scale" aria-hidden="true">
+                <span></span><div><span>0%</span><span>50%</span><span>100%</span></div>
+            </div>
+        </div>
+    </section>
+</div>
 <div class="monitor-grid">
 <section class="monitor-card">
 <h2>System performance</h2>
