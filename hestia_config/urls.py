@@ -18,11 +18,13 @@ from expenses.notification_views import service_worker, manifest
 from django.contrib import admin
 from django.urls import include, path
 
+from analytics.dashboard import dashboard as ai_analytics_dashboard
 from api.views import product_compare_page
 from hestia_config.views import HomePageView
 from workflows.ask_hestia_views import ask_hestia_page
 
 urlpatterns = [
+    path("analytics/ai/", ai_analytics_dashboard, name="ai-analytics"),
     path("groceries/", include("inventory.urls")),
     path("tasks/ask/", ask_hestia_page, name="ask-hestia"),
     path("households/", include("households.urls")),

@@ -1,0 +1,29 @@
+.ai-monitor { padding: 2rem 0 3rem; color: #233f36; }
+.monitor-head { display: flex; justify-content: space-between; align-items: end; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.35rem; }
+.ai-monitor h1 { margin: 0; font-size: clamp(2rem, 5vw, 3rem); }
+.ai-monitor h2 { margin: 0 0 .6rem; font-size: 1.25rem; }
+.monitor-head p { margin: .35rem 0 0; }
+.monitor-head nav { display: flex; gap: .3rem; border-radius: .8rem; background: #e3eae0; padding: .25rem; }
+.monitor-head nav a { padding: .45rem .65rem; border-radius: .55rem; color: #233f36; text-decoration: none; }
+.monitor-head nav a[aria-current] { background: #285a4c; color: white; }
+.monitor-summary, .monitor-grid { display: grid; gap: .8rem; }
+.monitor-summary { grid-template-columns: repeat(4,minmax(0,1fr)); margin: 0 0 .8rem; }
+.monitor-summary div { background: #e3eae0; border-radius: 1rem; padding: .85rem 1rem; }
+.monitor-summary dt { font-size: .85rem; }
+.monitor-summary dd { margin: .2rem 0 0; font-weight: 750; font-size: 1.45rem; }
+.monitor-grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+.monitor-card { background: #fffdf7; border: 1px solid #d9e3d9; border-radius: 1rem; padding: .85rem; min-width: 0; }
+.monitor-card table { width: 100%; border-collapse: collapse; font-size: .82rem; font-variant-numeric: tabular-nums; }
+.monitor-card caption, .monitor-trend figcaption { text-align: left; font-size: .85rem; font-weight: 700; margin-bottom: .45rem; }
+.monitor-card th, .monitor-card td { text-align: left; padding: .52rem .2rem; border-bottom: 1px solid #e0e6dc; }
+.monitor-card td { white-space: nowrap; }
+.monitor-note { margin: .75rem 0 0; font-size: .8rem; }
+.monitor-trend { margin: 0; }
+.monitor-bars { height: 76px; display: flex; align-items: end; gap: 2px; border-bottom: 1px solid #6d877c; }
+.monitor-bars span { flex: 1; background: #46796b; border-radius: 2px 2px 0 0; }
+.monitor-axis, .monitor-mix li { display: flex; justify-content: space-between; gap: .5rem; font-size: .8rem; }
+.monitor-axis { margin-top: .2rem; }
+.monitor-mix { list-style: none; margin: .45rem 0 0; padding: 0; }
+.monitor-mix li { padding: .2rem 0; border-bottom: 1px solid #e0e6dc; }
+@media (max-width: 900px) { .monitor-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .monitor-summary { grid-template-columns: repeat(2,minmax(0,1fr)); } }

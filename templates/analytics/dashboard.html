@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}AI Analytics | Hestia{% endblock %}
+{% block extra_css %}<link rel="stylesheet" href="{% static 'css/ai-analytics.css' %}">{% endblock %}
+{% block content %}
+<section class="ai-monitor">
+<header class="monitor-head">
+<div><h1>AI Analytics</h1><p>Simulated requests · {{ start|date:"M j" }}–{{ end|date:"M j, Y" }}</p></div>
+<nav aria-label="Reporting window"><a href="?days=7" {% if days == 7 %}aria-current="true"{% endif %}>Last 7 days</a><a href="?days=30" {% if days == 30 %}aria-current="true"{% endif %}>Last 30 days</a></nav>
+</header>
+<dl class="monitor-summary">
+<div><dt>Requests</dt><dd>{{ overall.count }}</dd></div>
+<div><dt>Mean latency</dt><dd>{{ overall.mean_latency|floatformat:2 }} s</dd></div>
+<div><dt>Failure rate</dt><dd>{{ overall.failure_rate|floatformat:1 }}%</dd></div>
+<div><dt>Estimated cost</dt><dd>&#36;{{ overall.cost|floatformat:4 }}</dd></div>
+</dl>
+<div class="monitor-grid">
+<section class="monitor-card">
+<h2>System performance</h2>
+<table><caption>Latency and failures by feature</caption>
+<thead><tr><th scope="col">Feature</th><th scope="col">Mean</th><th scope="col">P95</th><th scope="col">Failed</th></tr></thead>
+<tbody>{% for row in features %}<tr><th scope="row">{{ row.label }}</th><td>{{ row.mean_latency|floatformat:2 }} s</td><td>{{ row.p95|floatformat:2 }} s</td><td>{{ row.failure_rate|floatformat:1 }}%</td></tr>{% endfor %}</tbody></table>
+<p class="monitor-note">About 95% of requests finish within the P95 time.</p>
+</section>
+<section class="monitor-card">
+<h2>User behavior</h2>
+<figure class="monitor-trend"><figcaption>Daily requests · peak {{ peak }} on {{ peak_day|date:"M j" }}</figcaption>
+<div class="monitor-bars">{% for row in daily %}<span title="{{ row.day|date:'M j' }} · {{ row.count }} requests" aria-label="{{ row.day|date:'M j' }}, {{ row.count }} requests" role="img" style="height: {{ row.bar|floatformat:'0u' }}%"></span>{% endfor %}</div>
+<div class="monitor-axis"><span>{{ start|date:"M j" }}</span><span>{{ end|date:"M j" }}</span></div></figure>
+<ul class="monitor-mix" aria-label="Requests by input type">{% for row in features %}<li><span>{{ row.input }}</span><strong>{{ row.count }} · {{ row.share|floatformat:0 }}%</strong></li>{% endfor %}</ul>
+</section>
+<section class="monitor-card">
+<h2>Cost</h2>
+<table><caption>Estimated cost by feature in USD</caption>
+<thead><tr><th scope="col">Feature</th><th scope="col">Total</th><th scope="col">Per 1k requests</th><th scope="col">Share</th></tr></thead>
+<tbody>{% for row in features %}<tr><th scope="row">{{ row.label }}</th><td>&#36;{{ row.cost|floatformat:4 }}</td><td>&#36;{{ row.cost_per_thousand|floatformat:3 }}</td><td>{{ row.cost_share|floatformat:0 }}%</td></tr>{% endfor %}</tbody></table>
+<p class="monitor-note">Hypothetical rates per million tokens · &#36;{{ input_rate }} input and &#36;{{ output_rate }} output.</p>
+</section>
+</div>
+</section>
+{% endblock %}
