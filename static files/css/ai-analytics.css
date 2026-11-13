@@ -27,3 +27,31 @@
 .monitor-mix li { padding: .2rem 0; border-bottom: 1px solid #e0e6dc; }
 @media (max-width: 900px) { .monitor-grid { grid-template-columns: 1fr; } }
 @media (max-width: 520px) { .monitor-summary { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+
+.monitor-comparisons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .8rem; margin-bottom: .8rem; }
+.monitor-comparisons .monitor-card { padding: 1rem 1.1rem; }
+.monitor-legend { display: flex; flex-wrap: wrap; gap: .45rem 1rem; margin: .2rem 0 .75rem; font-size: .82rem; }
+.monitor-legend span { display: inline-flex; align-items: center; gap: .4rem; }
+.monitor-legend span::before { content: ""; display: inline-block; width: .65rem; height: .65rem; background: #286b5a; }
+.monitor-legend .legend-mean::before { border-radius: 50%; }
+.monitor-legend .legend-p95::before { background: #aa563a; transform: rotate(45deg) scale(.8); }
+.monitor-legend .legend-usage::before { background: #81aa9c; border-radius: 2px; }
+.monitor-legend .legend-spend::before { background: #aa563a; border-radius: 2px; }
+.monitor-chart { display: grid; gap: .55rem; }
+.monitor-chart-row { display: grid; grid-template-columns: 6.1rem minmax(0, 1fr) 6.7rem; gap: .65rem; align-items: center; font-size: .82rem; }
+.monitor-chart-label { font-weight: 700; }
+.monitor-chart-values { text-align: right; font-variant-numeric: tabular-nums; }
+.monitor-track { position: relative; background: linear-gradient(to right, #d6dfd4 1px, transparent 1px) 0 0 / 50% 100%, #f0f3ea; border-right: 1px solid #d6dfd4; }
+.latency-track { height: 1.05rem; }
+.latency-track span { position: absolute; top: 50%; width: .63rem; height: .63rem; }
+.latency-mean { background: #286b5a; border-radius: 50%; transform: translate(-50%, -50%); }
+.latency-p95 { background: #aa563a; transform: translate(-50%, -50%) rotate(45deg) scale(.8); }
+.spend-track { display: grid; gap: 2px; padding: 2px 0; }
+.spend-track span { height: .34rem; border-radius: 0 3px 3px 0; }
+.spend-usage { background: #81aa9c; }
+.spend-cost { background: #aa563a; }
+.monitor-scale { color: #50685e; font-size: .73rem; }
+.monitor-scale div { display: flex; justify-content: space-between; }
+.monitor-sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 900px) { .monitor-comparisons { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .monitor-chart-row { grid-template-columns: 4.9rem minmax(0, 1fr) 5.6rem; gap: .35rem; font-size: .75rem; } }
