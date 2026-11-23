@@ -163,3 +163,32 @@ class UserAvatar(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="hestia_avatar")
     options = models.JSONField(default=dict)
     updated_at = models.DateTimeField(auto_now=True)
+
+
+class SharingCircle(models.Model):
+    class Visibility(models.TextChoices):
+        ONLY_ME = "ONLY_ME", "Only me"
+        SELECTED = "SELECTED", "Selected roommates"
+        HOUSEHOLD = "HOUSEHOLD", "Everyone in the household"
+
+    workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="sharing_circles")
+    created_by = models.ForeignKey(Membership, on_delete=models.PROTECT, null=True, blank=True)
+    name = models.CharField(max_length=120)
+    visibility = models.CharField(max_length=10, choices=Visibility.choices)
+    version = models.PositiveIntegerField(default=1)
+    selected_readers = models.ManyToManyField(Membership, blank=True, related_name="selected_circles")
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["workspace"],
+                condition=models.Q(visibility="HOUSEHOLD"),
+                name="one_household_circle_per_workspace",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(visibility="HOUSEHOLD") | models.Q(
+                    visibility__in=["ONLY_ME", "SELECTED"], created_by__isnull=False,
+                ),
+                name="restricted_circle_requires_creator",
+            ),
+        ]

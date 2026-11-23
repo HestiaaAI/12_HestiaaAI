@@ -1,7 +1,7 @@
 """Household expenses and payments, stored as integer USD cents."""
 import uuid
 from django.db import models
-from households.models import Membership, Workspace
+from households.models import Membership, SharingCircle, Workspace
 
 
 class Expense(models.Model):
@@ -13,6 +13,7 @@ class Expense(models.Model):
         OTHER = "other", "Other"
 
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="expenses")
+    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT, null=True, blank=True)
     paid_by = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="paid_expenses")
     created_by = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="recorded_expenses")
     title = models.CharField(max_length=120)
@@ -50,6 +51,7 @@ class Settlement(models.Model):
         CANCELLED = "cancelled", "Cancelled"
 
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="settlements")
+    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT, null=True, blank=True)
     sender = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="sent_settlements")
     receiver = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="received_settlements")
     amount_cents = models.PositiveIntegerField()
@@ -78,7 +80,29 @@ class ExpenseEvent(models.Model):
         ordering = ["created_at", "pk"]
 
 
+class PurchaseList(models.Model):
+    workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="purchase_lists")
+    created_by = models.ForeignKey(Membership, on_delete=models.PROTECT, null=True, blank=True)
+    title = models.CharField(max_length=120)
+    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT, related_name="purchase_lists")
+    is_default = models.BooleanField(default=False)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["workspace"],
+                condition=models.Q(is_default=True),
+                name="one_default_purchase_list_per_workspace",
+            ),
+            models.CheckConstraint(
+                condition=models.Q(is_default=True) | models.Q(created_by__isnull=False),
+                name="named_purchase_list_requires_creator",
+            ),
+        ]
+
+
 class PurchaseItem(models.Model):
+    list = models.ForeignKey(PurchaseList, on_delete=models.PROTECT, null=True, blank=True)
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name='purchase_requests')
     requested_by = models.ForeignKey(Membership, on_delete=models.PROTECT)
     name = models.CharField(max_length=120)
