@@ -19,7 +19,7 @@ class HouseholdContextMiddleware(MiddlewareMixin):
         if match is None:
             return None
         name = match.view_name
-        data = name == 'workflows:task-export-csv' or name in {'expenses:export', 'expenses:push-config', 'expenses:push-subscribe', 'expenses:push-unsubscribe'}
+        data = name == 'workflows:task-export-csv' or name in {'expenses:export', 'expenses:push-config', 'expenses:push-subscribe', 'expenses:push-unsubscribe', 'expenses:push-visible'}
         household = match.app_name in {'workflows', 'task_forms', 'ai_tasks', 'groceries', 'expenses'} or name == 'product-lookup'
         private = household or match.app_name == 'households' or name == 'accounts:avatar'
         request._household_data = data

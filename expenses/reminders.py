@@ -23,7 +23,7 @@ def collect_reminders(workspace=None):
     return created
 
 def visible_reminders(user):
-    return BillReminder.objects.filter(user=user,bill__active=True,bill__reminders_enabled=True,bill__workspace__memberships__user=user,bill__workspace__memberships__is_active=True).filter(due=F('bill__next_due')).filter(Q(bill__paid_by__user=user,bill__paid_by__is_active=True)|Q(bill__participants__user=user,bill__participants__is_active=True)).select_related('bill__workspace').distinct().order_by('due','-created_at')
+    return BillReminder.objects.filter(user=user,user__is_active=True,bill__active=True,bill__reminders_enabled=True,bill__workspace__memberships__user=user,bill__workspace__memberships__is_active=True).filter(due=F('bill__next_due')).filter(Q(bill__paid_by__user=user,bill__paid_by__is_active=True)|Q(bill__participants__user=user,bill__participants__is_active=True)).select_related('bill__workspace').distinct().order_by('due','-created_at')
 
 def send_pending():
     # Generic lock-screen copy intentionally contains no bill amount or household details.
@@ -38,7 +38,7 @@ def send_pending():
             delivery,_=BillPushDelivery.objects.get_or_create(reminder=notice,subscription=subscription)
             if delivery.sent_at:continue
             try:
-                webpush(subscription_info={'endpoint':subscription.endpoint,'keys':subscription.keys},data=json.dumps({'title':'Hestia · bill reminder','body':'You have an upcoming or overdue bill. Open Hestia to review it.','url':'/expenses/reminders/','tag':f'bill-{notice.pk}'}),vapid_private_key=private,vapid_claims={'sub':subject},ttl=3600,timeout=10)
+                webpush(subscription_info={'endpoint':subscription.endpoint,'keys':subscription.keys},data=json.dumps({'title':'Hestia · bill reminder','body':'You have an upcoming or overdue bill. Open Hestia to review it.','url':'/expenses/reminders/','tag':f'bill-{notice.pk}','reminder_id':notice.pk}),vapid_private_key=private,vapid_claims={'sub':subject},ttl=3600,timeout=10)
             except (WebPushException, RequestException, OSError) as exc:
                 failed+=1
                 if getattr(exc,'response',None) is not None and exc.response.status_code in (404,410):

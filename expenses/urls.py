@@ -13,6 +13,7 @@ urlpatterns = [
     path("reminders/<int:reminder_id>/read/",notification_views.reminder_read,name="reminder-read"),
     path("push/subscribe/",notification_views.subscribe,name="push-subscribe"),
     path("push/unsubscribe/",notification_views.unsubscribe,name="push-unsubscribe"),
+    path("push/visible/<int:reminder_id>/", notification_views.push_reminder_access, name="push-visible"),
     path("push/config/",notification_views.push_config,name="push-config"),
     path("<int:workspace_id>/recurring/",recurring_views.recurring,name="recurring"),
     path("<int:workspace_id>/recurring/<int:bill_id>/",recurring_views.recurring_action,name="recurring-action"),

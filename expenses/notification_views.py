@@ -107,6 +107,19 @@ def unsubscribe(request):
 def push_config(request):
     return JsonResponse({'publicKey':getattr(settings,'WEBPUSH_PUBLIC_KEY','')})
 
+
+@login_required
+@require_safe
+@never_cache
+def push_reminder_access(request, reminder_id):
+    membership = require_household(request)
+    get_object_or_404(
+        visible_reminders(request.user).filter(bill__workspace=membership.workspace, read_at=None),
+        pk=reminder_id,
+    )
+    return HttpResponse(status=204)
+
+
 def service_worker(request):
     response=HttpResponse(render_to_string('expenses/bill-worker.js'),content_type='application/javascript')
     response['Service-Worker-Allowed']='/';response['Cache-Control']='no-cache'

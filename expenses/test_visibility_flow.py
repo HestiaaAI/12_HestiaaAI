@@ -256,3 +256,24 @@ class VisibilityFlowTests(TestCase):
             }], use_ai=True)
             provider.assert_not_called()
         self.assertEqual(draft.payload["receipts"][0]["rows"][0]["item_id"], item.pk)
+
+    def test_worker_checks_current_session_household_and_reminder_readership(self):
+        from .models import BillReminder, RecurringBill
+
+        bill = RecurringBill.objects.create(
+            workspace=self.home, title="Utility bill", created_by=self.a, paid_by=self.a,
+            next_due=timezone.localdate(), amount_cents=100,
+        )
+        notice = BillReminder.objects.create(bill=bill, user=self.a.user, due=bill.next_due)
+        url = reverse("expenses:push-visible", args=[notice.pk])
+        client = self.clients[self.a.pk]
+        response = client.get(url)
+        self.assertEqual(response.status_code, 204)
+        self.assertIn("no-store", response["Cache-Control"])
+        self.assertEqual(self.clients[self.b.pk].get(url).status_code, 404)
+        other = Workspace.objects.create(name="Other home")
+        Membership.objects.create(workspace=other, user=self.a.user, display_name="A")
+        client.post(reverse("households:switch"), {"workspace_id": other.pk})
+        self.assertEqual(client.get(url).status_code, 404)
+        client.logout()
+        self.assertEqual(client.get(url).status_code, 401)
