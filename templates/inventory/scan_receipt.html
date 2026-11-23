@@ -12,7 +12,7 @@
         {% csrf_token %}
         {{ review.management_form }}
         {{ review.non_form_errors }}
-        <p>Check names, fill in missing quantities, and choose where each item goes. Leave expiry dates blank if you don’t know them.</p>
+        <p>Check the suggested names, quantities, storage and expiry dates before saving. Expiry dates are estimates for unopened items with at least a week remaining when bought, based on the receipt date (or today if missing). Check the package and storage instructions; edit or clear any estimate. Unknown items need your storage choice.</p>
         <div class="receipt-rows">
             {% for form in review %}
             <fieldset class="demo-panel receipt-row">
@@ -28,11 +28,11 @@
     </form>
     {% else %}
     <div class="demo-panel demo-form">
-        <label for="receipt-image">Receipt photo</label>
-        <input id="receipt-image" type="file" accept="image/jpeg,image/png,image/webp">
-        <p>Use a clear JPG, PNG, or WebP image up to 10 MB. The photo is read in your browser.</p>
+        <label for="receipt-image">Receipt photos (up to five)</label>
+        <input id="receipt-image" type="file" multiple accept="image/jpeg,image/png,image/webp">
+        <p>Select up to five clear JPG, PNG, or WebP images, each up to 10 MB. The photo is read in your browser.</p>
         <div class="demo-actions">
-            <button id="scan-image" class="demo-button" type="button" hidden>Scan photo</button>
+            <button id="scan-image" class="demo-button" type="button" hidden>Scan selected photos</button>
             <a href="{% url 'groceries:add' workspace.pk %}">Add manually</a>
         </div>
         <p id="scan-status" role="status"></p>

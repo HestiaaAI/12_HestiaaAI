@@ -132,6 +132,7 @@ class ReceiptPurchaseLine(models.Model):
 
 
 class RecurringBill(models.Model):
+    task = models.OneToOneField("workflows.Task", null=True, blank=True, on_delete=models.SET_NULL, related_name="recurring_bill")
     ICONS = [('rent','🏠 Rent'),('electricity','⚡ Electricity'),('water','💧 Water'),('internet','🌐 Internet'),('streaming','📺 Streaming'),('music','🎵 Music'),('phone','📱 Phone'),('insurance','🛡️ Insurance'),('other','🧾 Other')]
     icon = models.CharField(max_length=20, choices=ICONS, default='other')
     notes = models.CharField(max_length=500, blank=True)

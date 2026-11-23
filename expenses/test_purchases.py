@@ -45,10 +45,24 @@ class PurchaseTests(TestCase):
         self.assertEqual(sum(s.amount_cents for e in Expense.objects.all() for s in e.shares.filter(member=self.b)),730)
     def test_bad_total_unmatched_wrong_quantity(self):
         self.item()
-        for text,total in [('UNMATCHED 6.00\nTOTAL 6.00','6.00'),('VASELINE 6.00\nTOTAL 7.00','7.00'),('2 x VASELINE 6.00\nTOTAL 6.00','6.00')]:
+        for text,total in [('UNMATCHED 6.00\nTOTAL 6.00','6.00'),('VASELINE 6.00\nTOTAL 7.00','7.00')]:
             draft=prepare_receipts(self.a,[self.receipt(text,total)])
             with self.assertRaises(ValidationError):confirm_receipts(self.a,draft.pk,self.rows(draft),True)
         self.assertEqual(Expense.objects.count(),0)
+    def test_extra_shared_units_use_existing_participants(self):
+        item=self.item('Milk','household')
+        draft=prepare_receipts(self.a,[self.receipt('2 x MILK 9.00\nTOTAL 9.00','9.00')])
+        confirm_receipts(self.a,draft.pk,self.rows(draft),True)
+        expense=Expense.objects.get()
+        self.assertEqual(list(expense.shares.order_by('member_id').values_list('amount_cents',flat=True)),[300,300,300])
+        self.assertEqual(expense.purchase_line.quantity,2)
+
+    def test_own_units_still_require_requested_quantity(self):
+        item=self.item();join_item(self.b,item.pk,'own',1)
+        draft=prepare_receipts(self.a,[self.receipt('3 x VASELINE 9.00\nTOTAL 9.00','9.00')])
+        with self.assertRaises(ValidationError):confirm_receipts(self.a,draft.pk,self.rows(draft),True)
+        self.assertFalse(Expense.objects.exists())
+
     def test_scoping_consent_and_duplicate(self):
         self.item();draft=prepare_receipts(self.a,[self.receipt()])
         with self.assertRaises(ValidationError):confirm_receipts(self.out,draft.pk,self.rows(draft),True)

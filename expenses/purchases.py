@@ -161,7 +161,10 @@ def confirm_receipts(actor,draft_id,rows,confirmed):
         if any(v<=0 for v in adjusted.values()):raise ValidationError('Discounts cannot reduce a receipt line to zero. Remove free items before reviewing.')
         prepared.append((receipt,payer,verified,adjusted))
     for item_id,quantity in units.items():
-        if quantity!=items[item_id].total_units:raise ValidationError(f'{items[item_id].name}: receipts contain {quantity} units, but the list requests {items[item_id].total_units}. Include all units in this review or correct the quantities before saving.')
+        item = items[item_id]
+        has_own_units = item.claims.filter(kind='own').exists()
+        if quantity < item.total_units or (has_own_units and quantity != item.total_units):
+            raise ValidationError(f'{item.name}: receipts contain {quantity} units, but the list requests {item.total_units}. Include all requested units; for individual own-unit requests, quantities must match exactly.')
     ids=[]
     for receipt,payer,verified,adjusted in prepared:
         saved=PurchaseReceipt.objects.create(workspace=actor.workspace,submitted_by=actor,fingerprint=receipt['fingerprint'],total_cents=receipt['total_cents'],draft=draft)

@@ -16,6 +16,8 @@ class RecurringTests(TestCase):
         data={'title':'Rent','amount':'1800.00','paid_by':self.a.pk,'participants':[self.a.pk,self.b.pk],'next_due':'2026-11-30','frequency':'monthly','category':'bills'}
         self.assertEqual(self.client.post(self.url,data).status_code,302)
         bill=RecurringBill.objects.get()
+        self.assertIsNotNone(bill.task_id)
+        self.assertEqual(str(bill.task.occurrences.get().due_at.date()),'2026-11-30')
         self.assertEqual(Expense.objects.count(),0)
         url=reverse('expenses:recurring-action',args=[self.home.pk,bill.pk])
         payload={'action':'record','due':'2026-11-30','amount':'1810.00'}
@@ -24,6 +26,10 @@ class RecurringTests(TestCase):
         self.assertEqual(Expense.objects.count(),1)
         self.assertEqual(Expense.objects.get().amount_cents,181000)
         bill.refresh_from_db();self.assertEqual(str(bill.next_due),'2026-12-30')
+        occurrences=list(bill.task.occurrences.order_by('sequence'))
+        self.assertEqual(len(occurrences),2)
+        self.assertEqual(occurrences[0].state,'REPORTED_COMPLETE')
+        self.assertEqual(str(occurrences[1].due_at.date()),'2026-12-30')
     def test_household_isolation(self):
         other=Membership.objects.create(workspace=Workspace.objects.create(name='Other'),user=get_user_model().objects.create_user(username='out'),display_name='Out')
         self.assertEqual(self.client.post(self.url,{'paid_by':other.pk}).status_code,200)
@@ -99,3 +105,20 @@ class RecurringTests(TestCase):
         self.assertEqual(visible_reminders(self.b.user).count(),1)
         bill.participants.remove(self.b)
         self.assertFalse(visible_reminders(self.b.user).exists())
+
+    def test_bill_task_sync_is_idempotent_and_pause_cancels_upcoming_task(self):
+        from expenses.bill_tasks import sync_bill_task
+        from datetime import date
+        from workflows.models import Task
+        bill=RecurringBill.objects.create(workspace=self.home,created_by=self.a,paid_by=self.a,title='Water',amount_cents=4000,next_due=date(2026,11,15))
+        sync_bill_task(bill);sync_bill_task(bill)
+        bill.refresh_from_db()
+        self.assertEqual(Task.objects.filter(workspace=self.home).count(),1)
+        self.assertEqual(bill.task.occurrences.count(),1)
+        bill.next_due=date(2026,11,18);bill.save();sync_bill_task(bill)
+        self.assertEqual(str(bill.task.occurrences.get().due_at.date()),'2026-11-18')
+        bill.active=False;bill.save();sync_bill_task(bill)
+        self.assertEqual(bill.task.occurrences.get().state,'CANCELLED')
+        bill.active=True;bill.save();sync_bill_task(bill)
+        self.assertEqual(bill.task.occurrences.get().state,'OPEN')
+        self.assertFalse(Expense.objects.exists())

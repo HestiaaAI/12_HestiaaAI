@@ -9,3 +9,5 @@
 .basket-target:hover,.basket-target:focus{background:#e6eedf;color:#315b55}.basket-target small{color:#5a7162}.basket-target.basket-hover{background:#f6d4bd;color:#315b55}
 
 .unmatched-line[hidden]{display:none!important}.basket-slot{min-width:0}.basket-slot>.basket-target{width:100%;min-height:135px}.basket-slot [data-basket-chips]>span{display:block;background:#e1ebdc;border:1px solid #c0cfb6;border-radius:10px;padding:8px;margin-top:7px;font-size:11px;cursor:pointer}.basket-slot [data-basket-chips]>span:focus-visible{outline:3px solid #b97b51;outline-offset:2px}
+
+.unmatched-line{user-select:none;-webkit-user-select:none}.unmatched-line input,.unmatched-line textarea{user-select:text;-webkit-user-select:text}.receipt-drag-preview{position:fixed;top:0;left:0;z-index:10000;pointer-events:none;max-width:320px;padding:14px 20px;border:2px solid #4f7d76;border-radius:14px;background:#fffdf7;color:#24453e;font-weight:700;box-shadow:0 4px 16px #0002}
