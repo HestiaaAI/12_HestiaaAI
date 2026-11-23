@@ -3,22 +3,72 @@ import json
 from urllib.parse import urlsplit
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponse
 from django.shortcuts import render,redirect,get_object_or_404
 from django.template.loader import render_to_string
 from django.utils import timezone
-from django.views.decorators.http import require_POST
+from django.views.decorators.http import require_POST, require_safe
 from django.views.decorators.cache import never_cache
-from households.context import require_household
-from .models import PushSubscription
+from households.context import require_household, resolve_active_membership
+from households.services import accept_received_invitation, received_invitations, InvitationError
+from .models import PushSubscription, ReceiptDraft, Settlement
+from .policies import visible_settlements
 from .reminders import collect_reminders,visible_reminders
 
 @login_required
 @never_cache
+@require_safe
 def inbox(request):
-    membership = require_household(request)
+    membership = resolve_active_membership(request)
+    incoming = received_invitations(request.user).select_related("workspace").defer(
+        "token_digest", "request_digest",
+    )[:30]
+    if membership is None:
+        return render(request, "expenses/reminders.html", {"incoming": incoming})
     collect_reminders(membership.workspace)
-    return render(request,'expenses/reminders.html',{'reminders':visible_reminders(request.user).filter(bill__workspace=require_household(request).workspace),'push_ready':bool(getattr(settings,'WEBPUSH_PUBLIC_KEY',''))})
+    from django.db.models import Q
+
+    payments = visible_settlements(actor=membership).filter(
+        Q(receiver=membership, status=Settlement.Status.PENDING)
+        | Q(sender=membership, status__in=(Settlement.Status.PENDING, Settlement.Status.REJECTED))
+    ).select_related("circle", "sender", "receiver")[:30]
+    drafts = ReceiptDraft.objects.filter(
+        workspace=membership.workspace, actor=membership, confirmed_ids=[],
+    ).defer("payload").order_by("-created_at")[:20]
+    cutoff = timezone.now() - timezone.timedelta(hours=24)
+    invitations = membership.workspace.invitations.none()
+    invitation_nonce = ""
+    if membership.role == "OWNER":
+        from households.invitation_views import nonce_for
+
+        invitation_nonce = nonce_for(request, membership)
+        invitations = membership.workspace.invitations.filter(
+            accepted_at__isnull=True, revoked_at__isnull=True,
+        ).only("email", "expires_at", "accepted_at", "revoked_at")[:30]
+    return render(request, "expenses/reminders.html", {
+        "workspace": membership.workspace, "actor": membership, "incoming": incoming,
+        "reminders": visible_reminders(request.user).filter(bill__workspace=membership.workspace),
+        "payments": payments, "drafts": drafts, "cutoff": cutoff, "invitations": invitations, "invitation_nonce": invitation_nonce,
+        "push_ready": bool(getattr(settings, "WEBPUSH_PUBLIC_KEY", "")),
+    })
+
+
+@login_required
+@require_POST
+def accept_inbox_invitation(request, invitation_id):
+    from django.contrib import messages
+
+    try:
+        member = accept_received_invitation(user=request.user, invitation_id=invitation_id)
+    except InvitationError as error:
+        if error.code in {"not_found", "wrong_email", "email_unverified"}:
+            raise Http404 from error
+        messages.error(request, str(error))
+        return redirect("expenses:reminders")
+    request.session["active_workspace_id"] = member.workspace_id
+    messages.success(request, f"Welcome to {member.workspace.name}.")
+    return redirect("task_forms:board")
+
 
 @login_required
 @require_POST

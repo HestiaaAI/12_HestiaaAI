@@ -1,0 +1,27 @@
+{% extends 'expenses/base.html' %}
+{% block title %}Today · Hestia{% endblock %}
+{% block content %}
+<h1>Today</h1>
+<p>{{ workspace.name }} · {{ day|date:"l, F j" }}</p>
+<section class="card">
+  <h2>Chores due</h2>
+  <ul>{% for occurrence in chores %}
+    <li>{{ occurrence.task.title }} <a href="{{ occurrence.task.get_absolute_url }}">Open chore</a></li>
+  {% empty %}<li>No chores due today.</li>{% endfor %}</ul>
+</section>
+<section class="card">
+  <h2>Bills due</h2>
+  <ul>{% for bill in bills %}
+    <li>{{ bill.title }} <a href="{% url 'expenses:recurring' workspace.pk %}?bill={{ bill.pk }}#bill-details">Review bill</a></li>
+  {% empty %}<li>No bills due today.</li>{% endfor %}</ul>
+</section>
+<section class="card">
+  <h2>Groceries needing attention</h2>
+  <ul>{% for batch in expiry %}
+    <li>{{ batch.name }} · {{ batch.expires_on|date:"M j" }} <a href="{% url 'groceries:edit' workspace.pk batch.pk %}">Review stock</a></li>
+  {% empty %}<li>No groceries nearing expiry.</li>{% endfor %}
+  {% for item in shopping %}
+    <li>{{ item.name }} {% if item.list_id and not item.list.is_default %}<a href="{% url 'groceries:named-list' workspace.pk item.list_id %}#shopping-item-{{ item.pk }}">Open shopping list</a>{% else %}<a href="{% url 'groceries:shopping' workspace.pk %}#shopping-item-{{ item.pk }}">Open shopping list</a>{% endif %}</li>
+  {% empty %}<li>No unchecked shopping items.</li>{% endfor %}</ul>
+</section>
+{% endblock %}

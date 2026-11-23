@@ -156,3 +156,9 @@ Teammates created households for their isolated feature checks. These are dispos
 - Do not indiscriminately delete existing database rows. If cleaning an existing shared/demo database, identify the exact disposable household, dependent expenses/settlements/receipts and affected accounts, back up the data and obtain authorization for the concrete destructive action. Never touch grading or real household data.
 
 Acceptance includes: fresh disposable database → signup → verified invite/create/join → tasks/groceries/expenses/thermostat work without manually inserted household records.
+
+## 11. Visibility foundation integration
+
+Use the policy and consumer contract in [Household product access/UI contract](household-access-contract.md#sharing-circles-today-and-the-action-inbox). Apply the sharing migrations together before enabling the new pages. Keep legacy household queries confined to the canonical household circle. Feature code must validate a restricted circle before using it in any form, total, export, provider call, or notification. Test with a household owner who is excluded from a selected circle, and with an eligible member whose access changes while a review is open.
+
+Back up the pre-sharing database before migration. Reverse migrations will reject states that contain restricted audiences, named lists, or restricted receipts. A verified backup is needed to restore the old schema in those cases. Preserve the current database for reconciliation before restoring an earlier snapshot so newer records can be recovered explicitly.

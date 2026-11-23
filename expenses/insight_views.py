@@ -6,7 +6,8 @@ from django.views.decorators.cache import never_cache
 from django.utils import timezone
 from households.models import Membership
 from .models import Expense
-from .views import membership,page_context
+from .views import ledger_context, ledger_members, membership, requested_circle
+from .policies import circle_rows
 from .insights import household_today,household_zone,spending_report,activity_rows
 
 
@@ -20,9 +21,9 @@ class ActivityFilter(forms.Form):
     kind=forms.ChoiceField(required=False,choices=[('','All activity'),('created','Expenses added'),('edited','Expenses edited'),('comment','Comments'),('removed','Expenses removed'),('restored','Expenses restored'),('payment_recorded','Payments recorded'),('payment_confirmed','Payments confirmed'),('payment_rejected','Payments declined'),('payment_cancelled','Payments cancelled')])
     since=forms.DateField(required=False,widget=forms.DateInput(attrs={'type':'date'}))
     until=forms.DateField(required=False,widget=forms.DateInput(attrs={'type':'date'}))
-    def __init__(self,*args,workspace,actor=None,**kwargs):
+    def __init__(self,*args,workspace,actor=None,circle=None,**kwargs):
         super().__init__(*args,**kwargs)
-        self.fields['person'].queryset=Membership.objects.filter(workspace=workspace).order_by('display_name','pk')
+        self.fields['person'].queryset = (ledger_members(actor, circle) if actor else workspace.memberships.all()).order_by('display_name', 'pk')
         self.fields['person'].label_from_instance=lambda member: (member.display_name or 'Roommate')+(' (you)' if actor and member.pk==actor.pk else '')
     def clean(self):
         values=super().clean()
@@ -36,25 +37,27 @@ def trends(request,workspace_id):
     actor=membership(request,workspace_id);today=household_today(actor.workspace)
     filters=TrendFilter({'year':request.GET.get('year',today.year),'month':request.GET.get('month',today.month)})
     valid=filters.is_valid();year=filters.cleaned_data['year'] if valid else today.year;month=filters.cleaned_data['month'] if valid else today.month
-    earliest=Expense.objects.filter(workspace=actor.workspace,voided_at=None).order_by('date').values_list('date',flat=True).first()
+    circle = requested_circle(request, actor)
+    earliest=circle_rows(Expense.objects, actor.workspace, circle).filter(voided_at=None).order_by('date').values_list('date',flat=True).first()
     years=range(max(2000,min(earliest.year if earliest else today.year,today.year-1)),min(2100,today.year+1)+1)
     import calendar
-    report=spending_report(actor,year,month,today)
-    return render(request,'expenses/trends.html',{**page_context(actor),'report':report,'filters':filters,'years':years,'month_choices':[(m,calendar.month_name[m]) for m in range(1,13)]})
+    report=spending_report(actor,year,month,today,circle=circle)
+    return render(request,'expenses/trends.html',{**ledger_context(actor, circle),'report':report,'filters':filters,'years':years,'month_choices':[(m,calendar.month_name[m]) for m in range(1,13)]})
 
 
 @login_required
 @never_cache
 def activity(request,workspace_id):
     actor=membership(request,workspace_id)
-    return render(request,'expenses/activity.html',{**page_context(actor),**activity_context(request,actor)})
+    circle = requested_circle(request, actor)
+    return render(request,'expenses/activity.html',{**ledger_context(actor, circle),**activity_context(request,actor,circle=circle)})
 
 
-def activity_context(request,actor):
-    form=ActivityFilter(request.GET,workspace=actor.workspace,actor=actor);rows=[]
+def activity_context(request,actor, *, circle=None):
+    form=ActivityFilter(request.GET,workspace=actor.workspace,actor=actor,circle=circle);rows=[]
     if form.is_valid():
         values=form.cleaned_data;zone=household_zone(actor.workspace)
-        for row in activity_rows(actor.workspace):
+        for row in activity_rows(actor.workspace, circle=circle):
             if values.get('person') and row['actor_id']!=values['person'].pk:continue
             if values.get('kind') and row['kind']!=values['kind']:continue
             day=timezone.localtime(row['at'],zone).date()

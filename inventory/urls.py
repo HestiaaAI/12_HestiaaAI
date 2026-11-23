@@ -6,6 +6,10 @@ from expenses import purchase_views
 app_name = "groceries"
 
 urlpatterns = [
+    path("<int:workspace_id>/lists/create/", purchase_views.named_list_form, name="list-create"),
+    path("<int:workspace_id>/lists/<int:list_id>/", purchase_views.purchase_list, name="named-list"),
+    path("<int:workspace_id>/lists/<int:list_id>/audience/", purchase_views.named_list_form, name="list-audience"),
+
     path("<int:workspace_id>/shopping/",purchase_views.purchase_list,name="shopping"),
     path("<int:workspace_id>/shopping/<int:item_id>/join/",purchase_views.join_purchase,name="shopping-join"),
     path("<int:workspace_id>/shopping/<int:item_id>/check/",purchase_views.check_purchase,name="shopping-check"),

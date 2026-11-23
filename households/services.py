@@ -154,7 +154,31 @@ def revoke_invitation(*, actor, invitation_id):
 @transaction.atomic
 @sensitive_variables()
 def accept_invitation(*, user, raw_token):
-    candidate = invitation_for_token(raw_token)
+    return accept_invitation_candidate(user=user, candidate=invitation_for_token(raw_token))
+
+
+def received_invitations(user):
+    from allauth.account.models import EmailAddress
+    from django.db.models.functions import Lower
+
+    if not user.is_authenticated or not user.is_active:
+        return HouseholdInvitation.objects.none()
+    verified = EmailAddress.objects.filter(user=user, verified=True).annotate(address=Lower("email"))
+    return HouseholdInvitation.objects.annotate(address=Lower("email")).filter(
+        address__in=verified.values("address"), revoked_at__isnull=True, accepted_at__isnull=True,
+    )
+
+
+@transaction.atomic
+def accept_received_invitation(*, user, invitation_id):
+    try:
+        candidate = received_invitations(user).get(pk=invitation_id)
+    except HouseholdInvitation.DoesNotExist:
+        raise InvitationError('not_found')
+    return accept_invitation_candidate(user=user, candidate=candidate)
+
+
+def accept_invitation_candidate(*, user, candidate):
     Workspace.objects.select_for_update().get(pk=candidate.workspace_id)
     invitation = HouseholdInvitation.objects.select_for_update().get(pk=candidate.pk)
     if not getattr(user, 'is_authenticated', False):

@@ -58,6 +58,9 @@ def recurring(request,workspace_id):
         initial.update({name:getattr(selected,name) for name in ('title','category','next_due','frequency','icon','notes','reminder_days','reminders_enabled')})
         initial.update(amount=Decimal(selected.amount_cents)/100,paid_by=selected.paid_by_id,participants=list(selected.participants.values_list('pk',flat=True)))
     form=BillForm(request.POST if request.method=='POST' else None,actor=actor,initial=initial)
+    if request.method == "POST" and (request.POST.get("circle") or request.POST.get("visibility", "HOUSEHOLD") != "HOUSEHOLD"):
+        form.is_valid()
+        form.add_error(None, "Recurring bills are shared with the whole household.")
     if request.method=='POST' and form.is_valid():
         with transaction.atomic():
             actor = lock_household(actor)

@@ -13,7 +13,7 @@ class Expense(models.Model):
         OTHER = "other", "Other"
 
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="expenses")
-    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT, null=True, blank=True)
+    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT)
     paid_by = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="paid_expenses")
     created_by = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="recorded_expenses")
     title = models.CharField(max_length=120)
@@ -51,7 +51,7 @@ class Settlement(models.Model):
         CANCELLED = "cancelled", "Cancelled"
 
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name="settlements")
-    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT, null=True, blank=True)
+    circle = models.ForeignKey(SharingCircle, on_delete=models.PROTECT)
     sender = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="sent_settlements")
     receiver = models.ForeignKey(Membership, on_delete=models.PROTECT, related_name="received_settlements")
     amount_cents = models.PositiveIntegerField()
@@ -102,7 +102,7 @@ class PurchaseList(models.Model):
 
 
 class PurchaseItem(models.Model):
-    list = models.ForeignKey(PurchaseList, on_delete=models.PROTECT, null=True, blank=True)
+    list = models.ForeignKey(PurchaseList, on_delete=models.PROTECT)
     workspace = models.ForeignKey(Workspace, on_delete=models.PROTECT, related_name='purchase_requests')
     requested_by = models.ForeignKey(Membership, on_delete=models.PROTECT)
     name = models.CharField(max_length=120)
@@ -142,10 +142,20 @@ class PurchaseReceipt(models.Model):
     workspace = models.ForeignKey(Workspace,on_delete=models.PROTECT)
     submitted_by = models.ForeignKey(Membership,on_delete=models.PROTECT)
     fingerprint = models.CharField(max_length=64)
+    household_only = models.BooleanField(default=True, editable=False)
     total_cents = models.PositiveIntegerField()
     draft = models.ForeignKey(ReceiptDraft,on_delete=models.PROTECT,related_name='saved_receipts')
     class Meta:
-        constraints=[models.UniqueConstraint(fields=['workspace','fingerprint'],name='unique_household_receipt')]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["workspace", "submitted_by", "fingerprint"],
+                name="unique_member_receipt",
+            ),
+            models.UniqueConstraint(
+                fields=["workspace", "fingerprint"], condition=models.Q(household_only=True),
+                name="unique_public_receipt",
+            ),
+        ]
 
 
 class ReceiptPurchaseLine(models.Model):

@@ -1,0 +1,50 @@
+<section class="calendar-card">
+  <h2>Actions</h2>
+  {% for invite in incoming %}
+    <article class="reminder-item">
+      <div><h3>Invitation to {{ invite.workspace.name }}</h3>
+      {% if invite.status == 'expired' %}
+        <p>Try again · Ask the household owner to send a new invitation.</p>
+      {% else %}
+        <p>Needs confirmation</p>
+        <form method="post" action="{% url 'expenses:inbox-invite' invite.pk %}">
+          {% csrf_token %}<button type="submit">Join household</button>
+        </form>
+      {% endif %}</div>
+    </article>
+  {% endfor %}
+  {% for invite in invitations %}
+    <article class="reminder-item">
+      <div><h3>Invitation for {{ invite.email }}</h3>
+      <p>{% if invite.status == 'expired' %}Try again{% else %}Pending{% endif %}</p>
+      {% if invite.status == 'expired' %}
+      <form method="post" action="{% url 'households:resend-invite' invite.pk %}">
+        {% csrf_token %}<input type="hidden" name="nonce" value="{{ invitation_nonce }}">
+        <button type="submit">Reissue invitation</button>
+      </form>
+      {% else %}<a href="{% url 'households:invites' %}#invite-{{ invite.pk }}">Manage invitation</a>{% endif %}</div>
+    </article>
+  {% endfor %}
+  {% for draft in drafts %}
+    <article class="reminder-item">
+      <div><h3>Receipt review from {{ draft.created_at|date:"M j, g:i a" }}</h3>
+      {% if draft.created_at < cutoff %}
+        <p>Try again</p><a href="{% url 'groceries:receipt-split' workspace.pk %}">Start a fresh review</a>
+      {% else %}
+        <p>Needs confirmation</p><a href="{% url 'groceries:receipt-split-review' workspace.pk draft.pk %}">Review receipt</a>
+      {% endif %}</div>
+    </article>
+  {% endfor %}
+  {% for payment in payments %}
+    <article class="reminder-item">
+      <div><h3>{{ payment.sender.display_name }} to {{ payment.receiver.display_name }}</h3>
+      {% if payment.status == 'rejected' %}
+        <p>Try again</p><a href="{% url 'expenses:payment' workspace.pk %}?receiver={{ payment.receiver_id }}{% if payment.circle_id %}&amp;circle={{ payment.circle_id }}{% endif %}">Record updated payment</a>
+      {% else %}
+        <p>{% if payment.receiver_id == actor.pk %}Needs confirmation{% else %}Pending{% endif %}</p>
+        <a href="{% url 'expenses:settle' workspace.pk %}{% if payment.circle_id %}?circle={{ payment.circle_id }}{% endif %}">Review settlement</a>
+      {% endif %}</div>
+    </article>
+  {% endfor %}
+  {% if not incoming and not invitations and not drafts and not payments %}<p>No actions to review.</p>{% endif %}
+</section>

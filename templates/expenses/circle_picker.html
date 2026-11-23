@@ -1,0 +1,15 @@
+{% if circles %}
+<form method="get" class="card">
+  <label for="ledger-circle">Viewing expenses for</label>
+  <select name="circle" id="ledger-circle">
+    <option value="">Everyone in the household</option>
+    {% for option in circles %}
+      {% if option.visibility != 'HOUSEHOLD' %}
+      <option value="{{ option.pk }}" {% if circle.pk == option.pk %}selected{% endif %}>{{ option.name }} · {{ option.get_visibility_display }}</option>
+      {% endif %}
+    {% endfor %}
+  </select>
+  <button type="submit">View</button>
+</form>
+{% if can_edit_circle %}<a href="{% url 'expenses:audience-edit' workspace.pk circle.pk %}">Change expense audience</a>{% endif %}
+{% endif %}

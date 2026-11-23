@@ -1,0 +1,12 @@
+{% extends 'inventory/shopping_base.html' %}
+{% block title %}Shopping list audience · Hestia{% endblock %}
+{% block content %}
+<a href="{% url 'groceries:shopping' workspace.pk %}">Shopping lists</a>
+<h1>{% if existing_circle %}Change audience for {{ existing_circle.name }}{% elif ledger_only %}Choose a new expense audience{% elif purchase_list %}Change audience for {{ purchase_list.title }}{% else %}Create a shopping list{% endif %}</h1>
+<p>You are always included. The audience controls who can see {% if ledger_only %}expenses in this group{% else %}the list{% endif %}. Allocations control who pays.</p>
+<form method="post" class="card editor">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button class="button primary" type="submit">{% if ledger_only %}Continue to expense{% else %}Save list{% endif %}</button>
+</form>
+{% endblock %}

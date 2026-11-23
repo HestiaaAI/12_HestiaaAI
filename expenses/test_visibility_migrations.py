@@ -11,7 +11,7 @@ class VisibilityMigrationTests(TransactionTestCase):
         ("households", "0005_merge_integration"),
         ("expenses", "0007_recurring_bill_task"),
     ]
-    after = [("expenses", "0009_backfill_sharing_contexts")]
+    after = [("expenses", "0010_require_sharing_context")]
 
     def migrate(self, targets):
         executor = MigrationExecutor(connection)

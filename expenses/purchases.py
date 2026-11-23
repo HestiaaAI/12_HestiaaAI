@@ -9,10 +9,21 @@ from django.db import transaction
 from django.utils import timezone
 from households.models import Membership
 from inventory.receipt import PRICE, SUMMARY, COUNT_PREFIX, QUANTITY_LINE
-from .models import PurchaseItem, PurchaseClaim, ReceiptDraft, PurchaseReceipt, ReceiptPurchaseLine
+from households.sharing import active_readers
+from .policies import household_circle, visible_items, visible_lists
+from .models import PurchaseList, PurchaseItem, PurchaseClaim, ReceiptDraft, PurchaseReceipt, ReceiptPurchaseLine
 from .services import lock_household, save_expense, cents
 from .forms import weighted_shares
 from .purchase_matching import suggest_matches
+
+
+
+def default_list(actor):
+    circle = household_circle(actor.workspace)
+    return PurchaseList.objects.get_or_create(
+        workspace=actor.workspace, is_default=True,
+        defaults={"circle": circle, "title": "Shopping list"},
+    )[0]
 
 
 def nonnegative_cents(value):
@@ -24,13 +35,21 @@ def nonnegative_cents(value):
 
 
 @transaction.atomic
-def create_item(actor,name,quantity,scope):
+def create_item(actor,name,quantity,scope, *, purchase_list=None, audience=None):
     actor=lock_household(actor)
     name=str(name).strip()
     if not name or len(name)>120 or type(quantity) is not int or not 1<=quantity<=1000 or scope not in ('household','personal'):
         raise ValidationError('Add a name, 1–1000 units and a valid list type.')
-    item=PurchaseItem.objects.create(workspace=actor.workspace,requested_by=actor,name=name,quantity=quantity,scope=scope)
-    people=Membership.objects.filter(workspace=actor.workspace,is_active=True, user__is_active=True) if scope=='household' else [actor]
+    if purchase_list is None:
+        purchase_list = default_list(actor)
+    else:
+        purchase_list = visible_lists(actor=actor).select_related("circle").filter(pk=purchase_list.pk).first()
+        if not purchase_list:
+            raise ValidationError("Shopping list access changed. Reload before trying again.")
+        if audience is not None and audience != f"{purchase_list.circle_id}:{purchase_list.circle.version}":
+            raise ValidationError("Sharing changed. Reload before adding the item.")
+    item=PurchaseItem.objects.create(workspace=actor.workspace,list=purchase_list,requested_by=actor,name=name,quantity=quantity,scope=scope)
+    people=active_readers(actor.workspace, purchase_list.circle) if scope=='household' else [actor]
     PurchaseClaim.objects.bulk_create([PurchaseClaim(item=item,member=p,kind='shared',quantity=1) for p in people])
     return item
 
@@ -38,7 +57,7 @@ def create_item(actor,name,quantity,scope):
 @transaction.atomic
 def join_item(actor,item_id,kind,quantity=1):
     actor=lock_household(actor)
-    item=PurchaseItem.objects.filter(pk=item_id,workspace=actor.workspace,state='open').first()
+    item=visible_items(actor=actor).filter(pk=item_id,state='open').first()
     if not item or kind not in ('shared','own') or type(quantity) is not int or not 1<=quantity<=1000:
         raise ValidationError('Choose an open item in your household and a valid join option.')
     if item.claims.filter(member=actor).exists():raise ValidationError('You are already included in this item.')
@@ -83,17 +102,27 @@ def receipt_rows(text):
     return rows
 
 
-def prepare_receipts(actor,receipts,use_ai=False):
+def prepare_receipts(actor,receipts,use_ai=False, *, purchase_list=None):
     if not Membership.objects.filter(pk=actor.pk,user=actor.user,workspace=actor.workspace,is_active=True, user__is_active=True).exists():raise ValidationError('An active household membership is required.')
     if not 1<=len(receipts)<=5:raise ValidationError('Review between one and five receipts at a time.')
-    items=list(PurchaseItem.objects.filter(workspace=actor.workspace,state='open').prefetch_related('claims'))
+    candidates = visible_items(actor=actor).filter(state='open').select_related('list__circle').prefetch_related('claims')
+    destinations = visible_lists(actor=actor).select_related("circle")
+    if purchase_list:
+        destinations = destinations.filter(pk=purchase_list.pk)
+        candidates = candidates.filter(list=purchase_list)
+    destination_versions = {str(target.pk): [target.circle_id, target.circle.version] for target in destinations}
+    if purchase_list and destination_versions.get(str(purchase_list.pk)) != [
+        purchase_list.circle_id, purchase_list.circle.version,
+    ]:
+        raise ValidationError("Shopping list access changed. Reload before scanning.")
+    items = list(candidates[:301])
     if len(items)>300:raise ValidationError('The open list is too long. Finish a trip before scanning more receipts.')
     data=[];fingerprints=set();line_id=0
     for source in receipts:
         text=source['text'].strip()
         if not text or len(text)>16000:raise ValidationError('Receipt text must contain 1–16000 characters.')
         fingerprint=hashlib.sha256(' '.join(text.casefold().split()).encode()).hexdigest()
-        if fingerprint in fingerprints or PurchaseReceipt.objects.filter(workspace=actor.workspace,fingerprint=fingerprint).exists():raise ValidationError('This receipt is duplicated or has already been confirmed for this household.')
+        if fingerprint in fingerprints or PurchaseReceipt.objects.filter(workspace=actor.workspace,submitted_by=actor,fingerprint=fingerprint).exists():raise ValidationError('This receipt is duplicated or has already been confirmed by your account.')
         fingerprints.add(fingerprint)
         payer=source['payer']
         if not Membership.objects.filter(pk=payer.pk,workspace=actor.workspace,is_active=True, user__is_active=True).exists():raise ValidationError('Choose a payer in this household.')
@@ -108,11 +137,38 @@ def prepare_receipts(actor,receipts,use_ai=False):
     flat=[r for receipt in data for r in receipt['rows']]
     if not Membership.objects.filter(pk=actor.pk,user_id=actor.user_id,workspace=actor.workspace,is_active=True,user__is_active=True).exists():
         raise ValidationError('An active household membership is required.')
+    # The external matching provider receives household candidates only.
+    if use_ai and (purchase_list or destinations.exclude(circle__visibility="HOUSEHOLD").exists()):
+        use_ai = False
     matches,status=suggest_matches([r['name'] for r in flat],items,use_ai)
     for row,match in zip(flat,matches):row.update(match)
     with transaction.atomic():
         actor=lock_household(actor)
-        return ReceiptDraft.objects.create(workspace=actor.workspace,actor=actor,payload={'receipts':data,'versions':{str(i.pk):i.version for i in items},'matching_status':status})
+        if set(visible_items(actor=actor).filter(pk__in=[i.pk for i in items]).values_list('pk', flat=True)) != {i.pk for i in items}:
+            raise ValidationError('Shopping list access changed. Start a fresh receipt review.')
+        return ReceiptDraft.objects.create(workspace=actor.workspace,actor=actor,payload={'receipts':data,'versions':{str(i.pk):i.version for i in items},'matching_status':status,'destinations':destination_versions,'target_list':purchase_list.pk if purchase_list else None,'audiences':{str(i.pk): [i.list.circle_id, i.list.circle.version] for i in items if i.list_id}})
+
+
+def validate_receipt_audiences(actor, draft):
+    payload = draft.payload
+    target_id = payload.get("target_list")
+    if target_id:
+        target = visible_lists(actor=actor).select_related("circle").filter(pk=target_id).first()
+        if not target or payload.get("destinations", {}).get(str(target_id)) != [
+            target.circle_id, target.circle.version,
+        ]:
+            raise ValidationError("The receipt list audience changed. Start a fresh review.")
+    audiences = payload.get("audiences", {})
+    matched = {
+        line["item_id"] for receipt in payload["receipts"] for line in receipt["rows"]
+        if line.get("item_id") and str(line["item_id"]) in audiences
+    }
+    current = {
+        pk: [circle_id, version] for pk, circle_id, version in visible_items(actor=actor)
+        .filter(pk__in=matched).values_list("pk", "list__circle_id", "list__circle__version")
+    }
+    if any(current.get(pk) != audiences[str(pk)] for pk in matched):
+        raise ValidationError("A matched list audience changed. Start a fresh review.")
 
 
 @transaction.atomic
@@ -123,11 +179,12 @@ def confirm_receipts(actor,draft_id,rows,confirmed):
     if not confirmed:raise ValidationError('Confirm the reviewed quantities, costs and participants before saving.')
     if draft.confirmed_ids:return draft.confirmed_ids
     if timezone.now()-draft.created_at>timezone.timedelta(hours=24):raise ValidationError('This review expired. Scan the receipts again.')
+    validate_receipt_audiences(actor, draft)
     source=draft.payload['receipts'];expected={r['line_id'] for rec in source for r in rec['rows']}
     if len(rows)!=len(expected) or {r.get('line_id') for r in rows}!=expected:raise ValidationError('The receipt lines changed. Reload the review.')
     edited={r['line_id']:r for r in rows};units=defaultdict(int);items={};prepared=[]
     for receipt in source:
-        if PurchaseReceipt.objects.filter(workspace=actor.workspace,fingerprint=receipt['fingerprint']).exists():raise ValidationError('A receipt in this review was already saved. Nothing was added.')
+        if PurchaseReceipt.objects.filter(workspace=actor.workspace,submitted_by=actor,fingerprint=receipt['fingerprint']).exists():raise ValidationError('A receipt in this review was already saved. Nothing was added.')
         payer=Membership.objects.filter(pk=receipt['payer_id'],workspace=actor.workspace,is_active=True, user__is_active=True).first()
         if not payer:raise ValidationError('The payer is no longer active in this household.')
         verified=[]
@@ -139,20 +196,44 @@ def confirm_receipts(actor,draft_id,rows,confirmed):
             if item_id is None:
                 if not isinstance(recipient_ids,list) or not recipient_ids or any(type(pk) is not int for pk in recipient_ids) or len(set(recipient_ids))!=len(recipient_ids):
                     raise ValidationError('Choose one or more roommate baskets for every unmatched item.')
-                recipients=list(Membership.objects.filter(workspace=actor.workspace,is_active=True,user__is_active=True,user__isnull=False,pk__in=recipient_ids).order_by('pk'))
-                if len(recipients)!=len(recipient_ids):raise ValidationError('Choose active roommates from this household only.')
-                all_ids=set(Membership.objects.filter(workspace=actor.workspace,is_active=True,user__is_active=True,user__isnull=False).values_list('pk',flat=True))
-                item=PurchaseItem.objects.create(workspace=actor.workspace,requested_by=recipients[0],name=original['name'][:120],quantity=qty,scope='household' if set(recipient_ids)==all_ids else 'personal')
+                destination_id = row.get('list_id') or draft.payload.get('target_list')
+                if destination_id:
+                    target = visible_lists(actor=actor).select_related('circle').filter(pk=destination_id).first()
+                    if not target or draft.payload.get('destinations', {}).get(str(target.pk)) != [target.circle_id, target.circle.version]:
+                        raise ValidationError('The destination audience changed. Start a fresh review.')
+                else:
+                    old_match = draft.payload.get('audiences', {}).get(str(original.get('item_id')))
+                    household = household_circle(actor.workspace)
+                    if old_match and old_match[0] != household.pk:
+                        raise ValidationError('Choose the destination list explicitly for this receipt line.')
+                    target = default_list(actor)
+                readers = active_readers(actor.workspace, target.circle)
+                recipients = list(readers.filter(pk__in=recipient_ids).order_by('pk'))
+                if len(recipients) != len(recipient_ids):
+                    raise ValidationError('Choose people who can read the destination list.')
+                all_ids = set(readers.values_list('pk', flat=True))
+                item = PurchaseItem.objects.create(
+                    workspace=actor.workspace, list=target, requested_by=recipients[0],
+                    name=original['name'][:120], quantity=qty,
+                    scope='household' if set(recipient_ids) == all_ids else 'personal',
+                )
                 PurchaseClaim.objects.bulk_create([PurchaseClaim(item=item,member=person,kind='shared') for person in recipients])
                 item_id=item.pk;items[item_id]=item
-            elif type(item_id) is not int or recipient_ids:
+            elif type(item_id) is not int or recipient_ids or row.get('list_id'):
                 raise ValidationError('Choose an existing list item or roommate baskets, not both.')
             item=items.get(item_id)
             if not item:
-                item=PurchaseItem.objects.filter(pk=item_id,workspace=actor.workspace,state='open').prefetch_related('claims__member').first()
+                item=visible_items(actor=actor).filter(pk=item_id,state='open').prefetch_related('claims__member').first()
                 if not item or draft.payload['versions'].get(str(item.pk))!=item.version:raise ValidationError('A list item or its participants changed. Start a fresh receipt review.')
+                provenance = draft.payload.get('audiences', {}).get(str(item.pk))
+                if provenance != [item.list.circle_id, item.list.circle.version] and (
+                    'audiences' in draft.payload or item.list.circle.visibility != "HOUSEHOLD"
+                ):
+                    raise ValidationError('Sharing changed. Start a fresh receipt review.')
                 if any(not claim.member.is_active for claim in item.claims.all()):raise ValidationError('A participant is no longer active. Resolve their list item before purchasing.')
                 items[item_id]=item
+            if draft.payload.get('target_list') and item.list_id != draft.payload['target_list']:
+                raise ValidationError('This review is bound to its original shopping list.')
             units[item_id]+=qty;verified.append({'item':item,'quantity':qty,'amount_cents':amount,'line_id':row['line_id']})
         subtotal=sum(r['amount_cents'] for r in verified)
         if subtotal+receipt['tax_cents']-receipt['discount_cents']!=receipt['total_cents']:
@@ -167,12 +248,20 @@ def confirm_receipts(actor,draft_id,rows,confirmed):
             raise ValidationError(f'{item.name}: receipts contain {quantity} units, but the list requests {item.total_units}. Include all requested units; for individual own-unit requests, quantities must match exactly.')
     ids=[]
     for receipt,payer,verified,adjusted in prepared:
-        saved=PurchaseReceipt.objects.create(workspace=actor.workspace,submitted_by=actor,fingerprint=receipt['fingerprint'],total_cents=receipt['total_cents'],draft=draft)
+        household_only = all(row['item'].list.circle.visibility == "HOUSEHOLD" for row in verified)
+        if household_only and PurchaseReceipt.objects.filter(
+            workspace=actor.workspace, household_only=True, fingerprint=receipt['fingerprint'],
+        ).exists():
+            raise ValidationError('This household receipt was already recorded. Nothing was added.')
+        saved = PurchaseReceipt.objects.create(
+            workspace=actor.workspace, submitted_by=actor, fingerprint=receipt['fingerprint'],
+            total_cents=receipt['total_cents'], draft=draft, household_only=household_only,
+        )
         for row in verified:
             item=row['item'];amount=adjusted[row['line_id']];shares=weighted_shares(amount,{k:Decimal(v) for k,v in claim_weights(item).items()})
             expense=save_expense(actor,{'amount':Decimal(amount)/100,'paid_by':payer,'title':item.name,'date':receipt['date'],'category':'groceries','split_method':'custom',
                 'note':f'Reviewed receipt · {row["quantity"]} units. Shared-unit and own-unit costs allocated across this purchase group. Tax and discount allocated proportionally.',
-                'split_data':{'purchase_item':item.pk}},shares,uuid.uuid5(uuid.NAMESPACE_URL,f'hestia-receipt:{draft.pk}:{row["line_id"]}'))
+                'split_data':{'purchase_item':item.pk}},shares,uuid.uuid5(uuid.NAMESPACE_URL,f'hestia-receipt:{draft.pk}:{row["line_id"]}'), circle=item.list.circle if item.list_id else None)
             ReceiptPurchaseLine.objects.create(receipt=saved,item=item,quantity=row['quantity'],expense=expense);ids.append(expense.pk)
     for item in items.values():item.state='purchased';item.is_checked=True;item.version+=1;item.save(update_fields=['state','is_checked','version'])
     draft.confirmed_ids=ids;draft.save(update_fields=['confirmed_ids']);return ids
@@ -181,7 +270,7 @@ def confirm_receipts(actor,draft_id,rows,confirmed):
 @transaction.atomic
 def check_item(actor,item_id,checked):
     actor=lock_household(actor)
-    item=PurchaseItem.objects.filter(pk=item_id,workspace=actor.workspace).first()
+    item=visible_items(actor=actor).filter(pk=item_id).first()
     if not item:raise ValidationError('Choose an item in this household.')
     if item.state!='open':raise ValidationError('Receipt-confirmed items cannot be unchecked. Their expenses are managed in the shared tab.')
     item.is_checked=bool(checked)

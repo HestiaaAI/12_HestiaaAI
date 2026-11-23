@@ -2,30 +2,33 @@
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.cache import never_cache
 from django.shortcuts import render
-from django.db.models import Q
 from django.db import transaction
 from django.views.decorators.http import require_POST
 from .models import Settlement
-from .services import balances,transfers,original_debts,payment_plan,payment_capacity
-from .views import membership,page_context
+from .services import available_payments, balances, original_debts, payment_plan
+from .views import ledger_context, ledger_members, membership, requested_circle
+from .policies import circle_rows
 
-def settlement_context(actor):
-    net=balances(actor.workspace)
-    people={m.pk:m for m in actor.workspace.memberships.select_related('user','user__hestia_avatar').all()}
-    pending=list(Settlement.objects.filter(workspace=actor.workspace,status='pending').select_related('sender__user','receiver__user'))
-    outgoing=sum(p.amount_cents for p in pending if p.sender_id==actor.pk)
-    incoming={}
-    for p in pending:incoming[p.receiver_id]=incoming.get(p.receiver_id,0)+p.amount_cents
+def settlement_context(actor, *, circle=None):
+    net=balances(actor.workspace, circle=circle)
+    people={m.pk:m for m in ledger_members(actor, circle)}
+    pending=list(circle_rows(Settlement.objects, actor.workspace, circle).filter(status='pending').select_related('sender__user__hestia_avatar','receiver__user__hestia_avatar'))
+    direct = original_debts(actor.workspace, circle=circle)
+    available_by_member = available_payments(
+        actor.workspace, actor.pk,
+        [person.pk for person in people.values() if person.pk != actor.pk and person.is_active and person.user_id and person.user.is_active],
+        circle=circle, net=net, direct=direct, pending=pending,
+    )
     options=[]
-    for transfer in payment_plan(actor.workspace):
+    plan = payment_plan(actor.workspace, circle=circle)
+    for transfer in plan:
         if actor.pk not in (transfer['sender_id'],transfer['receiver_id']):continue
         sending=transfer['sender_id']==actor.pk
         other=people[transfer['receiver_id'] if sending else transfer['sender_id']]
-        available=payment_capacity(actor.workspace,actor.pk,other.pk) if sending else 0
+        available=available_by_member.get(other.pk, 0) if sending else 0
         options.append({'member':other,'amount':transfer['amount_cents'],'sending':sending,'available':min(available,transfer['amount_cents'])})
     own_pending=[p for p in pending if actor.pk in (p.sender_id,p.receiver_id)]
     groups=[]
-    direct=original_debts(actor.workspace)
     for pk,person in people.items():
         details=[]
         for row in direct:
@@ -33,13 +36,14 @@ def settlement_context(actor):
                 details.append({'sender':people[row['sender_id']],'receiver':people[row['receiver_id']],'amount':row['amount_cents']})
         groups.append({'member':person,'balance':net.get(pk,0),'amount':abs(net.get(pk,0)),'details':details})
     value=net.get(actor.pk,0)
-    return {'settle_net':value,'settle_amount':abs(value),'settle_options':options,'settle_pending':own_pending,'all_settled':not options and not own_pending,'household_settled':not payment_plan(actor.workspace) and not pending,'group_balances':groups,'payment_amounts':{str(p.pk):payment_capacity(actor.workspace,actor.pk,p.pk) for p in people.values() if p.pk!=actor.pk and p.is_active and p.user_id}}
+    return {'settle_net':value,'settle_amount':abs(value),'settle_options':options,'settle_pending':own_pending,'all_settled':not options and not own_pending,'household_settled':not plan and not pending,'group_balances':groups,'payment_amounts':{str(pk): amount for pk, amount in available_by_member.items()}}
 
 @login_required
 @never_cache
 def settle(request,workspace_id):
     actor=membership(request,workspace_id)
-    return render(request,'expenses/settle.html',{**page_context(actor),**settlement_context(actor),'show_groups':request.GET.get('view')=='balances'})
+    circle = requested_circle(request, actor)
+    return render(request,'expenses/settle.html',{**ledger_context(actor, circle),**settlement_context(actor, circle=circle),'show_groups':request.GET.get('view')=='balances'})
 
 
 @login_required
@@ -51,13 +55,14 @@ def payment_mode(request,workspace_id):
     from django.shortcuts import redirect
     from .services import lock_household
     actor=lock_household(membership(request,workspace_id))
+    circle = None
     if actor.role!='OWNER':raise PermissionDenied
     mode=request.POST.get('mode')
     if mode not in ('original','simplified'):
         messages.error(request,'Choose Original or Simplified balances.')
-    elif Settlement.objects.filter(workspace=actor.workspace,status='pending').exists():
+    elif circle_rows(Settlement.objects, actor.workspace, circle).filter(status='pending').exists():
         messages.error(request,'Confirm, decline or cancel pending payments before changing the household payment mode.')
-    elif mode=='original' and actor.workspace.simplify_debts and Settlement.objects.filter(workspace=actor.workspace,status='confirmed').exists() and has_debt_cycle(original_debts(actor.workspace)):
+    elif mode=='original' and actor.workspace.simplify_debts and circle_rows(Settlement.objects, actor.workspace, circle).filter(status='confirmed').exists() and has_debt_cycle(original_debts(actor.workspace, circle=circle)):
         messages.error(request,'Original mode would reintroduce circular debts after earlier simplified payments. Keep Simplified mode to avoid requesting those payments again.')
     else:
         actor.workspace.simplify_debts=mode=='simplified';actor.workspace.save(update_fields=['simplify_debts'])

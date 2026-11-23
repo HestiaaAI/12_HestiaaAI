@@ -32,7 +32,7 @@ class HouseholdContextMiddleware(MiddlewareMixin):
         # queries membership independently before changing selection.
         if name != 'households:switch':
             resolve_active_membership(request)
-        if household and request.active_membership is None:
+        if household and name not in {"expenses:reminders", "expenses:inbox-invite"} and request.active_membership is None:
             return self.household_required_response(request)
 
     @staticmethod

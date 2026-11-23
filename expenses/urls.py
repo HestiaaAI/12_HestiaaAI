@@ -1,11 +1,15 @@
 from django.urls import path
-from . import views, purchase_views, insight_views, recurring_views, notification_views, settle_views
+from . import views, purchase_views, insight_views, recurring_views, notification_views, settle_views, today_views
 
 app_name = "expenses"
 urlpatterns = [
+    path("<int:workspace_id>/audiences/create/", purchase_views.named_list_form, {"ledger_only": True}, name="audience-create"),
+    path("<int:workspace_id>/audiences/<int:circle_id>/", purchase_views.named_list_form, {"ledger_only": True}, name="audience-edit"),
+    path("today/", today_views.today, name="today"),
     path("<int:workspace_id>/payment-mode/",settle_views.payment_mode,name="payment-mode"),
     path("<int:workspace_id>/settle/",settle_views.settle,name="settle"),
     path("reminders/",notification_views.inbox,name="reminders"),
+    path("reminders/invitations/<int:invitation_id>/accept/", notification_views.accept_inbox_invitation, name="inbox-invite"),
     path("reminders/<int:reminder_id>/read/",notification_views.reminder_read,name="reminder-read"),
     path("push/subscribe/",notification_views.subscribe,name="push-subscribe"),
     path("push/unsubscribe/",notification_views.unsubscribe,name="push-unsubscribe"),

@@ -6,6 +6,7 @@ from django.db.models import Q
 from django.utils import timezone
 
 from households.models import Membership
+from households.sharing import active_readers
 from .models import Expense
 from .services import cents
 
@@ -36,12 +37,14 @@ class ExpenseForm(forms.Form):
 
     item_lines = forms.CharField(required=False, max_length=10000, label="Line items: description | amount | roommate ID", widget=forms.Textarea(attrs={"rows": 4, "placeholder": "Milk | 6.00 | 1"}))
 
-    def __init__(self, *args, workspace, actor, expense=None, **kwargs):
+    def __init__(self, *args, workspace, actor, expense=None, circle=None, **kwargs):
         super().__init__(*args, **kwargs)
         history_ids = []
         if expense:
             history_ids = list(expense.shares.values_list("member_id", flat=True)) + [expense.paid_by_id]
-        self.members = list(Membership.objects.filter(workspace=workspace).filter(Q(is_active=True, user__is_active=True) | Q(pk__in=history_ids)).order_by("membership_id"))
+        self.members = list(Membership.objects.filter(workspace=workspace).filter(
+            Q(pk__in=active_readers(workspace, circle).values("pk")) | Q(pk__in=history_ids)
+        ).order_by("membership_id"))
         ids = [member.pk for member in self.members]
         available = Membership.objects.filter(pk__in=ids).order_by("membership_id")
         self.fields["paid_by"].queryset = available
@@ -125,9 +128,9 @@ class PaymentForm(forms.Form):
     note = forms.CharField(max_length=250, required=False, widget=forms.TextInput(attrs={"placeholder": "e.g. Paid through Venmo"}))
     request_token = forms.UUIDField(widget=forms.HiddenInput)
 
-    def __init__(self, *args, actor, **kwargs):
+    def __init__(self, *args, actor, circle=None, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["receiver"].queryset = Membership.objects.filter(workspace=actor.workspace, is_active=True, user__isnull=False).exclude(pk=actor.pk)
+        self.fields["receiver"].queryset = active_readers(actor.workspace, circle).exclude(pk=actor.pk)
         self.initial["request_token"] = uuid.uuid4()
 
 
