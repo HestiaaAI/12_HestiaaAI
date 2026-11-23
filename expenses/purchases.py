@@ -137,8 +137,13 @@ def prepare_receipts(actor,receipts,use_ai=False, *, purchase_list=None):
     flat=[r for receipt in data for r in receipt['rows']]
     if not Membership.objects.filter(pk=actor.pk,user_id=actor.user_id,workspace=actor.workspace,is_active=True,user__is_active=True).exists():
         raise ValidationError('An active household membership is required.')
-    # The external matching provider receives household candidates only.
-    if use_ai and (purchase_list or destinations.exclude(circle__visibility="HOUSEHOLD").exists()):
+    # Only the default household list has an audience that cannot change
+    # between taking this snapshot and sending candidate names to the provider.
+    if use_ai and (
+        purchase_list
+        or any(not item.list.is_default or item.list.circle.visibility != "HOUSEHOLD" for item in items)
+        or destinations.exclude(circle__visibility="HOUSEHOLD").exists()
+    ):
         use_ai = False
     matches,status=suggest_matches([r['name'] for r in flat],items,use_ai)
     for row,match in zip(flat,matches):row.update(match)

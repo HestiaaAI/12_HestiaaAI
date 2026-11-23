@@ -238,3 +238,21 @@ class VisibilityFlowTests(TestCase):
         self.assertNotContains(client.get(reverse("expenses:today")), item.name)
         self.assertEqual(client.get(self.url("groceries:named-list", shopping.pk)).status_code, 404)
         self.assertEqual(client.get(self.url("groceries:receipt-split-review", draft.pk)).status_code, 404)
+
+
+    def test_mutable_named_list_candidates_stay_local(self):
+        from unittest.mock import patch
+
+        response = self.clients[self.a.pk].post(self.url("groceries:list-create"), {
+            "title": "Mutable public list", "visibility": "HOUSEHOLD", "confirm": "on",
+        })
+        self.assertEqual(response.status_code, 302)
+        shopping = PurchaseList.objects.get(title="Mutable public list")
+        item = create_item(self.a, "Gift wrap", 1, "personal", purchase_list=shopping)
+        with patch("expenses.purchase_matching.requests.post") as provider:
+            draft = prepare_receipts(self.a, [{
+                "payer": self.a, "date": str(timezone.localdate()), "total": Decimal("3"),
+                "tax": Decimal("0"), "discount": Decimal("0"), "text": "Gift wrap 3.00",
+            }], use_ai=True)
+            provider.assert_not_called()
+        self.assertEqual(draft.payload["receipts"][0]["rows"][0]["item_id"], item.pk)
