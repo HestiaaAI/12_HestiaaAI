@@ -118,6 +118,10 @@ class VisibilityFlowTests(TestCase):
 
         shopping = self.create_list()
         item = create_item(self.a, "Hidden flowers", 1, "personal", purchase_list=shopping)
+        upload = self.url("groceries:receipt-split") + f"?list={shopping.pk}"
+        page = self.clients[self.a.pk].get(upload)
+        self.assertContains(page, f'name="audience" value="{shopping.circle_id}:{shopping.circle.version}"')
+        self.assertEqual(self.clients[self.owner.pk].get(upload).status_code, 404)
         data = {
             "payer": self.a, "date": str(timezone.localdate()), "total": Decimal("12"),
             "tax": Decimal("0"), "discount": Decimal("0"), "text": "Hidden flowers 12.00",

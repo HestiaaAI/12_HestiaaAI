@@ -93,14 +93,14 @@ def receipt_upload(request,workspace_id):
     if request.method == "POST" and target and request.POST.get("audience") != f"{target.circle_id}:{target.circle.version}":
         error = "Sharing changed. Reload before scanning."
     elif request.method=='POST' and forms.is_valid():
-        use_ai=request.POST.get('matching','ai')!='local'
+        use_ai=not target and request.POST.get('matching','ai')!='local'
         if use_ai and settings.GROQ_API_KEY.strip() and not cache.add(f'purchase-ai:{request.user.pk}',True,timeout=20):
             error='Wait a moment before requesting AI matching again, or use local matching.'
         else:
             try:draft=prepare_receipts(actor,[f.cleaned_data for f in forms],use_ai=use_ai,purchase_list=target)
             except (ValidationError,OperationalError) as exc:error=' '.join(exc.messages) if isinstance(exc,ValidationError) else 'The review could not be saved. Try again.'
             else:return redirect('groceries:receipt-split-review',workspace_id=workspace_id,draft_id=draft.pk)
-    return render(request,'expenses/receipt_upload.html',{**page_context(actor),'forms':forms,'matching_mode':'local' if request.POST.get('matching')=='local' else 'ai','error':error})
+    return render(request,'expenses/receipt_upload.html',{**page_context(actor),'forms':forms,'matching_mode':'local' if target or request.POST.get('matching')=='local' else 'ai','error':error,'receipt_target':target})
 
 
 @login_required
